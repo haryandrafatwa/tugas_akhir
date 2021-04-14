@@ -122,11 +122,11 @@ public class InformasiPresenter {
 
     }
 
-    public void getInformasi (){
+    public void getInformasi (String token){
         if (connectionHelper.isConnected(context)){
             viewResult.showProgress();
             ApiService apiInterface = ApiClient.getApiClient().create(ApiService.class);
-            Call<List<Informasi>> call = apiInterface.getInformasi();
+            Call<List<Informasi>> call = apiInterface.getInformasi("Bearer "+token);
             call.enqueue(new Callback<List<Informasi>>() {
                 @Override
                 public void onResponse(Call<List<Informasi>> call, Response<List<Informasi>> response) {

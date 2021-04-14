@@ -25,11 +25,12 @@ public class ApiUrl {
     public static final class FinproUrl {
 
         // public static final String BASE_URL = "https://e-denah.000webhostapp.com"; // Link Website
-        public static final String BASE_URL = "http://d3if-finpro.org"; // Link Website
+//        public static final String BASE_URL = "http://d3if-finpro.org"; // Link Website
+        public static final String BASE_URL = "http://192.168.1.2/new-finpro-api/public/"; // Link Website
 
         public static final String PATH_API = "api/v1"; // Link API
         // -----------------------------------------------------------------------------------------
-        public static final String BASE_URL_FOTO = BASE_URL + "/image/";
+        public static final String BASE_URL_FOTO = BASE_URL + "image/";
         public static final String BASE_URL_LOGIN = PATH_API + "/user";
         // -----------------------------------------------------------------------------------------
         public static final String URL_FOTO_DOSEN = BASE_URL_FOTO + "dsn_img/";
@@ -37,6 +38,7 @@ public class ApiUrl {
         public static final String URL_FOTO_MAHASISWA = BASE_URL_FOTO + "mhs_img/";
         // -----------------------------------------------------------------------------------------
         public static final String VAR_LOGIN = "signin";
+        public static final String VAR_LOGOUT = "logout";
         public static final String VAR_USER = "user";
         public static final String VAR_DOSEN = "dosen";
         public static final String VAR_MAHASISWA = "mahasiswa";
@@ -60,6 +62,8 @@ public class ApiUrl {
         public static final String VAR_QUERY = "query";
         // -----------------------------------------------------------------------------------------
         public static final String PATH_LOGIN = "/" + VAR_LOGIN;
+        public static final String PATH_LOGOUT= "/" + VAR_LOGOUT;
+        public static final String PATH_USER = "/" + VAR_USER;
         public static final String PATH_DOSEN = "/" + VAR_DOSEN;
         public static final String PATH_MAHASISWA = "/" + VAR_MAHASISWA;
         public static final String PATH_KOORDINATOR_PA = "/" + VAR_KOORDINATOR_PA;
@@ -87,6 +91,8 @@ public class ApiUrl {
         public static final String PATH_PURE = "/pure";
         // -----------------------------------------------------------------------------------------
         public static final String URL_LOGIN = BASE_URL_LOGIN + PATH_LOGIN;
+        public static final String URL_LOGOUT = BASE_URL_LOGIN + PATH_LOGOUT;
+        public static final String URL_USER = PATH_API + PATH_USER;
         public static final String URL_DOSEN = PATH_API + PATH_DOSEN;
         public static final String URL_MAHASISWA = PATH_API + PATH_MAHASISWA;
         public static final String URL_KOORDINATOR_PA = PATH_API + PATH_KOORDINATOR_PA;

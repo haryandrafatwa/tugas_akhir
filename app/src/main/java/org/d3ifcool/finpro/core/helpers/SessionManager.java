@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import org.d3ifcool.finpro.core.models.Dosen;
-import org.d3ifcool.finpro.core.models.KoordinatorPa;
+import org.d3ifcool.finpro.core.models.Koordinator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.*;
@@ -39,10 +39,11 @@ public class SessionManager {
         editor = sharedPreferences.edit();
     }
 
-    public void createSession(String username, String pengguna){
+    public void createSession(String username, String pengguna, String token){
         editor.putBoolean(LOGIN, true);
         editor.putString(USERNAME, username);
         editor.putString(PENGGUNA, pengguna);
+        editor.putString(TOKEN, token);
         editor.apply();
         editor.commit();
     }
@@ -89,7 +90,7 @@ public class SessionManager {
         editor.commit();
     }
 
-    public void createSessionDataKoor(KoordinatorPa koor){
+    public void createSessionDataKoor(Koordinator koor){
         editor.putString(KOOR_NIP, koor.getKoor_nip());
         editor.putString(KOOR_NAMA, koor.getKoor_nama());
         editor.putString(KOOR_FOTO, koor.getKoor_foto());
@@ -254,6 +255,10 @@ public class SessionManager {
 
     public String getSessionUsername(){
         return sharedPreferences.getString(USERNAME, null);
+    }
+
+    public String getSessionToken(){
+        return sharedPreferences.getString(TOKEN, null);
     }
 
     public void removeSession(){

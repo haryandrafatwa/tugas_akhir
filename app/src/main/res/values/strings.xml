@@ -327,6 +327,7 @@
     <string name="text_atur_reviewer">ATUR REVIEWER</string>
     <string name="text_ubah_kategori_monev">Ubah Kategori Monev</string>
     <string name="text_nama_mahasiswa">Mahasiswa</string>
+    <string name="text_angkatan_mahasiswa">Tahun Angkatan</string>
     <string name="text_mahasiswa_sudah_mengajukan_judul">Mahasiswa sudah mengajukan judul</string>
     <string name="text_judul_status">Status</string>
     <string name="text_belum_disetujui">Status proyek akhir belum ada</string>

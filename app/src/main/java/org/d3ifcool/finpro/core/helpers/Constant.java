@@ -43,6 +43,7 @@ public class Constant {
         public static final String LOGIN = "IS_LOGIN";
         public static final String USERNAME = "USERNAME";
         public static final String PENGGUNA = "PENGGUNA";
+        public static final String TOKEN = "TOKEN";
         // -----------------------------------------------------------------------------------------
         public static final String DSN_NIP = "DSN_NIP";
         public static final String DSN_NIP_TEMP = "DSN_NIP_TEMP";

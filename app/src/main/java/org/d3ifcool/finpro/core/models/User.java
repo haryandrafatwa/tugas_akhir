@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * Created by Faisal Amir
  * FrogoBox Inc License
@@ -30,8 +32,8 @@ public class User implements Parcelable {
     private String username;
 
     @Expose
-    @SerializedName("password")
-    private String password;
+    @SerializedName("token")
+    private String token;
 
     @Expose
     @SerializedName("pengguna")
@@ -45,9 +47,9 @@ public class User implements Parcelable {
     @SerializedName("message")
     private String message;
 
-    public User(String username, String password, String pengguna, Boolean success, String message) {
+    public User(String token, String username, String pengguna, Boolean success, String message) {
         this.username = username;
-        this.password = password;
+        this.token = token;
         this.pengguna = pengguna;
         this.success = success;
         this.message = message;
@@ -61,12 +63,12 @@ public class User implements Parcelable {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getToken() {
+        return token;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setToken(String password) {
+        this.token = password;
     }
 
     public String getPengguna() {
@@ -102,7 +104,7 @@ public class User implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.username);
-        dest.writeString(this.password);
+        dest.writeString(this.token);
         dest.writeString(this.pengguna);
         dest.writeValue(this.success);
         dest.writeString(this.message);
@@ -110,7 +112,7 @@ public class User implements Parcelable {
 
     protected User(Parcel in) {
         this.username = in.readString();
-        this.password = in.readString();
+        this.token = in.readString();
         this.pengguna = in.readString();
         this.success = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.message = in.readString();

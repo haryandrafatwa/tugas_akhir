@@ -93,12 +93,14 @@ public class DosenJudulPaSubdosenDetailActivity extends AppCompatActivity implem
         tv_kategori.setText(kategori);
         tv_deskripsi.setText(deskripsi);
 
-        proyekAkhirPresenter.searchDistinctProyekAkhirBy(PARAM_JUDUL_ID, String.valueOf(judul_id));
+//        proyekAkhirPresenter.searchDistinctProyekAkhirBy(PARAM_JUDUL_ID, String.valueOf(judul_id));
+        proyekAkhirPresenter.getProyekAkhir();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                proyekAkhirPresenter.searchDistinctProyekAkhirBy(PARAM_JUDUL_ID, String.valueOf(judul_id));
+//                proyekAkhirPresenter.searchDistinctProyekAkhirBy(PARAM_JUDUL_ID, String.valueOf(judul_id));
+                proyekAkhirPresenter.getProyekAkhir();
             }
         });
 
@@ -107,7 +109,8 @@ public class DosenJudulPaSubdosenDetailActivity extends AppCompatActivity implem
     @Override
     protected void onResume() {
         super.onResume();
-        proyekAkhirPresenter.searchDistinctProyekAkhirBy(PARAM_JUDUL_ID, String.valueOf(judul_id));
+//        proyekAkhirPresenter.searchDistinctProyekAkhirBy(PARAM_JUDUL_ID, String.valueOf(judul_id));
+        proyekAkhirPresenter.getProyekAkhir();
     }
 
     @Override

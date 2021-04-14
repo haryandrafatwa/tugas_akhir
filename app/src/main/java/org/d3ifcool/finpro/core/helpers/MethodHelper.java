@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -17,6 +18,8 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import org.d3ifcool.finpro.R;
@@ -36,6 +39,7 @@ public class MethodHelper {
     private Random random = new Random();
     private String randomChar;
     private Context context;
+    private AppCompatActivity appCompatActivity;
     private static final int REQUEST_SELECT_IMAGE = 1;
     // ---------------------------------------------------------------------------------------------
 
@@ -47,6 +51,10 @@ public class MethodHelper {
 
     public MethodHelper(Context context) {
         this.context = context;
+    }
+
+    public MethodHelper(AppCompatActivity appCompatActivity) {
+        this.appCompatActivity = appCompatActivity;
     }
 
     // Method Random Character ---------------------------------------------------------------------
@@ -208,5 +216,10 @@ public class MethodHelper {
 //        startActivityForResult(Intent.createChooser(intent, context.getString(R.string.title_select_file)), PICK_PDF_REQUEST);
     }
 
-
+    public void applyFragment(Fragment fragment){
+        this.appCompatActivity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.framelayout_container, fragment)
+                .commit();
+    }
 }

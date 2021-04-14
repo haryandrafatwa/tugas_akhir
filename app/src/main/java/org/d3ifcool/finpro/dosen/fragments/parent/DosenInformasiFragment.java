@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.dosen.activities.editor.create.DosenInformasiTambahActivity;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.interfaces.lists.InformasiListView;
@@ -40,6 +41,7 @@ public class DosenInformasiFragment extends Fragment implements InformasiListVie
     private InformasiPresenter informasiPresenter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private View empty_view;
+    private SessionManager sessionManager;
 
     public DosenInformasiFragment() {
         // Required empty public constructor
@@ -63,13 +65,14 @@ public class DosenInformasiFragment extends Fragment implements InformasiListVie
         progressDialog = new ProgressDialog(getContext());
         empty_view = view.findViewById(R.id.view_emptyview);
         swipeRefreshLayout = view.findViewById(R.id.frg_dsn_info_home_swiperefresh);
+        sessionManager = new SessionManager(getContext());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         progressDialog.setMessage(getString(R.string.text_progress_dialog));
 
         informasiPresenter.initContext(getContext());
-        informasiPresenter.getInformasi();
+        informasiPresenter.getInformasi(sessionManager.getSessionToken());
 
         FloatingActionButton floatingActionButton = view.findViewById(R.id.frg_dsn_info_home_fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +86,7 @@ public class DosenInformasiFragment extends Fragment implements InformasiListVie
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                informasiPresenter.getInformasi();
+                informasiPresenter.getInformasi(sessionManager.getSessionToken());
             }
         });
 
@@ -92,7 +95,7 @@ public class DosenInformasiFragment extends Fragment implements InformasiListVie
     @Override
     public void onResume() {
         super.onResume();
-        informasiPresenter.getInformasi();
+        informasiPresenter.getInformasi(sessionManager.getSessionToken());
     }
 
     @Override

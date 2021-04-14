@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.mahasiswa.adapters.recyclerview.MahasiswaInformasiViewAdapter;
 import org.d3ifcool.finpro.core.interfaces.lists.InformasiListView;
 import org.d3ifcool.finpro.core.models.Informasi;
@@ -38,6 +39,7 @@ public class MahasiswaInformasiFragment extends Fragment implements InformasiLis
     private InformasiPresenter informasiPresenter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private View empty_view;
+    private SessionManager sessionManager;
 
     public MahasiswaInformasiFragment() {
         // Required empty public constructor
@@ -54,6 +56,7 @@ public class MahasiswaInformasiFragment extends Fragment implements InformasiLis
         adapter = new MahasiswaInformasiViewAdapter(requireContext());
         informasiPresenter = new InformasiPresenter(this);
         informasiPresenter.initContext(requireContext());
+        sessionManager = new SessionManager(getContext());
 
         progressDialog = new ProgressDialog(requireContext());
         progressDialog.setMessage(getString(R.string.text_progress_dialog));
@@ -73,12 +76,12 @@ public class MahasiswaInformasiFragment extends Fragment implements InformasiLis
 
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        informasiPresenter.getInformasi();
+        informasiPresenter.getInformasi(sessionManager.getSessionToken());
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                informasiPresenter.getInformasi();
+                informasiPresenter.getInformasi(sessionManager.getSessionToken());
             }
         });
 
@@ -88,7 +91,7 @@ public class MahasiswaInformasiFragment extends Fragment implements InformasiLis
     @Override
     public void onResume() {
         super.onResume();
-        informasiPresenter.getInformasi();
+        informasiPresenter.getInformasi(sessionManager.getSessionToken());
     }
 
     @Override

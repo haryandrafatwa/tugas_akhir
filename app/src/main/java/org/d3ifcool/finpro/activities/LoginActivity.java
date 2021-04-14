@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,39 +14,47 @@ import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.core.interfaces.objects.LoginView;
 import org.d3ifcool.finpro.core.models.User;
-import org.d3ifcool.finpro.core.presenters.LoginPresenter;
+import org.d3ifcool.finpro.core.presenters.AuthPresenter;
 
 public class LoginActivity extends AppCompatActivity implements LoginView {
 
     private EditText editTextUsername;
     private EditText editTextPassword;
+    private Button btn_login;
     private String username, password;
+    private boolean status;
 
     private ProgressDialog progressDialog;
-    private LoginPresenter loginPresenter;
+    private AuthPresenter authPresenter;
     private SessionManager sessionManager;
 
     private static final String ROLE_DOSEN = "dosen";
     private static final String ROLE_MAHASISWA = "mahasiswa";
-    private static final String ROLE_KOOR = "koor";
+    private static final String ROLE_LAK = "LAK";
+    private static final String ROLE_PRODI = "prodi";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button button_login = findViewById(R.id.act_main_button_login);
+        btn_login = findViewById(R.id.act_main_button_login);
         editTextUsername = findViewById(R.id.act_main_edittext_username);
         editTextPassword = findViewById(R.id.act_main_edittext_password);
 
         sessionManager = new SessionManager(this);
-        loginPresenter = new LoginPresenter(this);
-        loginPresenter.initContext(this);
+        authPresenter = new AuthPresenter(this);
+        authPresenter.initContext(this);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(org.d3ifcool.finpro.R.string.text_progress_dialog));
 
-        button_login.setOnClickListener(new View.OnClickListener() {
+        if(sessionManager.getSessionUsername() != null ){
+            authPresenter.getUser(sessionManager.getSessionUsername());
+            checkUserLogin(sessionManager.getSessionPengguna());
+        }
+
+        btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 username = editTextUsername.getText().toString();
@@ -56,30 +65,29 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 } else if (password.isEmpty()){
                     editTextPassword.setError(getString(R.string.text_tidak_boleh_kosong));
                 } else {
-                    loginPresenter.getLogin(username, password);
+                    authPresenter.getLogin(username, password);
                 }
             }
         });
-
-        checkUserLogin(sessionManager.getSessionPengguna());
     }
-
 
     public void checkUserLogin(String cekPengguna){
 
         if (cekPengguna != null) {
-            if (cekPengguna.equalsIgnoreCase(ROLE_MAHASISWA)){
-                Intent j = new Intent(LoginActivity.this, MahasiswaMainActivity.class);
-                startActivity(j);
-                finish();
-            } else if (cekPengguna.equalsIgnoreCase(ROLE_DOSEN)){
-                Intent i = new Intent(LoginActivity.this, DosenMainActivity.class);
-                startActivity(i);
-                finish();
-            } else if (cekPengguna.equalsIgnoreCase(ROLE_KOOR)) {
-                Intent k = new Intent(LoginActivity.this, KoorMainActivity.class);
-                startActivity(k);
-                finish();
+            if(status){
+                if (cekPengguna.equalsIgnoreCase(ROLE_MAHASISWA)){
+                    Intent j = new Intent(LoginActivity.this, MahasiswaMainActivity.class);
+                    startActivity(j);
+                    finish();
+                } else if (cekPengguna.equalsIgnoreCase(ROLE_DOSEN)){
+                    Intent i = new Intent(LoginActivity.this, DosenMainActivity.class);
+                    startActivity(i);
+                    finish();
+                } else if (cekPengguna.equalsIgnoreCase(ROLE_PRODI)) {
+                    Intent k = new Intent(LoginActivity.this, ProdiMainActivity.class);
+                    startActivity(k);
+                    finish();
+                }
             }
         }
 
@@ -97,8 +105,15 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @Override
     public void onRequestSuccess(User user) {
-        sessionManager.createSession(user.getUsername(), user.getPengguna());
+        this.status = true;
+        sessionManager.createSession(user.getUsername(), user.getPengguna(),user.getToken());
         checkUserLogin(user.getPengguna());
+    }
+
+    @Override
+    public void setStatus(boolean status) {
+        this.status = status;
+        checkUserLogin(sessionManager.getSessionPengguna());
     }
 
     @Override
@@ -110,6 +125,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @Override
     public void onFailed(String message) {
         String failedMessage = "Id Pengguna atau Password Salah";
-        Toast.makeText(this, failedMessage, Toast.LENGTH_SHORT).show();
+        Log.e("TAG", "onResponse: "+message);
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
 }

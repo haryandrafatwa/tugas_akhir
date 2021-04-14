@@ -1,7 +1,8 @@
 package org.d3ifcool.finpro.core.api
 
-import org.d3ifcool.finpro.core.models.*
+import okhttp3.ResponseBody
 import org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl
+import org.d3ifcool.finpro.core.models.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -134,7 +135,9 @@ interface ApiService {
     ): Call<Informasi?>?
 
     @GET(FinproUrl.URL_INFORMASI)
-    fun getInformasi(): Call<List<Informasi?>?>?
+    fun getInformasi(
+            @Header("Authorization") token: String?
+    ): Call<List<Informasi?>?>?
 
     // Ga perlu pake @FormUrlEncoded karena tidak menggunakan field
     @POST(FinproUrl.URL_INFORMASI + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_INFORMASI)
@@ -259,7 +262,7 @@ interface ApiService {
             @Field("koor_kontak") koor_kontak: String?,
             @Field("koor_foto") koor_foto: String?,
             @Field("koor_email") koor_email: String?
-    ): Call<KoordinatorPa?>?
+    ): Call<Koordinator?>?
 
     @FormUrlEncoded
     @POST(FinproUrl.URL_KOORDINATOR_PA + FinproUrl.PATH_UPDATE + FinproUrl.PARAMETER_KOOR)
@@ -270,16 +273,16 @@ interface ApiService {
             @Field("koor_kode") koor_kode: String?,
             @Field("koor_kontak") koor_kontak: String?,
             @Field("koor_email") koor_email: String?
-    ): Call<KoordinatorPa?>?
+    ): Call<Koordinator?>?
 
     @GET(FinproUrl.URL_KOORDINATOR_PA)
-    fun getKoor(): Call<List<KoordinatorPa?>?>?
+    fun getKoor(): Call<List<Koordinator?>?>?
 
     @POST(FinproUrl.URL_KOORDINATOR_PA + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_KOOR)
-    fun deleteKoor(@Path(FinproUrl.VAR_KOORDINATOR_PA) koor_nip: String?): Call<KoordinatorPa?>?
+    fun deleteKoor(@Path(FinproUrl.VAR_KOORDINATOR_PA) koor_nip: String?): Call<Koordinator?>?
 
     @GET(FinproUrl.URL_KOORDINATOR_PA + FinproUrl.PARAMETER_KOOR)
-    fun getKoorByParameter(@Path(FinproUrl.VAR_KOORDINATOR_PA) username_koor: String?): Call<KoordinatorPa?>?
+    fun getKoorByParameter(@Path(FinproUrl.VAR_KOORDINATOR_PA) username_koor: String?): Call<Koordinator?>?
 
 
     // Kuota Dosen
@@ -310,6 +313,7 @@ interface ApiService {
     // Mahasiswa
     // ---------------------------------------------------------------------------------------------
 
+    @FormUrlEncoded
     @POST(FinproUrl.URL_MAHASISWA)
     fun createMahasiswa(
             @Field("mhs_nim") mhs_nim: String?,
@@ -597,4 +601,13 @@ interface ApiService {
             @Field("username") username: String?,
             @Field("password") password: String?): Call<User?>?
 
+    @GET(FinproUrl.URL_USER + FinproUrl.PARAMETER_USER)
+    fun getUserBy(
+            @Path(FinproUrl.VAR_USER) username: String?
+    ):Call<ResponseBody>?
+
+    @POST(FinproUrl.URL_LOGOUT)
+    fun logout(
+            @Header("Authorization") token: String?
+    ):Call<ResponseBody>?
 }

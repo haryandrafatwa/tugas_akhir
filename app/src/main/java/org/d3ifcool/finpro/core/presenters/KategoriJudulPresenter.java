@@ -1,6 +1,7 @@
 package org.d3ifcool.finpro.core.presenters;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.d3ifcool.finpro.R;
