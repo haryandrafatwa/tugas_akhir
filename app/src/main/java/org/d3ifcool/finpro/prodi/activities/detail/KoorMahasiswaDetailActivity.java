@@ -1,28 +1,50 @@
 package org.d3ifcool.finpro.prodi.activities.detail;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.OpenableColumns;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import org.apache.commons.io.FileUtils;
 
 import com.squareup.picasso.Picasso;
 
+import org.d3ifcool.finpro.core.helpers.Constant;
 import org.d3ifcool.finpro.core.interfaces.works.MahasiswaWorkView;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.ProdiDetailActivityMediator;
+import org.d3ifcool.finpro.core.mediators.prodi.ProdiDetailActivityConcrete;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
+import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
 import org.d3ifcool.finpro.prodi.activities.editor.update.KoorMahasiswaUbahActivity;
 import org.d3ifcool.finpro.R;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 import static org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl.URL_FOTO_MAHASISWA;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.FILE_TYPE_PDF;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.PICK_PDF_REQUEST;
 
 public class KoorMahasiswaDetailActivity extends AppCompatActivity implements MahasiswaWorkView {
 
@@ -30,7 +52,9 @@ public class KoorMahasiswaDetailActivity extends AppCompatActivity implements Ma
 
     private Mahasiswa extraMahasiswa;
     private MahasiswaPresenter mahasiswaPresenter;
-    private ProgressDialog progressDialog;
+    private ProdiDetailActivityMediator mediator;
+    private String displayName,size;
+    private Uri docUri;
 
 
     @Override
@@ -45,40 +69,59 @@ public class KoorMahasiswaDetailActivity extends AppCompatActivity implements Ma
         mahasiswaPresenter = new MahasiswaPresenter(this);
         mahasiswaPresenter.initContext(this);
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(getString(R.string.text_progress_dialog));
+        mediator = new ProdiDetailActivityConcrete(this);
+        mediator.message("ProgressDialog");
+        mediator.Notify(R.id.act_koor_profil_foto);
+        mediator.Notify(R.id.act_koor_profil_nama);
+        mediator.Notify(R.id.act_koor_profil_nim);
+        mediator.Notify(R.id.act_koor_profil_angkatan_mhs);
+        mediator.Notify(R.id.act_koor_profil_email);
+        mediator.Notify(R.id.act_koor_profil_kontak);
+        mediator.Notify(R.id.act_koor_profil_status_sk);
+        mediator.message("SetMahasiswa");
+        mediator.Notify(R.id.tv_change_pembimbing);
+        mediator.Notify(R.id.btn_update_status_sk);
+        mediator.Notify(R.id.btn_plot_pembimbing);
 
-        TextView tv_nama = findViewById(R.id.act_koor_profil_nama_mhs);
-        TextView tv_nim = findViewById(R.id.act_koor_profil_nim);
-        TextView tv_kontak = findViewById(R.id.act_koor_profil_kontak_mhs);
-        TextView tv_email = findViewById(R.id.act_koor_profil_email_mhs);
-        TextView tv_angkatan = findViewById(R.id.act_koor_profil_angkatan_mhs);
-        TextView tv_judul = findViewById(R.id.act_koor_profil_judul_mhs);
-        CircleImageView circleImageView = findViewById(R.id.act_koor_profil_foto_mhs);
-
-        extraMahasiswa = getIntent().getParcelableExtra(EXTRA_MAHASISWA);
-        String nim = extraMahasiswa.getMhs_nim();
-        String nama = extraMahasiswa.getMhs_nama();
-        String kontak = extraMahasiswa.getMhs_kontak();
-        String email = extraMahasiswa.getMhs_email();
-        String angkatan = extraMahasiswa.getAngkatan();
-        String judul = extraMahasiswa.getJudul_nama();
-        String path = extraMahasiswa.getMhs_foto();
-
-        tv_nama.setText(nama);
-        tv_nim.setText(nim);
-        tv_email.setText(email);
-        tv_kontak.setText(kontak);
-        tv_angkatan.setText(angkatan);
-        tv_judul.setText(judul);
-        Picasso.get().load(URL_FOTO_MAHASISWA + path).into(circleImageView);
-
+        mahasiswaPresenter.getPembimbing(mediator.getMahasiswa().getPlot_id());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_edit_delete,menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private File copyToTempFile(Uri uri, File tempFile) throws IOException {
+        InputStream inputStream = getContentResolver().openInputStream(uri);
+        if (inputStream == null) {
+            throw new IOException("Unable to obtain input stream from URI");
+        }
+        FileUtils.copyInputStreamToFile(inputStream, tempFile);
+        return tempFile;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_PDF_REQUEST && resultCode == RESULT_OK) {
+            docUri = data.getData();
+            File file = new File(docUri.getPath());
+            String mimeType = getContentResolver().getType(docUri);
+            Log.e("TAG", "onActivityResult: "+mimeType+": "+file.getName());
+            File outputDir = getCacheDir(); // context being the Activity pointer
+            File outputFile = null;
+            try {
+                outputFile = File.createTempFile("skta","pdf", outputDir);
+                File fileCopy = copyToTempFile(docUri, outputFile);
+                RequestBody requestBody = RequestBody.create(MediaType.parse(mimeType),fileCopy);
+                String fileName = mediator.getMahasiswa().getMhs_nim()+"_skta.pdf";
+                MultipartBody.Part part = MultipartBody.Part.createFormData("file",fileName,requestBody);
+                mahasiswaPresenter.updateSKTA(mediator.getMahasiswa().getMhs_nim(),part);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -90,7 +133,7 @@ public class KoorMahasiswaDetailActivity extends AppCompatActivity implements Ma
 
         } else if (i == R.id.toolbar_menu_ubah) {
             Intent intent = new Intent(this, KoorMahasiswaUbahActivity.class);
-            intent.putExtra(KoorMahasiswaUbahActivity.EXTRA_MAHASISWA, extraMahasiswa);
+            intent.putExtra(KoorMahasiswaUbahActivity.EXTRA_MAHASISWA, mediator.getMahasiswa());
             startActivity(intent);
             finish();
         } else if (i == R.id.toolbar_menu_hapus) {
@@ -115,17 +158,23 @@ public class KoorMahasiswaDetailActivity extends AppCompatActivity implements Ma
 
     @Override
     public void showProgress() {
-        progressDialog.show();
+        mediator.getProgressDialog().show();
     }
 
     @Override
     public void hideProgress() {
-        progressDialog.dismiss();
+        mediator.getProgressDialog().dismiss();
     }
 
     @Override
     public void onSucces() {
         finish();
+    }
+
+    @Override
+    public void onSuccesGetPlotting(Plotting plotting) {
+        mediator.setPlotting(plotting);
+        mediator.message("SetPlotting");
     }
 
     @Override

@@ -101,7 +101,7 @@ public class DosenInformasiTambahActivity extends AppCompatActivity implements I
 
     @Override
     public void onSucces() {
-        notifikasiPresenter.createNotifikasi(NOTIF_KATEGORI_INFORMASI(sessionManager.getSessionDosenNama()), text_info_judul, sessionManager.getSessionDosenNama(), UNTUK_SEMUA);
+        notifikasiPresenter.createNotifikasi(sessionManager.getSessionToken(),NOTIF_KATEGORI_INFORMASI(sessionManager.getSessionDosenNama()), text_info_judul, sessionManager.getSessionDosenNama(), UNTUK_SEMUA);
     }
 
     @Override

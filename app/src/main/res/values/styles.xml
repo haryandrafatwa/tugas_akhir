@@ -127,6 +127,14 @@
         <item name="android:contentDescription">@string/dummy</item>
     </style>
 
+    <style name="image_new_editor_view">
+        <item name="android:layout_width">@dimen/dimen_profil_photo</item>
+        <item name="android:layout_height">@dimen/dimen_profil_photo</item>
+        <item name="android:layout_marginBottom">@dimen/dimen_big_super_24dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:contentDescription">@string/dummy</item>
+    </style>
+
     <style name="textview_title_all_editor_view">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -153,7 +161,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginStart">@dimen/dimen_big_super_24dp</item>
         <item name="android:gravity">end</item>
-        <item name="android:textSize">@dimen/text_size_medium_16sp</item>
+        <item name="android:textSize">@dimen/text_size_default_12sp</item>
     </style>
 
     <style name="profile_all_textview_subtitle">
@@ -210,6 +218,43 @@
         <item name="android:background">@drawable/circle_profile_body</item>
         <item name="android:orientation">vertical</item>
         <item name="android:padding">@dimen/dimen_big_super_24dp</item>
+    </style>
+
+    <style name="profile_all_container_status_sk">
+        <item name="android:id">@id/profile_body_status_sk</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_below">@id/title_sk</item>
+        <item name="android:layout_marginTop">@dimen/dimen_medium_8dp</item>
+        <item name="android:layout_marginLeft">@dimen/dimen_big_16dp</item>
+        <item name="android:layout_marginRight">@dimen/dimen_big_16dp</item>
+        <item name="android:layout_marginBottom">@dimen/dimen_medium_8dp</item>
+        <item name="android:background">@drawable/circle_profile_body</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">@dimen/dimen_big_super_24dp</item>
+    </style>
+
+    <style name="profile_all_container_pembimbing">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/dimen_medium_8dp</item>
+        <item name="android:layout_marginLeft">@dimen/dimen_big_16dp</item>
+        <item name="android:layout_marginRight">@dimen/dimen_big_16dp</item>
+        <item name="android:layout_marginBottom">@dimen/dimen_medium_8dp</item>
+        <item name="android:background">@drawable/circle_profile_body</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">@dimen/dimen_big_super_24dp</item>
+    </style>
+
+    <style name="profile_all_container_pembimbing_detail">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:weightSum">3</item>
+        <item name="android:gravity">bottom</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:layout_marginStart">@dimen/dimen_big_16dp</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_big_16dp</item>
+        <item name="android:layout_marginBottom">@dimen/dimen_medium_8dp</item>
     </style>
 
 </resources>

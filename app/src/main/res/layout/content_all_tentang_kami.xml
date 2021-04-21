@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textSize="@dimen/text_size_default_12sp"
-                android:text="@string/text_d3rpla"/>
+                android:text="@string/text_s1informatika"/>
 
             <TextView
                 android:layout_width="wrap_content"

@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import org.d3ifcool.finpro.core.interfaces.works.DosenWorkView;
 import org.d3ifcool.finpro.core.models.Dosen;
-import org.d3ifcool.finpro.core.presenters.DosenPresenter;
+import org.d3ifcool.finpro.core.presenters.DosenPresenters;
 import org.d3ifcool.finpro.prodi.activities.editor.update.KoorDosenUbahActivity;
 import org.d3ifcool.finpro.R;
 
@@ -27,7 +27,7 @@ public class KoorDosenDetailActivity extends AppCompatActivity implements DosenW
 
     public static final String EXTRA_DOSEN = "extra_dosen";
     private Dosen extraDosen;
-    private DosenPresenter dosenPresenter;
+    private DosenPresenters dosenPresenters;
     private ProgressDialog progressDialog;
     private TextView tv_nama, tv_kode, tv_nip, tv_kontak, tv_email, tv_batas_bimbingan, tv_batas_reviewer;
     private CircleImageView circleImageView;
@@ -42,8 +42,8 @@ public class KoorDosenDetailActivity extends AppCompatActivity implements DosenW
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(0f);
 
-        dosenPresenter = new DosenPresenter(this);
-        dosenPresenter.initContext(this);
+        dosenPresenters = new DosenPresenters(this);
+        dosenPresenters.initContext(this);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.text_progress_dialog));
@@ -106,7 +106,7 @@ public class KoorDosenDetailActivity extends AppCompatActivity implements DosenW
                     .setPositiveButton(R.string.iya, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // Continue with delete operation
-                            dosenPresenter.deleteDosen(nip);
+                            dosenPresenters.deleteDosen(nip);
                         }
                     })
 

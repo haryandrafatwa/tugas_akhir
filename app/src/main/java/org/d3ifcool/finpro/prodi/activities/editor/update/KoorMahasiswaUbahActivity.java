@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import org.d3ifcool.finpro.core.interfaces.works.MahasiswaWorkView;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
+import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
 import org.d3ifcool.finpro.R;
 
@@ -134,6 +135,11 @@ public class KoorMahasiswaUbahActivity extends AppCompatActivity implements Maha
     @Override
     public void onSucces() {
         finish();
+    }
+
+    @Override
+    public void onSuccesGetPlotting(Plotting plotting) {
+
     }
 
     @Override

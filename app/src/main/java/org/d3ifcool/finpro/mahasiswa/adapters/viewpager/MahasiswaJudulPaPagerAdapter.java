@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import org.d3ifcool.finpro.mahasiswa.fragments.child.MahasiswaJudulPaDosenFragment;
-import org.d3ifcool.finpro.mahasiswa.fragments.child.MahasiswaJudulPaMandiriFragment;
 import org.d3ifcool.finpro.R;
 
 /**
@@ -41,8 +40,6 @@ public class MahasiswaJudulPaPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 return new MahasiswaJudulPaDosenFragment();
-            case 1:
-                return new MahasiswaJudulPaMandiriFragment();
             default:
                 throw new IllegalArgumentException();
         }

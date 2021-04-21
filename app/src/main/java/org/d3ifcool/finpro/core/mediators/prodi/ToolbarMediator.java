@@ -3,6 +3,7 @@ package org.d3ifcool.finpro.core.mediators.prodi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,10 +13,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
 import org.d3ifcool.finpro.R;
-import org.d3ifcool.finpro.activities.LoginActivity;
+import org.d3ifcool.finpro.activities.AuthActivity;
 import org.d3ifcool.finpro.core.helpers.SessionManager;
-import org.d3ifcool.finpro.core.mediators.interfaces.ProdiMediator;
-import org.d3ifcool.finpro.core.presenters.AuthPresenter;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.ProdiMediator;
+import org.d3ifcool.finpro.core.models.manager.AuthManager;
 import org.d3ifcool.finpro.prodi.activities.KoorPemberitahuanActivity;
 import org.d3ifcool.finpro.prodi.activities.KoorProfilActivity;
 
@@ -28,7 +29,7 @@ public class ToolbarMediator implements ProdiMediator {
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private SessionManager sessionManager;
     private NavigationView navigationView;
-    private AuthPresenter authPresent = new AuthPresenter();
+    private AuthManager authManager = new AuthManager();
 
     public ToolbarMediator(AppCompatActivity appCompatActivity) {
         this.appCompatActivity = appCompatActivity;
@@ -45,6 +46,14 @@ public class ToolbarMediator implements ProdiMediator {
                 break;
             case R.id.nav_view:
                 navigationView = this.appCompatActivity.findViewById(R.id.nav_view);
+                TextView tv_nama = navigationView.getHeaderView(0).findViewById(R.id.tv_nama);
+                tv_nama.setText(sessionManager.getSessionKoorNama());
+                TextView tv_role = navigationView.getHeaderView(0).findViewById(R.id.tv_role);
+                if (sessionManager.getSessionUsername().equalsIgnoreCase("admin_prodi")){
+                    tv_role.setText(R.string.title_koor_prodi);
+                }else{
+                    tv_role.setText(R.string.title_koor_lak);
+                }
                 break;
             case R.id.toolbar_menu_pemberitahuan:
                 Intent intentPemberitahuan = new Intent(appCompatActivity, KoorPemberitahuanActivity.class);
@@ -63,12 +72,12 @@ public class ToolbarMediator implements ProdiMediator {
                         .setMessage(R.string.dialog_keluar_text)
                         .setPositiveButton("Keluar", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intentKeluar = new Intent(appCompatActivity, LoginActivity.class);
+                                Intent intentKeluar = new Intent(appCompatActivity, AuthActivity.class);
                                 appCompatActivity.startActivity(intentKeluar);
-                                authPresent.logout(sessionManager.getSessionToken());
+                                authManager.logout(sessionManager.getSessionToken());
                                 sessionManager.removeSession();
                                 appCompatActivity.finish();
-                                authPresent.initContext(appCompatActivity);
+                                authManager.initContext(appCompatActivity);
                             }
                         })
 

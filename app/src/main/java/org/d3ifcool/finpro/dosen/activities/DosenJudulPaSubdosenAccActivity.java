@@ -22,6 +22,7 @@ import org.d3ifcool.finpro.core.interfaces.lists.ProyekAkhirListView;
 import org.d3ifcool.finpro.core.interfaces.works.JudulWorkView;
 import org.d3ifcool.finpro.core.interfaces.works.MahasiswaWorkView;
 import org.d3ifcool.finpro.core.interfaces.works.ProyekAkhirWorkView;
+import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.core.models.ProyekAkhir;
 import org.d3ifcool.finpro.core.presenters.JudulPresenter;
 import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
@@ -216,6 +217,10 @@ public class DosenJudulPaSubdosenAccActivity extends AppCompatActivity implement
 
     @Override
     public void onSucces() {
+    }
+
+    @Override
+    public void onSuccesGetPlotting(Plotting plotting) {
     }
 
     @Override

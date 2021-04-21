@@ -54,12 +54,10 @@ public class SessionManager {
         editor.putString(MHS_FOTO, mahasiswa.getMhs_foto());
         editor.putString(MHS_EMAIL, mahasiswa.getMhs_email());
         editor.putString(MHS_KONTAK, mahasiswa.getMhs_kontak());
-        editor.putString(MHS_STATUS, mahasiswa.getStatus());
         editor.putString(MHS_ANGKATAN, mahasiswa.getAngkatan());
-        editor.putString(MHS_JUDUL, mahasiswa.getJudul_nama());
-        editor.putString(MHS_JUDUL_DESKRIPSI, mahasiswa.getJudul_deskripsi());
-        editor.putString(MHS_JUDUL_STATUS, mahasiswa.getJudul_status());
-        editor.putInt(MHS_ID_JUDUL, mahasiswa.getJudul_id());
+        editor.putString(MHS_JUDUL, mahasiswa.getNip_pembimbing_1());
+        editor.putString(MHS_JUDUL_DESKRIPSI, mahasiswa.getNip_pembimbing_2());
+        editor.putInt(MHS_ID_JUDUL, mahasiswa.getPlot_id());
         editor.apply();
         editor.commit();
     }

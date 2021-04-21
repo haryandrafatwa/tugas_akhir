@@ -1,10 +1,12 @@
 package org.d3ifcool.finpro.core.presenters;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.ConnectionHelper;
+import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.core.interfaces.works.InformasiWorkView;
 import org.d3ifcool.finpro.core.interfaces.lists.InformasiListView;
 import org.d3ifcool.finpro.core.models.Informasi;
@@ -37,8 +39,11 @@ public class InformasiPresenter {
     private ConnectionHelper connectionHelper = new ConnectionHelper();
     private Context context;
 
+    private SessionManager sessionManager;
+
     public void initContext(Context context){
         this.context = context;
+        this.sessionManager = new SessionManager(context);
     }
 
     public InformasiPresenter(InformasiWorkView view) {
@@ -54,18 +59,20 @@ public class InformasiPresenter {
         if (connectionHelper.isConnected(context)){
             viewEditor.showProgress();
             ApiService apiInterface = ApiClient.getApiClient().create(ApiService.class);
-            Call<Informasi> call = apiInterface.createInformasi(informasi_judul, informasi_isi, penerbit);
+            Call<Informasi> call = apiInterface.createInformasi("Bearer "+sessionManager.getSessionToken(), informasi_judul, informasi_isi, penerbit);
             call.enqueue(new Callback<Informasi>() {
                 @Override
                 public void onResponse(Call<Informasi> call, Response<Informasi> response) {
                     viewEditor.hideProgress();
                     viewEditor.onSucces();
+                    Log.e("FINPRO!", "onFailure: "+response.body().getInfo_judul());
                 }
 
                 @Override
                 public void onFailure(Call<Informasi> call, Throwable t) {
                     viewEditor.hideProgress();
                     viewEditor.onFailed(t.getMessage());
+                    Log.e("FINPRO!", "onFailure: "+t.getMessage());
                 }
             });
         } else {
@@ -122,11 +129,11 @@ public class InformasiPresenter {
 
     }
 
-    public void getInformasi (String token){
+    public void getInformasi (){
         if (connectionHelper.isConnected(context)){
             viewResult.showProgress();
             ApiService apiInterface = ApiClient.getApiClient().create(ApiService.class);
-            Call<List<Informasi>> call = apiInterface.getInformasi("Bearer "+token);
+            Call<List<Informasi>> call = apiInterface.getInformasi("Bearer "+sessionManager.getSessionToken());
             call.enqueue(new Callback<List<Informasi>>() {
                 @Override
                 public void onResponse(Call<List<Informasi>> call, Response<List<Informasi>> response) {
@@ -141,7 +148,8 @@ public class InformasiPresenter {
                 @Override
                 public void onFailure(Call<List<Informasi>> call, Throwable t) {
                     viewResult.hideProgress();
-                    viewResult.onFailed(t.getLocalizedMessage());
+//                    viewResult.onFailed(t.getLocalizedMessage());
+                    call.clone().enqueue(this);
                 }
             });
         } else {

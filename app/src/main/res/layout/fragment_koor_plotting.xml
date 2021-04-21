@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:id="@+id/refresh"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
+            style="@style/cardview_list_all_clicked">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_medium_8dp">
+
+                <LinearLayout
+                    android:layout_marginLeft="@dimen/dimen_big_16dp"
+                    android:layout_marginRight="@dimen/dimen_big_16dp"
+                    android:layout_marginTop="@dimen/dimen_medium_8dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:textSize="@dimen/text_size_title_small_18sp"
+                            android:maxLines="1"
+                            android:id="@+id/ctn_koor_textview_nama_dosen_1"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="Form Excel Plotting Pembimbing"/>
+
+                        <TextView
+                            android:textSize="@dimen/text_size_title_small_18sp"
+                            android:maxLines="1"
+                            android:id="@+id/tv_status"
+                            android:textColor="@color/colorTextRed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_medium_8dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="2"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:textSize="@dimen/text_size_medium_16sp"
+                                android:maxLines="1"
+                                android:id="@+id/tv_download"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_medium_8dp"
+                                android:textStyle="italic"/>
+
+                            <TextView
+                                android:textSize="@dimen/text_size_medium_16sp"
+                                android:maxLines="1"
+                                android:id="@+id/tv_hapus"
+                                android:textColor="@color/colorPrimary"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_medium_8dp"
+                                android:text="@string/text_hapus_form"
+                                android:gravity="end"
+                                android:textStyle="italic"
+                                android:visibility="gone"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Empty View -->
+        <include layout="@layout/content_list_all_is_empty"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/frg_koor_dosen_home_recyclerview"
+            android:layout_below="@id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/content_list_koor_plotting"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/frg_koor_dosen_home_fab"
+            style="@style/fab_all_add"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/act_prodi_form_excel_fab"
+            android:layout_alignParentRight="true"
+            android:layout_above="@id/frg_koor_dosen_home_fab"
+            android:layout_marginEnd="@dimen/dimen_big_16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_fab_pa_pengajuan"/>
+
+    </RelativeLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

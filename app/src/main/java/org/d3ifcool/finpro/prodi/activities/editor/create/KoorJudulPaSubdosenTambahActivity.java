@@ -19,7 +19,7 @@ import org.d3ifcool.finpro.core.interfaces.lists.KategoriJudulListView;
 import org.d3ifcool.finpro.core.interfaces.works.JudulWorkView;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.KategoriJudul;
-import org.d3ifcool.finpro.core.presenters.DosenPresenter;
+import org.d3ifcool.finpro.core.presenters.DosenPresenters;
 import org.d3ifcool.finpro.core.presenters.JudulPresenter;
 import org.d3ifcool.finpro.core.presenters.KategoriJudulPresenter;
 import org.d3ifcool.finpro.R;
@@ -35,7 +35,7 @@ public class KoorJudulPaSubdosenTambahActivity extends AppCompatActivity impleme
 
     private Spinner sp_dosen, sp_kategori;
     private JudulPresenter judulPresenter;
-    private DosenPresenter dosenPresenter;
+    private DosenPresenters dosenPresenters;
     private KategoriJudulPresenter kategoriJudulPresenter;
     private ProgressDialog progressDialog;
 
@@ -56,11 +56,11 @@ public class KoorJudulPaSubdosenTambahActivity extends AppCompatActivity impleme
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         judulPresenter = new JudulPresenter(this);
-        dosenPresenter = new DosenPresenter(this);
+        dosenPresenters = new DosenPresenters(this);
         kategoriJudulPresenter = new KategoriJudulPresenter(this);
 
         judulPresenter.initContext(this);
-        dosenPresenter.initContext(this);
+        dosenPresenters.initContext(this);
         kategoriJudulPresenter.initContext(this);
 
         progressDialog = new ProgressDialog(this);
@@ -74,7 +74,7 @@ public class KoorJudulPaSubdosenTambahActivity extends AppCompatActivity impleme
         sp_kategori = findViewById(R.id.act_koor_judul_pa_spinner_kategori);
         Button btn_simpan = findViewById(R.id.act_koor_judul_pa_button_simpan);
 
-        dosenPresenter.getDosen();
+        dosenPresenters.getDosen();
         kategoriJudulPresenter.getKategori();
 
         sp_dosen.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

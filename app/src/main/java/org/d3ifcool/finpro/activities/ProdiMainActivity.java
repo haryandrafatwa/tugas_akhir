@@ -1,63 +1,79 @@
 package org.d3ifcool.finpro.activities;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.Menu;
-import android.view.MenuItem;
-
 import org.d3ifcool.finpro.R;
-import org.d3ifcool.finpro.core.interfaces.objects.ProdiView;
-import org.d3ifcool.finpro.core.mediators.prodi.ToolbarMediator;
-import org.d3ifcool.finpro.core.models.Koordinator;
-import org.d3ifcool.finpro.core.presenters.ProdiPresenter;
+import org.d3ifcool.finpro.core.helpers.SessionManager;
+import org.d3ifcool.finpro.core.interfaces.DosenContract;
+import org.d3ifcool.finpro.core.interfaces.ProdiContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.ProdiMediator;
 import org.d3ifcool.finpro.core.mediators.prodi.NavigationProdiMediator;
-import org.d3ifcool.finpro.core.mediators.interfaces.ProdiMediator;
+import org.d3ifcool.finpro.core.mediators.prodi.ToolbarMediator;
+import org.d3ifcool.finpro.core.models.Dosen;
+import org.d3ifcool.finpro.core.models.Koordinator;
+import org.d3ifcool.finpro.core.presenters.prodi.ProdiPresenter;
+import org.d3ifcool.finpro.databinding.ActivityAdminMainBinding;
+import org.d3ifcool.finpro.prodi.activities.KoorPemberitahuanActivity;
+import org.d3ifcool.finpro.prodi.activities.KoorProfilActivity;
 
-public class ProdiMainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ProdiView {
+import java.util.List;
 
-    private ProdiMediator prodiMediator;
+public class ProdiMainActivity extends AppCompatActivity implements ProdiContract.ViewModel, NavigationView.OnNavigationItemSelectedListener {
+
+    private ProdiPresenter mPresenter;
+    private ActivityAdminMainBinding mBinding;
+    private SessionManager sessionManager;
+
+    private ProgressDialog progressDialog;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_main);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_admin_main);
+        mPresenter = new ProdiPresenter(this);
+        mBinding.setPresenter(mPresenter);
 
-        prodiMediator = new ToolbarMediator(this);
-        prodiMediator.Notify(R.id.toolbar);
-        setSupportActionBar(prodiMediator.getToolbar());
 
-        prodiMediator.Notify(R.id.drawer_layout);
-        prodiMediator.message("ActionBarDrawerToggle");
+        sessionManager = new SessionManager(this);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(org.d3ifcool.finpro.R.string.text_progress_dialog));
 
-        prodiMediator.message("SessionManager");
-        ProdiPresenter prodiPresenter = new ProdiPresenter(this);
-        prodiPresenter.initContext(this);
+        mPresenter.getProdiByNIP(sessionManager.getSessionToken(),sessionManager.getSessionUsername());
 
-        prodiPresenter.getKoorByParameter(prodiMediator.getSessionManager().getSessionUsername());
+        setSupportActionBar(mBinding.includeLayout.toolbar);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,mBinding.drawerLayout,mBinding.includeLayout.toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        mBinding.drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
 
-        prodiMediator.Notify(R.id.nav_view);
-        prodiMediator.getNavigationView().setNavigationItemSelectedListener(this);
-
-        prodiMediator.getNavigationView().getMenu().getItem(0).setChecked(true);
-        onNavigationItemSelected(prodiMediator.getNavigationView().getMenu().getItem(0));
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        ((TextView)mBinding.navView.getHeaderView(0).findViewById(R.id.tv_nama)).setText(sessionManager.getSessionKoorNama());
+        if (sessionManager.getSessionUsername().equalsIgnoreCase("admin_prodi")){
+            ((TextView) mBinding.navView.getHeaderView(0).findViewById(R.id.tv_role)).setText(R.string.title_koor_prodi);
+        }else{
+            ((TextView) mBinding.navView.getHeaderView(0).findViewById(R.id.tv_role)).setText(R.string.title_koor_lak);
         }
+        mBinding.navView.setNavigationItemSelectedListener(this);
+        mBinding.navView.getMenu().getItem(0).setChecked(true);
+        onNavigationItemSelected(mBinding.navView.getMenu().findItem(R.id.nav_menu_dosen));
+
     }
 
     @Override
@@ -68,26 +84,60 @@ public class ProdiMainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        prodiMediator.Notify(item.getItemId());
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        ProdiMediator mdt = new NavigationProdiMediator(this);
+        mdt.Notify(item.getItemId());
+        mBinding.drawerLayout.closeDrawer(GravityCompat.START);
+        item.setCheckable(true);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.toolbar_menu_pemberitahuan:
+                Intent intentPemberitahuan = new Intent(this, KoorPemberitahuanActivity.class);
+                startActivity(intentPemberitahuan);
+                break;
+
+            case R.id.toolbar_menu_profil:
+                Intent intentProfil = new Intent(this, KoorProfilActivity.class);
+                startActivity(intentProfil);
+                break;
+
+            case R.id.toolbar_menu_keluar:
+                new AlertDialog
+                        .Builder(this)
+                        .setTitle(R.string.dialog_keluar_title)
+                        .setMessage(R.string.dialog_keluar_text)
+                        .setPositiveButton("Keluar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intentKeluar = new Intent(ProdiMainActivity.this, AuthActivity.class);
+                                startActivity(intentKeluar);
+                                mPresenter.logout(sessionManager.getSessionToken());
+                                sessionManager.removeSession();
+                                finish();
+                            }
+                        })
+
+                        .setNegativeButton("Batal", null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
+                break;
+            default:
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        ProdiMediator mdt = new NavigationProdiMediator(this);
-        mdt.Notify(item.getItemId());
-
-        prodiMediator.getDrawer().closeDrawer(GravityCompat.START);
-        item.setCheckable(true);
-
-        return true;
+    public void onBackPressed() {
+        if (mBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mBinding.drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -101,12 +151,27 @@ public class ProdiMainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onGetObjectKoor(Koordinator koordinator) {
-        prodiMediator.getSessionManager().createSessionDataKoor(koordinator);
+    public void onGetObjectProdi(Koordinator prodi) {
+        sessionManager.createSessionDataKoor(prodi);
     }
 
     @Override
-    public void isEmptyObjectKoor() {
+    public void isEmptyObjectProdi() {
+
+    }
+
+    @Override
+    public void onGetListProdi(List<Koordinator> prodiList) {
+
+    }
+
+    @Override
+    public void isEmptyListProdi() {
+
+    }
+
+    @Override
+    public void onSuccess() {
 
     }
 

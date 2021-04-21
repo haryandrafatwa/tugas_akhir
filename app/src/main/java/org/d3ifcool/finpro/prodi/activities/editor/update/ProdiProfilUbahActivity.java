@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.core.interfaces.works.ProdiWorkView;
-import org.d3ifcool.finpro.core.presenters.ProdiPresenter;
+import org.d3ifcool.finpro.core.presenters.ProdiPresenters;
 import org.d3ifcool.finpro.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -26,7 +26,7 @@ public class ProdiProfilUbahActivity extends AppCompatActivity implements ProdiW
 
     private SessionManager sessionManager;
     private ProgressDialog progressDialog;
-    private ProdiPresenter prodiPresenter;
+    private ProdiPresenters prodiPresenters;
 
     private String nip_baru, nama_baru, kode_baru, kontak_baru, email_baru;
     private EditText et_nama, et_kode, et_email, et_kontak, et_nip;
@@ -40,8 +40,8 @@ public class ProdiProfilUbahActivity extends AppCompatActivity implements ProdiW
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(0f);
 
-        prodiPresenter = new ProdiPresenter(this);
-        prodiPresenter.initContext(this);
+        prodiPresenters = new ProdiPresenters(this);
+        prodiPresenters.initContext(this);
 
         sessionManager = new SessionManager(this);
         progressDialog = new ProgressDialog(this);
@@ -107,7 +107,7 @@ public class ProdiProfilUbahActivity extends AppCompatActivity implements ProdiW
                 }
             }
 
-            prodiPresenter.updateKoor(sessionManager.getSessionUsername(), nip_baru, nama_baru, kode_baru,kontak_baru, email_baru);
+            prodiPresenters.updateKoor(sessionManager.getSessionUsername(), nip_baru, nama_baru, kode_baru,kontak_baru, email_baru);
         }
     }
 

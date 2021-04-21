@@ -21,10 +21,10 @@ import org.d3ifcool.finpro.core.interfaces.lists.DosenListView;
 import org.d3ifcool.finpro.core.interfaces.lists.ProyekAkhirListView;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.ProyekAkhir;
-import org.d3ifcool.finpro.core.presenters.DosenPresenter;
+import org.d3ifcool.finpro.core.presenters.DosenPresenters;
 import org.d3ifcool.finpro.core.presenters.ProyekAkhirPresenter;
 import org.d3ifcool.finpro.R;
-import org.d3ifcool.finpro.prodi.adapters.KoorReviewerViewAdapter;
+import org.d3ifcool.finpro.prodi.adapters.ProdiReviewerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,10 +48,10 @@ public class KoorReviewerFragment extends Fragment implements ProyekAkhirListVie
     private ArrayList<ProyekAkhir> arrayListProyekAkhir = new ArrayList<>();
     private ArrayList<Dosen> arrayListDosen = new ArrayList<>();
 
-    private DosenPresenter dosenPresenter;
+    private DosenPresenters dosenPresenters;
     private ProyekAkhirPresenter proyekAkhirPresenter;
 
-    private KoorReviewerViewAdapter koorReviewerViewAdapter;
+    private ProdiReviewerViewAdapter prodiReviewerViewAdapter;
 
     public KoorReviewerFragment() {
         // Required empty public constructor
@@ -69,7 +69,7 @@ public class KoorReviewerFragment extends Fragment implements ProyekAkhirListVie
         recyclerView = rootView.findViewById(R.id.frg_koor_judul_dsn_recyclerview);
 
         progressDialog = new ProgressDialog(getContext());
-        koorReviewerViewAdapter = new KoorReviewerViewAdapter(getContext());
+        prodiReviewerViewAdapter = new ProdiReviewerViewAdapter(getContext());
         progressDialog.setMessage(getString(R.string.text_progress_dialog));
 
         spinnerHelper = new SpinnerHelper(getContext());
@@ -77,15 +77,15 @@ public class KoorReviewerFragment extends Fragment implements ProyekAkhirListVie
         empty_view = rootView.findViewById(R.id.view_emptyview);
 
         proyekAkhirPresenter = new ProyekAkhirPresenter(this);
-        dosenPresenter = new DosenPresenter(this);
+        dosenPresenters = new DosenPresenters(this);
 
-        dosenPresenter.initContext(getContext());
+        dosenPresenters.initContext(getContext());
         proyekAkhirPresenter.initContext(getContext());
 
-        dosenPresenter.getDosen();
+        dosenPresenters.getDosen();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        koorReviewerViewAdapter.setLayoutType(R.layout.content_list_koor_dosen_reviewer);
+        prodiReviewerViewAdapter.setLayoutType(R.layout.content_list_koor_dosen_reviewer);
 
         sp_dosen.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -139,9 +139,9 @@ public class KoorReviewerFragment extends Fragment implements ProyekAkhirListVie
 
         arrayListProyekAkhir.clear();
         arrayListProyekAkhir.addAll(proyekAkhirList);
-        koorReviewerViewAdapter.addItemPa(arrayListProyekAkhir);
+        prodiReviewerViewAdapter.addItemPa(arrayListProyekAkhir);
 
-        recyclerView.setAdapter(koorReviewerViewAdapter);
+        recyclerView.setAdapter(prodiReviewerViewAdapter);
         swipeRefreshLayout.setRefreshing(false);
 
         if (arrayListProyekAkhir.size() == 0) {

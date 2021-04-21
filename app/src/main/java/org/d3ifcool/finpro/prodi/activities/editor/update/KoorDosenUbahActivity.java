@@ -14,14 +14,14 @@ import android.widget.Toast;
 
 import org.d3ifcool.finpro.core.interfaces.works.DosenWorkView;
 import org.d3ifcool.finpro.core.models.Dosen;
-import org.d3ifcool.finpro.core.presenters.DosenPresenter;
+import org.d3ifcool.finpro.core.presenters.DosenPresenters;
 import org.d3ifcool.finpro.R;
 
 public class KoorDosenUbahActivity extends AppCompatActivity implements DosenWorkView {
 
     private EditText et_nip, et_nama,et_kode, et_kontak, et_email, et_batas_bimbingan, et_batas_reviewer;
     private Button btn_simpan;
-    private DosenPresenter dosenPresenter;
+    private DosenPresenters dosenPresenters;
     private ProgressDialog progressDialog;
 
     public static final String EXTRA_DOSEN = "extra_dosen";
@@ -32,8 +32,8 @@ public class KoorDosenUbahActivity extends AppCompatActivity implements DosenWor
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_koor_dosen_ubah);
 
-        dosenPresenter = new DosenPresenter(this);
-        dosenPresenter.initContext(this);
+        dosenPresenters = new DosenPresenters(this);
+        dosenPresenters.initContext(this);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.text_progress_dialog));
@@ -88,7 +88,7 @@ public class KoorDosenUbahActivity extends AppCompatActivity implements DosenWor
                                 } else if (kode_baru.isEmpty()) {
                                     et_kode.setError(getString(R.string.text_tidak_boleh_kosong));
                                 } else {
-                                    dosenPresenter.updateDosen(extraDosen.getDsn_nip(), nama_baru, kode_baru, kontak_baru, email_baru, batas_bimbingan_int, batas_reviewer_int);
+                                    dosenPresenters.updateDosen(extraDosen.getDsn_nip(), nama_baru, kode_baru, kontak_baru, email_baru, batas_bimbingan_int, batas_reviewer_int);
 
                                 }
                             }

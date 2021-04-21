@@ -25,7 +25,7 @@ import org.d3ifcool.finpro.core.helpers.MethodHelper;
 import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.core.interfaces.objects.DosenView;
 import org.d3ifcool.finpro.core.models.Dosen;
-import org.d3ifcool.finpro.core.presenters.DosenPresenter;
+import org.d3ifcool.finpro.core.presenters.DosenPresenters;
 
 public class DosenMainActivity extends AppCompatActivity implements DosenView {
 
@@ -49,11 +49,11 @@ public class DosenMainActivity extends AppCompatActivity implements DosenView {
         //    private ViewPager mViewPager;
         BottomNavigationView bottomNavigationView = findViewById(R.id.act_dsn_home_bottom_navigation);
 
-        DosenPresenter dosenPresenter = new DosenPresenter(this);
-        dosenPresenter.initContext(this);
+        DosenPresenters dosenPresenters = new DosenPresenters(this);
+        dosenPresenters.initContext(this);
 
         sessionManager = new SessionManager(this);
-        dosenPresenter.getDosenByParameter(sessionManager.getSessionUsername());
+        dosenPresenters.getDosenByParameter(sessionManager.getSessionUsername());
 
         openFragment(new DosenInformasiFragment());
 
@@ -168,7 +168,7 @@ public class DosenMainActivity extends AppCompatActivity implements DosenView {
                         .setMessage(getString(R.string.dialog_keluar_text))
                         .setPositiveButton("Keluar", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intentKeluar = new Intent(DosenMainActivity.this, LoginActivity.class);
+                                Intent intentKeluar = new Intent(DosenMainActivity.this, AuthActivity.class);
                                 startActivity(intentKeluar);
                                 sessionManager.removeSession();
                                 finish();

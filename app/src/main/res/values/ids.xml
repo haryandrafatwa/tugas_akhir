@@ -197,6 +197,8 @@
     <item type="id" name="frg_koor_info_home_fab"/>
     <item type="id" name="profile_header_container" />
     <item type="id" name="profile_body_container" />
+    <item type="id" name="profile_body_status_sk" />
+    <item type="id" name="profile_body_pembimbing" />
 
 
 </resources>

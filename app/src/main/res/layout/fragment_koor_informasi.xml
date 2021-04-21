@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    android:id="@+id/frg_koor_info_home_swiperefresh"
+    android:id="@+id/refresh"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         <include layout="@layout/content_list_all_is_empty"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/frg_koor_info_home_recyclerview"
+            android:id="@+id/frg_koor_dosen_home_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/dimen_medium_8dp"
@@ -23,7 +23,7 @@
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/frg_koor_info_home_fab"
+            android:id="@+id/frg_koor_dosen_home_fab"
             style="@style/fab_all_add"/>
 
 

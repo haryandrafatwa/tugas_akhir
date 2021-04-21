@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.d3ifcool.finpro.mahasiswa.activities.detail.MahasiswaJudulPaDosenDetailActivity;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.models.Judul;
 
@@ -94,19 +93,6 @@ public class MahasiswaJudulPaDosenViewAdapter extends RecyclerView.Adapter<Mahas
         holder.judul.setText(dataJudul.get(position).getJudul());
         holder.kategori.setText(dataJudul.get(position).getKategori_nama());
         cekStatusJudul(holder.status, status);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (status.equalsIgnoreCase(JUDUL_STATUS_TERSEDIA)){
-                    Intent intentData = new Intent(context, MahasiswaJudulPaDosenDetailActivity.class);
-                    Judul parcelJudul = dataJudul.get(position);
-                    intentData.putExtra(MahasiswaJudulPaDosenDetailActivity.EXTRA_JUDUL, parcelJudul);
-                    context.startActivity(intentData);
-                } else if (status.equalsIgnoreCase(JUDUL_STATUS_DIGUNAKAN)) {
-                    Toast.makeText(context, R.string.text_judul_digunakan, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
     @NonNull

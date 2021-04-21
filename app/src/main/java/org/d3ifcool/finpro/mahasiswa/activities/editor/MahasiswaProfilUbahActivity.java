@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.core.interfaces.works.MahasiswaWorkView;
+import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -148,6 +149,10 @@ public class MahasiswaProfilUbahActivity extends AppCompatActivity implements Ma
     public void onSucces() {
         sessionManager.updateSessionMahasiswa(nama_baru, angkatan_baru, kontak_baru, email_baru);
         finish();
+    }
+
+    @Override
+    public void onSuccesGetPlotting(Plotting plotting) {
     }
 
     @Override

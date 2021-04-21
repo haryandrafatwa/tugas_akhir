@@ -24,6 +24,7 @@
             style="@style/profile_all_header_name"/>
 
         <LinearLayout
+            android:id="@+id/linear_layout"
             style="@style/profile_all_container_body">
 
             <LinearLayout

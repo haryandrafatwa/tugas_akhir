@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.core.interfaces.works.DosenWorkView;
-import org.d3ifcool.finpro.core.presenters.DosenPresenter;
+import org.d3ifcool.finpro.core.presenters.DosenPresenters;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -25,7 +25,7 @@ import static org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl.URL_FOTO_DOSEN;
 
 public class DosenProfilUbahActivity extends AppCompatActivity implements DosenWorkView {
 
-    private DosenPresenter dosenPresenter;
+    private DosenPresenters dosenPresenters;
     private SessionManager sessionManager;
     private ProgressDialog progressDialog;
 
@@ -41,8 +41,8 @@ public class DosenProfilUbahActivity extends AppCompatActivity implements DosenW
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(0f);
 
-        dosenPresenter = new DosenPresenter(this);
-        dosenPresenter.initContext(this);
+        dosenPresenters = new DosenPresenters(this);
+        dosenPresenters.initContext(this);
 
         sessionManager = new SessionManager(this);
         progressDialog = new ProgressDialog(this);
@@ -107,7 +107,7 @@ public class DosenProfilUbahActivity extends AppCompatActivity implements DosenW
                 }
             }
 
-            dosenPresenter.updateDosenPure(sessionManager.getSessionDosenNip(), nama_baru, kode_baru, kontak_baru, email_baru);
+            dosenPresenters.updateDosenPure(sessionManager.getSessionDosenNip(), nama_baru, kode_baru, kontak_baru, email_baru);
         }
     }
 

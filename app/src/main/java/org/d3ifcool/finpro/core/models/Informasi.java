@@ -41,7 +41,7 @@ public class Informasi implements Parcelable {
     private String penerbit;
 
     @Expose
-    @SerializedName("informasi_waktu")
+    @SerializedName("created_at")
     private String tanggal;
 
     public Informasi(int id, String info_judul, String info_deskripsi, String penerbit, String tanggal) {

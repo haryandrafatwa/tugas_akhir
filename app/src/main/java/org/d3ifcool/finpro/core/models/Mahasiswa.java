@@ -49,57 +49,42 @@ public class Mahasiswa implements Parcelable {
     private String mhs_email;
 
     @Expose
-    @SerializedName("status")
-    private String status;
+    @SerializedName("plot_id")
+    private int plot_id;
 
     @Expose
-    @SerializedName("judul_id")
-    private int judul_id;
+    @SerializedName("nip_pembimbing_1")
+    private String nip_pembimbing_1;
+
+    @Expose
+    @SerializedName("nip_pembimbing_2")
+    private String nip_pembimbing_2;
+
+    @Expose
+    @SerializedName("sk_expired")
+    private String sk_expired;
+
+    @Expose
+    @SerializedName("sk_status")
+    private int sk_status;
 
     @Expose
     @SerializedName("username")
     private String username;
 
-    @Expose
-    @SerializedName("judul_nama")
-    private String judul_nama;
-
-    @Expose
-    @SerializedName("judul_deskripsi")
-    private String judul_deskripsi;
-
-    @Expose
-    @SerializedName("judul_status")
-    private String judul_status;
-
-    @Expose
-    @SerializedName("judul_waktu")
-    private String judul_waktu;
-
-    @Expose
-    @SerializedName("dsn_nip")
-    private String dsn_nip;
-
-    @Expose
-    @SerializedName("kategori_id")
-    private String kategori_id;
-
-    public Mahasiswa(String mhs_nim, String mhs_nama, String angkatan, String mhs_kontak, String mhs_foto, String mhs_email, String status, int judul_id, String username, String judul_nama, String judul_deskripsi, String judul_status, String judul_waktu, String dsn_nip, String kategori_id) {
+    public Mahasiswa(String mhs_nim, String mhs_nama, String angkatan, String mhs_kontak, String mhs_foto, String mhs_email, int plot_id, String sk_expired, int sk_status, String username, String nip_pembimbing_1, String nip_pembimbing_2) {
         this.mhs_nim = mhs_nim;
         this.mhs_nama = mhs_nama;
         this.angkatan = angkatan;
         this.mhs_kontak = mhs_kontak;
         this.mhs_foto = mhs_foto;
         this.mhs_email = mhs_email;
-        this.status = status;
-        this.judul_id = judul_id;
+        this.plot_id = plot_id;
+        this.sk_expired = sk_expired;
+        this.sk_status = sk_status;
         this.username = username;
-        this.judul_nama = judul_nama;
-        this.judul_deskripsi = judul_deskripsi;
-        this.judul_status = judul_status;
-        this.judul_waktu = judul_waktu;
-        this.dsn_nip = dsn_nip;
-        this.kategori_id = kategori_id;
+        this.nip_pembimbing_1 = nip_pembimbing_1;
+        this.nip_pembimbing_2 = nip_pembimbing_2;
     }
 
     public String getMhs_nim() {
@@ -150,20 +135,28 @@ public class Mahasiswa implements Parcelable {
         this.mhs_email = mhs_email;
     }
 
-    public String getStatus() {
-        return status;
+    public int getPlot_id() {
+        return plot_id;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setPlot_id(int plot_id) {
+        this.plot_id = plot_id;
     }
 
-    public int getJudul_id() {
-        return judul_id;
+    public String getNip_pembimbing_1() {
+        return nip_pembimbing_1;
     }
 
-    public void setJudul_id(int judul_id) {
-        this.judul_id = judul_id;
+    public void setNip_pembimbing_1(String nip_pembimbing_1) {
+        this.nip_pembimbing_1 = nip_pembimbing_1;
+    }
+
+    public String getNip_pembimbing_2() {
+        return nip_pembimbing_2;
+    }
+
+    public void setNip_pembimbing_2(String nip_pembimbing_2) {
+        this.nip_pembimbing_2 = nip_pembimbing_2;
     }
 
     public String getUsername() {
@@ -174,54 +167,21 @@ public class Mahasiswa implements Parcelable {
         this.username = username;
     }
 
-    public String getJudul_nama() {
-        return judul_nama;
+    public String getSk_expired() {
+        return sk_expired;
     }
 
-    public void setJudul_nama(String judul_nama) {
-        this.judul_nama = judul_nama;
+    public void setSk_expired(String sk_expired) {
+        this.sk_expired = sk_expired;
     }
 
-    public String getJudul_deskripsi() {
-        return judul_deskripsi;
+    public int getSk_status() {
+        return sk_status;
     }
 
-    public void setJudul_deskripsi(String judul_deskripsi) {
-        this.judul_deskripsi = judul_deskripsi;
+    public void setSk_status(int sk_status) {
+        this.sk_status = sk_status;
     }
-
-    public String getJudul_status() {
-        return judul_status;
-    }
-
-    public void setJudul_status(String judul_status) {
-        this.judul_status = judul_status;
-    }
-
-    public String getJudul_waktu() {
-        return judul_waktu;
-    }
-
-    public void setJudul_waktu(String judul_waktu) {
-        this.judul_waktu = judul_waktu;
-    }
-
-    public String getDsn_nip() {
-        return dsn_nip;
-    }
-
-    public void setDsn_nip(String dsn_nip) {
-        this.dsn_nip = dsn_nip;
-    }
-
-    public String getKategori_id() {
-        return kategori_id;
-    }
-
-    public void setKategori_id(String kategori_id) {
-        this.kategori_id = kategori_id;
-    }
-
 
     @Override
     public int describeContents() {
@@ -236,15 +196,12 @@ public class Mahasiswa implements Parcelable {
         dest.writeString(this.mhs_kontak);
         dest.writeString(this.mhs_foto);
         dest.writeString(this.mhs_email);
-        dest.writeString(this.status);
-        dest.writeInt(this.judul_id);
+        dest.writeInt(this.plot_id);
         dest.writeString(this.username);
-        dest.writeString(this.judul_nama);
-        dest.writeString(this.judul_deskripsi);
-        dest.writeString(this.judul_status);
-        dest.writeString(this.judul_waktu);
-        dest.writeString(this.dsn_nip);
-        dest.writeString(this.kategori_id);
+        dest.writeString(this.sk_expired);
+        dest.writeInt(this.sk_status);
+        dest.writeString(this.nip_pembimbing_1);
+        dest.writeString(this.nip_pembimbing_2);
     }
 
     protected Mahasiswa(Parcel in) {
@@ -254,15 +211,12 @@ public class Mahasiswa implements Parcelable {
         this.mhs_kontak = in.readString();
         this.mhs_foto = in.readString();
         this.mhs_email = in.readString();
-        this.status = in.readString();
-        this.judul_id = in.readInt();
+        this.plot_id = in.readInt();
         this.username = in.readString();
-        this.judul_nama = in.readString();
-        this.judul_deskripsi = in.readString();
-        this.judul_status = in.readString();
-        this.judul_waktu = in.readString();
-        this.dsn_nip = in.readString();
-        this.kategori_id = in.readString();
+        this.sk_expired = in.readString();
+        this.sk_status = in.readInt();
+        this.nip_pembimbing_1 = in.readString();
+        this.nip_pembimbing_2 = in.readString();
     }
 
     public static final Creator<Mahasiswa> CREATOR = new Creator<Mahasiswa>() {

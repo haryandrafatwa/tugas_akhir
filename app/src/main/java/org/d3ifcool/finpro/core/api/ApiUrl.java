@@ -26,7 +26,7 @@ public class ApiUrl {
 
         // public static final String BASE_URL = "https://e-denah.000webhostapp.com"; // Link Website
 //        public static final String BASE_URL = "http://d3if-finpro.org"; // Link Website
-        public static final String BASE_URL = "http://192.168.1.2/new-finpro-api/public/"; // Link Website
+        public static final String BASE_URL = "http://192.168.1.2/tugas_akhir/public/"; // Link Website
 
         public static final String PATH_API = "api/v1"; // Link API
         // -----------------------------------------------------------------------------------------
@@ -44,6 +44,9 @@ public class ApiUrl {
         public static final String VAR_MAHASISWA = "mahasiswa";
         public static final String VAR_KOORDINATOR_PA = "koor";
         public static final String VAR_INFORMASI = "informasi";
+        public static final String VAR_PLOTTING = "plotting";
+        public static final String VAR_PEMBIMBING = "pembimbing";
+        public static final String VAR_SKTA = "skta";
         public static final String VAR_JUDUL = "judul";
         public static final String VAR_KATEGORI_JUDUL = "kategori_judul";
         public static final String VAR_NOTIFIKASI = "notifikasi";
@@ -57,6 +60,10 @@ public class ApiUrl {
         public static final String VAR_KEGIATAN = "jadwal_kegiatan";
         public static final String VAR_KUOTA_DOSEN = "kuota_dosen";
         public static final String VAR_SIAP_SIDANG = "siap_sidang";
+        public static final String VAR_AUTHORIZATION = "Authorization";
+        public static final String VAR_CHECKFORMPLOT = "checkFormPlot";
+        public static final String VAR_DOWNLOADFORMPLOT = "downloadFormPlot";
+        public static final String VAR_DELETEFORMPLOT = "deleteFormPlot";
         // -----------------------------------------------------------------------------------------
         public static final String VAR_PARAMS = "parameter";
         public static final String VAR_QUERY = "query";
@@ -68,6 +75,8 @@ public class ApiUrl {
         public static final String PATH_MAHASISWA = "/" + VAR_MAHASISWA;
         public static final String PATH_KOORDINATOR_PA = "/" + VAR_KOORDINATOR_PA;
         public static final String PATH_INFORMASI = "/" + VAR_INFORMASI;
+        public static final String PATH_PLOTTING = "/" + VAR_PLOTTING;
+        public static final String PATH_CHECKFORMPLOT = "/" + VAR_CHECKFORMPLOT;
         public static final String PATH_JUDUL = "/" + VAR_JUDUL;
         public static final String PATH_KATEGORI_JUDUL = "/" + VAR_KATEGORI_JUDUL;
         public static final String PATH_NOTIFIKASI = "/" + VAR_NOTIFIKASI;
@@ -81,8 +90,12 @@ public class ApiUrl {
         public static final String PATH_KEGIATAN = "/" + VAR_KEGIATAN;
         public static final String PATH_KUOTA_DOSEN = "/" + VAR_KUOTA_DOSEN;
         public static final String PATH_SIAP_SIDANG = "/" + VAR_SIAP_SIDANG;
+        public static final String PATH_SKTA = "/" + VAR_SKTA;
+        public static final String PATH_DOWNLOADFORMPLOT = "/" + VAR_DOWNLOADFORMPLOT;
+        public static final String PATH_DELETEFORMPLOT = "/" + VAR_DELETEFORMPLOT;
         // -----------------------------------------------------------------------------------------
         public static final String PATH_UPDATE = "/update";
+        public static final String PATH_UPLOAD = "/upload";
         public static final String PATH_DELETE = "/delete";
         public static final String PATH_SEARCH = "/search";
         public static final String PATH_STATUS = "/status";
@@ -95,8 +108,10 @@ public class ApiUrl {
         public static final String URL_USER = PATH_API + PATH_USER;
         public static final String URL_DOSEN = PATH_API + PATH_DOSEN;
         public static final String URL_MAHASISWA = PATH_API + PATH_MAHASISWA;
+        public static final String URL_CHECKFORMPLOT = PATH_API + PATH_CHECKFORMPLOT;
         public static final String URL_KOORDINATOR_PA = PATH_API + PATH_KOORDINATOR_PA;
         public static final String URL_INFORMASI = PATH_API + PATH_INFORMASI;
+        public static final String URL_PLOTTING = PATH_API + PATH_PLOTTING;
         public static final String URL_JUDUL_PA = PATH_API + PATH_JUDUL;
         public static final String URL_KATEGORI_JUDUL = PATH_API + PATH_KATEGORI_JUDUL;
         public static final String URL_NOTIFIKASI = PATH_API + PATH_NOTIFIKASI;
@@ -107,6 +122,8 @@ public class ApiUrl {
         public static final String URL_MONEV_DETAIL = PATH_API + PATH_MONEV_DETAIL;
         public static final String URL_KEGIATAN = PATH_API + PATH_KEGIATAN;
         public static final String URL_KUOTA_DOSEN = PATH_API + PATH_KUOTA_DOSEN;
+        public static final String URL_DOWNLOADFORMPLOT = PATH_API + PATH_DOWNLOADFORMPLOT;
+        public static final String URL_DELETEFORMPLOT = PATH_API + PATH_DELETEFORMPLOT;
         // -----------------------------------------------------------------------------------------
         public static final String BASE_PARAMETER = "/{" + VAR_PARAMS + "}";
         public static final String BASE_PARAMETER_1 = "/{" + VAR_PARAMS + "1}";
@@ -129,6 +146,7 @@ public class ApiUrl {
         public static final String PARAMETER_MONEV_DETAIL = "/{" + VAR_MONEV_DETAIL + "}";
         public static final String PARAMETER_KEGIATAN = "/{" + VAR_KEGIATAN + "}";
         public static final String PARAMETER_KUOTA_DOOSEN = "/{" + VAR_KUOTA_DOSEN + "}";
+        public static final String PARAMETER_PLOTTING= "/{" + VAR_PLOTTING + "}";
         // -----------------------------------------------------------------------------------------
         public static final String PARAM_DOSEN_NAMA = "dsn_nama";
         public static final String PARAM_JUDUL_STATUS = "judul.judul_status";

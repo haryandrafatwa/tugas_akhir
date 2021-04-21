@@ -14,22 +14,23 @@
         android:icon="@drawable/ic_nav_mahasiswa"
         android:title="@string/menu_mahasiswa" />
 
-    <item android:title="@string/menu_group_manajemen_info">
+    <item
+        android:id="@+id/nav_menu_informasi"
+        android:icon="@drawable/ic_nav_informasi"
+        android:title="@string/menu_informasi" />
+
+    <item android:title="@string/menu_group_manajemen_ta">
         <menu>
             <item
-                android:id="@+id/nav_menu_informasi"
-                android:icon="@drawable/ic_nav_informasi"
-                android:title="@string/menu_informasi" />
+                android:id="@+id/nav_menu_plotting"
+                android:icon="@drawable/ic_nav_pemetaan_reviewer"
+                android:title="@string/menu_plotting_pembimbing"/>
 
-        </menu>
-    </item>
-
-    <item android:title="@string/menu_group_lain_lain">
-        <menu>
             <item
-                android:id="@+id/nav_menu_tentang_kami"
-                android:icon="@drawable/ic_about_us"
-                android:title="@string/menu_tentang_kami" />
+                android:id="@+id/nav_menu_skta"
+                android:icon="@drawable/ic_nav_judul_pa"
+                android:title="@string/menu_sk_ta"/>
+
         </menu>
     </item>
 

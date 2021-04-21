@@ -16,13 +16,13 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.core.presenters.DosenPresenters;
 import org.d3ifcool.finpro.mahasiswa.adapters.recyclerview.MahasiswaJudulPaDosenViewAdapter;
 import org.d3ifcool.finpro.core.helpers.SpinnerHelper;
 import org.d3ifcool.finpro.core.interfaces.lists.DosenListView;
 import org.d3ifcool.finpro.core.interfaces.lists.JudulListView;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.Judul;
-import org.d3ifcool.finpro.core.presenters.DosenPresenter;
 import org.d3ifcool.finpro.core.presenters.JudulPresenter;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class MahasiswaJudulPaDosenFragment extends Fragment implements DosenList
     private ArrayList<Judul> arrayListJudul = new ArrayList<>();
     private ArrayList<Dosen> arrayListDosen = new ArrayList<>();
 
-    private DosenPresenter dosenPresenter;
+    private DosenPresenters dosenPresenters;
     private JudulPresenter judulPresenter;
 
     private View empty_view;
@@ -70,16 +70,16 @@ public class MahasiswaJudulPaDosenFragment extends Fragment implements DosenList
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage(getString(R.string.text_progress_dialog));
 
-        dosenPresenter = new DosenPresenter(this);
+        dosenPresenters = new DosenPresenters(this);
         judulPresenter = new JudulPresenter(this);
 
-        dosenPresenter.initContext(getContext());
+        dosenPresenters.initContext(getContext());
         judulPresenter.initContext(getContext());
 
         empty_view = rootView.findViewById(R.id.view_emptyview);
 
         adapter = new MahasiswaJudulPaDosenViewAdapter(getContext());
-        dosenPresenter.getDosen();
+        dosenPresenters.getDosen();
 
         sp_dosen.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -97,7 +97,7 @@ public class MahasiswaJudulPaDosenFragment extends Fragment implements DosenList
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                dosenPresenter.getDosen();
+                dosenPresenters.getDosen();
                 judulPresenter.searchJudulMahasiswaBy(PARAM_DOSEN_NAMA, sp_dosen.getSelectedItem().toString());
             }
         });

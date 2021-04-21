@@ -72,7 +72,7 @@ public class DosenInformasiFragment extends Fragment implements InformasiListVie
         progressDialog.setMessage(getString(R.string.text_progress_dialog));
 
         informasiPresenter.initContext(getContext());
-        informasiPresenter.getInformasi(sessionManager.getSessionToken());
+        informasiPresenter.getInformasi();
 
         FloatingActionButton floatingActionButton = view.findViewById(R.id.frg_dsn_info_home_fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +86,7 @@ public class DosenInformasiFragment extends Fragment implements InformasiListVie
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                informasiPresenter.getInformasi(sessionManager.getSessionToken());
+                informasiPresenter.getInformasi();
             }
         });
 
@@ -95,7 +95,7 @@ public class DosenInformasiFragment extends Fragment implements InformasiListVie
     @Override
     public void onResume() {
         super.onResume();
-        informasiPresenter.getInformasi(sessionManager.getSessionToken());
+        informasiPresenter.getInformasi();
     }
 
     @Override

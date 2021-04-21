@@ -13,16 +13,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.core.interfaces.objects.MahasiswaView;
 import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaJadwalKegiatanActivity;
-import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaJudulPaArsipActivity;
-import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaKuotaDosenActivity;
 import org.d3ifcool.finpro.mahasiswa.fragments.parent.MahasiswaInformasiFragment;
 import org.d3ifcool.finpro.mahasiswa.fragments.parent.MahasiswaJudulPaFragment;
 import org.d3ifcool.finpro.mahasiswa.fragments.parent.MahasiswaPaFragment;
 import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaPemberitahuanActivity;
 import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaProfilActivity;
-import org.d3ifcool.finpro.core.interfaces.objects.MahasiswaView;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
 
@@ -153,16 +151,6 @@ public class MahasiswaMainActivity extends AppCompatActivity implements Mahasisw
                 startActivity(intentJadwal);
                 break;
 
-            case R.id.toolbar_menu_arsip_judul:
-                Intent intentArsip = new Intent(MahasiswaMainActivity.this, MahasiswaJudulPaArsipActivity.class);
-                startActivity(intentArsip);
-                break;
-
-            case R.id.toolbar_menu_kuota_dosen:
-                Intent intentKuota = new Intent(MahasiswaMainActivity.this, MahasiswaKuotaDosenActivity.class);
-                startActivity(intentKuota);
-                break;
-
             case R.id.toolbar_menu_keluar:
                 new AlertDialog
                         .Builder(this)
@@ -171,7 +159,7 @@ public class MahasiswaMainActivity extends AppCompatActivity implements Mahasisw
 
                         .setPositiveButton("Keluar", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intentKeluar = new Intent(MahasiswaMainActivity.this, LoginActivity.class);
+                                Intent intentKeluar = new Intent(MahasiswaMainActivity.this, AuthActivity.class);
                                 startActivity(intentKeluar);
                                 sessionManager.removeSession();
                                 finish();

@@ -23,7 +23,7 @@ import org.d3ifcool.finpro.core.interfaces.lists.ProyekAkhirListView;
 import org.d3ifcool.finpro.core.interfaces.works.ProyekAkhirWorkView;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.ProyekAkhir;
-import org.d3ifcool.finpro.core.presenters.DosenPresenter;
+import org.d3ifcool.finpro.core.presenters.DosenPresenters;
 import org.d3ifcool.finpro.core.presenters.ProyekAkhirPresenter;
 import org.d3ifcool.finpro.R;
 
@@ -37,7 +37,7 @@ public class KoorPemetaanMonevDetailActivity extends AppCompatActivity implement
     private static final String PARAM_PROYEK_AKHIR_JUDUL_ID = "proyek_akhir.judul_id";
     private static final String PARAM_JUDUL_STATUS = "judul_status";
 
-    private DosenPresenter dosenPresenter;
+    private DosenPresenters dosenPresenters;
     private ProyekAkhirPresenter proyekAkhirPresenter;
     private ProgressDialog progressDialog;
     private SpinnerHelper spinnerHelper;
@@ -67,10 +67,10 @@ public class KoorPemetaanMonevDetailActivity extends AppCompatActivity implement
 
 
         proyekAkhirPresenter = new ProyekAkhirPresenter(this, this);
-        dosenPresenter = new DosenPresenter(this);
+        dosenPresenters = new DosenPresenters(this);
 
         proyekAkhirPresenter.initContext(this);
-        dosenPresenter.initContext(this);
+        dosenPresenters.initContext(this);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.text_progress_dialog));
@@ -94,7 +94,7 @@ public class KoorPemetaanMonevDetailActivity extends AppCompatActivity implement
         final String stringJudulId = String.valueOf(extraProyekAkhir.getJudul_id());
         extraDsnNip = extraProyekAkhir.getPembimbing_dsn_nip();
 
-        dosenPresenter.getDosen();
+        dosenPresenters.getDosen();
         proyekAkhirPresenter.searchAllProyekAkhirBy(PARAM_PROYEK_AKHIR_JUDUL_ID, stringJudulId);
 
         sp_dosen.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

@@ -32,12 +32,15 @@ public class Constant {
         public static final String JUDUL_STATUS_MENUNGGU = "Menunggu persetujuan";
         public static final String JUDUL_STATUS_DISETUJUI = "Judul disetujui";
         // -----------------------------------------------------------------------------------------
+        public static final String APP_TAG = "Finpro";
         public static final String PACKAGE_ROOT = "org.d3ifcool.finpro";
         public static final String PACKAGE_PATH_ACTIVITIES = PACKAGE_ROOT+".views.activities";
         public static final String PATH_MAIN_ACTIVITY = PACKAGE_PATH_ACTIVITIES+".MainActivity";
         // -----------------------------------------------------------------------------------------
         public static int PICK_PDF_REQUEST = 1;
+        public static int PICK_EXCEL_REQUEST = 2;
         public static final int STORAGE_PERMISSION_CODE = 123;
+        public static final int API_TIMEOUT = 5;
         // -----------------------------------------------------------------------------------------
         public static final String PREF_NAME = "LOGIN";
         public static final String LOGIN = "IS_LOGIN";

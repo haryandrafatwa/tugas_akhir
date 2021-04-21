@@ -18,7 +18,7 @@
  -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_below="@id/profile_body_container"
+    android:layout_below="@+id/linear_layout"
     android:layout_centerInParent="true"
     android:orientation="vertical"
     android:gravity="center"
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorTextBlack"
         android:textSize="@dimen/text_size_small_10sp"
-        android:text="@string/text_d3rpla"/>
+        android:text="@string/text_s1informatika"/>
 
     <TextView
         android:layout_width="wrap_content"

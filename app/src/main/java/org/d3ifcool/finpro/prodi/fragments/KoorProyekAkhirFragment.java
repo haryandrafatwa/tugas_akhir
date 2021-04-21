@@ -20,7 +20,7 @@ import org.d3ifcool.finpro.core.interfaces.lists.DosenListView;
 import org.d3ifcool.finpro.core.interfaces.lists.JudulListView;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.Judul;
-import org.d3ifcool.finpro.core.presenters.DosenPresenter;
+import org.d3ifcool.finpro.core.presenters.DosenPresenters;
 import org.d3ifcool.finpro.core.presenters.JudulPresenter;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.prodi.adapters.KoorProyekAkhirViewAdapter;
@@ -51,7 +51,7 @@ public class KoorProyekAkhirFragment extends Fragment implements DosenListView, 
     private ArrayList<Judul> arrayListJudul = new ArrayList<>();
     private ArrayList<Dosen> arrayListDosen = new ArrayList<>();
 
-    private DosenPresenter dosenPresenter;
+    private DosenPresenters dosenPresenters;
     private JudulPresenter judulPresenter;
 
     public KoorProyekAkhirFragment() {
@@ -74,13 +74,13 @@ public class KoorProyekAkhirFragment extends Fragment implements DosenListView, 
         swipeRefreshLayout = rootView.findViewById(R.id.swipe_refresh);
         empty_view = rootView.findViewById(R.id.view_emptyview);
 
-        dosenPresenter = new DosenPresenter(this);
+        dosenPresenters = new DosenPresenters(this);
         judulPresenter = new JudulPresenter(this);
 
-        dosenPresenter.initContext(getContext());
+        dosenPresenters.initContext(getContext());
         judulPresenter.initContext(getContext());
 
-        dosenPresenter.getDosen();
+        dosenPresenters.getDosen();
         sp_dosen.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

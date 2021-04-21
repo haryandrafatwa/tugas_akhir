@@ -12,7 +12,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
 import org.d3ifcool.finpro.R;
-import org.d3ifcool.finpro.activities.LoginActivity;
 import org.d3ifcool.finpro.activities.MahasiswaMainActivity;
 import org.junit.Before;
 import org.junit.Rule;

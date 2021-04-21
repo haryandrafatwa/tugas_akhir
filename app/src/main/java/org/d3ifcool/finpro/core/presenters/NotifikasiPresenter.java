@@ -71,12 +71,12 @@ public class NotifikasiPresenter {
         this.viewEditor = viewEditor;
     }
 
-    public void createNotifikasi(String notifikasi_kategori, String notifikasi_deskripsi, String notifikasi_dari, String notifikasi_untuk){
+    public void createNotifikasi(String token, String notifikasi_kategori, String notifikasi_deskripsi, String notifikasi_dari, String notifikasi_untuk){
 
         if (connectionHelper.isConnected(context)){
             viewEditor.showProgress();
             ApiService apiInterfaceNotifikasi = ApiClient.getApiClient().create(ApiService.class);
-            Call<Notifikasi> call = apiInterfaceNotifikasi.createNotifikasi(notifikasi_kategori, notifikasi_deskripsi, notifikasi_dari, notifikasi_untuk);
+            Call<Notifikasi> call = apiInterfaceNotifikasi.createNotifikasi("Bearer "+token, notifikasi_kategori, notifikasi_deskripsi, notifikasi_dari, notifikasi_untuk);
             call.enqueue(new Callback<Notifikasi>() {
                 @Override
                 public void onResponse(Call<Notifikasi> call, Response<Notifikasi> response) {

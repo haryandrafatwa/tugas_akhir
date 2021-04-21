@@ -76,12 +76,12 @@ public class MahasiswaInformasiFragment extends Fragment implements InformasiLis
 
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        informasiPresenter.getInformasi(sessionManager.getSessionToken());
+        informasiPresenter.getInformasi();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                informasiPresenter.getInformasi(sessionManager.getSessionToken());
+                informasiPresenter.getInformasi();
             }
         });
 
@@ -91,7 +91,7 @@ public class MahasiswaInformasiFragment extends Fragment implements InformasiLis
     @Override
     public void onResume() {
         super.onResume();
-        informasiPresenter.getInformasi(sessionManager.getSessionToken());
+        informasiPresenter.getInformasi();
     }
 
     @Override

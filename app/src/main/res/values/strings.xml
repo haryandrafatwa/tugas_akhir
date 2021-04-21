@@ -31,6 +31,8 @@
     <string name="validate_tidak_lebih_16">Tidak Boleh Lebih dari 16</string>
     <string name="validate_no_connection">Tidak ada koneksi internet</string>
 
+    <string name="title_koor_prodi">Koordinator Prodi</string>
+    <string name="title_koor_lak">Koordinator LAK</string>
     <string name="title_judulpa_pengajuan">Pengajuan Mandiri</string>
     <string name="title_bimbingan">Bimbingan</string>
     <string name="title_monev">Monev</string>
@@ -73,6 +75,8 @@
     <string name="title_tambah_pemetaan">Tambah Pemetaan Monev</string>
     <string name="title_dosen_ubah">Ubah Dosen</string>
     <string name="title_mahasiswa_tambah">Tambah Mahasiswa</string>
+    <string name="title_plotting_tambah">Tambah Plotting</string>
+    <string name="title_tambah_pembimbing">Tambah Pembimbing</string>
     <string name="title_mahasiswa_ubah">Ubah Mahasiswa</string>
     <string name="title_email_dosen">Email</string>
     <string name="title_activity_admin_main">AdminMainActivity</string>
@@ -106,6 +110,7 @@
     <string name="button_click_simpan">Simpan</string>
     <string name="button_click_tambah_judul">Tambah Judul</string>
     <string name="button_click_tambah_mahasiswa">Tambah Mahasiswa</string>
+    <string name="button_click_tambah_plotting">Tambah Plotting</string>
     <string name="button_click_ubah_mahasiswa">Ubah Mahasiswa</string>
     <string name="button_click_tambah_monev">Tambah Monev</string>
     <string name="button_click_tambah_bimbingan">Tambah Bimbingan</string>
@@ -150,10 +155,12 @@
     <string name="dummt_spinner">Spinner Item</string>
     <string name="dummy_angkatan">2016</string>
     <string name="dummy_kategori_monev">Monev 1</string>
+    <string name="dummy_status_sk">Aktif hingga 18 Agustus 2021</string>
 
     <string name="dialog_hapus_title">Hapus Data</string>
     <string name="dialog_hapus_text">Anda yakin ingin menghapus ini?</string>
     <string name="dialog_ubah_text">Apakah anda yakin ingin merubah ini?</string>
+    <string name="dialog_tambah_pembimbing">Apakah anda yakin ingin menambahkan pembimbing ini?</string>
     <string name="dialog_ubah_title">Ubah Data</string>
     <string name="dialog_tambah">Tambah</string>
     <string name="dialog_pengajuan_judul_title">Ajukan Judul</string>
@@ -163,6 +170,10 @@
     <string name="dialog_tolak_title">Tolak Judul</string>
     <string name="dialog_tolak_text">Apakah anda yakin menolak kelompok ini?</string>
     <string name="dialog_keluar_title">Keluar</string>
+    <string name="dialog_upload_form_plot">Upload Form</string>
+    <string name="dialog_hapus_form_plot">Hapus Form</string>
+    <string name="dialog_hapus_form_plot_text">Apakah anda yakin ingin menghapus file ini?</string>
+    <string name="dialog_upload_text">Apakah anda yakin ingin upload ulang file?</string>
     <string name="dialog_keluar_text">Anda Yakin Ingin Keluar?</string>
     <string name="dialog_arsip_title">Arsip</string>
     <string name="dialog_arsip_text">Arsipkan Judul?</string>
@@ -179,7 +190,9 @@
     <string name="menu_mahasiswa">Mahasiswa</string>
     <string name="menu_dosen">Dosen</string>
     <string name="menu_proyek_akhir">Proyek Akhir</string>
-    <string name="menu_pemetaan_monev">Pemetaan Monev</string>
+    <string name="menu_plotting_pembimbing">Plotting Pembimbing</string>
+    <string name="menu_pemetaan_pembimbing">Pemetaan Pembimbing</string>
+    <string name="menu_sk_ta">SK TA</string>
     <string name="menu_judul_pa">Judul</string>
     <string name="menu_kategori_judul">Kategori Judul</string>
     <string name="menu_arsip_judul">Arsip Judul</string>
@@ -189,7 +202,7 @@
     <string name="menu_reviewer">Reviewer Monev</string>
     <string name="menu_group_manajemen_info">Manajemen Informasi</string>
     <string name="menu_group_manajemen_kategori">Manajemen Kategori</string>
-    <string name="menu_group_manajemen_pa">Manajemen Proyek Akhir</string>
+    <string name="menu_group_manajemen_ta">Manajemen Tugas Akhir</string>
     <string name="menu_group_lain_lain">Lain - Lain</string>
     <string name="menu_kuota_dosen">Kuota Dosen</string>
     <string name="menu_siap_sidang">Siap Sidang</string>
@@ -241,7 +254,7 @@
     <string name="text_profil_detail_notelp">No Telp</string>
     <string name="text_profil_detail_kelompok">Kelompok</string>
     <string name="text_bimbingan_home_judul">Bimbingan Kelompok Proyek Akhir</string>
-    <string name="text_dosen_pembimbing">Dosen Pembimbing</string>
+    <string name="text_dosen_pembimbing">Dosen Pembimbing</string>\
     <string name="text_jumlah_bimbingan">Jumlah Bimbingan</string>
     <string name="text_title_pa">Data Proyek Akhir Mahasiswa</string>
     <string name="text_monev_terakhir">Monev Terakhir</string>
@@ -250,6 +263,10 @@
     <string name="text_daftar_monev">Daftar Monev</string>
     <string name="text_mahasiswa_bimbingan">Mahasiswa yang di bimbing</string>
     <string name="text_mahasiswa_monev">Mahasiswa yang di review</string>
+    <string name="text_download_disini">Silahkan unduh disini</string>
+    <string name="text_ubah_pembimbing">Ubah Pembimbing</string>
+    <string name="text_sunting">Sunting</string>
+    <string name="text_hapus_form">Hapus Form</string>
     <string name="text_ubah">Ubah</string>
     <string name="text_hapus">Hapus</string>
     <string name="text_oleh">Oleh :</string>
@@ -257,8 +274,10 @@
     <string name="text_lupa_kata_sandi">Lupa kata sandi?</string>
     <string name="text_klik_disini">Klik disini</string>
     <string name="text_informasi">Informasi :</string>
+    <string name="text_belum_diunggah">Status : Belum diunggah</string>
+    <string name="text_telah_diunggah">Status : Telah diunggah</string>
     <string name="text_titiktitik">........ baca selengkapnya</string>
-    <string name="text_d3rpla">D3 Rekayasa Perangkat Lunak Aplikasi</string>
+    <string name="text_s1informatika">S1 Informatika</string>
     <string name="text_telkomuniversity">Telkom University</string>
     <string name="text_nama_kelompok">Nama Kelompok</string>
     <string name="text_judul_proyek_akhir">Judul Proyek Akhir</string>
@@ -277,6 +296,8 @@
     <string name="text_setuju">Setuju</string>
     <string name="text_tolak">Tolak</string>
     <string name="text_ajukan_judul">Ajukan Judul</string>
+    <string name="text_update_status_sk">Update SK</string>
+    <string name="text_plot_pembimbing">Plot Pembimbing</string>
     <string name="text_daftar_mahasiswa_bimbingan">Daftar mahasiswa bimbingan</string>
     <string name="text_daftar_mahasiswa_monev">Daftar mahasiswa monev</string>
     <string name="text_daftar_mahasiswa_sidang">Daftar mahasiswa sidang</string>
@@ -289,6 +310,8 @@
     <string name="text_profil_detail_email">Email</string>
     <string name="text_daftar_pa_mahasiswa">Daftar Judul Proyek Akhir Mahasiswa Bimbingan</string>
     <string name="text_tidak_boleh_kosong">Tidak boleh kosong</string>
+    <string name="text_pilih_dosen_dahulu">Pilih dosen terlebih dahulu</string>
+    <string name="text_tidak_boleh_sama">Dosen tidak boleh sama</string>
     <string name="text_daftar_pa_monev_mahasiswa">Daftar Judul Proyek Akhir Monev</string>
     <string name="text_progress_dialog">Tunggu Sebentar . . .</string>
     <string name="text_judul_digunakan">Judul sudah di gunakan oleh kelompok lain</string>
@@ -345,6 +368,8 @@
     <string name="text_ubah_monev">Ubah Monev</string>
     <string name="text_list_mahasiswa">Daftar mahasiswa</string>
     <string name="text_nim_mahasiswa">Nim Mahasiswa</string>
+    <string name="text_nama_dospem_1">Dosen Pembimbing 1</string>
+    <string name="text_nama_dospem_2">Dosen Pembimbing 2</string>
     <string name="text_title_pa_sidang">Daftar Judul Proyek Akhir Sidang</string>
     <string name="text_penilaian_sidang">Penilaian Sidang</string>
     <string name="text_sidang_nilai_proposal">Nilai Proposal</string>
@@ -393,6 +418,16 @@
     <string name="text_keterangan">Keterangan</string>
     <string name="text_ubah_kuota_dosen">Ubah Kuota Dosen</string>
     <string name="text_tambah_kuota_dosen">Tambah Kuota Dosen</string>
+    <string name="text_sk">SK TA</string>
+    <string name="text_pembimbing">Pembimbing</string>
+    <string name="text_pembimbing_1">Pembimbing 1</string>
+    <string name="text_pembimbing_2">Pembimbing 2</string>
+    <string name="text_pembimbing_null">Belum memiliki pembimbing</string>
+
+    <string name="status_sk_aktif">Aktif hingga</string>
+    <string name="status_sk_pasif">SK TA Belum Diterbitkan</string>
+    <string name="status_sk_kadaluwarsa">Kadaluwarsa (</string>
+    <string name="status_sk_perpanjang">Sedang mengajukan perpanjangan</string>
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="subscribe_to_news">Subscribe to news</string>

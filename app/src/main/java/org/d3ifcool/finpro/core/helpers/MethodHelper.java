@@ -216,10 +216,26 @@ public class MethodHelper {
 //        startActivityForResult(Intent.createChooser(intent, context.getString(R.string.title_select_file)), PICK_PDF_REQUEST);
     }
 
-    public void applyFragment(Fragment fragment){
+    public void applyFragment(Fragment fragment, String TAG){
         this.appCompatActivity.getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.framelayout_container, fragment)
+                .replace(R.id.framelayout_container, fragment,TAG)
                 .commit();
+    }
+
+    public static final class MethodConst{
+
+        private AppCompatActivity appCompatActivity;
+
+        public MethodConst(AppCompatActivity appCompatActivity) {
+            this.appCompatActivity = appCompatActivity;
+        }
+
+        public void applyFragment(Fragment fragment, String TAG){
+            this.appCompatActivity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.framelayout_container, fragment,TAG)
+                    .commit();
+        }
     }
 }
