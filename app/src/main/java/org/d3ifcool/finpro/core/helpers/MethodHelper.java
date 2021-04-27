@@ -222,20 +222,4 @@ public class MethodHelper {
                 .replace(R.id.framelayout_container, fragment,TAG)
                 .commit();
     }
-
-    public static final class MethodConst{
-
-        private AppCompatActivity appCompatActivity;
-
-        public MethodConst(AppCompatActivity appCompatActivity) {
-            this.appCompatActivity = appCompatActivity;
-        }
-
-        public void applyFragment(Fragment fragment, String TAG){
-            this.appCompatActivity.getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.framelayout_container, fragment,TAG)
-                    .commit();
-        }
-    }
 }

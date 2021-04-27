@@ -1,5 +1,6 @@
 package org.d3ifcool.finpro.core.mediators.prodi;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import org.d3ifcool.finpro.R;
@@ -29,7 +31,7 @@ import org.d3ifcool.finpro.prodi.fragments.ProdiSKTAFragment;
 
 public class ProdiConcrete implements ProdiMediator {
 
-    private AppCompatActivity appCompatActivity;
+    private AppCompatActivity activity;
     private AuthManager authManager;
     private MethodHelper methodHelper;
 
@@ -38,10 +40,10 @@ public class ProdiConcrete implements ProdiMediator {
     private ProgressDialog progressDialog;
 
 
-    public ProdiConcrete(AppCompatActivity appCompatActivity) {
-        this.appCompatActivity = appCompatActivity;
+    public ProdiConcrete(AppCompatActivity activity) {
+        this.activity = activity;
         authManager  = new AuthManager();
-        methodHelper = new MethodHelper(appCompatActivity);
+        methodHelper = new MethodHelper(activity);
     }
 
     private static final String SET = "set";
@@ -62,23 +64,23 @@ public class ProdiConcrete implements ProdiMediator {
                 message("AlertDialog","logout");
                 break;
             case R.id.nav_menu_informasi:
-                this.appCompatActivity.setTitle(R.string.title_informasi);
+                this.activity.setTitle(R.string.title_informasi);
                 methodHelper.applyFragment(new ProdiInformasiFragment(),"ProdiInformasiFragment");
                 break;
             case R.id.nav_menu_mahasiswa:
-                this.appCompatActivity.setTitle(R.string.title_mahasiswa);
+                this.activity.setTitle(R.string.title_mahasiswa);
                 methodHelper.applyFragment(new ProdiMahasiswaFragment(),"ProdiMahasiswaFragment");
                 break;
             case R.id.nav_menu_dosen:
-                this.appCompatActivity.setTitle(R.string.title_dosen);
+                this.activity.setTitle(R.string.title_dosen);
                 methodHelper.applyFragment(new ProdiDosenFragment(),"ProdiDosenFragment");
                 break;
             case R.id.nav_menu_plotting:
-                this.appCompatActivity.setTitle(R.string.menu_plotting_pembimbing);
+                this.activity.setTitle(R.string.menu_plotting_pembimbing);
                 methodHelper.applyFragment(new ProdiPlottingFragment(),"ProdiPlottingFragment");
                 break;
             case R.id.nav_menu_skta:
-                this.appCompatActivity.setTitle(R.string.menu_sk_ta);
+                this.activity.setTitle(R.string.menu_sk_ta);
                 methodHelper.applyFragment(new ProdiSKTAFragment(),"ProdiSKTAFragment");
                 break;
             default:
@@ -92,22 +94,22 @@ public class ProdiConcrete implements ProdiMediator {
             case "ProgressDialog":
                 switch (event){
                     case SET:
-                        progressDialog = new ProgressDialog(appCompatActivity);
-                        progressDialog.setMessage(appCompatActivity.getString(org.d3ifcool.finpro.R.string.text_progress_dialog));
+                        progressDialog = new ProgressDialog(activity);
+                        progressDialog.setMessage(activity.getString(org.d3ifcool.finpro.R.string.text_progress_dialog));
                         break;
                 }
                 break;
             case "SessionManager":
                 switch (event){
                     case SET:
-                        sessionManager = new SessionManager(this.appCompatActivity);
+                        sessionManager = new SessionManager(this.activity);
                         break;
                 }
                 break;
             case "AlertDialog":
                 switch (event){
                     case SET:
-                        alertDialog = new AlertDialog.Builder(appCompatActivity).setIcon(android.R.drawable.ic_dialog_alert).setNegativeButton("Batal",null);
+                        alertDialog = new AlertDialog.Builder(activity).setIcon(android.R.drawable.ic_dialog_alert).setNegativeButton("Batal",null);
                         break;
                     case "logout":
                         alertDialog
@@ -115,12 +117,12 @@ public class ProdiConcrete implements ProdiMediator {
                                 .setMessage(R.string.dialog_keluar_text)
                                 .setPositiveButton("Keluar", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                        Intent intentKeluar = new Intent(appCompatActivity, AuthActivity.class);
-                                        appCompatActivity.startActivity(intentKeluar);
+                                        Intent intentKeluar = new Intent(activity, AuthActivity.class);
+                                        activity.startActivity(intentKeluar);
                                         authManager.logout(sessionManager.getSessionToken());
                                         sessionManager.removeSession();
-                                        authManager.initContext(appCompatActivity);
-                                        appCompatActivity.finish();
+                                        authManager.initContext(activity);
+                                        activity.finish();
                                     }
                                 })
                                 .show();
@@ -133,8 +135,8 @@ public class ProdiConcrete implements ProdiMediator {
     }
 
     private void selectIntent(Class aClass){
-        Intent intent = new Intent(appCompatActivity, aClass);
-        appCompatActivity.startActivity(intent);
+        Intent intent = new Intent(activity, aClass);
+        activity.startActivity(intent);
     }
 
     public ProgressDialog getProgressDialog(){

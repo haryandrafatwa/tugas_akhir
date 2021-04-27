@@ -37,12 +37,12 @@ import static org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl.URL_FOTO_DOSEN;
  * -----------------------------------------
  * id.amirisback.frogobox
  */
-public class KoorDosenViewAdapter extends RecyclerView.Adapter<KoorDosenViewAdapter.ViewHolder> {
+public class ProdiDosenViewAdapter extends RecyclerView.Adapter<ProdiDosenViewAdapter.ViewHolder> {
     private Context context;
     private ArrayList<Dosen> dosens;
     private int layoutType;
 
-    public KoorDosenViewAdapter(Context context) {
+    public ProdiDosenViewAdapter(Context context) {
         this.context = context;
     }
 

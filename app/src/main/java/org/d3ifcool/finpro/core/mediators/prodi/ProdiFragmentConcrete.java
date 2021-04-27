@@ -1,17 +1,11 @@
 package org.d3ifcool.finpro.core.mediators.prodi;
 
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -20,18 +14,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.mediators.interfaces.prodi.ProdiFragmentMediator;
-import org.d3ifcool.finpro.prodi.adapters.KoorDosenViewAdapter;
+import org.d3ifcool.finpro.prodi.adapters.ProdiDosenViewAdapter;
 import org.d3ifcool.finpro.prodi.adapters.ProdiInformasiViewAdapter;
 import org.d3ifcool.finpro.prodi.adapters.ProdiMahasiswaViewAdapter;
 import org.d3ifcool.finpro.prodi.adapters.ProdiPlotPembimbingViewAdapter;
 import org.d3ifcool.finpro.prodi.adapters.ProdiPlottingViewAdapter;
 import org.d3ifcool.finpro.prodi.adapters.ProdiSKTAViewAdapter;
-
-import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.FILE_TYPE_PDF;
-import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.FILE_TYPE_XLS;
-import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.FILE_TYPE_XLSX;
-import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.PICK_EXCEL_REQUEST;
-import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.PICK_PDF_REQUEST;
 
 public class ProdiFragmentConcrete implements ProdiFragmentMediator {
 
@@ -44,7 +32,7 @@ public class ProdiFragmentConcrete implements ProdiFragmentMediator {
     private ProgressDialog progressDialog;
     private TextView tv_status, tv_download, tv_hapus;
 
-    private KoorDosenViewAdapter koorDosenViewAdapter;
+    private ProdiDosenViewAdapter prodiDosenViewAdapter;
     private ProdiMahasiswaViewAdapter prodiMahasiswaViewAdapter;
     private ProdiInformasiViewAdapter prodiInformasiViewAdapter;
     private ProdiPlottingViewAdapter prodiPlottingViewAdapter;
@@ -91,8 +79,8 @@ public class ProdiFragmentConcrete implements ProdiFragmentMediator {
                 uploadFAB = view.findViewById(R.id.act_prodi_form_excel_fab);
                 break;
             case"ProdiDosenAdapter":
-                koorDosenViewAdapter = new KoorDosenViewAdapter(view.getContext());
-                koorDosenViewAdapter.setLayoutType(R.layout.content_list_koor_dosen);
+                prodiDosenViewAdapter = new ProdiDosenViewAdapter(view.getContext());
+                prodiDosenViewAdapter.setLayoutType(R.layout.content_list_koor_dosen);
                 break;
             case "ProdiMahasiswaAdapter":
                 prodiMahasiswaViewAdapter = new ProdiMahasiswaViewAdapter(view.getContext());
@@ -180,8 +168,8 @@ public class ProdiFragmentConcrete implements ProdiFragmentMediator {
     }
 
     @Override
-    public KoorDosenViewAdapter getKoorDosenAdapter() {
-        return this.koorDosenViewAdapter;
+    public ProdiDosenViewAdapter getKoorDosenAdapter() {
+        return this.prodiDosenViewAdapter;
     }
 
     @Override

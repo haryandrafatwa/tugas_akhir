@@ -4,7 +4,6 @@ import androidx.test.rule.ActivityTestRule;
 
 import org.d3ifcool.finpro.HelperTest;
 import org.d3ifcool.finpro.R;
-import org.d3ifcool.finpro.activities.ProdiMainActivitys;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

@@ -5,13 +5,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.IdRes;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.d3ifcool.finpro.prodi.adapters.KoorDosenViewAdapter;
+import org.d3ifcool.finpro.prodi.adapters.ProdiDosenViewAdapter;
 import org.d3ifcool.finpro.prodi.adapters.ProdiInformasiViewAdapter;
 import org.d3ifcool.finpro.prodi.adapters.ProdiMahasiswaViewAdapter;
 import org.d3ifcool.finpro.prodi.adapters.ProdiPlotPembimbingViewAdapter;
@@ -32,7 +31,7 @@ public interface ProdiFragmentMediator {
     View getView();
     SwipeRefreshLayout getRefreshLayout();
     ProgressDialog getProgressDialog();
-    KoorDosenViewAdapter getKoorDosenAdapter();
+    ProdiDosenViewAdapter getKoorDosenAdapter();
     ProdiMahasiswaViewAdapter getKoorMahasiswaAdapter();
     ProdiInformasiViewAdapter getKoorInformasiAdapter();
     ProdiPlottingViewAdapter getKoorPlottingAdapter();

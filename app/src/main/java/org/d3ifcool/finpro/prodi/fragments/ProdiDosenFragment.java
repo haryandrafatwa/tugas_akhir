@@ -1,9 +1,13 @@
 package org.d3ifcool.finpro.prodi.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
@@ -11,58 +15,63 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import org.d3ifcool.finpro.core.interfaces.lists.DosenListView;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.ProdiFragmentMediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ProdiFragmentConcrete;
+import org.d3ifcool.finpro.App;
+import org.d3ifcool.finpro.core.helpers.MethodHelper;
+import org.d3ifcool.finpro.core.interfaces.DosenContract;
+import org.d3ifcool.finpro.core.mediators.prodi.ProdiConcrete;
 import org.d3ifcool.finpro.core.models.Dosen;
-import org.d3ifcool.finpro.core.presenters.DosenPresenters;
-import org.d3ifcool.finpro.prodi.activities.editor.create.ProdiDosenTambahActivity;
+import org.d3ifcool.finpro.core.presenters.prodi.DosenPresenter;
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.databinding.FragmentProdiDosenBinding;
+import org.d3ifcool.finpro.prodi.activities.editor.create.ProdiDosenTambahActivity;
+import org.d3ifcool.finpro.prodi.adapters.ProdiDosenViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProdiDosenFragment extends Fragment implements DosenListView {
+public class ProdiDosenFragment extends Fragment implements DosenContract.ViewModel {
 
     private ArrayList<Dosen> arrayList = new ArrayList<>();
-    private DosenPresenters dosenPresenters;
 
-    private ProdiFragmentMediator mediator;
+    private DosenPresenter dosenPresenter;
+    private ProdiConcrete mediator;
+    private FragmentProdiDosenBinding binding;
 
-
-    public ProdiDosenFragment() {
-        // Required empty public constructor
-    }
-
+    private ProdiDosenViewAdapter viewAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_koor_dosen, container, false);
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_prodi_dosen,container,false);
+        View view = binding.getRoot();
 
-        dosenPresenters = new DosenPresenters(this);
-        dosenPresenters.initContext(getContext());
+        viewAdapter = new ProdiDosenViewAdapter(App.self());
+        dosenPresenter = new DosenPresenter(this);
+        mediator = new ProdiConcrete((AppCompatActivity) getActivity());
+        mediator.message("ProgressDialog","set");
 
-        mediator = new ProdiFragmentConcrete(view);
-        mediator.message("RefreshLayout");
-        mediator.message("RecycleView");
-        mediator.message("EmptyView");
-        mediator.message("ProgressDialog");
-        mediator.message("ProdiDosenAdapter");
-        mediator.message("FloatingAButton", ProdiDosenTambahActivity.class);
-
-        dosenPresenters.getDosen();
-
-        mediator.getRefreshLayout().setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        viewAdapter.setLayoutType(R.layout.content_list_koor_dosen);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        binding.refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                dosenPresenters.getDosen();
+                dosenPresenter.getAllDosen();
             }
         });
+        binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),ProdiDosenTambahActivity.class);
+                startActivity(intent);
+            }
+        });
+        dosenPresenter.getAllDosen();
 
         return view;
     }
@@ -70,7 +79,7 @@ public class ProdiDosenFragment extends Fragment implements DosenListView {
     @Override
     public void onResume() {
         super.onResume();
-        dosenPresenters.getDosen();
+        dosenPresenter.getAllDosen();
     }
 
     @Override
@@ -84,29 +93,41 @@ public class ProdiDosenFragment extends Fragment implements DosenListView {
     }
 
     @Override
-    public void onGetListDosen(List<Dosen> dosen) {
+    public void onGetObjectDosen(Dosen dosen) {
 
+    }
+
+    @Override
+    public void isEmptyObjectDosen() {
+
+    }
+
+    @Override
+    public void onGetListDosen(List<Dosen> dosen) {
         arrayList.clear();
         arrayList.addAll(dosen);
-
-        mediator.getKoorDosenAdapter().setDosens(arrayList);
-        mediator.getRecycleView().setAdapter(mediator.getKoorDosenAdapter());
-        mediator.getRefreshLayout().setRefreshing(false);
-
-        if (arrayList.size() == 0) {
-            mediator.getView().setVisibility(View.VISIBLE);
-        } else {
-            mediator.getView().setVisibility(View.GONE);
+        viewAdapter.setDosens(arrayList);
+        binding.recyclerView.setAdapter(viewAdapter);
+        binding.refresh.setRefreshing(false);
+        if (arrayList.size() == 0){
+            binding.includeLayout.viewEmptyview.setVisibility(View.VISIBLE);
+        }else{
+            binding.includeLayout.viewEmptyview.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void isEmptyListDosen() {
-        mediator.getView().setVisibility(View.VISIBLE);
+        binding.includeLayout.viewEmptyview.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onSuccess() {
+
     }
 
     @Override
     public void onFailed(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        Toasty.error(getContext(), message, Toasty.LENGTH_SHORT).show();
     }
 }

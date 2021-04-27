@@ -33,9 +33,6 @@
 
         <activity android:name=".FirebaseActivity" />
         <activity
-            android:name=".activities.ProdiMainActivitys"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".activities.AuthActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar">
