@@ -13,21 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.SessionManager;
-import org.d3ifcool.finpro.core.interfaces.DosenContract;
 import org.d3ifcool.finpro.core.interfaces.ProdiContract;
 import org.d3ifcool.finpro.core.mediators.interfaces.prodi.ProdiMediator;
 import org.d3ifcool.finpro.core.mediators.prodi.NavigationProdiMediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ToolbarMediator;
-import org.d3ifcool.finpro.core.models.Dosen;
+import org.d3ifcool.finpro.core.mediators.prodi.ProdiConcrete;
 import org.d3ifcool.finpro.core.models.Koordinator;
 import org.d3ifcool.finpro.core.presenters.prodi.ProdiPresenter;
 import org.d3ifcool.finpro.databinding.ActivityAdminMainBinding;
@@ -40,9 +36,7 @@ public class ProdiMainActivity extends AppCompatActivity implements ProdiContrac
 
     private ProdiPresenter mPresenter;
     private ActivityAdminMainBinding mBinding;
-    private SessionManager sessionManager;
-
-    private ProgressDialog progressDialog;
+    private ProdiConcrete mediator;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
@@ -53,19 +47,22 @@ public class ProdiMainActivity extends AppCompatActivity implements ProdiContrac
         mBinding.setPresenter(mPresenter);
 
 
-        sessionManager = new SessionManager(this);
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(getString(org.d3ifcool.finpro.R.string.text_progress_dialog));
+//        sessionManager = new SessionManager(this);
 
-        mPresenter.getProdiByNIP(sessionManager.getSessionToken(),sessionManager.getSessionUsername());
+        mediator = new ProdiConcrete(this);
+        mediator.message("SessionManager","set");
+
+        mediator.message("ProgressDialog","set");
+
+        mPresenter.getProdiByNIP(mediator.getSessionManager().getSessionToken(),mediator.getSessionManager().getSessionUsername());
 
         setSupportActionBar(mBinding.includeLayout.toolbar);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,mBinding.drawerLayout,mBinding.includeLayout.toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         mBinding.drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        ((TextView)mBinding.navView.getHeaderView(0).findViewById(R.id.tv_nama)).setText(sessionManager.getSessionKoorNama());
-        if (sessionManager.getSessionUsername().equalsIgnoreCase("admin_prodi")){
+        ((TextView)mBinding.navView.getHeaderView(0).findViewById(R.id.tv_nama)).setText(mediator.getSessionManager().getSessionKoorNama());
+        if (mediator.getSessionManager().getSessionUsername().equalsIgnoreCase("admin_prodi")){
             ((TextView) mBinding.navView.getHeaderView(0).findViewById(R.id.tv_role)).setText(R.string.title_koor_prodi);
         }else{
             ((TextView) mBinding.navView.getHeaderView(0).findViewById(R.id.tv_role)).setText(R.string.title_koor_lak);
@@ -85,8 +82,7 @@ public class ProdiMainActivity extends AppCompatActivity implements ProdiContrac
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        ProdiMediator mdt = new NavigationProdiMediator(this);
-        mdt.Notify(item.getItemId());
+        mediator.Notify(item.getItemId());
         mBinding.drawerLayout.closeDrawer(GravityCompat.START);
         item.setCheckable(true);
         return true;
@@ -94,40 +90,7 @@ public class ProdiMainActivity extends AppCompatActivity implements ProdiContrac
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.toolbar_menu_pemberitahuan:
-                Intent intentPemberitahuan = new Intent(this, KoorPemberitahuanActivity.class);
-                startActivity(intentPemberitahuan);
-                break;
-
-            case R.id.toolbar_menu_profil:
-                Intent intentProfil = new Intent(this, KoorProfilActivity.class);
-                startActivity(intentProfil);
-                break;
-
-            case R.id.toolbar_menu_keluar:
-                new AlertDialog
-                        .Builder(this)
-                        .setTitle(R.string.dialog_keluar_title)
-                        .setMessage(R.string.dialog_keluar_text)
-                        .setPositiveButton("Keluar", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intentKeluar = new Intent(ProdiMainActivity.this, AuthActivity.class);
-                                startActivity(intentKeluar);
-                                mPresenter.logout(sessionManager.getSessionToken());
-                                sessionManager.removeSession();
-                                finish();
-                            }
-                        })
-
-                        .setNegativeButton("Batal", null)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-
-                break;
-            default:
-                break;
-        }
+        mediator.Notify(item.getItemId());
         return super.onOptionsItemSelected(item);
     }
 
@@ -142,17 +105,17 @@ public class ProdiMainActivity extends AppCompatActivity implements ProdiContrac
 
     @Override
     public void showProgress() {
-
+        mediator.getProgressDialog().show();
     }
 
     @Override
     public void hideProgress() {
-
+        mediator.getProgressDialog().dismiss();
     }
 
     @Override
     public void onGetObjectProdi(Koordinator prodi) {
-        sessionManager.createSessionDataKoor(prodi);
+        mediator.getSessionManager().createSessionDataKoor(prodi);
     }
 
     @Override

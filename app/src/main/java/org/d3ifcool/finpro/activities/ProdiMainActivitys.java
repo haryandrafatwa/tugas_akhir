@@ -12,15 +12,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.core.interfaces.ProdiContract;
 import org.d3ifcool.finpro.core.interfaces.objects.ProdiView;
-import org.d3ifcool.finpro.core.mediators.prodi.ToolbarMediator;
+import org.d3ifcool.finpro.core.mediators.prodi.ProdiConcrete;
 import org.d3ifcool.finpro.core.models.Koordinator;
 import org.d3ifcool.finpro.core.presenters.ProdiPresenters;
 import org.d3ifcool.finpro.core.mediators.prodi.NavigationProdiMediator;
 import org.d3ifcool.finpro.core.mediators.interfaces.prodi.ProdiMediator;
+import org.d3ifcool.finpro.core.presenters.prodi.ProdiPresenter;
+
+import java.util.List;
 
 public class ProdiMainActivitys extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ProdiView {
+        implements NavigationView.OnNavigationItemSelectedListener, ProdiContract.ViewModel {
 
     private ProdiMediator prodiMediator;
 
@@ -29,25 +33,24 @@ public class ProdiMainActivitys extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_main);
 
-        prodiMediator = new ToolbarMediator(this);
+        prodiMediator = new ProdiConcrete(this);
         prodiMediator.Notify(R.id.toolbar);
-        setSupportActionBar(prodiMediator.getToolbar());
+//        setSupportActionBar(prodiMediator.getToolbar());
 
         prodiMediator.Notify(R.id.drawer_layout);
-        prodiMediator.message("ActionBarDrawerToggle");
+//        prodiMediator.message("ActionBarDrawerToggle");
 
-        prodiMediator.message("SessionManager");
-        ProdiPresenters prodiPresenters = new ProdiPresenters(this);
-        prodiPresenters.initContext(this);
+//        prodiMediator.message("SessionManager");
+        ProdiPresenter prodiPresenter = new ProdiPresenter(this);
 
-        prodiPresenters.getKoorByParameter(prodiMediator.getSessionManager().getSessionToken(),
-                prodiMediator.getSessionManager().getSessionUsername());
+//        prodiPresenters.getKoorByParameter(prodiMediator.getSessionManager().getSessionToken(),
+//                prodiMediator.getSessionManager().getSessionUsername());
 
         prodiMediator.Notify(R.id.nav_view);
-        prodiMediator.getNavigationView().setNavigationItemSelectedListener(this);
+//        prodiMediator.getNavigationView().setNavigationItemSelectedListener(this);
 
-        prodiMediator.getNavigationView().getMenu().getItem(0).setChecked(true);
-        onNavigationItemSelected(prodiMediator.getNavigationView().getMenu().getItem(0));
+//        prodiMediator.getNavigationView().getMenu().getItem(0).setChecked(true);
+//        onNavigationItemSelected(prodiMediator.getNavigationView().getMenu().getItem(0));
 
     }
 
@@ -85,7 +88,7 @@ public class ProdiMainActivitys extends AppCompatActivity
         ProdiMediator mdt = new NavigationProdiMediator(this);
         mdt.Notify(item.getItemId());
 
-        prodiMediator.getDrawer().closeDrawer(GravityCompat.START);
+//        prodiMediator.getDrawer().closeDrawer(GravityCompat.START);
         item.setCheckable(true);
 
         return true;
@@ -102,12 +105,27 @@ public class ProdiMainActivitys extends AppCompatActivity
     }
 
     @Override
-    public void onGetObjectKoor(Koordinator koordinator) {
-        prodiMediator.getSessionManager().createSessionDataKoor(koordinator);
+    public void onGetObjectProdi(Koordinator prodi) {
+
     }
 
     @Override
-    public void isEmptyObjectKoor() {
+    public void isEmptyObjectProdi() {
+
+    }
+
+    @Override
+    public void onGetListProdi(List<Koordinator> prodiList) {
+
+    }
+
+    @Override
+    public void isEmptyListProdi() {
+
+    }
+
+    @Override
+    public void onSuccess() {
 
     }
 

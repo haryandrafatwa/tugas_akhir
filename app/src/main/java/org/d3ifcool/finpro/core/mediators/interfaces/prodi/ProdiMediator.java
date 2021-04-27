@@ -13,10 +13,6 @@ import org.d3ifcool.finpro.core.helpers.SessionManager;
 public interface ProdiMediator {
 
     void Notify(@IdRes int id);
-    void message(String event);
-    Toolbar getToolbar();
-    DrawerLayout getDrawer();
-    NavigationView getNavigationView();
-    SessionManager getSessionManager();
+    void message(String component, String event);
 
 }
