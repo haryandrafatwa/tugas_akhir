@@ -1,19 +1,14 @@
 package org.d3ifcool.finpro.core.mediators.prodi;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
 
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.activities.AuthActivity;
@@ -38,6 +33,7 @@ public class ProdiConcrete implements ProdiMediator {
     private SessionManager sessionManager;
     private AlertDialog.Builder alertDialog;
     private ProgressDialog progressDialog;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
 
     public ProdiConcrete(AppCompatActivity activity) {
@@ -137,6 +133,14 @@ public class ProdiConcrete implements ProdiMediator {
     private void selectIntent(Class aClass){
         Intent intent = new Intent(activity, aClass);
         activity.startActivity(intent);
+    }
+    public void setActionBarDrawerToggle(DrawerLayout drawerLayout, Toolbar toolbar) {
+        actionBarDrawerToggle = new ActionBarDrawerToggle(activity,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        actionBarDrawerToggle.syncState();
+    }
+
+    public ActionBarDrawerToggle getActionBarDrawerToggle() {
+        return actionBarDrawerToggle;
     }
 
     public ProgressDialog getProgressDialog(){
