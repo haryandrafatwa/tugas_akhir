@@ -40,7 +40,6 @@ import static org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl.URL_FOTO_DOSEN;
 public class ProdiDosenViewAdapter extends RecyclerView.Adapter<ProdiDosenViewAdapter.ViewHolder> {
     private Context context;
     private ArrayList<Dosen> dosens;
-    private int layoutType;
 
     public ProdiDosenViewAdapter(Context context) {
         this.context = context;
@@ -52,14 +51,9 @@ public class ProdiDosenViewAdapter extends RecyclerView.Adapter<ProdiDosenViewAd
         notifyDataSetChanged();
     }
 
-
-    public void setLayoutType(int layoutType) {
-        this.layoutType = layoutType;
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(layoutType, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.content_list_koor_dosen, parent, false);
         return new ViewHolder(view);
     }
 

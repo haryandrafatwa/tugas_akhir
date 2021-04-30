@@ -24,6 +24,7 @@ import org.d3ifcool.finpro.core.presenters.prodi.DosenPresenter;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.databinding.FragmentProdiDosenBinding;
 import org.d3ifcool.finpro.prodi.activities.editor.create.ProdiDosenTambahActivity;
+import org.d3ifcool.finpro.prodi.activities.editor.create.ProdiInformasiTambahActivity;
 import org.d3ifcool.finpro.prodi.adapters.ProdiDosenViewAdapter;
 
 import java.util.ArrayList;
@@ -42,8 +43,6 @@ public class ProdiDosenFragment extends Fragment implements DosenContract.ViewMo
     private ProdiConcrete mediator;
     private FragmentProdiDosenBinding binding;
 
-    private ProdiDosenViewAdapter viewAdapter;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,26 +50,24 @@ public class ProdiDosenFragment extends Fragment implements DosenContract.ViewMo
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_prodi_dosen,container,false);
         View view = binding.getRoot();
 
-        viewAdapter = new ProdiDosenViewAdapter(App.self());
         dosenPresenter = new DosenPresenter(this);
         mediator = new ProdiConcrete((AppCompatActivity) getActivity());
         mediator.message("ProgressDialog","set");
+        mediator.message("DosenViewAdapter","set");
+        mediator.setFloatingActionButton(binding.floatingActionButton, ProdiDosenTambahActivity.class);
 
-        viewAdapter.setLayoutType(R.layout.content_list_koor_dosen);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        binding.refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mediator.setRecyclerView(binding.recyclerView);
+
+        mediator.setRefreshLayout(binding.refresh);
+        mediator.getRefreshLayout().setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 dosenPresenter.getAllDosen();
             }
         });
-        binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),ProdiDosenTambahActivity.class);
-                startActivity(intent);
-            }
-        });
+
+        mediator.setRelativeLayout(binding.includeLayout.viewEmptyview);
+
         dosenPresenter.getAllDosen();
 
         return view;
@@ -106,19 +103,19 @@ public class ProdiDosenFragment extends Fragment implements DosenContract.ViewMo
     public void onGetListDosen(List<Dosen> dosen) {
         arrayList.clear();
         arrayList.addAll(dosen);
-        viewAdapter.setDosens(arrayList);
-        binding.recyclerView.setAdapter(viewAdapter);
-        binding.refresh.setRefreshing(false);
+        mediator.getDosenViewAdapter().setDosens(arrayList);
+        mediator.getRecyclerView().setAdapter(mediator.getDosenViewAdapter());
+        mediator.getRefreshLayout().setRefreshing(false);
         if (arrayList.size() == 0){
-            binding.includeLayout.viewEmptyview.setVisibility(View.VISIBLE);
+            mediator.getRelativeLayout().setVisibility(View.VISIBLE);
         }else{
-            binding.includeLayout.viewEmptyview.setVisibility(View.GONE);
+            mediator.getRelativeLayout().setVisibility(View.GONE);
         }
     }
 
     @Override
     public void isEmptyListDosen() {
-        binding.includeLayout.viewEmptyview.setVisibility(View.VISIBLE);
+        mediator.getRelativeLayout().setVisibility(View.VISIBLE);
     }
 
     @Override
