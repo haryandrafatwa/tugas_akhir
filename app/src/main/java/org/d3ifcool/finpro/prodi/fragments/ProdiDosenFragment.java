@@ -41,14 +41,12 @@ public class ProdiDosenFragment extends Fragment implements DosenContract.ViewMo
 
     private DosenPresenter dosenPresenter;
     private ProdiConcrete mediator;
-    private FragmentProdiDosenBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_prodi_dosen,container,false);
-        View view = binding.getRoot();
+        FragmentProdiDosenBinding binding = DataBindingUtil.inflate(inflater,R.layout.fragment_prodi_dosen,container,false);
 
         dosenPresenter = new DosenPresenter(this);
         mediator = new ProdiConcrete((AppCompatActivity) getActivity());
@@ -70,7 +68,7 @@ public class ProdiDosenFragment extends Fragment implements DosenContract.ViewMo
 
         dosenPresenter.getAllDosen();
 
-        return view;
+        return binding.getRoot();
     }
 
     @Override

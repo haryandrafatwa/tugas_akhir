@@ -115,6 +115,12 @@ public class ProdiConcrete implements ProdiMediator {
                         progressDialog = new ProgressDialog(activity);
                         progressDialog.setMessage(activity.getString(org.d3ifcool.finpro.R.string.text_progress_dialog));
                         break;
+                    case "show":
+                        progressDialog.show();
+                        break;
+                    case "dismiss":
+                        progressDialog.dismiss();
+                        break;
                 }
                 break;
             case "SessionManager":

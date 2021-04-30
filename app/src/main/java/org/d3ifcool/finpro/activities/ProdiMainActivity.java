@@ -75,12 +75,12 @@ public class ProdiMainActivity extends AppCompatActivity implements ProdiContrac
 
     @Override
     public void showProgress() {
-        mediator.getProgressDialog().show();
+        mediator.message("ProgressDialog","show");
     }
 
     @Override
     public void hideProgress() {
-        mediator.getProgressDialog().dismiss();
+        mediator.message("ProgressDialog","dismiss");
     }
 
     @Override
