@@ -16,6 +16,7 @@ import org.d3ifcool.finpro.core.mediators.interfaces.prodi.ProdiFragmentMediator
 import org.d3ifcool.finpro.core.mediators.prodi.ProdiFragmentConcrete;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
+import org.d3ifcool.finpro.core.presenters.MahasiswaPresenters;
 import org.d3ifcool.finpro.prodi.activities.editor.create.ProdiMahasiswaTambahActivity;
 import org.d3ifcool.finpro.R;
 
@@ -28,7 +29,7 @@ import java.util.List;
 public class ProdiMahasiswaFragment extends Fragment implements MahasiswaListView {
 
     private ArrayList<Mahasiswa> arrayList = new ArrayList<>();
-    private MahasiswaPresenter mahasiswaPresenter;
+    private MahasiswaPresenters mahasiswaPresenter;
     private ProdiFragmentMediator mediator;
 
     public ProdiMahasiswaFragment() {
@@ -51,7 +52,7 @@ public class ProdiMahasiswaFragment extends Fragment implements MahasiswaListVie
         mediator.message("ProdiMahasiswaAdapter");
         mediator.message("FloatingAButton", ProdiMahasiswaTambahActivity.class);
 
-        mahasiswaPresenter = new MahasiswaPresenter(this);
+        mahasiswaPresenter = new MahasiswaPresenters(this);
         mahasiswaPresenter.initContext(getContext());
         mahasiswaPresenter.getMahasiswa();
 

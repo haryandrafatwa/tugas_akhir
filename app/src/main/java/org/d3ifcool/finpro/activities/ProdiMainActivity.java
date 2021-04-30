@@ -11,12 +11,13 @@ import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.interfaces.ProdiContract;
 import org.d3ifcool.finpro.core.mediators.prodi.ProdiConcrete;
 import org.d3ifcool.finpro.core.models.Koordinator;
-import org.d3ifcool.finpro.core.presenters.prodi.ProdiPresenter;
+import org.d3ifcool.finpro.core.presenters.ProdiPresenter;
 import org.d3ifcool.finpro.databinding.ActivityAdminMainBinding;
 
 import java.util.List;
 
-public class ProdiMainActivity extends AppCompatActivity implements ProdiContract.ViewModel, NavigationView.OnNavigationItemSelectedListener {
+public class ProdiMainActivity extends AppCompatActivity implements ProdiContract.ViewModel,
+        NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityAdminMainBinding mBinding;
     private ProdiConcrete mediator;
@@ -31,7 +32,8 @@ public class ProdiMainActivity extends AppCompatActivity implements ProdiContrac
         mediator.message("SessionManager","set");
         mediator.message("ProgressDialog","set");
 
-        mPresenter.getProdiByNIP(mediator.getSessionManager().getSessionToken(),mediator.getSessionManager().getSessionUsername());
+        mPresenter.getProdiByNIP(mediator.getSessionManager().getSessionToken(),
+                mediator.getSessionManager().getSessionUsername());
 
         setSupportActionBar(mBinding.includeLayout.toolbar);
 

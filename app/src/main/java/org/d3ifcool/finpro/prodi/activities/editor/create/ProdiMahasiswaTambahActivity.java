@@ -14,10 +14,11 @@ import org.d3ifcool.finpro.core.mediators.prodi.ProdiActivityConcrete;
 import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.core.presenters.MahasiswaPresenters;
 
 public class ProdiMahasiswaTambahActivity extends AppCompatActivity implements MahasiswaWorkView {
 
-    private MahasiswaPresenter mahasiswaPresenter;
+    private MahasiswaPresenters mahasiswaPresenter;
     private ProdiActivityMediator mediator;
     private String nama,nim;
 
@@ -29,7 +30,7 @@ public class ProdiMahasiswaTambahActivity extends AppCompatActivity implements M
         setTitle(getString(R.string.title_mahasiswa_tambah));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mahasiswaPresenter = new MahasiswaPresenter(this);
+        mahasiswaPresenter = new MahasiswaPresenters(this);
         mahasiswaPresenter.initContext(this);
 
         mediator = new ProdiActivityConcrete(this);

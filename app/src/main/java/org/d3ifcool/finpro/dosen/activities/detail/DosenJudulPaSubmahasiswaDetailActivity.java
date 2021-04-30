@@ -27,6 +27,7 @@ import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.core.models.ProyekAkhir;
 import org.d3ifcool.finpro.core.presenters.JudulPresenter;
 import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
+import org.d3ifcool.finpro.core.presenters.MahasiswaPresenters;
 import org.d3ifcool.finpro.core.presenters.ProyekAkhirPresenter;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class DosenJudulPaSubmahasiswaDetailActivity extends AppCompatActivity im
 
     private ProyekAkhirPresenter proyekAkhirPresenter;
     private JudulPresenter judulPresenter;
-    private MahasiswaPresenter mahasiswaPresenter;
+    private MahasiswaPresenters mahasiswaPresenter;
 
     private ProgressDialog progressDialog;
     private int extraJudulId;
@@ -63,7 +64,7 @@ public class DosenJudulPaSubmahasiswaDetailActivity extends AppCompatActivity im
 
         proyekAkhirPresenter = new ProyekAkhirPresenter(this, this);
         judulPresenter = new JudulPresenter(this);
-        mahasiswaPresenter = new MahasiswaPresenter(this);
+        mahasiswaPresenter = new MahasiswaPresenters(this);
 
         proyekAkhirPresenter.initContext(this);
         judulPresenter.initContext(this);

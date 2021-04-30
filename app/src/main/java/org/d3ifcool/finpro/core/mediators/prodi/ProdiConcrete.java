@@ -106,7 +106,8 @@ public class ProdiConcrete implements ProdiMediator {
             case "DosenViewAdapter":
                 switch (event){
                     case SET:
-                        dosenViewAdapter = new ProdiDosenViewAdapter(App.self());
+                        dosenViewAdapter = new ProdiDosenViewAdapter(activity);
+                        break;
                 }
                 break;
             case "ProgressDialog":

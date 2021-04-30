@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import org.d3ifcool.finpro.core.models.Mahasiswa;
-import org.d3ifcool.finpro.prodi.activities.detail.KoorMahasiswaDetailActivity;
+import org.d3ifcool.finpro.prodi.activities.detail.ProdiMahasiswaDetailActivity;
 import org.d3ifcool.finpro.R;
 
 import java.util.ArrayList;
@@ -136,9 +136,9 @@ public class ProdiMahasiswaViewAdapter extends RecyclerView.Adapter<ProdiMahasis
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, KoorMahasiswaDetailActivity.class);
+                Intent intent = new Intent(mContext, ProdiMahasiswaDetailActivity.class);
                 Mahasiswa parcelMahasiswa = mMahasiswa.get(position);
-                intent.putExtra(KoorMahasiswaDetailActivity.EXTRA_MAHASISWA, parcelMahasiswa);
+                intent.putExtra(ProdiMahasiswaDetailActivity.EXTRA_MAHASISWA, parcelMahasiswa);
                 mContext.startActivity(intent);
             }
         });

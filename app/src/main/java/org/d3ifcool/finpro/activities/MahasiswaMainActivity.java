@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.interfaces.objects.MahasiswaView;
+import org.d3ifcool.finpro.core.presenters.MahasiswaPresenters;
 import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaJadwalKegiatanActivity;
 import org.d3ifcool.finpro.mahasiswa.fragments.parent.MahasiswaInformasiFragment;
 import org.d3ifcool.finpro.mahasiswa.fragments.parent.MahasiswaJudulPaFragment;
@@ -44,7 +45,7 @@ public class MahasiswaMainActivity extends AppCompatActivity implements Mahasisw
         //    private ViewPager mViewPager;
         BottomNavigationView bottomNavigationView = findViewById(R.id.act_mhs_home_bottom_navigation);
         sessionManager = new SessionManager(this);
-        MahasiswaPresenter mahasiswaPresenter = new MahasiswaPresenter(this);
+        MahasiswaPresenters mahasiswaPresenter = new MahasiswaPresenters(this);
         mahasiswaPresenter.initContext(this);
 
         mahasiswaPresenter.getMahasiswaByParameter(sessionManager.getSessionUsername());

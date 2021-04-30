@@ -15,6 +15,7 @@ import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.interfaces.works.MahasiswaWorkView;
 import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
+import org.d3ifcool.finpro.core.presenters.MahasiswaPresenters;
 import org.d3ifcool.finpro.prodi.activities.editor.update.KoorMahasiswaUbahActivity;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class ProdiPlotPembimbingViewAdapter extends RecyclerView.Adapter<ProdiPl
     private Context context;
     private int layoutType;
     private String mhs_nim;
-    private MahasiswaPresenter mahasiswaPresenter;
+    private MahasiswaPresenters mahasiswaPresenter;
 
     public ProdiPlotPembimbingViewAdapter(Context context) {
         this.context = context;
@@ -58,7 +59,7 @@ public class ProdiPlotPembimbingViewAdapter extends RecyclerView.Adapter<ProdiPl
         this.mhs_nim = mhs_nim;
     }
 
-    public void setMahasiswaPresenter(MahasiswaPresenter mahasiswaPresenter) {
+    public void setMahasiswaPresenter(MahasiswaPresenters mahasiswaPresenter) {
         this.mahasiswaPresenter = mahasiswaPresenter;
     }
 

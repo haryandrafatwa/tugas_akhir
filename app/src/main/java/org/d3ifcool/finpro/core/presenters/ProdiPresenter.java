@@ -1,4 +1,4 @@
-package org.d3ifcool.finpro.core.presenters.prodi;
+package org.d3ifcool.finpro.core.presenters;
 
 import org.d3ifcool.finpro.App;
 import org.d3ifcool.finpro.core.interfaces.DosenContract;

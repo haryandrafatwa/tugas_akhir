@@ -18,10 +18,11 @@ import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.core.presenters.MahasiswaPresenters;
 
 public class KoorMahasiswaUbahActivity extends AppCompatActivity implements MahasiswaWorkView {
 
-    private MahasiswaPresenter mahasiswaPresenter;
+    private MahasiswaPresenters mahasiswaPresenter;
     private ProgressDialog progressDialog;
     private EditText et_nim,et_nama,et_angkatan, et_kontak, et_email;
     private Button btn_ubah;
@@ -37,7 +38,7 @@ public class KoorMahasiswaUbahActivity extends AppCompatActivity implements Maha
         setTitle(getString(R.string.title_mahasiswa_ubah));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mahasiswaPresenter = new MahasiswaPresenter(this);
+        mahasiswaPresenter = new MahasiswaPresenters(this);
         mahasiswaPresenter.initContext(this);
 
         progressDialog = new ProgressDialog(this);
@@ -88,7 +89,7 @@ public class KoorMahasiswaUbahActivity extends AppCompatActivity implements Maha
 //                                } else if (kontak_baru.isEmpty()) {
 //                                    et_kontak.setError("kontak harus di isi");
                                 } else {
-                                    mahasiswaPresenter.updateMahasiswa(extraMahasiswa.getMhs_nim(), nama_baru, angkatan_baru, kontak_baru, email_baru);
+                                    mahasiswaPresenter.updateMahasiswa(extraMahasiswa.getMhs_nim(), nama_baru, angkatan_baru, kontak_baru, email_baru,"judul");
 
                                 }
 //

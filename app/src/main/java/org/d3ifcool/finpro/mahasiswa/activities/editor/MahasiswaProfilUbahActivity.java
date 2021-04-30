@@ -17,6 +17,7 @@ import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.core.interfaces.works.MahasiswaWorkView;
 import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
+import org.d3ifcool.finpro.core.presenters.MahasiswaPresenters;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -29,7 +30,7 @@ public class MahasiswaProfilUbahActivity extends AppCompatActivity implements Ma
     private ProgressDialog progressDialog;
     private SessionManager sessionManager;
 
-    private MahasiswaPresenter mahasiswaPresenter;
+    private MahasiswaPresenters mahasiswaPresenter;
 
     private String nama_baru, angkatan_baru, kontak_baru, email_baru;
     private EditText et_nama, et_email, et_kontak;
@@ -50,7 +51,7 @@ public class MahasiswaProfilUbahActivity extends AppCompatActivity implements Ma
         progressDialog.setMessage(getString(R.string.text_progress_dialog));
 
         sessionManager = new SessionManager(this);
-        mahasiswaPresenter = new MahasiswaPresenter(this);
+        mahasiswaPresenter = new MahasiswaPresenters(this);
         mahasiswaPresenter.initContext(this);
 
         TextView tv_nim = findViewById(R.id.act_mhs_profil_nim);
@@ -109,7 +110,7 @@ public class MahasiswaProfilUbahActivity extends AppCompatActivity implements Ma
                 }
             }
 
-            mahasiswaPresenter.updateMahasiswa(sessionManager.getSessionMahasiswaNim(), nama_baru, angkatan_baru, kontak_baru, email_baru);
+            mahasiswaPresenter.updateMahasiswa(sessionManager.getSessionMahasiswaNim(), nama_baru, angkatan_baru, kontak_baru, email_baru,"Judul");
 
         }
     }
