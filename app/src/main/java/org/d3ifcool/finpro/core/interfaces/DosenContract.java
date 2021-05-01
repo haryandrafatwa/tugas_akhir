@@ -15,6 +15,7 @@ public interface DosenContract {
         void isEmptyListDosen();
         void onSuccess();
         void onFailed(String message);
+        void onClickFloatButton();
     }
 
     interface Presenter{

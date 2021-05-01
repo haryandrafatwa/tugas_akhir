@@ -123,4 +123,9 @@ public class ProdiDosenFragments extends Fragment implements DosenContract.ViewM
     public void onFailed(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onClickFloatButton() {
+
+    }
 }

@@ -24,6 +24,7 @@ import org.d3ifcool.finpro.core.helpers.MethodHelper;
 import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.core.mediators.interfaces.prodi.ProdiMediator;
 import org.d3ifcool.finpro.core.models.manager.AuthManager;
+import org.d3ifcool.finpro.core.models.manager.MahasiswaManager;
 import org.d3ifcool.finpro.prodi.activities.KoorPemberitahuanActivity;
 import org.d3ifcool.finpro.prodi.activities.KoorProfilActivity;
 import org.d3ifcool.finpro.prodi.activities.editor.create.ProdiDosenTambahActivity;
@@ -38,6 +39,7 @@ public class ProdiConcrete implements ProdiMediator {
 
     private AppCompatActivity activity;
     private AuthManager authManager;
+    private MahasiswaManager mahasiswaManager;
     private MethodHelper methodHelper;
 
     private ProdiDosenViewAdapter dosenViewAdapter;
@@ -75,6 +77,12 @@ public class ProdiConcrete implements ProdiMediator {
                 message("AlertDialog",SET);
                 message("AlertDialog","logout");
                 break;
+
+            case R.id.toolbar_menu_hapus:
+                message("AlertDialog",SET);
+                message("AlertDialog","hapus");
+                break;
+
             case R.id.nav_menu_informasi:
                 this.activity.setTitle(R.string.title_informasi);
                 methodHelper.applyFragment(new ProdiInformasiFragment(),"ProdiInformasiFragment");
@@ -152,6 +160,17 @@ public class ProdiConcrete implements ProdiMediator {
                                 })
                                 .show();
                         break;
+                    case "hapus":
+                        alertDialog
+                                .setTitle(R.string.dialog_hapus_title)
+                                .setMessage(R.string.dialog_hapus_text)
+                                .setPositiveButton("Iya", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    }
+                                });
+                        break;
                 }
                 break;
             default:
@@ -159,7 +178,7 @@ public class ProdiConcrete implements ProdiMediator {
         }
     }
 
-    private void selectIntent(Class aClass){
+    public void selectIntent(Class aClass){
         Intent intent = new Intent(activity, aClass);
         activity.startActivity(intent);
     }
@@ -178,46 +197,6 @@ public class ProdiConcrete implements ProdiMediator {
 
     public SessionManager getSessionManager(){
         return this.sessionManager;
-    }
-
-    public FloatingActionButton getFloatingActionButton() {
-        return floatingActionButton;
-    }
-
-    public void setFloatingActionButton(FloatingActionButton floatingActionButton, Class target) {
-        this.floatingActionButton = floatingActionButton;
-        this.floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(activity, target);
-                activity.startActivity(intent);
-            }
-        });
-    }
-
-    public RecyclerView getRecyclerView() {
-        return recyclerView;
-    }
-
-    public void setRecyclerView(RecyclerView recyclerView) {
-        this.recyclerView = recyclerView;
-        recyclerView.setLayoutManager(new LinearLayoutManager(App.self()));
-    }
-
-    public SwipeRefreshLayout getRefreshLayout() {
-        return refreshLayout;
-    }
-
-    public void setRefreshLayout(SwipeRefreshLayout refreshLayout) {
-        this.refreshLayout = refreshLayout;
-    }
-
-    public RelativeLayout getRelativeLayout() {
-        return relativeLayout;
-    }
-
-    public void setRelativeLayout(RelativeLayout relativeLayout) {
-        this.relativeLayout = relativeLayout;
     }
 
     public ProdiDosenViewAdapter getDosenViewAdapter() {

@@ -1,5 +1,7 @@
 package org.d3ifcool.finpro.core.presenters;
 
+import android.content.Intent;
+
 import org.d3ifcool.finpro.App;
 import org.d3ifcool.finpro.core.interfaces.DosenContract;
 import org.d3ifcool.finpro.core.models.manager.DosenManager;
@@ -38,5 +40,9 @@ public class DosenPresenter implements DosenContract.Presenter {
     @Override
     public void getDosenByNIP(String dsn_nip) {
 
+    }
+
+    public void floatButton(){
+        viewModel.onClickFloatButton();
     }
 }
