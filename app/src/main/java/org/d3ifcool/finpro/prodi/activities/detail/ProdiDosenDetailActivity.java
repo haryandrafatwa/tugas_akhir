@@ -3,54 +3,47 @@ package org.d3ifcool.finpro.prodi.activities.detail;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
-
-import org.d3ifcool.finpro.core.interfaces.works.DosenWorkView;
+import org.d3ifcool.finpro.core.interfaces.DosenContract;
 import org.d3ifcool.finpro.core.mediators.prodi.ProdiConcrete;
 import org.d3ifcool.finpro.core.models.Dosen;
-import org.d3ifcool.finpro.core.presenters.DosenPresenters;
+import org.d3ifcool.finpro.core.presenters.DosenPresenter;
 import org.d3ifcool.finpro.databinding.ActivityProdiDosenDetailBinding;
-import org.d3ifcool.finpro.prodi.activities.editor.update.KoorDosenUbahActivity;
 import org.d3ifcool.finpro.R;
+
+import java.util.List;
 
 import static org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl.URL_FOTO_DOSEN;
 
-public class ProdiDosenDetailActivity extends AppCompatActivity implements DosenWorkView {
+public class ProdiDosenDetailActivity extends AppCompatActivity implements DosenContract.ViewModel {
 
     public static final String EXTRA_DOSEN = "extra_dosen";
     private Dosen extraDosen;
-    private DosenPresenters dosenPresenters;
-
-    private ActivityProdiDosenDetailBinding binding;
+    private DosenPresenter dosenPresenter;
     private ProdiConcrete mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_prodi_dosen_detail);
+
+        ActivityProdiDosenDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_prodi_dosen_detail);
+        extraDosen = getIntent().getParcelableExtra(EXTRA_DOSEN);
+        binding.setModel(extraDosen);
 
         setTitle("Detail Dosen");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(0f);
 
-        dosenPresenters = new DosenPresenters(this);
-        dosenPresenters.initContext(this);
+        dosenPresenter = new DosenPresenter(this);
 
         mediator = new ProdiConcrete(this);
         mediator.message("ProgressDialog","set");
-
-        extraDosen = getIntent().getParcelableExtra(EXTRA_DOSEN);
-        binding.setModel(extraDosen);
-        Picasso.get().load(URL_FOTO_DOSEN + extraDosen.getDsn_foto()).into(binding.actKoorProfilFotoDosen);
-
+        mediator.loadImage(URL_FOTO_DOSEN+extraDosen.getDsn_foto(),binding.actKoorProfilFotoDosen);
     }
 
 
@@ -67,9 +60,7 @@ public class ProdiDosenDetailActivity extends AppCompatActivity implements Dosen
         if (i == android.R.id.home) {
             finish();
         } else if (i == R.id.toolbar_menu_ubah) {
-            Intent intentUbah = new Intent(ProdiDosenDetailActivity.this, KoorDosenUbahActivity.class);
-            intentUbah.putExtra(KoorDosenUbahActivity.EXTRA_DOSEN, extraDosen);
-            startActivity(intentUbah);
+            startActivity(dosenPresenter.toolbarIntent(extraDosen));
             finish();
         } else if (i == R.id.toolbar_menu_hapus) {
             mediator.message("AlertDialog","set");
@@ -77,7 +68,7 @@ public class ProdiDosenDetailActivity extends AppCompatActivity implements Dosen
             mediator.getAlertDialog().setPositiveButton("Iya", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    dosenPresenters.deleteDosen(extraDosen.getDsn_nip());
+                    dosenPresenter.deleteDosen(extraDosen.getDsn_nip());
                 }
             });
         }
@@ -95,12 +86,37 @@ public class ProdiDosenDetailActivity extends AppCompatActivity implements Dosen
     }
 
     @Override
-    public void onSucces() {
-        finish();
+    public void onGetObjectDosen(Dosen dosen) {
+
+    }
+
+    @Override
+    public void isEmptyObjectDosen() {
+
+    }
+
+    @Override
+    public void onGetListDosen(List<Dosen> dosenList) {
+
+    }
+
+    @Override
+    public void isEmptyListDosen() {
+
+    }
+
+    @Override
+    public void onSuccess() {
+
     }
 
     @Override
     public void onFailed(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClickFloatButton() {
+
     }
 }

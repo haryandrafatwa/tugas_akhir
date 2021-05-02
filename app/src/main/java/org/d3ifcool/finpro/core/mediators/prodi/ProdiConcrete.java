@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Picasso;
 
 import org.d3ifcool.finpro.App;
 import org.d3ifcool.finpro.R;
@@ -34,6 +35,10 @@ import org.d3ifcool.finpro.prodi.fragments.ProdiInformasiFragment;
 import org.d3ifcool.finpro.prodi.fragments.ProdiMahasiswaFragment;
 import org.d3ifcool.finpro.prodi.fragments.ProdiPlottingFragment;
 import org.d3ifcool.finpro.prodi.fragments.ProdiSKTAFragment;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl.URL_FOTO_DOSEN;
 
 public class ProdiConcrete implements ProdiMediator {
 
@@ -177,7 +182,9 @@ public class ProdiConcrete implements ProdiMediator {
         activity.startActivity(intent);
     }
 
-
+    public void loadImage(String url, CircleImageView circleImageView){
+        Picasso.get().load(url).into(circleImageView);
+    }
 
     public void setActionBarDrawerToggle(DrawerLayout drawerLayout, Toolbar toolbar) {
         actionBarDrawerToggle = new ActionBarDrawerToggle(activity,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);

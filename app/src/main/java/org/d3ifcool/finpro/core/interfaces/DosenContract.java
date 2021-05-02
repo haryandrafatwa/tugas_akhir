@@ -21,7 +21,7 @@ public interface DosenContract {
     interface Presenter{
         void getAllDosen();
         void createDosen();
-        void deleteDosen();
+        void deleteDosen(String dsn_nip);
         void updateDosen();
         void getDosenByNIP(String dsn_nip);
     }
