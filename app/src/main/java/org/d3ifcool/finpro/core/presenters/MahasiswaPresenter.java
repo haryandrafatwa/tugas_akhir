@@ -7,6 +7,7 @@ import androidx.databinding.ObservableField;
 import org.d3ifcool.finpro.App;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
+import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.manager.MahasiswaManager;
 
 import okhttp3.MultipartBody;
@@ -110,5 +111,10 @@ public class MahasiswaPresenter implements MahasiswaContract.Presenter {
     @Override
     public void updateSKTA(String mhs_nim, MultipartBody.Part part) {
         mahasiswaManager.updateSKTA(mhs_nim,part);
+    }
+
+    @Override
+    public void btnSKUpdate() {
+        viewModel.btnSKUpdate();
     }
 }

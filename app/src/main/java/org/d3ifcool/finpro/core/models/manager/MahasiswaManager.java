@@ -258,8 +258,7 @@ public class MahasiswaManager {
 
                 @Override
                 public void onFailure(Call<Mahasiswa> call, Throwable t) {
-                    viewModel.hideProgress();
-                    viewModel.onFailed(t.getLocalizedMessage());
+                    call.clone().enqueue(this);
                 }
             });
         } else {

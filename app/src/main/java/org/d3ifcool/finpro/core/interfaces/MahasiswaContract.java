@@ -19,6 +19,7 @@ public interface MahasiswaContract {
         void onSuccessGetPlotting(Plotting plotting);
         void onSuccess();
         void onFailed(String message);
+        void btnSKUpdate();
     }
 
     interface Presenter{
@@ -29,6 +30,7 @@ public interface MahasiswaContract {
         void getMahasiswaByNIM(String mhs_nim);
         void getPembimbing(int plot_id);
         void updateSKTA(String mhs_nim, MultipartBody.Part part);
+        void btnSKUpdate();
     }
 
 }

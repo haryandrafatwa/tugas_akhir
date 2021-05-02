@@ -1,11 +1,15 @@
 package org.d3ifcool.finpro.prodi.activities.detail;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,11 +46,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import es.dmoral.toasty.Toasty;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 import static org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl.URL_FOTO_MAHASISWA;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.FILE_TYPE_PDF;
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.PICK_PDF_REQUEST;
 
 public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements MahasiswaContract.ViewModel {
@@ -66,61 +72,24 @@ public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements M
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_prodi_mahasiswa_detail);
+        mahasiswaPresenter = new MahasiswaPresenter(this);
 
         setTitle(getString(R.string.title_mahasiswa_detail));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(0f);
 
-        mahasiswaPresenter = new MahasiswaPresenter(this);
-
         extraMahasiswa = getIntent().getParcelableExtra(EXTRA_MAHASISWA);
-        binding.actKoorProfilNama.setText(extraMahasiswa.getMhs_nama());
-        binding.actKoorProfilNim.setText(extraMahasiswa.getMhs_nim());
-        if (extraMahasiswa.getMhs_email() == null){
-            binding.actKoorProfilEmail.setText("-");
-        }else{
-            binding.actKoorProfilEmail.setText(extraMahasiswa.getMhs_email());
-        }
-        if (extraMahasiswa.getMhs_kontak() == null){
-            binding.actKoorProfilKontak.setText("-");
-        }else{
-            binding.actKoorProfilKontak.setText(extraMahasiswa.getMhs_kontak());
-        }
-        if (extraMahasiswa.getSk_status() == 1){
-            binding.actKoorProfilStatusSk.setText(R.string.status_sk_pasif);
+        binding.setModel(extraMahasiswa);
+
+        if (extraMahasiswa.getSk_status() == 1 || extraMahasiswa.getSk_status() == 3){
             binding.actKoorProfilStatusSk.setTextColor(Color.RED);
         }else{
-            Locale locale = new Locale("in", "ID");
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", locale);
-            try {
-                Date date = format.parse(extraMahasiswa.getSk_expired());
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(date);
-                String month_name = new SimpleDateFormat("MMMM", locale).format(calendar.getTime());
-                String tempJudul = calendar.get(Calendar.DATE)+" "+month_name+" "+calendar.get(Calendar.YEAR);
-                if(extraMahasiswa.getSk_status() == 2){
-                    binding.actKoorProfilStatusSk.setText(getResources().getString(R.string.status_sk_aktif)+" "+tempJudul);
-                    binding.actKoorProfilStatusSk.setTextColor(getResources().getColor(R.color.colorTextGreen));
-                }else if(extraMahasiswa.getSk_status() == 3){
-                    binding.actKoorProfilStatusSk.setText(getResources().getString(R.string.status_sk_kadaluwarsa)+" "+tempJudul+")");
-                    binding.actKoorProfilStatusSk.setTextColor(Color.RED);
-                }else{
-                    binding.actKoorProfilStatusSk.setText(R.string.status_sk_perpanjang);
-                    binding.actKoorProfilStatusSk.setTextColor(getResources().getColor(R.color.colorAccent));
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if(extraMahasiswa.getSk_status() == 2){
+                binding.actKoorProfilStatusSk.setTextColor(getResources().getColor(R.color.colorTextGreen));
+            }else{
+                binding.actKoorProfilStatusSk.setTextColor(getResources().getColor(R.color.colorAccent));
             }
         }
-
-        if (extraMahasiswa.getPlot_id() > 0 ){
-            binding.tvChangePembimbing.setVisibility(View.VISIBLE);
-        }else{
-            binding.tvChangePembimbing.setVisibility(View.GONE);
-        }
-
-        binding.actKoorProfilAngkatanMhs.setText(extraMahasiswa.getAngkatan());
-        Picasso.get().load(URL_FOTO_MAHASISWA + extraMahasiswa.getMhs_foto()).into(binding.actKoorProfilFoto);
 
         mediator = new ProdiConcrete(this);
         mediator.message("ProgressDialog","set");
@@ -235,21 +204,29 @@ public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements M
 
     @Override
     public void onSuccessGetPlotting(Plotting plotting) {
-        if (extraMahasiswa.getPlot_id() > 0){
-            binding.listPembimbing.setVisibility(View.VISIBLE);
-            binding.linearLayout.setVisibility(View.GONE);
-            binding.tvNamaPembimbing1.setText(plotting.getNama_pembimbing_1());
-            binding.tvNamaPembimbing2.setText(plotting.getNama_pembimbing_2());
-            binding.tvNipPembimbing1.setText(plotting.getNip_pembimbing_1());
-            binding.tvNipPembimbing2.setText(plotting.getNip_pembimbing_2());
-        }else{
-            binding.listPembimbing.setVisibility(View.GONE);
-            binding.linearLayout.setVisibility(View.VISIBLE);
-        }
+        binding.setPlot(plotting);
     }
 
     @Override
     public void onFailed(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toasty.error(this, message, Toasty.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void btnSKUpdate() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        } else {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+            } else {
+                Intent intent = new Intent();
+                intent.setType(FILE_TYPE_PDF);
+                String[] mimetypes = {FILE_TYPE_PDF};
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+                startActivityForResult(Intent.createChooser(intent, "Pilih file"), PICK_PDF_REQUEST);
+            }
+        }
     }
 }

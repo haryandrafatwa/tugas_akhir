@@ -1,10 +1,22 @@
 package org.d3ifcool.finpro.core.models;
 
+import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.IdRes;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import org.d3ifcool.finpro.App;
+import org.d3ifcool.finpro.R;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Faisal Amir
@@ -157,6 +169,33 @@ public class Mahasiswa implements Parcelable {
 
     public void setNip_pembimbing_2(String nip_pembimbing_2) {
         this.nip_pembimbing_2 = nip_pembimbing_2;
+    }
+
+    public String setSk_detail(){
+        String detail = null;
+        if (sk_status == 1){
+            detail = App.self().getResources().getString(R.string.status_sk_pasif);
+        }else{
+            Locale locale = new Locale("in", "ID");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", locale);
+            try {
+                Date date = format.parse(sk_expired);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                String month_name = new SimpleDateFormat("MMMM", locale).format(calendar.getTime());
+                String tempJudul = calendar.get(Calendar.DATE)+" "+month_name+" "+calendar.get(Calendar.YEAR);
+                if(sk_status == 2){
+                    detail = App.self().getResources().getString(R.string.status_sk_aktif)+" "+tempJudul;
+                }else if(sk_status == 3){
+                    detail = App.self().getResources().getString(R.string.status_sk_kadaluwarsa)+" "+tempJudul;
+                }else{
+                    detail = App.self().getResources().getString(R.string.status_sk_perpanjang);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return detail;
     }
 
     public String getUsername() {

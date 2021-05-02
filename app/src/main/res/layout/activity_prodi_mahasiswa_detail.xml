@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="presenter"
+            type="org.d3ifcool.finpro.core.presenters.MahasiswaPresenter" />
+
+        <variable
+            name="model"
+            type="org.d3ifcool.finpro.core.models.Mahasiswa" />
+
+        <variable
+            name="plot"
+            type="org.d3ifcool.finpro.core.models.Plotting" />
+
+    </data>
+
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -22,7 +38,7 @@
 
             <TextView
                 android:id="@+id/act_koor_profil_nama"
-                android:text="@string/dummy_dosen_pembimbing"
+                android:text="@{model.mhs_nama}"
                 android:layout_below="@+id/act_koor_profil_foto"
                 style="@style/profile_all_header_name"/>
 
@@ -38,7 +54,7 @@
 
                     <TextView
                         android:id="@+id/act_koor_profil_nim"
-                        android:text="@string/dummy_anggota_nim_2"
+                        android:text="@{model.mhs_nim}"
                         style="@style/profile_all_textview_content"/>
 
                 </LinearLayout>
@@ -59,7 +75,7 @@
 
                     <TextView
                         android:id="@+id/act_koor_profil_angkatan_mhs"
-                        tools:text="@string/dummy_email"
+                        tools:text="@{model.angkatan}"
                         style="@style/profile_all_textview_content"/>
 
                 </LinearLayout>
@@ -80,7 +96,7 @@
 
                     <TextView
                         android:id="@+id/act_koor_profil_email"
-                        tools:text="@string/dummy_email"
+                        tools:text="@{model.mhs_email ?? `-`}"
                         style="@style/profile_all_textview_content"/>
 
                 </LinearLayout>
@@ -100,7 +116,7 @@
 
                     <TextView
                         android:id="@+id/act_koor_profil_kontak"
-                        tools:text="@string/dummy_no_telp"
+                        tools:text="@{model.mhs_kontak ?? `-`}"
                         style="@style/profile_all_textview_content"/>
 
                 </LinearLayout>
@@ -139,7 +155,7 @@
 
                     <TextView
                         android:id="@+id/act_koor_profil_status_sk"
-                        tools:text="@string/dummy_status_sk"
+                        tools:text="@{model.setSk_detail()}"
                         style="@style/profile_all_textview_content"/>
 
                 </LinearLayout>
@@ -181,6 +197,7 @@
                     android:textSize="@dimen/text_size_small_10sp"
                     android:textColor="@color/colorPrimaryDark"
                     android:gravity="end"
+                    android:visibility="@{model.plot_id > 0 ? View.VISIBLE : View.GONE}"
                     android:layout_gravity="center_vertical"/>
 
             </LinearLayout>
@@ -191,7 +208,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title_pembimbing"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="@{model.plot_id > 0 ? View.VISIBLE : View.GONE}">
 
                 <LinearLayout
                     android:id="@+id/container_pembimbing_1"
@@ -204,7 +221,7 @@
 
                         <TextView
                             android:id="@+id/tv_nama_pembimbing_1"
-                            android:text="@string/dummy_dosen_pembimbing"
+                            android:text="@{plot.nama_pembimbing_1}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/colorPrimaryDark"
@@ -215,7 +232,7 @@
                             android:id="@+id/tv_nip_pembimbing_1"
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
-                            android:text="@string/dummy_anggota_nim_2"
+                            android:text="@{plot.nip_pembimbing_1}"
                             android:textColor="@color/colorAccent"
                             android:textStyle="bold"
                             android:textSize="@dimen/text_size_medium_16sp"/>
@@ -241,7 +258,7 @@
 
                         <TextView
                             android:id="@+id/tv_nama_pembimbing_2"
-                            android:text="@string/dummy_dosen_pembimbing"
+                            android:text="@{plot.nama_pembimbing_2}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/colorPrimaryDark"
@@ -252,7 +269,7 @@
                             android:id="@+id/tv_nip_pembimbing_2"
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
-                            android:text="@string/dummy_anggota_nim_2"
+                            android:text="@{plot.nip_pembimbing_2}"
                             android:textColor="@color/colorAccent"
                             android:textStyle="bold"
                             android:textSize="@dimen/text_size_medium_16sp"/>
@@ -280,7 +297,7 @@
                 android:layout_marginEnd="@dimen/dimen_big_16dp"
                 android:layout_marginVertical="@dimen/dimen_medium_8dp"
                 android:gravity="center"
-                android:visibility="visible">
+                android:visibility="@{model.plot_id > 0 ? View.GONE : View.VISIBLE}">
 
                 <ImageView
                     android:layout_width="@dimen/dimen_profil_photo_medium"
