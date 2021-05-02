@@ -163,13 +163,7 @@ public class ProdiConcrete implements ProdiMediator {
                     case "hapus":
                         alertDialog
                                 .setTitle(R.string.dialog_hapus_title)
-                                .setMessage(R.string.dialog_hapus_text)
-                                .setPositiveButton("Iya", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                                    }
-                                });
+                                .setMessage(R.string.dialog_hapus_text);
                         break;
                 }
                 break;
@@ -182,9 +176,16 @@ public class ProdiConcrete implements ProdiMediator {
         Intent intent = new Intent(activity, aClass);
         activity.startActivity(intent);
     }
+
+
+
     public void setActionBarDrawerToggle(DrawerLayout drawerLayout, Toolbar toolbar) {
         actionBarDrawerToggle = new ActionBarDrawerToggle(activity,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         actionBarDrawerToggle.syncState();
+    }
+
+    public AlertDialog.Builder getAlertDialog() {
+        return alertDialog;
     }
 
     public ActionBarDrawerToggle getActionBarDrawerToggle() {
