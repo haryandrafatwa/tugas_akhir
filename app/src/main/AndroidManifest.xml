@@ -112,7 +112,7 @@
         <activity android:name="org.d3ifcool.finpro.prodi.activities.detail.KoorProyekAkhirDetailActivity" />
         <activity android:name="org.d3ifcool.finpro.prodi.activities.detail.KoorInformasiDetailActivity" />
         <activity android:name="org.d3ifcool.finpro.prodi.activities.detail.ProdiMahasiswaDetailActivity" />
-        <activity android:name="org.d3ifcool.finpro.prodi.activities.detail.KoorDosenDetailActivity" />
+        <activity android:name="org.d3ifcool.finpro.prodi.activities.detail.ProdiDosenDetailActivity" />
         <activity android:name="org.d3ifcool.finpro.prodi.activities.detail.KoorJudulPaArsipDetailActivity" />
         <activity android:name="org.d3ifcool.finpro.prodi.activities.detail.KoorPemetaanMonevDetailActivity" />
 

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import org.d3ifcool.finpro.core.models.Dosen;
-import org.d3ifcool.finpro.prodi.activities.detail.KoorDosenDetailActivity;
+import org.d3ifcool.finpro.prodi.activities.detail.ProdiDosenDetailActivity;
 import org.d3ifcool.finpro.R;
 
 import java.util.ArrayList;
@@ -67,9 +67,9 @@ public class ProdiDosenViewAdapter extends RecyclerView.Adapter<ProdiDosenViewAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, KoorDosenDetailActivity.class);
+                Intent intent = new Intent(context, ProdiDosenDetailActivity.class);
                 Dosen parcelDosen = dosens.get(position);
-                intent.putExtra(KoorDosenDetailActivity.EXTRA_DOSEN, parcelDosen);
+                intent.putExtra(ProdiDosenDetailActivity.EXTRA_DOSEN, parcelDosen);
                 context.startActivity(intent);
             }
         });
