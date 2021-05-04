@@ -91,21 +91,6 @@ public class KoorPemberitahuanActivity extends AppCompatActivity implements Noti
     }
 
     @Override
-    public void showProgress() {
-        progressDialog.show();
-    }
-
-    @Override
-    public void hideProgress() {
-        progressDialog.hide();
-    }
-
-    @Override
-    public void onSuccesCreateNotifikasi() {
-
-    }
-
-    @Override
     public void onGetListNotifikasi(List<Notifikasi> notifikasiList) {
 
         notifikasiArrayList.clear();
@@ -123,12 +108,20 @@ public class KoorPemberitahuanActivity extends AppCompatActivity implements Noti
     }
 
     @Override
-    public void isEmptyListNotifikasi() {
-        empty_view.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onFailed(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void onMessage(String message) {
+        switch (message){
+            case "ShowProgressDialog":
+                progressDialog.show();
+                break;
+            case "HideProgressDialog":
+                progressDialog.hide();
+                break;
+            case "EmptyList":
+                empty_view.setVisibility(View.VISIBLE);
+                break;
+            default:
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }

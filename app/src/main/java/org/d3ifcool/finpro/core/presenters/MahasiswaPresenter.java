@@ -42,32 +42,32 @@ public class MahasiswaPresenter implements MahasiswaContract.Presenter {
 
     private boolean isValidate(){
         if (TextUtils.isEmpty(nama.get())){
-            viewModel.onFailed(App.self().getString(R.string.text_tidak_boleh_kosong));
+            viewModel.onMessage(App.self().getString(R.string.text_tidak_boleh_kosong));
             return false;
         }
 
         if (TextUtils.isEmpty(nim.get())){
-            viewModel.onFailed(App.self().getString(R.string.text_tidak_boleh_kosong));
+            viewModel.onMessage(App.self().getString(R.string.text_tidak_boleh_kosong));
             return false;
         }
 
         if (TextUtils.isEmpty(judul.get())){
-            viewModel.onFailed(App.self().getString(R.string.text_tidak_boleh_kosong));
+            viewModel.onMessage(App.self().getString(R.string.text_tidak_boleh_kosong));
             return false;
         }
 
         if (TextUtils.isEmpty(angkatan.get())){
-            viewModel.onFailed(App.self().getString(R.string.text_tidak_boleh_kosong));
+            viewModel.onMessage(App.self().getString(R.string.text_tidak_boleh_kosong));
             return false;
         }
 
         if (TextUtils.isEmpty(telp.get())){
-            viewModel.onFailed(App.self().getString(R.string.text_tidak_boleh_kosong));
+            viewModel.onMessage(App.self().getString(R.string.text_tidak_boleh_kosong));
             return false;
         }
 
         if (TextUtils.isEmpty(email.get())){
-            viewModel.onFailed(App.self().getString(R.string.text_tidak_boleh_kosong));
+            viewModel.onMessage(App.self().getString(R.string.text_tidak_boleh_kosong));
             return false;
         }
         return true;
@@ -113,8 +113,11 @@ public class MahasiswaPresenter implements MahasiswaContract.Presenter {
         mahasiswaManager.updateSKTA(mhs_nim,part);
     }
 
-    @Override
     public void btnSKUpdate() {
-        viewModel.btnSKUpdate();
+        viewModel.onMessage("btnSkUpdate");
+    }
+
+    public void floatButton(){
+        viewModel.onMessage("FloatButton");
     }
 }

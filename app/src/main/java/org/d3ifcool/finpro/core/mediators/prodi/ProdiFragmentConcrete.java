@@ -83,7 +83,6 @@ public class ProdiFragmentConcrete implements ProdiFragmentMediator {
                 break;
             case "ProdiMahasiswaAdapter":
                 prodiMahasiswaViewAdapter = new ProdiMahasiswaViewAdapter(view.getContext());
-                prodiMahasiswaViewAdapter.setLayouyType(R.layout.content_list_koor_mahasiswa);
                 break;
             case "ProdiInformasiAdapter":
                 prodiInformasiViewAdapter = new ProdiInformasiViewAdapter(view.getContext());

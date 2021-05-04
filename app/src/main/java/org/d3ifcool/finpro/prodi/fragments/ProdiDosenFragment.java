@@ -37,9 +37,7 @@ public class ProdiDosenFragment extends Fragment implements DosenContract.ViewMo
     private FragmentProdiDosenBinding binding;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_prodi_dosen,container,false);
         dosenPresenter = new DosenPresenter(this);
         binding.setPresenter(dosenPresenter);
@@ -59,22 +57,7 @@ public class ProdiDosenFragment extends Fragment implements DosenContract.ViewMo
     }
 
     @Override
-    public void showProgress() {
-        mediator.getProgressDialog().show();
-    }
-
-    @Override
-    public void hideProgress() {
-        mediator.getProgressDialog().dismiss();
-    }
-
-    @Override
     public void onGetObjectDosen(Dosen dosen) {
-
-    }
-
-    @Override
-    public void isEmptyObjectDosen() {
 
     }
 
@@ -93,22 +76,23 @@ public class ProdiDosenFragment extends Fragment implements DosenContract.ViewMo
     }
 
     @Override
-    public void isEmptyListDosen() {
-        binding.includeLayout.viewEmptyview.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onSuccess() {
-
-    }
-
-    @Override
-    public void onFailed(String message) {
-        Toasty.error(getContext(), message, Toasty.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onClickFloatButton() {
-        mediator.selectIntent(ProdiDosenTambahActivity.class);
+    public void onMessage(String message) {
+        switch (message){
+            case "ShowProgressDialog":
+                mediator.getProgressDialog().show();
+                break;
+            case "HideProgressDialog":
+                mediator.getProgressDialog().dismiss();
+                break;
+            case "EmptyList":
+                binding.includeLayout.viewEmptyview.setVisibility(View.VISIBLE);
+                break;
+            case "FloatButton":
+                mediator.selectIntent(ProdiDosenTambahActivity.class);
+                break;
+            default:
+                Toasty.error(getContext(), message, Toasty.LENGTH_SHORT).show();
+                break;
+        }
     }
 }

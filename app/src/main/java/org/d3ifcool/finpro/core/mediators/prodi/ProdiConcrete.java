@@ -26,10 +26,14 @@ import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.core.mediators.interfaces.prodi.ProdiMediator;
 import org.d3ifcool.finpro.core.models.manager.AuthManager;
 import org.d3ifcool.finpro.core.models.manager.MahasiswaManager;
+import org.d3ifcool.finpro.core.presenters.DosenPresenter;
+import org.d3ifcool.finpro.core.presenters.ProdiPresenter;
 import org.d3ifcool.finpro.prodi.activities.KoorPemberitahuanActivity;
 import org.d3ifcool.finpro.prodi.activities.KoorProfilActivity;
 import org.d3ifcool.finpro.prodi.activities.editor.create.ProdiDosenTambahActivity;
 import org.d3ifcool.finpro.prodi.adapters.ProdiDosenViewAdapter;
+import org.d3ifcool.finpro.prodi.adapters.ProdiInformasiViewAdapter;
+import org.d3ifcool.finpro.prodi.adapters.ProdiMahasiswaViewAdapter;
 import org.d3ifcool.finpro.prodi.fragments.ProdiDosenFragment;
 import org.d3ifcool.finpro.prodi.fragments.ProdiInformasiFragment;
 import org.d3ifcool.finpro.prodi.fragments.ProdiMahasiswaFragment;
@@ -48,15 +52,13 @@ public class ProdiConcrete implements ProdiMediator {
     private MethodHelper methodHelper;
 
     private ProdiDosenViewAdapter dosenViewAdapter;
+    private ProdiMahasiswaViewAdapter mahasiswaViewAdapter;
+    private ProdiInformasiViewAdapter informasiViewAdapter;
 
     private SessionManager sessionManager;
     private AlertDialog.Builder alertDialog;
     private ProgressDialog progressDialog;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-    private FloatingActionButton floatingActionButton;
-    private RecyclerView recyclerView;
-    private SwipeRefreshLayout refreshLayout;
-    private RelativeLayout relativeLayout;
 
 
     public ProdiConcrete(AppCompatActivity activity) {
@@ -116,6 +118,20 @@ public class ProdiConcrete implements ProdiMediator {
     @Override
     public void message(String component, String event) {
         switch (component){
+            case "InformasiViewAdapter":
+                switch (event){
+                    case SET:
+                        informasiViewAdapter = new ProdiInformasiViewAdapter(activity);
+                        break;
+                }
+                break;
+            case "MahasiswaViewAdapter":
+                switch (event){
+                    case SET:
+                        mahasiswaViewAdapter = new ProdiMahasiswaViewAdapter(activity);
+                        break;
+                }
+                break;
             case "DosenViewAdapter":
                 switch (event){
                     case SET:
@@ -209,5 +225,13 @@ public class ProdiConcrete implements ProdiMediator {
 
     public ProdiDosenViewAdapter getDosenViewAdapter() {
         return dosenViewAdapter;
+    }
+
+    public ProdiMahasiswaViewAdapter getMahasiswaViewAdapter() {
+        return mahasiswaViewAdapter;
+    }
+
+    public ProdiInformasiViewAdapter getInformasiViewAdapter() {
+        return informasiViewAdapter;
     }
 }

@@ -37,25 +37,25 @@ public class DosenManager {
     public void getDosen(){
 
         if (connectionHelper.isConnected(context)){
-            viewModel.showProgress();
+            viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterface = ApiClient.getApiClient().create(ApiService.class);
             Call<List<Dosen>> call = apiInterface.getDosen("Bearer "+sessionManager.getSessionToken());
             call.enqueue(new Callback<List<Dosen>>() {
                 @Override
                 public void onResponse(Call<List<Dosen>> call, Response<List<Dosen>> response) {
-                    viewModel.hideProgress();
+                    viewModel.onMessage("HideProgressDialog");
                     if (response.body() != null && response.isSuccessful()) {
                         viewModel.onGetListDosen(response.body());
                     } else {
-                        viewModel.isEmptyListDosen();
+                        viewModel.onMessage("EmptyList");
                     }
 
                 }
 
                 @Override
                 public void onFailure(Call<List<Dosen>> call, Throwable t) {
-                    viewModel.hideProgress();
-                    viewModel.onFailed(t.getMessage());
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage(t.getMessage());
                 }
             });
         } else {
@@ -68,20 +68,20 @@ public class DosenManager {
     public void createDosen(String nip, String nama, String kode){
 
         if (connectionHelper.isConnected(context)){
-            viewModel.showProgress();
+            viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceDosen = ApiClient.getApiClient().create(ApiService.class);
             Call<Dosen> call = apiInterfaceDosen.createDosen("Bearer "+sessionManager.getSessionToken(),nip,nama,kode);
             call.enqueue(new Callback<Dosen>() {
                 @Override
                 public void onResponse(Call<Dosen> call, Response<Dosen> response) {
-                    viewModel.hideProgress();
-                    viewModel.onSuccess();
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage("onSuccess");
                 }
 
                 @Override
                 public void onFailure(Call<Dosen> call, Throwable t) {
-                    viewModel.hideProgress();
-                    viewModel.onFailed(t.getLocalizedMessage());
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage(t.getLocalizedMessage());
                 }
             });
         } else {
@@ -92,21 +92,21 @@ public class DosenManager {
     public void deleteDosen(String nip){
 
         if (connectionHelper.isConnected(context)){
-            viewModel.showProgress();
+            viewModel.onMessage("ShowProgressDialog");
 
             ApiService apiInterfaceDosen = ApiClient.getApiClient().create(ApiService.class);
             Call<Dosen> call = apiInterfaceDosen.deleteDosen(nip);
             call.enqueue(new Callback<Dosen>() {
                 @Override
                 public void onResponse(Call<Dosen> call, Response<Dosen> response) {
-                    viewModel.hideProgress();
-                    viewModel.onSuccess();
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage("onSuccess");
                 }
 
                 @Override
                 public void onFailure(Call<Dosen> call, Throwable t) {
-                    viewModel.hideProgress();
-                    viewModel.onFailed(t.getLocalizedMessage());
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage(t.getLocalizedMessage());
                 }
             });
         } else {
@@ -119,20 +119,20 @@ public class DosenManager {
     public void updateDosen(String nip_dosen, String dsn_nama, String dsn_kode, String dsn_kontak, String dsn_email, int batas_bimbingan, int batas_reviewer) {
 
         if (connectionHelper.isConnected(context)){
-            viewModel.showProgress();
+            viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceDosen = ApiClient.getApiClient().create(ApiService.class);
             Call<Dosen> call = apiInterfaceDosen.updateDosen(nip_dosen, dsn_nama, dsn_kode, dsn_kontak, dsn_email, batas_bimbingan, batas_reviewer);
             call.enqueue(new Callback<Dosen>() {
                 @Override
                 public void onResponse(Call<Dosen> call, Response<Dosen> response) {
-                    viewModel.hideProgress();
-                    viewModel.onSuccess();
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage("onSuccess");
                 }
 
                 @Override
                 public void onFailure(Call<Dosen> call, Throwable t) {
-                    viewModel.hideProgress();
-                    viewModel.onFailed(t.getLocalizedMessage());
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage(t.getLocalizedMessage());
                 }
             });
         } else {
@@ -150,19 +150,19 @@ public class DosenManager {
             call.enqueue(new Callback<Dosen>() {
                 @Override
                 public void onResponse(Call<Dosen> call, Response<Dosen> response) {
-                    viewModel.hideProgress();
+                    viewModel.onMessage("HideProgressDialog");
                     if (response.body() != null && response.isSuccessful()) {
                         viewModel.onGetObjectDosen(response.body());
                     } else {
-                        viewModel.isEmptyObjectDosen();
+                        viewModel.onMessage("EmptyObject");
                     }
 
                 }
 
                 @Override
                 public void onFailure(Call<Dosen> call, Throwable t) {
-                    viewModel.hideProgress();
-                    viewModel.onFailed(t.getLocalizedMessage());
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage(t.getLocalizedMessage());
                 }
             });
         } else {

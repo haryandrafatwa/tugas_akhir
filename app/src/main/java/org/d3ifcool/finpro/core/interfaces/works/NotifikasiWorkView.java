@@ -19,13 +19,6 @@ package org.d3ifcool.finpro.core.interfaces.works;
  */
 public interface NotifikasiWorkView {
 
-    void showProgress();
-
-    void hideProgress();
-
-    void onSuccesCreateNotifikasi();
-
-    void onFailed(String message);
-
+    void onMessage(String message);
 
 }

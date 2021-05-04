@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.d3ifcool.finpro.core.helpers.SessionManager;
+import org.d3ifcool.finpro.core.interfaces.InformasiContract;
 import org.d3ifcool.finpro.dosen.activities.editor.create.DosenInformasiTambahActivity;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.interfaces.lists.InformasiListView;
@@ -32,7 +33,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DosenInformasiFragment extends Fragment implements InformasiListView {
+public class DosenInformasiFragment extends Fragment implements InformasiContract.ViewModel {
 
     private ArrayList<Informasi> arrayList = new ArrayList<>();
     private DosenInformasiViewAdapter adapter;
@@ -71,8 +72,7 @@ public class DosenInformasiFragment extends Fragment implements InformasiListVie
 
         progressDialog.setMessage(getString(R.string.text_progress_dialog));
 
-        informasiPresenter.initContext(getContext());
-        informasiPresenter.getInformasi();
+        informasiPresenter.getAllInformasi();
 
         FloatingActionButton floatingActionButton = view.findViewById(R.id.frg_dsn_info_home_fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +86,7 @@ public class DosenInformasiFragment extends Fragment implements InformasiListVie
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                informasiPresenter.getInformasi();
+                informasiPresenter.getAllInformasi();
             }
         });
 
@@ -95,17 +95,12 @@ public class DosenInformasiFragment extends Fragment implements InformasiListVie
     @Override
     public void onResume() {
         super.onResume();
-        informasiPresenter.getInformasi();
+        informasiPresenter.getAllInformasi();
     }
 
     @Override
-    public void showProgress() {
-        progressDialog.show();
-    }
+    public void onGetObjectInformasi(Informasi informasi) {
 
-    @Override
-    public void hideProgress() {
-        progressDialog.dismiss();
     }
 
     @Override
@@ -125,12 +120,20 @@ public class DosenInformasiFragment extends Fragment implements InformasiListVie
     }
 
     @Override
-    public void isEmptyListInformasi() {
-        empty_view.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onFailed(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    public void onMessage(String message) {
+        switch (message){
+            case "ShowProgressDialog":
+                progressDialog.show();
+                break;
+            case "HideProgressDialog":
+                progressDialog.dismiss();
+                break;
+            case "EmptyList":
+                empty_view.setVisibility(View.VISIBLE);
+                break;
+            default:
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }

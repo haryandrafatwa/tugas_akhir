@@ -10,16 +10,10 @@ import okhttp3.MultipartBody;
 public interface MahasiswaContract {
 
     interface ViewModel{
-        void showProgress();
-        void hideProgress();
         void onGetObjectMahasiswa(Mahasiswa mahasiswa);
-        void isEmptyObjectMahasiswa();
         void onGetListMahasiswa(List<Mahasiswa> mahasiswaList);
-        void isEmptyListMahasiswa();
         void onSuccessGetPlotting(Plotting plotting);
-        void onSuccess();
-        void onFailed(String message);
-        void btnSKUpdate();
+        void onMessage(String message);
     }
 
     interface Presenter{
@@ -30,7 +24,6 @@ public interface MahasiswaContract {
         void getMahasiswaByNIM(String mhs_nim);
         void getPembimbing(int plot_id);
         void updateSKTA(String mhs_nim, MultipartBody.Part part);
-        void btnSKUpdate();
     }
 
 }

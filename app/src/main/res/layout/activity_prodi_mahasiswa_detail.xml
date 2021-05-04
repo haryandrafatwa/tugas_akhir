@@ -164,7 +164,8 @@
                     android:id="@+id/btn_update_status_sk"
                     style="@style/button_all_primary"
                     android:layout_marginTop="@dimen/text_size_medium_16sp"
-                    android:text="@string/text_update_status_sk"/>
+                    android:text="@string/text_update_status_sk"
+                    android:onClick="@{()->presenter.btnSKUpdate()}"/>
 
             </LinearLayout>
 

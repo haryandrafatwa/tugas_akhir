@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.d3ifcool.finpro.core.models.Informasi;
-import org.d3ifcool.finpro.prodi.activities.detail.KoorInformasiDetailActivity;
+import org.d3ifcool.finpro.prodi.activities.detail.ProdiInformasiDetailActivity;
 import org.d3ifcool.finpro.R;
 
 import java.text.ParseException;
@@ -78,6 +78,7 @@ public class ProdiInformasiViewAdapter extends RecyclerView.Adapter<ProdiInforma
             String month_name = new SimpleDateFormat("MMMM", locale).format(calendar.getTime());
             String curTime = String.format("%02d:%02d", (calendar.get(Calendar.HOUR)+7), calendar.get(Calendar.MINUTE));
             holder.infoTanggal.setText(calendar.get(Calendar.DATE)+" "+month_name+" "+calendar.get(Calendar.YEAR)+" - "+curTime);
+            data.get(position).setTanggal(calendar.get(Calendar.DATE)+" "+month_name+" "+calendar.get(Calendar.YEAR)+" - "+curTime);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -86,9 +87,9 @@ public class ProdiInformasiViewAdapter extends RecyclerView.Adapter<ProdiInforma
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, KoorInformasiDetailActivity.class);
+                Intent intent = new Intent(context, ProdiInformasiDetailActivity.class);
                 Informasi parcelInfo = data.get(position);
-                intent.putExtra(KoorInformasiDetailActivity.EXTRA_INFORMASI, parcelInfo);
+                intent.putExtra(ProdiInformasiDetailActivity.EXTRA_INFORMASI, parcelInfo);
                 context.startActivity(intent);
             }
         });

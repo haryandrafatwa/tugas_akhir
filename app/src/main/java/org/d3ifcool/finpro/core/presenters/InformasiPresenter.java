@@ -1,160 +1,86 @@
 package org.d3ifcool.finpro.core.presenters;
 
-import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
+import android.content.Intent;
+import android.text.TextUtils;
+
+import androidx.databinding.ObservableField;
+
+import org.d3ifcool.finpro.App;
 import org.d3ifcool.finpro.R;
-import org.d3ifcool.finpro.core.helpers.ConnectionHelper;
-import org.d3ifcool.finpro.core.helpers.SessionManager;
-import org.d3ifcool.finpro.core.interfaces.works.InformasiWorkView;
-import org.d3ifcool.finpro.core.interfaces.lists.InformasiListView;
+import org.d3ifcool.finpro.core.interfaces.InformasiContract;
 import org.d3ifcool.finpro.core.models.Informasi;
-import org.d3ifcool.finpro.core.api.ApiClient;
-import org.d3ifcool.finpro.core.api.ApiService;
+import org.d3ifcool.finpro.core.models.manager.InformasiManager;
+import org.d3ifcool.finpro.prodi.activities.editor.update.KoorInformasiUbahActivity;
 
-import java.util.List;
+public class InformasiPresenter implements InformasiContract.Presenter {
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+    public ObservableField<String> judul;
+    public ObservableField<String> deskripsi;
+    private String penerbit;
 
-/**
- * Created by ikhsan ramadhan
- * =========================================
- * Finpro
- * Copyright (C) 3/1/2019.
- * All rights reserved
- * -----------------------------------------
- * Name     : Muhamad Ikhsan Ramadhan
- * E-mail   : ikhsanramadhan28@gmail.com
- * Majors   : D3 Teknik Informatika 2016
- * Campus   : Telkom University
- * -----------------------------------------
- */
-public class InformasiPresenter {
-    private InformasiWorkView viewEditor;
-    private InformasiListView viewResult;
+    private InformasiManager informasiManager;
+    private InformasiContract.ViewModel viewModel;
 
-    private ConnectionHelper connectionHelper = new ConnectionHelper();
-    private Context context;
-
-    private SessionManager sessionManager;
-
-    public void initContext(Context context){
-        this.context = context;
-        this.sessionManager = new SessionManager(context);
+    public InformasiPresenter(InformasiContract.ViewModel viewModel) {
+        this.viewModel = viewModel;
+        informasiManager = new InformasiManager(viewModel);
+        informasiManager.initContext(App.self());
+        intFields();
     }
 
-    public InformasiPresenter(InformasiWorkView view) {
-        this.viewEditor = view;
+    private void intFields(){
+        judul = new ObservableField<>();
+        deskripsi = new ObservableField<>();
     }
 
-    public InformasiPresenter(InformasiListView viewMain) {
-        this.viewResult = viewMain;
-    }
-
-    public void createInformasi (String informasi_judul, String informasi_isi, String penerbit) {
-
-        if (connectionHelper.isConnected(context)){
-            viewEditor.showProgress();
-            ApiService apiInterface = ApiClient.getApiClient().create(ApiService.class);
-            Call<Informasi> call = apiInterface.createInformasi("Bearer "+sessionManager.getSessionToken(), informasi_judul, informasi_isi, penerbit);
-            call.enqueue(new Callback<Informasi>() {
-                @Override
-                public void onResponse(Call<Informasi> call, Response<Informasi> response) {
-                    viewEditor.hideProgress();
-                    viewEditor.onSucces();
-                    Log.e("FINPRO!", "onFailure: "+response.body().getInfo_judul());
-                }
-
-                @Override
-                public void onFailure(Call<Informasi> call, Throwable t) {
-                    viewEditor.hideProgress();
-                    viewEditor.onFailed(t.getMessage());
-                    Log.e("FINPRO!", "onFailure: "+t.getMessage());
-                }
-            });
-        } else {
-            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
+    private boolean isValidate(){
+        if (TextUtils.isEmpty(judul.get())){
+            viewModel.onMessage("Judul "+App.self().getString(R.string.text_tidak_boleh_kosong));
+            return false;
         }
 
+        if (TextUtils.isEmpty(deskripsi.get())){
+            viewModel.onMessage("Informasi "+App.self().getString(R.string.text_tidak_boleh_kosong));
+            return false;
+        }
+        return true;
     }
 
 
-    public void updateInformasi (int informasi_id, String informasi_judul, String informasi_isi) {
-        if (connectionHelper.isConnected(context)){
-            viewEditor.showProgress();
-            ApiService apiInterface = ApiClient.getApiClient().create(ApiService.class);
-            Call<Informasi> call = apiInterface.updateInformasi(informasi_id, informasi_judul, informasi_isi);
-            call.enqueue(new Callback<Informasi>() {
-                @Override
-                public void onResponse(Call<Informasi> call, Response<Informasi> response) {
-                    viewEditor.hideProgress();
-                    viewEditor.onSucces();
-                }
+    @Override
+    public void getAllInformasi() {
+        informasiManager.getInformasi();
+    }
 
-                @Override
-                public void onFailure(Call<Informasi> call, Throwable t) {
-                    viewEditor.showProgress();
-                    viewEditor.onFailed(t.getLocalizedMessage());
-                }
-            });
-        } else {
-            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
+    @Override
+    public void createInformasi() {
+        if (isValidate()){
+            informasiManager.createInformasi(judul.get(),deskripsi.get(),penerbit);
         }
     }
 
-    public void deleteInformasi(int informasi_id) {
-        if (connectionHelper.isConnected(context)){
-            viewEditor.showProgress();
-            ApiService apiInterface = ApiClient.getApiClient().create(ApiService.class);
-            Call<Informasi> call = apiInterface.deleteInformasi(informasi_id);
-            call.enqueue(new Callback<Informasi>() {
-                @Override
-                public void onResponse(Call<Informasi> call, Response<Informasi> response) {
-                    viewEditor.hideProgress();
-                    viewEditor.onSucces();
-                }
-
-                @Override
-                public void onFailure(Call<Informasi> call, Throwable t) {
-                    viewEditor.showProgress();
-                    viewEditor.onFailed(t.getLocalizedMessage());
-                }
-            });
-        } else {
-            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
-        }
-
+    @Override
+    public void deleteInformasi(int id) {
+        informasiManager.deleteInformasi(id);
     }
 
-    public void getInformasi (){
-        if (connectionHelper.isConnected(context)){
-            viewResult.showProgress();
-            ApiService apiInterface = ApiClient.getApiClient().create(ApiService.class);
-            Call<List<Informasi>> call = apiInterface.getInformasi("Bearer "+sessionManager.getSessionToken());
-            call.enqueue(new Callback<List<Informasi>>() {
-                @Override
-                public void onResponse(Call<List<Informasi>> call, Response<List<Informasi>> response) {
-                    viewResult.hideProgress();
-                    if (response.body() != null && response.isSuccessful()) {
-                        viewResult.onGetListInformasi(response.body());
-                    } else {
-                        viewResult.isEmptyListInformasi();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<Informasi>> call, Throwable t) {
-                    viewResult.hideProgress();
-//                    viewResult.onFailed(t.getLocalizedMessage());
-                    call.clone().enqueue(this);
-                }
-            });
-        } else {
-            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
-        }
+    @Override
+    public void updateInformasi(int id, String judul, String text) {
+        informasiManager.updateInformasi(id,judul,text);
     }
 
+    public void floatClick(){
+        viewModel.onMessage("FloatButton");
+    }
+
+    public Intent toolbarIntent(Informasi informasi){
+        Intent intent = new Intent(App.self(), KoorInformasiUbahActivity.class);
+        intent.putExtra("extra_informasi",informasi);
+        return intent;
+    }
+
+    public void setPenerbit(String penerbit) {
+        this.penerbit = penerbit;
+    }
 }

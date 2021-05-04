@@ -1,6 +1,5 @@
 package org.d3ifcool.finpro.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.core.interfaces.LoginContract;
+import org.d3ifcool.finpro.core.mediators.prodi.ProdiConcrete;
 import org.d3ifcool.finpro.core.models.User;
 import org.d3ifcool.finpro.core.presenters.LoginPresenter;
 import org.d3ifcool.finpro.databinding.ActivityAuthBinding;
@@ -22,7 +22,7 @@ public class AuthActivity extends AppCompatActivity implements LoginContract.Vie
     private LoginPresenter mPresenter;
     private ActivityAuthBinding mBinding;
     private SessionManager sessionManager;
-    private ProgressDialog progressDialog;
+    private ProdiConcrete mediator;
 
     private boolean status;
     private static final String ROLE_DOSEN = "dosen";
@@ -38,8 +38,8 @@ public class AuthActivity extends AppCompatActivity implements LoginContract.Vie
         mBinding.setPresenter(mPresenter);
 
         sessionManager = new SessionManager(this);
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(getString(org.d3ifcool.finpro.R.string.text_progress_dialog));
+        mediator = new ProdiConcrete(this);
+        mediator.message("ProgressDialog","set");
 
         if(sessionManager.getSessionUsername() != null ){
             mPresenter.checkUser(sessionManager.getSessionUsername());
@@ -82,12 +82,12 @@ public class AuthActivity extends AppCompatActivity implements LoginContract.Vie
 
     @Override
     public void showProgress() {
-        progressDialog.show();
+        mediator.getProgressDialog().show();
     }
 
     @Override
     public void hideProgress() {
-        progressDialog.dismiss();
+        mediator.getProgressDialog().dismiss();
     }
 
     @Override

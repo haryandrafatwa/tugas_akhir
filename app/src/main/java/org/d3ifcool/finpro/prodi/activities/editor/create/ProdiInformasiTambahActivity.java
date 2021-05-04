@@ -1,6 +1,7 @@
 package org.d3ifcool.finpro.prodi.activities.editor.create;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,62 +9,53 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import org.d3ifcool.finpro.core.interfaces.InformasiContract;
 import org.d3ifcool.finpro.core.interfaces.works.InformasiWorkView;
 import org.d3ifcool.finpro.core.interfaces.works.NotifikasiWorkView;
 import org.d3ifcool.finpro.core.mediators.interfaces.prodi.ProdiActivityMediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ProdiActivityConcrete;
+import org.d3ifcool.finpro.core.mediators.prodi.ProdiConcrete;
+import org.d3ifcool.finpro.core.models.Informasi;
 import org.d3ifcool.finpro.core.presenters.InformasiPresenter;
 import org.d3ifcool.finpro.core.presenters.NotifikasiPresenter;
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.databinding.ActivityKoorInformasiTambahBinding;
+
+import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 import static org.d3ifcool.finpro.core.helpers.ConstantNotif.ConstantaNotif.NOTIF_KATEGORI_INFORMASI;
 import static org.d3ifcool.finpro.core.helpers.ConstantNotif.ConstantaNotif.UNTUK_SEMUA;
 
-public class ProdiInformasiTambahActivity extends AppCompatActivity implements InformasiWorkView, NotifikasiWorkView {
+public class ProdiInformasiTambahActivity extends AppCompatActivity implements InformasiContract.ViewModel, NotifikasiWorkView {
 
     private InformasiPresenter informasiPresenter;
     private NotifikasiPresenter notifikasiPresenter;
-    private String et_judul, et_deskripsi;
 
-    private ProdiActivityMediator prodiActivityMediator;
+    private ProdiConcrete mediator;
+    private ActivityKoorInformasiTambahBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_koor_informasi_tambah);
-
-        prodiActivityMediator = new ProdiActivityConcrete(this);
-
-        prodiActivityMediator.message("SessionManager");
-        prodiActivityMediator.message("ProgressDialog");
-
-        prodiActivityMediator.Notify(R.id.act_koor_edittext_judul);
-        prodiActivityMediator.Notify(R.id.act_koor_edittext_deskripsi);
-        prodiActivityMediator.Notify(R.id.act_koor_info_button_simpan);
-
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_koor_informasi_tambah);
         informasiPresenter = new InformasiPresenter(this);
-        notifikasiPresenter = new NotifikasiPresenter(this);
+        binding.setPresenter(informasiPresenter);
 
-        informasiPresenter.initContext(this);
+        notifikasiPresenter = new NotifikasiPresenter(this);
         notifikasiPresenter.initContext(this);
 
-        setTitle(getString(R.string.title_informasi_tambah));
+        mediator = new ProdiConcrete(this);
+
+        mediator.message("SessionManager","set");
+        mediator.message("ProgressDialog","set");
+
+        informasiPresenter.setPenerbit(mediator.getSessionManager().getSessionKoorNama());
+
+        setTitle("Tambah Informasi");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        prodiActivityMediator.getButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                et_judul = prodiActivityMediator.getETJudul().getText().toString();
-                et_deskripsi = prodiActivityMediator.getETDeskripsi().getText().toString();
-                if (et_judul.isEmpty()){
-                    prodiActivityMediator.getETJudul().setError("judul tidak boleh kosong");
-                }else if (et_deskripsi.isEmpty()){
-                    prodiActivityMediator.getETDeskripsi().setError("deskripsi tidak boleh kosong");
-                }else{
-                    informasiPresenter.createInformasi(et_judul, et_deskripsi, prodiActivityMediator.getSessionManager().getSessionKoorNama());
-                }
-            }
-        });
     }
 
     @Override
@@ -81,28 +73,34 @@ public class ProdiInformasiTambahActivity extends AppCompatActivity implements I
     }
 
     @Override
-    public void showProgress() {
-        prodiActivityMediator.getProgressDialog().show();
+    public void onGetObjectInformasi(Informasi informasi) {
+
     }
 
     @Override
-    public void hideProgress() {
-        prodiActivityMediator.getProgressDialog().dismiss();
+    public void onGetListInformasi(List<Informasi> informasiList) {
+
     }
 
     @Override
-    public void onSuccesCreateNotifikasi() {
-        finish();
-    }
-
-    @Override
-    public void onSucces() {
-        notifikasiPresenter.createNotifikasi(prodiActivityMediator.getSessionManager().getSessionToken(),NOTIF_KATEGORI_INFORMASI(prodiActivityMediator.getSessionManager().getSessionKoorNama()),
-                et_judul, prodiActivityMediator.getSessionManager().getSessionKoorNama(), UNTUK_SEMUA);
-    }
-
-    @Override
-    public void onFailed(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void onMessage(String message) {
+        switch (message){
+            case "ShowProgressDialog":
+                mediator.getProgressDialog().show();
+                break;
+            case "HideProgressDialog":
+                mediator.getProgressDialog().dismiss();
+                break;
+            case "onSuccess":
+                notifikasiPresenter.createNotifikasi(mediator.getSessionManager().getSessionToken(),NOTIF_KATEGORI_INFORMASI(mediator.getSessionManager().getSessionKoorNama()),
+                        binding.actKoorEdittextJudul.getText().toString(), mediator.getSessionManager().getSessionKoorNama(), UNTUK_SEMUA);
+                break;
+            case "onSuccessCreateNotif":
+                finish();
+                break;
+            default:
+                Toasty.error(this, message, Toasty.LENGTH_SHORT).show();
+                break;
+        }
     }
 }

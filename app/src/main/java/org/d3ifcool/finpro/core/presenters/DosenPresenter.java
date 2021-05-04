@@ -53,6 +53,6 @@ public class DosenPresenter implements DosenContract.Presenter {
     }
 
     public void floatButton(){
-        viewModel.onClickFloatButton();
+        viewModel.onMessage("FloatButton");
     }
 }

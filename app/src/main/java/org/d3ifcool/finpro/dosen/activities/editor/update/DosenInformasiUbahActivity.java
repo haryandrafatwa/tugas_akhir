@@ -14,11 +14,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.core.interfaces.InformasiContract;
 import org.d3ifcool.finpro.core.interfaces.works.InformasiWorkView;
 import org.d3ifcool.finpro.core.models.Informasi;
 import org.d3ifcool.finpro.core.presenters.InformasiPresenter;
 
-public class DosenInformasiUbahActivity extends AppCompatActivity implements InformasiWorkView {
+import java.util.List;
+
+public class DosenInformasiUbahActivity extends AppCompatActivity implements InformasiContract.ViewModel {
 
     public static final String EXTRA_INFORMASI = "extra_informasi";
     private Informasi extraInfo;
@@ -45,7 +48,6 @@ public class DosenInformasiUbahActivity extends AppCompatActivity implements Inf
         info_deskripsi.setText(isi);
 
         informasiPresenter = new InformasiPresenter(this);
-        informasiPresenter.initContext(this);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.text_progress_dialog));
@@ -100,22 +102,30 @@ public class DosenInformasiUbahActivity extends AppCompatActivity implements Inf
     }
 
     @Override
-    public void showProgress() {
-        progressDialog.show();
+    public void onGetObjectInformasi(Informasi informasi) {
+
     }
 
     @Override
-    public void hideProgress() {
-        progressDialog.dismiss();
+    public void onGetListInformasi(List<Informasi> informasiList) {
+
     }
 
     @Override
-    public void onSucces() {
-        finish();
-    }
-
-    @Override
-    public void onFailed(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void onMessage(String message) {
+        switch (message){
+            case "ShowProgressDialog":
+                progressDialog.show();
+                break;
+            case "HideProgressDialog":
+                progressDialog.dismiss();
+                break;
+            case"onSuccess":
+                finish();
+                break;
+            default:
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }

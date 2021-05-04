@@ -168,22 +168,7 @@ public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements M
     }
 
     @Override
-    public void showProgress() {
-        mediator.getProgressDialog().show();
-    }
-
-    @Override
-    public void hideProgress() {
-        mediator.getProgressDialog().dismiss();
-    }
-
-    @Override
     public void onGetObjectMahasiswa(Mahasiswa mahasiswa) {
-
-    }
-
-    @Override
-    public void isEmptyObjectMahasiswa() {
 
     }
 
@@ -193,40 +178,41 @@ public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements M
     }
 
     @Override
-    public void isEmptyListMahasiswa() {
-
-    }
-
-    @Override
-    public void onSuccess() {
-        finish();
-    }
-
-    @Override
     public void onSuccessGetPlotting(Plotting plotting) {
         binding.setPlot(plotting);
     }
 
     @Override
-    public void onFailed(String message) {
-        Toasty.error(this, message, Toasty.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void btnSKUpdate() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-        } else {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-            } else {
-                Intent intent = new Intent();
-                intent.setType(FILE_TYPE_PDF);
-                String[] mimetypes = {FILE_TYPE_PDF};
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
-                startActivityForResult(Intent.createChooser(intent, "Pilih file"), PICK_PDF_REQUEST);
-            }
+    public void onMessage(String message) {
+        switch (message){
+            case "onSuccess":
+                finish();
+                break;
+            case "ShowProgressDialog":
+                mediator.getProgressDialog().show();
+                break;
+            case "HideProgressDialog":
+                mediator.getProgressDialog().dismiss();
+                break;
+            case "btnSkUpdate":
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                } else {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                    } else {
+                        Intent intent = new Intent();
+                        intent.setType(FILE_TYPE_PDF);
+                        String[] mimetypes = {FILE_TYPE_PDF};
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+                        startActivityForResult(Intent.createChooser(intent, "Pilih file"), PICK_PDF_REQUEST);
+                    }
+                }
+                break;
+            default:
+                Toasty.error(this, message, Toasty.LENGTH_SHORT).show();
+                break;
         }
     }
 }

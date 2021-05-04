@@ -21,14 +21,8 @@ import org.d3ifcool.finpro.core.models.Notifikasi;
  */
 public interface NotifikasiView {
 
-    void showProgress();
-
-    void hideProgress();
-
     void onGetObjectNotifikasi(Notifikasi notifikasi);
 
-    void isEmptyObjectNotifikasi();
-
-    void onFailed(String message);
+    void onMessage(String message);
 
 }

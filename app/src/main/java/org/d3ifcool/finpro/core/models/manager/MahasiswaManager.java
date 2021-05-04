@@ -41,25 +41,24 @@ public class MahasiswaManager {
     public void getMahasiswa(){
 
         if (connectionHelper.isConnected(context)){
-            viewModel.showProgress();
+            viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
             Call<List<Mahasiswa>> call = apiInterfaceMahasiswa.getMahasiswa("Bearer "+sessionManager.getSessionToken());
             call.enqueue(new Callback<List<Mahasiswa>>() {
                 @Override
                 public void onResponse(Call<List<Mahasiswa>> call, Response<List<Mahasiswa>> response) {
-                    viewModel.hideProgress();
+                    viewModel.onMessage("HideProgressDialog");
                     if (response.body() != null && response.isSuccessful()) {
                         viewModel.onGetListMahasiswa(response.body());
                     } else {
-                        viewModel.isEmptyListMahasiswa();
+                        viewModel.onMessage("EmptyList");
                     }
 
                 }
 
                 @Override
                 public void onFailure(Call<List<Mahasiswa>> call, Throwable t) {
-                    viewModel.hideProgress();
-                    viewModel.onFailed(t.getLocalizedMessage());
+                    call.clone().enqueue(this);
                 }
             });
         } else {
@@ -72,20 +71,20 @@ public class MahasiswaManager {
     public void createMahasiswa(String nim, String nama){
 
         if (connectionHelper.isConnected(context)){
-            viewModel.showProgress();
+            viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
             Call<Mahasiswa> call = apiInterfaceMahasiswa.createMahasiswa("Bearer "+sessionManager.getSessionToken(),nim, nama);
             call.enqueue(new Callback<Mahasiswa>() {
                 @Override
                 public void onResponse(Call<Mahasiswa> call, Response<Mahasiswa> response) {
-                    viewModel.hideProgress();
-                    viewModel.onSuccess();
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage("onSuccess");
                 }
 
                 @Override
                 public void onFailure(Call<Mahasiswa> call, Throwable t) {
-                    viewModel.hideProgress();
-                    viewModel.onFailed(t.getLocalizedMessage());
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage(t.getLocalizedMessage());
                 }
             });
         } else {
@@ -99,20 +98,20 @@ public class MahasiswaManager {
     public void updateMahasiswa(String nim, String nama, String angkatan, String kontak,String mhs_foto, String email){
 
         if (connectionHelper.isConnected(context)){
-            viewModel.showProgress();
+            viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
             Call<Mahasiswa> call = apiInterfaceMahasiswa.updateMahasiswa(nim, nama, angkatan, kontak, mhs_foto,email);
             call.enqueue(new Callback<Mahasiswa>() {
                 @Override
                 public void onResponse(Call<Mahasiswa> call, Response<Mahasiswa> response) {
-                    viewModel.hideProgress();
-                    viewModel.onSuccess();
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage("onSuccess");
                 }
 
                 @Override
                 public void onFailure(Call<Mahasiswa> call, Throwable t) {
-                    viewModel.hideProgress();
-                    viewModel.onFailed(t.getLocalizedMessage());
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage(t.getLocalizedMessage());
                 }
             });
         } else {
@@ -126,20 +125,20 @@ public class MahasiswaManager {
     public void updateMahasiswa(String nim, String nama, String angkatan, String kontak, String email){
 
         if (connectionHelper.isConnected(context)){
-            viewModel.showProgress();
+            viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
             Call<Mahasiswa> call = apiInterfaceMahasiswa.updateMahasiswa(nim, nama, angkatan, kontak, email);
             call.enqueue(new Callback<Mahasiswa>() {
                 @Override
                 public void onResponse(Call<Mahasiswa> call, Response<Mahasiswa> response) {
-                    viewModel.hideProgress();
-                    viewModel.onSuccess();
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage("onSuccess");
                 }
 
                 @Override
                 public void onFailure(Call<Mahasiswa> call, Throwable t) {
-                    viewModel.hideProgress();
-                    viewModel.onFailed(t.getLocalizedMessage());
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage(t.getLocalizedMessage());
                 }
             });
         } else {
@@ -150,19 +149,19 @@ public class MahasiswaManager {
     public void addPembimbing(String mhs_nim, int id){
 
         if (connectionHelper.isConnected(context)){
-            viewModel.showProgress();
+            viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
             Call<Mahasiswa> call = apiInterfaceMahasiswa.addPembimbing("Bearer "+sessionManager.getSessionToken(),id,mhs_nim);
             call.enqueue(new Callback<Mahasiswa>() {
                 @Override
                 public void onResponse(Call<Mahasiswa> call, Response<Mahasiswa> response) {
                     if (response.body()!=null || response.isSuccessful()){
-                        viewModel.hideProgress();
-                        viewModel.onSuccess();
+                        viewModel.onMessage("HideProgressDialog");
+                        viewModel.onMessage("onSuccess");
                     }else{
-                        viewModel.hideProgress();
+                        viewModel.onMessage("HideProgressDialog");
                         try {
-                            viewModel.onFailed(response.errorBody().string());
+                            viewModel.onMessage(response.errorBody().string());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -171,8 +170,8 @@ public class MahasiswaManager {
 
                 @Override
                 public void onFailure(Call<Mahasiswa> call, Throwable t) {
-                    viewModel.hideProgress();
-                    viewModel.onFailed(t.getLocalizedMessage());
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage(t.getLocalizedMessage());
                 }
             });
         } else {
@@ -183,19 +182,19 @@ public class MahasiswaManager {
     public void updateSKTA(String mhs_nim, MultipartBody.Part part){
 
         if (connectionHelper.isConnected(context)){
-            viewModel.showProgress();
+            viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
             Call<ResponseBody> call = apiInterfaceMahasiswa.updateSKTA("Bearer "+sessionManager.getSessionToken(),mhs_nim, part);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.body()!=null || response.isSuccessful()){
-                        viewModel.hideProgress();
-                        viewModel.onSuccess();
+                        viewModel.onMessage("HideProgressDialog");
+                        viewModel.onMessage("onSuccess");
                     }else{
-                        viewModel.hideProgress();
+                        viewModel.onMessage("HideProgressDialog");
                         try {
-                            viewModel.onFailed(response.errorBody().string());
+                            viewModel.onMessage(response.errorBody().string());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -204,8 +203,8 @@ public class MahasiswaManager {
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    viewModel.hideProgress();
-                    viewModel.onFailed(t.getLocalizedMessage());
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage(t.getLocalizedMessage());
                 }
             });
         } else {
@@ -216,20 +215,20 @@ public class MahasiswaManager {
     public void deleteMahasiswa(String nim){
 
         if (connectionHelper.isConnected(context)){
-            viewModel.showProgress();
+            viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
             Call<Mahasiswa> call = apiInterfaceMahasiswa.deleteMahasiswa(nim);
             call.enqueue(new Callback<Mahasiswa>() {
                 @Override
                 public void onResponse(Call<Mahasiswa> call, Response<Mahasiswa> response) {
-                    viewModel.hideProgress();
-                    viewModel.onSuccess();
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage("onSuccess");
                 }
 
                 @Override
                 public void onFailure(Call<Mahasiswa> call, Throwable t) {
-                    viewModel.hideProgress();
-                    viewModel.onFailed(t.getLocalizedMessage());
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage(t.getLocalizedMessage());
                 }
             });
         } else {
@@ -247,11 +246,11 @@ public class MahasiswaManager {
             call.enqueue(new Callback<Mahasiswa>() {
                 @Override
                 public void onResponse(Call<Mahasiswa> call, Response<Mahasiswa> response) {
-                    viewModel.hideProgress();
+                    viewModel.onMessage("HideProgressDialog");
                     if (response.body() != null && response.isSuccessful()) {
                         viewModel.onGetObjectMahasiswa(response.body());
                     } else {
-                        viewModel.isEmptyObjectMahasiswa();
+                        viewModel.onMessage("EmptyObject");
                     }
 
                 }
@@ -271,20 +270,20 @@ public class MahasiswaManager {
 
     public void getPembimbing(int plotId){
         if (connectionHelper.isConnected(context)){
-            viewModel.showProgress();
+            viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
             Call<Plotting> call = apiInterfaceMahasiswa.getPlottingByParamter("Bearer "+sessionManager.getSessionToken(),plotId);
             call.enqueue(new Callback<Plotting>() {
                 @Override
                 public void onResponse(Call<Plotting> call, Response<Plotting> response) {
-                    viewModel.hideProgress();
+                    viewModel.onMessage("HideProgressDialog");
                     viewModel.onSuccessGetPlotting(response.body());
                 }
 
                 @Override
                 public void onFailure(Call<Plotting> call, Throwable t) {
-                    viewModel.hideProgress();
-                    viewModel.onFailed(t.getMessage());
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage(t.getMessage());
                 }
             });
         }
@@ -293,20 +292,20 @@ public class MahasiswaManager {
     public void updateMahasiswaJudul(String nim, int judul_id){
 
         if (connectionHelper.isConnected(context)){
-            viewModel.showProgress();
+            viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
             Call<Mahasiswa> call = apiInterfaceMahasiswa.updateJudulMahasiswa(nim, judul_id);
             call.enqueue(new Callback<Mahasiswa>() {
                 @Override
                 public void onResponse(Call<Mahasiswa> call, Response<Mahasiswa> response) {
-                    viewModel.hideProgress();
-                    viewModel.onSuccess();
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage("onSuccess");
                 }
 
                 @Override
                 public void onFailure(Call<Mahasiswa> call, Throwable t) {
-                    viewModel.hideProgress();
-                    viewModel.onFailed(t.getLocalizedMessage());
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage(t.getLocalizedMessage());
                 }
             });
 

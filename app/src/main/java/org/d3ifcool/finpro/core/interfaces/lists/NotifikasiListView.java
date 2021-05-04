@@ -23,14 +23,8 @@ import java.util.List;
  */
 public interface NotifikasiListView {
 
-    void showProgress();
-
-    void hideProgress();
-
     void onGetListNotifikasi(List<Notifikasi> notifikasiList);
 
-    void isEmptyListNotifikasi();
-
-    void onFailed(String message);
+    void onMessage(String message);
 
 }
