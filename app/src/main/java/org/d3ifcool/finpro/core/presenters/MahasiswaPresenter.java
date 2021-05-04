@@ -1,5 +1,6 @@
 package org.d3ifcool.finpro.core.presenters;
 
+import android.content.Intent;
 import android.text.TextUtils;
 
 import androidx.databinding.ObservableField;
@@ -7,8 +8,11 @@ import androidx.databinding.ObservableField;
 import org.d3ifcool.finpro.App;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
+import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.manager.MahasiswaManager;
+import org.d3ifcool.finpro.prodi.activities.editor.update.KoorDosenUbahActivity;
+import org.d3ifcool.finpro.prodi.activities.editor.update.KoorMahasiswaUbahActivity;
 
 import okhttp3.MultipartBody;
 
@@ -119,5 +123,11 @@ public class MahasiswaPresenter implements MahasiswaContract.Presenter {
 
     public void floatButton(){
         viewModel.onMessage("FloatButton");
+    }
+
+    public Intent toolbarIntent(Mahasiswa mahasiswa){
+        Intent intent = new Intent(App.self(), KoorMahasiswaUbahActivity.class);
+        intent.putExtra("extra_mahasiswa",mahasiswa);
+        return intent;
     }
 }

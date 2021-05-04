@@ -143,26 +143,17 @@ public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements M
             finish();
 
         } else if (i == R.id.toolbar_menu_ubah) {
-            Intent intent = new Intent(this, KoorMahasiswaUbahActivity.class);
-            intent.putExtra(KoorMahasiswaUbahActivity.EXTRA_MAHASISWA, extraMahasiswa);
-            startActivity(intent);
+            startActivity(mahasiswaPresenter.toolbarIntent(extraMahasiswa));
             finish();
         } else if (i == R.id.toolbar_menu_hapus) {
-            new AlertDialog
-                    .Builder(this)
-                    .setTitle(getString(R.string.dialog_hapus_title))
-                    .setMessage(getString(R.string.dialog_hapus_text))
-
-                    .setPositiveButton(R.string.iya, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Continue with delete operation
-                            mahasiswaPresenter.deleteMahasiswa(extraMahasiswa.getMhs_nim());
-                        }
-                    })
-
-                    .setNegativeButton(R.string.tidak, null)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
+            mediator.message("AlertDialog","set");
+            mediator.message("AlertDialog","hapus");
+            mediator.getAlertDialog().setPositiveButton("Iya", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    mahasiswaPresenter.deleteMahasiswa(extraMahasiswa.getMhs_nim());
+                }
+            }).show();
         }
         return super.onOptionsItemSelected(item);
     }
