@@ -53,14 +53,14 @@ public class Dosen implements Parcelable {
     private String username;
 
     @Expose
-    @SerializedName("batas_bimbingan")
-    private int batas_bimbingan;
+    @SerializedName("kuota_bimbingan")
+    private int kuota_bimbingan;
 
     @Expose
-    @SerializedName("batas_reviewer")
-    private int batas_reviewer;
+    @SerializedName("kuota_reviewer")
+    private int kuota_reviewer;
 
-    public Dosen(String dsn_nip, String dsn_nama, String dsn_kode, String dsn_kontak, String dsn_foto, String dsn_email, String username, int batas_bimbingan, int batas_reviewer) {
+    public Dosen(String dsn_nip, String dsn_nama, String dsn_kode, String dsn_kontak, String dsn_foto, String dsn_email, String username, int kuota_bimbingan, int kuota_reviewer) {
         this.dsn_nip = dsn_nip;
         this.dsn_nama = dsn_nama;
         this.dsn_kode = dsn_kode;
@@ -68,8 +68,8 @@ public class Dosen implements Parcelable {
         this.dsn_foto = dsn_foto;
         this.dsn_email = dsn_email;
         this.username = username;
-        this.batas_bimbingan = batas_bimbingan;
-        this.batas_reviewer = batas_reviewer;
+        this.kuota_bimbingan = kuota_bimbingan;
+        this.kuota_reviewer = kuota_reviewer;
     }
 
     public String getDsn_nip() {
@@ -128,20 +128,20 @@ public class Dosen implements Parcelable {
         this.username = username;
     }
 
-    public int getBatas_bimbingan() {
-        return batas_bimbingan;
+    public int getKuota_bimbingan() {
+        return kuota_bimbingan;
     }
 
-    public void setBatas_bimbingan(int batas_bimbingan) {
-        this.batas_bimbingan = batas_bimbingan;
+    public void setKuota_bimbingan(int kuota_bimbingan) {
+        this.kuota_bimbingan = kuota_bimbingan;
     }
 
-    public int getBatas_reviewer() {
-        return batas_reviewer;
+    public int getKuota_reviewer() {
+        return kuota_reviewer;
     }
 
-    public void setBatas_reviewer(int batas_reviewer) {
-        this.batas_reviewer = batas_reviewer;
+    public void setKuota_reviewer(int kuota_reviewer) {
+        this.kuota_reviewer = kuota_reviewer;
     }
 
 
@@ -159,8 +159,8 @@ public class Dosen implements Parcelable {
         dest.writeString(this.dsn_foto);
         dest.writeString(this.dsn_email);
         dest.writeString(this.username);
-        dest.writeInt(this.batas_bimbingan);
-        dest.writeInt(this.batas_reviewer);
+        dest.writeInt(this.kuota_bimbingan);
+        dest.writeInt(this.kuota_reviewer);
     }
 
     protected Dosen(Parcel in) {
@@ -171,8 +171,8 @@ public class Dosen implements Parcelable {
         this.dsn_foto = in.readString();
         this.dsn_email = in.readString();
         this.username = in.readString();
-        this.batas_bimbingan = in.readInt();
-        this.batas_reviewer = in.readInt();
+        this.kuota_bimbingan = in.readInt();
+        this.kuota_reviewer = in.readInt();
     }
 
     public static final Creator<Dosen> CREATOR = new Creator<Dosen>() {

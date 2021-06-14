@@ -13,11 +13,13 @@ public interface DosenContract {
     }
 
     interface Presenter{
-        void getAllDosen();
-        void createDosen();
-        void deleteDosen(String dsn_nip);
-        void updateDosen();
-        void getDosenByNIP(String dsn_nip);
+        void onCreate();
+        void getCurrentDosen(String token);
+        void getAllDosen(String token);
+        void createDosen(String token);
+        void deleteDosen(String token, String dsn_nip);
+        void updateDosen(String token);
+        void getDosenByNIP(String token, String dsn_nip);
     }
 
 }

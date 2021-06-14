@@ -6,6 +6,10 @@
         <variable
             name="presenter"
             type="org.d3ifcool.finpro.core.presenters.MahasiswaPresenter" />
+        
+        <variable
+            name="token"
+            type="String" />
 
     </data>
 
@@ -17,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBackground"
-        app:onRefreshListener="@{()->presenter.getAllMahasiswa()}">
+        app:onRefreshListener="@{()->presenter.getAllMahasiswa(token)}">
 
         <RelativeLayout
             android:layout_width="match_parent"

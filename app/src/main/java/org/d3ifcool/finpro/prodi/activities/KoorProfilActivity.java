@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import org.d3ifcool.finpro.core.helpers.SessionManager;
-import org.d3ifcool.finpro.prodi.activities.editor.update.ProdiProfilUbahActivity;
+import org.d3ifcool.finpro.prodi.activities.editor.ProdiProfilUbahActivity;
 import org.d3ifcool.finpro.R;
 
 import static org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl.URL_FOTO_KOOR;

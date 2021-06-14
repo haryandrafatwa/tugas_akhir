@@ -27,23 +27,21 @@ public class MahasiswaManager {
 
     private ConnectionHelper connectionHelper = new ConnectionHelper();
     private Context context;
-    private SessionManager sessionManager;
 
     public void initContext(Context context){
         this.context = context;
-        sessionManager = new SessionManager(context);
     }
 
     public MahasiswaManager(MahasiswaContract.ViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
-    public void getMahasiswa(){
+    public void getMahasiswa(String token){
 
         if (connectionHelper.isConnected(context)){
             viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
-            Call<List<Mahasiswa>> call = apiInterfaceMahasiswa.getMahasiswa("Bearer "+sessionManager.getSessionToken());
+            Call<List<Mahasiswa>> call = apiInterfaceMahasiswa.getMahasiswa("Bearer "+token);
             call.enqueue(new Callback<List<Mahasiswa>>() {
                 @Override
                 public void onResponse(Call<List<Mahasiswa>> call, Response<List<Mahasiswa>> response) {
@@ -68,12 +66,12 @@ public class MahasiswaManager {
 
     }
 
-    public void createMahasiswa(String nim, String nama){
+    public void createMahasiswa(String token, String nim, String nama){
 
         if (connectionHelper.isConnected(context)){
             viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
-            Call<Mahasiswa> call = apiInterfaceMahasiswa.createMahasiswa("Bearer "+sessionManager.getSessionToken(),nim, nama);
+            Call<Mahasiswa> call = apiInterfaceMahasiswa.createMahasiswa("Bearer "+token,nim, nama);
             call.enqueue(new Callback<Mahasiswa>() {
                 @Override
                 public void onResponse(Call<Mahasiswa> call, Response<Mahasiswa> response) {
@@ -95,12 +93,12 @@ public class MahasiswaManager {
 
     }
 
-    public void updateMahasiswa(String nim, String nama, String angkatan, String kontak,String mhs_foto, String email){
+    public void updateMahasiswa(String token, String nim, String nama, String angkatan, String kontak, String email, String judul, String judul_inggris){
 
         if (connectionHelper.isConnected(context)){
             viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
-            Call<Mahasiswa> call = apiInterfaceMahasiswa.updateMahasiswa(nim, nama, angkatan, kontak, mhs_foto,email);
+            Call<Mahasiswa> call = apiInterfaceMahasiswa.updateMahasiswa("Bearer "+token,nim, nama, angkatan, kontak, email, judul, judul_inggris);
             call.enqueue(new Callback<Mahasiswa>() {
                 @Override
                 public void onResponse(Call<Mahasiswa> call, Response<Mahasiswa> response) {
@@ -122,36 +120,12 @@ public class MahasiswaManager {
 
     }
 
-    public void updateMahasiswa(String nim, String nama, String angkatan, String kontak, String email){
+    public void addPembimbing(String token, String mhs_nim, int id){
 
         if (connectionHelper.isConnected(context)){
             viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
-            Call<Mahasiswa> call = apiInterfaceMahasiswa.updateMahasiswa(nim, nama, angkatan, kontak, email);
-            call.enqueue(new Callback<Mahasiswa>() {
-                @Override
-                public void onResponse(Call<Mahasiswa> call, Response<Mahasiswa> response) {
-                    viewModel.onMessage("HideProgressDialog");
-                    viewModel.onMessage("onSuccess");
-                }
-
-                @Override
-                public void onFailure(Call<Mahasiswa> call, Throwable t) {
-                    viewModel.onMessage("HideProgressDialog");
-                    viewModel.onMessage(t.getLocalizedMessage());
-                }
-            });
-        } else {
-            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void addPembimbing(String mhs_nim, int id){
-
-        if (connectionHelper.isConnected(context)){
-            viewModel.onMessage("ShowProgressDialog");
-            ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
-            Call<Mahasiswa> call = apiInterfaceMahasiswa.addPembimbing("Bearer "+sessionManager.getSessionToken(),id,mhs_nim);
+            Call<Mahasiswa> call = apiInterfaceMahasiswa.addPembimbing("Bearer "+token,id,mhs_nim);
             call.enqueue(new Callback<Mahasiswa>() {
                 @Override
                 public void onResponse(Call<Mahasiswa> call, Response<Mahasiswa> response) {
@@ -179,12 +153,12 @@ public class MahasiswaManager {
         }
     }
 
-    public void updateSKTA(String mhs_nim, MultipartBody.Part part){
+    public void updateSKTA(String token, String mhs_nim, MultipartBody.Part part){
 
         if (connectionHelper.isConnected(context)){
             viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
-            Call<ResponseBody> call = apiInterfaceMahasiswa.updateSKTA("Bearer "+sessionManager.getSessionToken(),mhs_nim, part);
+            Call<ResponseBody> call = apiInterfaceMahasiswa.updateSKTA("Bearer "+token,mhs_nim, part);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -212,12 +186,12 @@ public class MahasiswaManager {
         }
     }
 
-    public void deleteMahasiswa(String nim){
+    public void deleteMahasiswa(String token, String nim){
 
         if (connectionHelper.isConnected(context)){
             viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
-            Call<Mahasiswa> call = apiInterfaceMahasiswa.deleteMahasiswa(nim);
+            Call<Mahasiswa> call = apiInterfaceMahasiswa.deleteMahasiswa("Bearer "+token, nim);
             call.enqueue(new Callback<Mahasiswa>() {
                 @Override
                 public void onResponse(Call<Mahasiswa> call, Response<Mahasiswa> response) {
@@ -238,11 +212,11 @@ public class MahasiswaManager {
 
     }
 
-    public void getMahasiswaByParameter(String mhs_nim){
+    public void getMahasiswaByParameter(String token, String mhs_nim){
 
         if (connectionHelper.isConnected(context)){
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
-            Call<Mahasiswa> call = apiInterfaceMahasiswa.getMahasiswaByParameter(mhs_nim);
+            Call<Mahasiswa> call = apiInterfaceMahasiswa.getMahasiswaByParameter("Bearer "+token,mhs_nim);
             call.enqueue(new Callback<Mahasiswa>() {
                 @Override
                 public void onResponse(Call<Mahasiswa> call, Response<Mahasiswa> response) {
@@ -268,11 +242,11 @@ public class MahasiswaManager {
 
     }
 
-    public void getPembimbing(int plotId){
+    public void getPembimbing(String token, int plotId){
         if (connectionHelper.isConnected(context)){
             viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
-            Call<Plotting> call = apiInterfaceMahasiswa.getPlottingByParamter("Bearer "+sessionManager.getSessionToken(),plotId);
+            Call<Plotting> call = apiInterfaceMahasiswa.getPlottingByParamter("Bearer "+token,plotId);
             call.enqueue(new Callback<Plotting>() {
                 @Override
                 public void onResponse(Call<Plotting> call, Response<Plotting> response) {

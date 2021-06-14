@@ -15,7 +15,6 @@ import android.widget.Toast;
 import org.d3ifcool.finpro.core.adapters.AllDosenKuotaViewAdpater;
 import org.d3ifcool.finpro.core.interfaces.lists.DosenListView;
 import org.d3ifcool.finpro.core.models.Dosen;
-import org.d3ifcool.finpro.core.presenters.DosenPresenters;
 import org.d3ifcool.finpro.R;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class DosenKuotaDosenActivity extends AppCompatActivity implements DosenL
 
     private AllDosenKuotaViewAdpater adapter;
     private ProgressDialog progressDialog;
-    private DosenPresenters dosenPresenters;
+//    private DosenPresenters dosenPresenters;
 
     private SwipeRefreshLayout refreshLayout;
     private View empty_view;
@@ -42,8 +41,8 @@ public class DosenKuotaDosenActivity extends AppCompatActivity implements DosenL
         setTitle(getString(R.string.title_kuota_dosen));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        dosenPresenters = new DosenPresenters(this);
-        dosenPresenters.initContext(this);
+//        dosenPresenters = new DosenPresenters(this);
+//        dosenPresenters.initContext(this);
 
         refreshLayout = findViewById(R.id.refresh);
         recyclerView = findViewById(R.id.frg_koor_dosen_home_recyclerview);
@@ -56,12 +55,12 @@ public class DosenKuotaDosenActivity extends AppCompatActivity implements DosenL
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        dosenPresenters.getDosen();
+//        dosenPresenters.getDosen();
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                dosenPresenters.getDosen();
+//                dosenPresenters.getDosen();
             }
         });
 
@@ -83,7 +82,7 @@ public class DosenKuotaDosenActivity extends AppCompatActivity implements DosenL
     @Override
     public void onResume() {
         super.onResume();
-        dosenPresenters.getDosen();
+//        dosenPresenters.getDosen();
     }
 
     @Override

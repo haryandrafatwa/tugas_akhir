@@ -5,6 +5,10 @@
         <variable
             name="presenter"
             type="org.d3ifcool.finpro.core.presenters.DosenPresenter" />
+
+        <variable
+            name="token"
+            type="String" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -15,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBackground"
-        app:onRefreshListener="@{()->presenter.getAllDosen()}">
+        app:onRefreshListener="@{()->presenter.getAllDosen(token)}">
 
         <RelativeLayout
             android:layout_width="match_parent"

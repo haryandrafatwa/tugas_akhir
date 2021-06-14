@@ -1,51 +1,49 @@
 package org.d3ifcool.finpro.prodi.fragments;
 
-
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.DosenContract;
-import org.d3ifcool.finpro.core.mediators.prodi.ProdiConcrete;
+import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Dosen;
-import org.d3ifcool.finpro.core.presenters.DosenPresenter;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.databinding.FragmentProdiDosenBinding;
-import org.d3ifcool.finpro.prodi.activities.editor.create.ProdiDosenTambahActivity;
+import org.d3ifcool.finpro.prodi.activities.editor.ProdiDosenEditorActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import es.dmoral.toasty.Toasty;
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ProdiDosenFragment extends Fragment implements DosenContract.ViewModel {
 
-    private ArrayList<Dosen> arrayList = new ArrayList<>();
-
-    private DosenPresenter dosenPresenter;
-    private ProdiConcrete mediator;
+    private Message message = new Message();
+    private ConcreteMediator mediator;
     private FragmentProdiDosenBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_prodi_dosen,container,false);
-        dosenPresenter = new DosenPresenter(this);
-        binding.setPresenter(dosenPresenter);
-        mediator = new ProdiConcrete((AppCompatActivity) getActivity());
-        mediator.message("ProgressDialog","set");
-        mediator.message("DosenViewAdapter","set");
+        mediator = new ConcreteMediator((AppCompatActivity) getActivity());
+        mediator.setDosenPresenter(this);
+        binding.setPresenter(mediator.getDosenPresenter());
 
-        dosenPresenter.getAllDosen();
+        mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
+        mediator.message(message.setComponent("ProdiDosenAdapter").setEvent("set"));
+        mediator.message(message.setComponent("SessionManager").setEvent("set"));
+
+        mediator.setRecyclerView(binding.recyclerView);
+        mediator.setRelativeLayout(binding.includeLayout.viewEmptyview);
+        mediator.setRefreshLayout(binding.refresh);
+
+        binding.setToken(mediator.getSessionToken());
+        mediator.message(message.setComponent("DosenPresenter").setEvent("getAllData"));
 
         return binding.getRoot();
     }
@@ -53,7 +51,7 @@ public class ProdiDosenFragment extends Fragment implements DosenContract.ViewMo
     @Override
     public void onResume() {
         super.onResume();
-        dosenPresenter.getAllDosen();
+        mediator.message(message.setComponent("DosenPresenter").setEvent("getAllData"));
     }
 
     @Override
@@ -63,35 +61,35 @@ public class ProdiDosenFragment extends Fragment implements DosenContract.ViewMo
 
     @Override
     public void onGetListDosen(List<Dosen> dosen) {
+        ArrayList<Dosen> arrayList = new ArrayList<>();
         arrayList.clear();
         arrayList.addAll(dosen);
-        mediator.getDosenViewAdapter().setDosens(arrayList);
-        binding.recyclerView.setAdapter(mediator.getDosenViewAdapter());
-        binding.refresh.setRefreshing(false);
-        if (arrayList.size() == 0){
-            binding.includeLayout.viewEmptyview.setVisibility(View.VISIBLE);
-        }else{
-            binding.includeLayout.viewEmptyview.setVisibility(View.GONE);
+        mediator.message(message.setComponent("ProdiDosenAdapter").setEvent("addItem").setItem(arrayList));
+        mediator.message(message.setComponent("ProdiDosenAdapter").setEvent("setAdapter"));
+        mediator.message(message.setComponent("RefreshLayout").setEvent("setRefreshing").setEnabled(false));
+        if (arrayList.size() == 0) {
+            mediator.message(message.setComponent("RelativeLayout").setEvent("setVisibility").setVisibility(View.VISIBLE));
+        } else {
+            mediator.message(message.setComponent("RelativeLayout").setEvent("setVisibility").setVisibility(View.GONE));
         }
     }
 
     @Override
-    public void onMessage(String message) {
-        switch (message){
+    public void onMessage(String messages) {
+        switch (messages){
             case "ShowProgressDialog":
-                mediator.getProgressDialog().show();
+                mediator.message(message.setComponent("ProgressDialog").setEvent("show"));
                 break;
             case "HideProgressDialog":
-                mediator.getProgressDialog().dismiss();
-                break;
+                mediator.message(message.setComponent("ProgressDialog").setEvent("dismiss"));
             case "EmptyList":
-                binding.includeLayout.viewEmptyview.setVisibility(View.VISIBLE);
+                mediator.message(message.setComponent("RelativeLayout").setEvent("setVisibility").setVisibility(View.VISIBLE));
                 break;
             case "FloatButton":
-                mediator.selectIntent(ProdiDosenTambahActivity.class);
+                mediator.selectIntent(ProdiDosenEditorActivity.class);
                 break;
             default:
-                Toasty.error(getContext(), message, Toasty.LENGTH_SHORT).show();
+                mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));
                 break;
         }
     }

@@ -3,7 +3,6 @@ package org.d3ifcool.finpro.prodi.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.d3ifcool.finpro.R;
-import org.d3ifcool.finpro.core.interfaces.works.MahasiswaWorkView;
 import org.d3ifcool.finpro.core.models.Plotting;
-import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
-import org.d3ifcool.finpro.core.presenters.MahasiswaPresenters;
-import org.d3ifcool.finpro.prodi.activities.editor.update.KoorMahasiswaUbahActivity;
 
 import java.util.ArrayList;
 
@@ -43,7 +38,7 @@ public class ProdiPlotPembimbingViewAdapter extends RecyclerView.Adapter<ProdiPl
     private Context context;
     private int layoutType;
     private String mhs_nim;
-    private MahasiswaPresenters mahasiswaPresenter;
+//    private MahasiswaPresenters mahasiswaPresenter;
 
     public ProdiPlotPembimbingViewAdapter(Context context) {
         this.context = context;
@@ -59,9 +54,9 @@ public class ProdiPlotPembimbingViewAdapter extends RecyclerView.Adapter<ProdiPl
         this.mhs_nim = mhs_nim;
     }
 
-    public void setMahasiswaPresenter(MahasiswaPresenters mahasiswaPresenter) {
-        this.mahasiswaPresenter = mahasiswaPresenter;
-    }
+//    public void setMahasiswaPresenter(MahasiswaPresenters mahasiswaPresenter) {
+//        this.mahasiswaPresenter = mahasiswaPresenter;
+//    }
 
     public void setLayoutType(int layouyType) {
         this.layoutType = layouyType;
@@ -89,7 +84,7 @@ public class ProdiPlotPembimbingViewAdapter extends RecyclerView.Adapter<ProdiPl
 
                         .setPositiveButton(R.string.iya, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                mahasiswaPresenter.addPembimbing(mhs_nim,data.get(position).getId());
+//                                mahasiswaPresenter.addPembimbing(mhs_nim,data.get(position).getId());
 //                                Log.e("TAG", "onClick: "+mhs_nim+": "+data.get(position).getId() );
                             }
                         })

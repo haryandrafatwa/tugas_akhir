@@ -82,8 +82,8 @@ public class SessionManager {
         editor.putString(DSN_EMAIL, dosen.getDsn_email());
         editor.putString(DSN_KONTAK, dosen.getDsn_kontak());
         editor.putString(DSN_KODE, dosen.getDsn_kode());
-        editor.putInt(DSN_BATAS_BIMBINGAN, dosen.getBatas_bimbingan());
-        editor.putInt(DSN_BATAS_REVIEWER, dosen.getBatas_reviewer());
+        editor.putInt(DSN_BATAS_BIMBINGAN, dosen.getKuota_bimbingan());
+        editor.putInt(DSN_BATAS_REVIEWER, dosen.getKuota_reviewer());
         editor.apply();
         editor.commit();
     }

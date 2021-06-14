@@ -9,16 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.interfaces.lists.MahasiswaListView;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.ProdiFragmentMediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ProdiFragmentConcrete;
+import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
-import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
-import org.d3ifcool.finpro.core.presenters.MahasiswaPresenters;
-import org.d3ifcool.finpro.prodi.activities.editor.create.ProdiMahasiswaTambahActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +24,8 @@ import java.util.List;
 public class ProdiSKTAFragment extends Fragment implements MahasiswaListView {
 
     private ArrayList<Mahasiswa> arrayList = new ArrayList<>();
-    private MahasiswaPresenters mahasiswaPresenter;
-    private ProdiFragmentMediator mediator;
+//    private MahasiswaPresenters mahasiswaPresenter;
+    private ConcreteMediator mediator;
 
     public ProdiSKTAFragment() {
         // Required empty public constructor
@@ -44,32 +39,31 @@ public class ProdiSKTAFragment extends Fragment implements MahasiswaListView {
 
         View view = inflater.inflate(R.layout.fragment_koor_mahasiswa, container, false);
 
-        mediator = new ProdiFragmentConcrete(view);
+       /* mediator = new ProdiFragmentConcrete(view);
         mediator.message("RefreshLayout");
         mediator.message("RecycleView");
         mediator.message("EmptyView");
         mediator.message("ProgressDialog");
         mediator.message("ProdiSKTAAdapter");
-        mediator.message("FloatingAButton", ProdiMahasiswaTambahActivity.class);
-        mediator.getFloatingButton().setVisibility(View.GONE);
+        mediator.getFloatingButton().setVisibility(View.GONE);*/
 
-        mahasiswaPresenter = new MahasiswaPresenters(this);
-        mahasiswaPresenter.initContext(getContext());
-        mahasiswaPresenter.getMahasiswa();
+//        mahasiswaPresenter = new MahasiswaPresenters(this);
+//        mahasiswaPresenter.initContext(getContext());
+//        mahasiswaPresenter.getMahasiswa();
 
-        mediator.getRefreshLayout().setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        /*mediator.getRefreshLayout().setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mahasiswaPresenter.getMahasiswa();
             }
-        });
+        });*/
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mahasiswaPresenter.getMahasiswa();
+//        mahasiswaPresenter.getMahasiswa();
     }
 
     @Override
@@ -93,7 +87,7 @@ public class ProdiSKTAFragment extends Fragment implements MahasiswaListView {
             }
         }
 
-        mediator.getProdiSKTAAdapter().setmMahasiswa(arrayList);
+        /*mediator.getProdiSKTAAdapter().setmMahasiswa(arrayList);
         mediator.getRecycleView().setAdapter(mediator.getProdiSKTAAdapter());
         mediator.getRefreshLayout().setRefreshing(false);
 
@@ -101,13 +95,13 @@ public class ProdiSKTAFragment extends Fragment implements MahasiswaListView {
             mediator.getView().setVisibility(View.VISIBLE);
         } else {
             mediator.getView().setVisibility(View.GONE);
-        }
+        }*/
 
     }
 
     @Override
     public void isEmptyListMahasiswa() {
-        mediator.getView().setVisibility(View.VISIBLE);
+        //mediator.getView().setVisibility(View.VISIBLE);
     }
 
     @Override

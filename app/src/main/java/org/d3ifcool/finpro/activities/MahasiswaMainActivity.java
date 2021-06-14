@@ -14,16 +14,14 @@ import android.view.MenuItem;
 
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.interfaces.objects.MahasiswaView;
-import org.d3ifcool.finpro.core.presenters.MahasiswaPresenters;
+import org.d3ifcool.finpro.fragments.InformasiFragment;
 import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaJadwalKegiatanActivity;
-import org.d3ifcool.finpro.mahasiswa.fragments.parent.MahasiswaInformasiFragment;
 import org.d3ifcool.finpro.mahasiswa.fragments.parent.MahasiswaJudulPaFragment;
 import org.d3ifcool.finpro.mahasiswa.fragments.parent.MahasiswaPaFragment;
 import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaPemberitahuanActivity;
 import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaProfilActivity;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
-import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
 
 public class MahasiswaMainActivity extends AppCompatActivity implements MahasiswaView {
 
@@ -45,14 +43,14 @@ public class MahasiswaMainActivity extends AppCompatActivity implements Mahasisw
         //    private ViewPager mViewPager;
         BottomNavigationView bottomNavigationView = findViewById(R.id.act_mhs_home_bottom_navigation);
         sessionManager = new SessionManager(this);
-        MahasiswaPresenters mahasiswaPresenter = new MahasiswaPresenters(this);
-        mahasiswaPresenter.initContext(this);
+//        MahasiswaPresenters mahasiswaPresenter = new MahasiswaPresenters(this);
+//        mahasiswaPresenter.initContext(this);
 
-        mahasiswaPresenter.getMahasiswaByParameter(sessionManager.getSessionUsername());
+//        mahasiswaPresenter.getMahasiswaByParameter(sessionManager.getSessionToken(),sessionManager.getSessionUsername());
 
 
 
-        openFragment(new MahasiswaInformasiFragment());
+        openFragment(new InformasiFragment());
 
         // -----------------------------------------------------------------------------------------
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -62,7 +60,7 @@ public class MahasiswaMainActivity extends AppCompatActivity implements Mahasisw
                 switch (menuItem.getItemId()) {
                     case R.id.bottom_menu_mhs_informasi:
 //                        mViewPager.setCurrentItem(0);
-                        openFragment(new MahasiswaInformasiFragment());
+                        openFragment(new InformasiFragment());
                         setTitle(R.string.title_informasi);
                         break;
                     case R.id.bottom_menu_mhs_proyekakhir:
@@ -73,7 +71,7 @@ public class MahasiswaMainActivity extends AppCompatActivity implements Mahasisw
                     case R.id.bottom_menu_mhs_judulpa:
 //                        mViewPager.setCurrentItem(2);
                         openFragment(new MahasiswaJudulPaFragment());
-                        setTitle(R.string.title_judulpa);
+                        setTitle(R.string.title_judulta);
                         break;
                 }
 //                return false;

@@ -14,7 +14,6 @@ import com.squareup.picasso.Picasso;
 
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.SessionManager;
-import org.d3ifcool.finpro.dosen.activities.editor.update.DosenProfilUbahActivity;
 
 import static org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl.URL_FOTO_DOSEN;
 
@@ -80,8 +79,8 @@ public class DosenProfilActivity extends AppCompatActivity {
         if (i == android.R.id.home) {
             finish();
         } else if (i == R.id.toolbar_menu_hanya_ubah) {
-            Intent intentUbah = new Intent(DosenProfilActivity.this, DosenProfilUbahActivity.class);
-            startActivity(intentUbah);
+//            Intent intentUbah = new Intent(DosenProfilActivity.this, DosenProfilUbahActivity.class);
+//            startActivity(intentUbah);
         }
 
         return super.onOptionsItemSelected(item);

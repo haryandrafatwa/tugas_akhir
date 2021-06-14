@@ -39,7 +39,8 @@
     <string name="title_sidang">Sidang</string>
     <string name="title_profil">Profil</string>
     <string name="title_informasi">Informasi</string>
-    <string name="title_judulpa">Judul Proyek Akhir</string>
+    <string name="title_judulta">Judul Tugas Akhir</string>
+    <string name="title_judultainggris">Judul Tugas Akhir Inggris</string>
     <string name="title_judulpakategori">Kategori Judul Proyek Akhir</string>
     <string name="title_judulpa_pendek">Judul PA</string>
     <string name="title_judulpa_dosen">Judul Dosen</string>

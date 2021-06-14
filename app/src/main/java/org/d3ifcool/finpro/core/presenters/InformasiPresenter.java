@@ -8,10 +8,10 @@ import androidx.databinding.ObservableField;
 
 import org.d3ifcool.finpro.App;
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.activities.detail.InformasiUbahActivity;
 import org.d3ifcool.finpro.core.interfaces.InformasiContract;
 import org.d3ifcool.finpro.core.models.Informasi;
 import org.d3ifcool.finpro.core.models.manager.InformasiManager;
-import org.d3ifcool.finpro.prodi.activities.editor.update.KoorInformasiUbahActivity;
 
 public class InformasiPresenter implements InformasiContract.Presenter {
 
@@ -47,27 +47,32 @@ public class InformasiPresenter implements InformasiContract.Presenter {
         return true;
     }
 
-
     @Override
-    public void getAllInformasi() {
-        informasiManager.getInformasi();
+    public void getAllInformasi(String token) {
+        informasiManager.getInformasi(token);
     }
 
     @Override
-    public void createInformasi() {
+    public void createInformasi(String token) {
         if (isValidate()){
-            informasiManager.createInformasi(judul.get(),deskripsi.get(),penerbit);
+            informasiManager.createInformasi(token,judul.get(),deskripsi.get(),penerbit);
         }
     }
 
     @Override
-    public void deleteInformasi(int id) {
-        informasiManager.deleteInformasi(id);
+    public void deleteInformasi(String token, int id) {
+        informasiManager.deleteInformasi(token,id);
     }
 
     @Override
-    public void updateInformasi(int id, String judul, String text) {
-        informasiManager.updateInformasi(id,judul,text);
+    public void updateInformasi(String token, int id) {
+        informasiManager.updateInformasi(token, id,judul.get(), deskripsi.get());
+    }
+
+    public void buttonChange(){
+        if (isValidate()){
+            viewModel.onMessage("AlertUbah");
+        }
     }
 
     public void floatClick(){
@@ -75,12 +80,20 @@ public class InformasiPresenter implements InformasiContract.Presenter {
     }
 
     public Intent toolbarIntent(Informasi informasi){
-        Intent intent = new Intent(App.self(), KoorInformasiUbahActivity.class);
+        Intent intent = new Intent(App.self(), InformasiUbahActivity.class);
         intent.putExtra("extra_informasi",informasi);
         return intent;
     }
 
     public void setPenerbit(String penerbit) {
         this.penerbit = penerbit;
+    }
+
+    public void setJudul(String judul) {
+        this.judul.set(judul);
+    }
+
+    public void setDeskripsi(String deskripsi) {
+        this.deskripsi.set(deskripsi);
     }
 }

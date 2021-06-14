@@ -3,46 +3,52 @@ package org.d3ifcool.finpro.prodi.activities.detail;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.DosenContract;
-import org.d3ifcool.finpro.core.mediators.prodi.ProdiConcrete;
+import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Dosen;
-import org.d3ifcool.finpro.core.presenters.DosenPresenter;
 import org.d3ifcool.finpro.databinding.ActivityProdiDosenDetailBinding;
 import org.d3ifcool.finpro.R;
 
 import java.util.List;
 
 import static org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl.URL_FOTO_DOSEN;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_DOSEN;
 
 public class ProdiDosenDetailActivity extends AppCompatActivity implements DosenContract.ViewModel {
 
-    public static final String EXTRA_DOSEN = "extra_dosen";
-    private Dosen extraDosen;
-    private DosenPresenter dosenPresenter;
-    private ProdiConcrete mediator;
+    private Message message = new Message();
+    private ConcreteMediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         ActivityProdiDosenDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_prodi_dosen_detail);
-        extraDosen = getIntent().getParcelableExtra(EXTRA_DOSEN);
-        binding.setModel(extraDosen);
+        mediator = new ConcreteMediator(this);
+        mediator.setDosenPresenter(this);
+
+        message.setDosen(getIntent().getParcelableExtra(EXTRA_DOSEN));
+        if(message.getDosen().getDsn_kontak() == null){
+            message.getDosen().setDsn_kontak("-");
+        }
+        if(message.getDosen().getDsn_email() == null){
+            message.getDosen().setDsn_email("-");
+        }
+        binding.setModel(message.getDosen());
 
         setTitle("Detail Dosen");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(0f);
 
-        dosenPresenter = new DosenPresenter(this);
-        mediator = new ProdiConcrete(this);
-        mediator.message("ProgressDialog","set");
-        mediator.loadImage(URL_FOTO_DOSEN+extraDosen.getDsn_foto(),binding.actKoorProfilFotoDosen);
+        mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
+        mediator.message(message.setComponent("SessionManager").setEvent("set"));
+        mediator.setCircleImageView(binding.actKoorProfilFotoDosen);
+        mediator.message(message.setComponent("CircleImageView").setEvent("setImage").setUrl(URL_FOTO_DOSEN+message.getDosen().getDsn_foto()));
     }
 
 
@@ -54,23 +60,8 @@ public class ProdiDosenDetailActivity extends AppCompatActivity implements Dosen
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int i = item.getItemId();
-        if (i == android.R.id.home) {
-            finish();
-        } else if (i == R.id.toolbar_menu_ubah) {
-            startActivity(dosenPresenter.toolbarIntent(extraDosen));
-            finish();
-        } else if (i == R.id.toolbar_menu_hapus) {
-            mediator.message("AlertDialog","set");
-            mediator.message("AlertDialog","hapus");
-            mediator.getAlertDialog().setPositiveButton("Iya", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dosenPresenter.deleteDosen(extraDosen.getDsn_nip());
-                }
-            }).show();
-        }
+        mediator.message(message.setComponent("Toolbar").setVisibility(i).setEvent("dosen"));
         return super.onOptionsItemSelected(item);
     }
 
@@ -85,19 +76,19 @@ public class ProdiDosenDetailActivity extends AppCompatActivity implements Dosen
     }
 
     @Override
-    public void onMessage(String message) {
-        switch (message){
+    public void onMessage(String messages) {
+        switch (messages){
             case "ShowProgressDialog":
-                mediator.getProgressDialog().show();
+                mediator.message(message.setComponent("ProgressDialog").setEvent("show"));
                 break;
             case "HideProgressDialog":
-                mediator.getProgressDialog().dismiss();
+                mediator.message(message.setComponent("ProgressDialog").setEvent("dismiss"));
                 break;
             case "onSuccess":
                 finish();
                 break;
             default:
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+                mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));
                 break;
         }
     }

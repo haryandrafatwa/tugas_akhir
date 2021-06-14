@@ -16,10 +16,10 @@ public interface InformasiContract {
     }
 
     interface Presenter{
-        void getAllInformasi();
-        void createInformasi();
-        void deleteInformasi(int id);
-        void updateInformasi(int id, String judul, String text);
+        void getAllInformasi(String token);
+        void createInformasi(String token);
+        void deleteInformasi(String token, int id);
+        void updateInformasi(String token, int id);
     }
 
 }

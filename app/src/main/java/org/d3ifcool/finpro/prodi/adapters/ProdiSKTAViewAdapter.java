@@ -26,6 +26,7 @@ import java.util.Locale;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl.URL_FOTO_MAHASISWA;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_MAHASISWA;
 
 /**
  * Created by Faisal Amir
@@ -128,7 +129,7 @@ public class ProdiSKTAViewAdapter extends RecyclerView.Adapter<ProdiSKTAViewAdap
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ProdiMahasiswaDetailActivity.class);
                 Mahasiswa parcelMahasiswa = mMahasiswa.get(position);
-                intent.putExtra(ProdiMahasiswaDetailActivity.EXTRA_MAHASISWA, parcelMahasiswa);
+                intent.putExtra(EXTRA_MAHASISWA, parcelMahasiswa);
                 mContext.startActivity(intent);
             }
         });

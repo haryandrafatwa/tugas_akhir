@@ -23,6 +23,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.activities.AuthActivity;
+import org.d3ifcool.finpro.activities.MahasiswaMainActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

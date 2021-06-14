@@ -17,13 +17,14 @@ public interface MahasiswaContract {
     }
 
     interface Presenter{
-        void getAllMahasiswa();
-        void createMahasiswa();
-        void deleteMahasiswa(String nim);
-        void updateMahasiswa();
-        void getMahasiswaByNIM(String mhs_nim);
-        void getPembimbing(int plot_id);
-        void updateSKTA(String mhs_nim, MultipartBody.Part part);
+        void onCreate();
+        void getAllMahasiswa(String token);
+        void createMahasiswa(String token);
+        void deleteMahasiswa(String token,String nim);
+        void updateMahasiswa(String token);
+        void getMahasiswaByNIM(String token,String mhs_nim);
+        void getPembimbing(String token,int plot_id);
+        void updateSKTA(String token,String mhs_nim, MultipartBody.Part part);
     }
 
 }

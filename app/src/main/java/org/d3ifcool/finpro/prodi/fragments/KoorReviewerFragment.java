@@ -21,7 +21,6 @@ import org.d3ifcool.finpro.core.interfaces.lists.DosenListView;
 import org.d3ifcool.finpro.core.interfaces.lists.ProyekAkhirListView;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.ProyekAkhir;
-import org.d3ifcool.finpro.core.presenters.DosenPresenters;
 import org.d3ifcool.finpro.core.presenters.ProyekAkhirPresenter;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.prodi.adapters.ProdiReviewerViewAdapter;
@@ -48,7 +47,7 @@ public class KoorReviewerFragment extends Fragment implements ProyekAkhirListVie
     private ArrayList<ProyekAkhir> arrayListProyekAkhir = new ArrayList<>();
     private ArrayList<Dosen> arrayListDosen = new ArrayList<>();
 
-    private DosenPresenters dosenPresenters;
+//    private DosenPresenters dosenPresenters;
     private ProyekAkhirPresenter proyekAkhirPresenter;
 
     private ProdiReviewerViewAdapter prodiReviewerViewAdapter;
@@ -77,12 +76,12 @@ public class KoorReviewerFragment extends Fragment implements ProyekAkhirListVie
         empty_view = rootView.findViewById(R.id.view_emptyview);
 
         proyekAkhirPresenter = new ProyekAkhirPresenter(this);
-        dosenPresenters = new DosenPresenters(this);
+//        dosenPresenters = new DosenPresenters(this);
 
-        dosenPresenters.initContext(getContext());
+//        dosenPresenters.initContext(getContext());
         proyekAkhirPresenter.initContext(getContext());
 
-        dosenPresenters.getDosen();
+//        dosenPresenters.getDosen();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         prodiReviewerViewAdapter.setLayoutType(R.layout.content_list_koor_dosen_reviewer);

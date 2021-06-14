@@ -19,24 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl.URL_FOTO_MAHASISWA;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_MAHASISWA;
 
-/**
- * Created by Faisal Amir
- * FrogoBox Inc License
- * =========================================
- * Finpro
- * Copyright (C) 08/03/2019.
- * All rights reserved
- * -----------------------------------------
- * Name     : Muhammad Faisal Amir
- * E-mail   : faisalamircs@gmail.com
- * Line     : bullbee117
- * Phone    : 081357108568
- * Majors   : D3 Teknik Informatika 2016
- * Campus   : Telkom University
- * -----------------------------------------
- * id.amirisback.frogobox
- */
 public class ProdiMahasiswaViewAdapter extends RecyclerView.Adapter<ProdiMahasiswaViewAdapter.ViewHolder> {
 
     private Context mContext;
@@ -46,7 +30,7 @@ public class ProdiMahasiswaViewAdapter extends RecyclerView.Adapter<ProdiMahasis
         this.mContext = mContext;
     }
 
-    public void setmMahasiswa(ArrayList<Mahasiswa> mMahasiswa) {
+    public void addItem(ArrayList<Mahasiswa> mMahasiswa) {
         this.mMahasiswa = mMahasiswa;
         notifyDataSetChanged();
     }
@@ -103,7 +87,7 @@ public class ProdiMahasiswaViewAdapter extends RecyclerView.Adapter<ProdiMahasis
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ProdiMahasiswaDetailActivity.class);
                 Mahasiswa parcelMahasiswa = mMahasiswa.get(position);
-                intent.putExtra(ProdiMahasiswaDetailActivity.EXTRA_MAHASISWA, parcelMahasiswa);
+                intent.putExtra(EXTRA_MAHASISWA, parcelMahasiswa);
                 mContext.startActivity(intent);
             }
         });

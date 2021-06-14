@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil;
 import com.google.android.material.navigation.NavigationView;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.interfaces.ProdiContract;
-import org.d3ifcool.finpro.core.mediators.prodi.ProdiConcrete;
+import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Koordinator;
 import org.d3ifcool.finpro.core.presenters.ProdiPresenter;
 import org.d3ifcool.finpro.databinding.ActivityAdminMainBinding;
@@ -20,15 +20,16 @@ public class ProdiMainActivity extends AppCompatActivity implements ProdiContrac
         NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityAdminMainBinding mBinding;
-    private ProdiConcrete mediator;
+    private ConcreteMediator mediator;
+    private ProdiPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_admin_main);
-        ProdiPresenter mPresenter = new ProdiPresenter(this);
+        mPresenter = new ProdiPresenter(this);
 
-        mediator = new ProdiConcrete(this);
+        mediator = new ConcreteMediator(this);
         mediator.message("SessionManager","set");
         mediator.message("ProgressDialog","set");
 

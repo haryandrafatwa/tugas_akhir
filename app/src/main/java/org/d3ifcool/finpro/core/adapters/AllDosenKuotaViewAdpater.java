@@ -59,8 +59,8 @@ public class AllDosenKuotaViewAdpater extends RecyclerView.Adapter<AllDosenKuota
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.nama_dosen.setText(dosens.get(position).getDsn_nama());
         holder.nip_dosen.setText(dosens.get(position).getDsn_nip());
-        holder.kuota_bimbingan.setText(String.valueOf(dosens.get(position).getBatas_bimbingan()));
-        holder.kuota_reviewer.setText(String.valueOf(dosens.get(position).getBatas_reviewer()));
+        holder.kuota_bimbingan.setText(String.valueOf(dosens.get(position).getKuota_bimbingan()));
+        holder.kuota_reviewer.setText(String.valueOf(dosens.get(position).getKuota_reviewer()));
         Picasso.get().load(URL_FOTO_DOSEN+dosens.get(position).getDsn_foto()).into(holder.foto);
 
     }

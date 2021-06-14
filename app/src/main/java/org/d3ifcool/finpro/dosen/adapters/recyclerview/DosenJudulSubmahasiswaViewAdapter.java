@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.d3ifcool.finpro.R;
-import org.d3ifcool.finpro.dosen.activities.detail.DosenJudulPaSubmahasiswaDetailActivity;
 import org.d3ifcool.finpro.core.models.Judul;
 
 import java.util.ArrayList;
@@ -71,10 +70,10 @@ public class DosenJudulSubmahasiswaViewAdapter extends RecyclerView.Adapter<Dose
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentData = new Intent(context, DosenJudulPaSubmahasiswaDetailActivity.class);
+//                Intent intentData = new Intent(context, DosenJudulPaSubmahasiswaDetailActivity.class);
                 Judul extraJudul = data.get(position);
-                intentData.putExtra(DosenJudulPaSubmahasiswaDetailActivity.EXTRA_JUDUL, extraJudul);
-                context.startActivity(intentData);
+//                intentData.putExtra(DosenJudulPaSubmahasiswaDetailActivity.EXTRA_JUDUL, extraJudul);
+//                context.startActivity(intentData);
             }
         });
     }

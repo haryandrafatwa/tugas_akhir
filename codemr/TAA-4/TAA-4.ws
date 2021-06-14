@@ -1,0 +1,1 @@
+{"Tugas_Akhir.app":{"name":"Tugas_Akhir.app","packages":{"org.d3ifcool.finpro.prodi.fragments":{"packageName":"org.d3ifcool.finpro.prodi.fragments","isAll":false,"classes":["Lorg.d3ifcool.finpro.prodi.fragments.ProdiPlottingFragment"]}}}}

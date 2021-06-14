@@ -7,18 +7,6 @@ import org.d3ifcool.finpro.core.models.*
 import retrofit2.Call
 import retrofit2.http.*
 
-/*
- * Created by Faisal Amir on 18/02/2021
- * Finpro-PA-D3IF-Telkom Source Code
- * -----------------------------------------
- * Name     : Muhammad Faisal Amir
- * E-mail   : faisalamircs@gmail.com
- * Github   : github.com/amirisback
- * -----------------------------------------
- * Copyright (C) 2021 FrogoBox Inc.      
- * All rights reserved
- *
- */
 interface ApiService {
 
     // Bimbingan
@@ -89,36 +77,39 @@ interface ApiService {
     @FormUrlEncoded
     @POST(FinproUrl.URL_DOSEN + FinproUrl.PATH_UPDATE + FinproUrl.PARAMETER_DOSEN)
     fun updateDosen(
-            @Path(FinproUrl.VAR_DOSEN) dsn_nip: String?,
-            @Field("dsn_nama") dsn_nama: String?,
-            @Field("dsn_kode") dsn_kode: String?,
-            @Field("dsn_kontak") dsn_kontak: String?,
-            @Field("dsn_email") dsn_email: String?,
-            @Field("batas_bimbingan") batas_bimbingan: Int,
-            @Field("batas_reviewer") batas_reviewer: Int
-    ): Call<Dosen?>?
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_DOSEN + FinproUrl.PATH_UPDATE + FinproUrl.PATH_PURE + FinproUrl.PARAMETER_DOSEN)
-    fun updateDosenPure(
-            @Path(FinproUrl.VAR_DOSEN) dsn_nip: String?,
-            @Field("dsn_nama") dsn_nama: String?,
-            @Field("dsn_kode") dsn_kode: String?,
-            @Field("dsn_kontak") dsn_kontak: String?,
-            @Field("dsn_email") dsn_email: String?
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_DOSEN) dsn_nip: String?,
+        @Field("dsn_nama") dsn_nama: String?,
+        @Field("dsn_kode") dsn_kode: String?,
+        @Field("dsn_kontak") dsn_kontak: String?,
+        @Field("dsn_email") dsn_email: String?,
+        @Field("kuota_bimbingan") kuota_bimbingan: Int,
+        @Field("kuota_reviewer")kuota_reviewer: Int
     ): Call<Dosen?>?
 
     @POST(FinproUrl.URL_DOSEN + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_DOSEN)
-    fun deleteDosen(@Path(FinproUrl.VAR_DOSEN) dsn_nip: String?): Call<Dosen?>?
+    fun deleteDosen(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_DOSEN) dsn_nip: String?
+    ): Call<Dosen?>?
+
+    @Headers("Connection: close")
+    @GET(FinproUrl.URL_DOSEN + FinproUrl.PATH_ALL)
+    fun getAllDosen(
+            @Header(FinproUrl.VAR_AUTHORIZATION) token: String?
+    ): Call<List<Dosen?>?>?
 
     @Headers("Connection: close")
     @GET(FinproUrl.URL_DOSEN)
     fun getDosen(
-            @Header(FinproUrl.VAR_AUTHORIZATION) token: String?
-    ): Call<List<Dosen?>?>?
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?
+    ): Call<Dosen?>?
 
     @GET(FinproUrl.URL_DOSEN + FinproUrl.PARAMETER_DOSEN)
-    fun getDosenByParameter(@Path(FinproUrl.VAR_DOSEN) dsn_nip: String?): Call<Dosen?>?
+    fun getDosenByParameter(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_DOSEN) dsn_nip: String?
+    ): Call<Dosen?>?
 
     // Plotting
     // ---------------------------------------------------------------------------------------------
@@ -132,31 +123,31 @@ interface ApiService {
     ): Call<ResponseBody?>?
 
     @FormUrlEncoded
-    @POST(FinproUrl.URL_INFORMASI + FinproUrl.PATH_UPDATE + FinproUrl.PARAMETER_INFORMASI)
+    @POST(FinproUrl.URL_PLOTTING + FinproUrl.PATH_UPDATE + FinproUrl.PARAMETER_PLOTTING)
     fun updatePlotting(
-            @Path(FinproUrl.VAR_INFORMASI) informasi_id: Int,
-            @Field("informasi_judul") informasi_judul: String?,
-            @Field("informasi_isi") informasi_isi: String?
-    ): Call<Informasi?>?
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_PLOTTING) plot_id: Int,
+        @Field("nip_pembimbing_1") nip_pembimbing_1: String?,
+        @Field("nip_pembimbing_2") nip_pembimbing_2: String?
+    ): Call<ResponseBody?>?
 
-    @Headers("Connection:close")
     @GET(FinproUrl.URL_PLOTTING)
     fun getPlotting(
             @Header(FinproUrl.VAR_AUTHORIZATION) token: String?
     ): Call<List<Plotting?>?>?
 
-    @Headers("Connection:close")
     @GET(FinproUrl.URL_PLOTTING + FinproUrl.PARAMETER_PLOTTING)
     fun getPlottingByParamter(
             @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
             @Path(FinproUrl.VAR_PLOTTING) plot_id: Int?
     ): Call<Plotting?>?
 
-    // Ga perlu pake @FormUrlEncoded karena tidak menggunakan field
-    @POST(FinproUrl.URL_INFORMASI + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_INFORMASI)
+    @Headers("Connection:close")
+    @POST(FinproUrl.URL_PLOTTING + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_PLOTTING)
     fun deletePlotting(
-            @Path(FinproUrl.VAR_INFORMASI) informasi_id: Int
-    ): Call<Informasi?>?
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_PLOTTING) plotting_id: Int
+    ): Call<ResponseBody?>?
 
     @Multipart
     @POST(FinproUrl.URL_PLOTTING + FinproUrl.PATH_UPLOAD)
@@ -199,6 +190,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST(FinproUrl.URL_INFORMASI + FinproUrl.PATH_UPDATE + FinproUrl.PARAMETER_INFORMASI)
     fun updateInformasi(
+            @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
             @Path(FinproUrl.VAR_INFORMASI) informasi_id: Int,
             @Field("informasi_judul") informasi_judul: String?,
             @Field("informasi_isi") informasi_isi: String?
@@ -213,6 +205,7 @@ interface ApiService {
     // Ga perlu pake @FormUrlEncoded karena tidak menggunakan field
     @POST(FinproUrl.URL_INFORMASI + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_INFORMASI)
     fun deleteInformasi(
+            @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
             @Path(FinproUrl.VAR_INFORMASI) informasi_id: Int
     ): Call<Informasi?>?
 
@@ -399,22 +392,14 @@ interface ApiService {
     @FormUrlEncoded
     @POST(FinproUrl.URL_MAHASISWA + FinproUrl.PATH_UPDATE + FinproUrl.PARAMETER_MAHASISWA)
     fun updateMahasiswa(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
             @Path(FinproUrl.VAR_MAHASISWA) nim_mhs: String?,
             @Field("mhs_nama") mhs_nama: String?,
             @Field("mhs_angkatan") angkatan: String?,
             @Field("mhs_kontak") mhs_kontak: String?,
-            @Field("mhs_foto") mhs_foto: String?,
-            @Field("mhs_email") mhs_email: String?
-    ): Call<Mahasiswa?>?
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_MAHASISWA + FinproUrl.PATH_UPDATE + FinproUrl.PARAMETER_MAHASISWA)
-    fun updateMahasiswa(
-            @Path(FinproUrl.VAR_MAHASISWA) nim_mhs: String?,
-            @Field("mhs_nama") mhs_nama: String?,
-            @Field("mhs_angkatan") angkatan: String?,
-            @Field("mhs_kontak") mhs_kontak: String?,
-            @Field("mhs_email") mhs_email: String?
+            @Field("mhs_email") mhs_email: String?,
+            @Field("judul") judul: String?,
+            @Field("judul_inggris") judul_inggris: String?
     ): Call<Mahasiswa?>?
 
     @Headers("Connection: close")
@@ -433,10 +418,16 @@ interface ApiService {
     ): Call<List<Mahasiswa?>?>?
 
     @POST(FinproUrl.URL_MAHASISWA + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_MAHASISWA)
-    fun deleteMahasiswa(@Path(FinproUrl.VAR_MAHASISWA) mhs_nim: String?): Call<Mahasiswa?>?
+    fun deleteMahasiswa(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_MAHASISWA) mhs_nim: String?
+    ): Call<Mahasiswa?>?
 
     @GET(FinproUrl.URL_MAHASISWA + FinproUrl.PARAMETER_MAHASISWA)
-    fun getMahasiswaByParameter(@Path(FinproUrl.VAR_MAHASISWA) username_mhs: String?): Call<Mahasiswa?>?
+    fun getMahasiswaByParameter(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_MAHASISWA) username_mhs: String?
+    ): Call<Mahasiswa?>?
 
     @FormUrlEncoded
     @POST(FinproUrl.URL_MAHASISWA + FinproUrl.PATH_UPDATE + FinproUrl.PATH_JUDUL + FinproUrl.PARAMETER_MAHASISWA)

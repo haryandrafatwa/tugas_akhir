@@ -86,7 +86,7 @@
 
                     <TextView
                         android:id="@+id/act_koor_dosen_batas_bimbingan"
-                        android:text="-"
+                        android:text="@{Integer.toString(model.kuota_bimbingan)}"
                         style="@style/profile_all_textview_content"/>
 
                 </LinearLayout>
@@ -107,7 +107,7 @@
 
                     <TextView
                         android:id="@+id/act_koor_dosen_batas_reviewer"
-                        android:text="-"
+                        android:text="@{Integer.toString(model.kuota_reviewer)}"
                         style="@style/profile_all_textview_content"/>
 
                 </LinearLayout>

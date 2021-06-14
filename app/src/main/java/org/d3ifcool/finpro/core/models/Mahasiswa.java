@@ -52,9 +52,18 @@ public class Mahasiswa implements Parcelable {
     @Expose
     @SerializedName("mhs_kontak")
     private String mhs_kontak;
+
     @Expose
     @SerializedName("mhs_foto")
     private String mhs_foto;
+
+    @Expose
+    @SerializedName("judul")
+    private String judul;
+
+    @Expose
+    @SerializedName("judul_inggris")
+    private String judul_inggris;
 
     @Expose
     @SerializedName("mhs_email")
@@ -84,13 +93,15 @@ public class Mahasiswa implements Parcelable {
     @SerializedName("username")
     private String username;
 
-    public Mahasiswa(String mhs_nim, String mhs_nama, String angkatan, String mhs_kontak, String mhs_foto, String mhs_email, int plot_id, String sk_expired, int sk_status, String username, String nip_pembimbing_1, String nip_pembimbing_2) {
+    public Mahasiswa(String mhs_nim, String mhs_nama, String angkatan, String mhs_kontak, String mhs_foto, String mhs_email, String judul, String judul_inggris, int plot_id, String sk_expired, int sk_status, String username, String nip_pembimbing_1, String nip_pembimbing_2) {
         this.mhs_nim = mhs_nim;
         this.mhs_nama = mhs_nama;
         this.angkatan = angkatan;
         this.mhs_kontak = mhs_kontak;
         this.mhs_foto = mhs_foto;
         this.mhs_email = mhs_email;
+        this.judul = judul;
+        this.judul_inggris = judul_inggris;
         this.plot_id = plot_id;
         this.sk_expired = sk_expired;
         this.sk_status = sk_status;
@@ -222,6 +233,22 @@ public class Mahasiswa implements Parcelable {
         this.sk_status = sk_status;
     }
 
+    public String getJudul() {
+        return judul;
+    }
+
+    public void setJudul(String judul) {
+        this.judul = judul;
+    }
+
+    public String getJudul_inggris() {
+        return judul_inggris;
+    }
+
+    public void setJudul_inggris(String judul_inggris) {
+        this.judul_inggris = judul_inggris;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -235,6 +262,8 @@ public class Mahasiswa implements Parcelable {
         dest.writeString(this.mhs_kontak);
         dest.writeString(this.mhs_foto);
         dest.writeString(this.mhs_email);
+        dest.writeString(this.judul);
+        dest.writeString(this.judul_inggris);
         dest.writeInt(this.plot_id);
         dest.writeString(this.username);
         dest.writeString(this.sk_expired);
@@ -250,6 +279,8 @@ public class Mahasiswa implements Parcelable {
         this.mhs_kontak = in.readString();
         this.mhs_foto = in.readString();
         this.mhs_email = in.readString();
+        this.judul = in.readString();
+        this.judul_inggris = in.readString();
         this.plot_id = in.readInt();
         this.username = in.readString();
         this.sk_expired = in.readString();

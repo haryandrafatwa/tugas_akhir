@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import org.d3ifcool.finpro.core.models.Dosen;
-import org.d3ifcool.finpro.prodi.activities.detail.ProdiDosenDetailActivity;
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.prodi.activities.detail.ProdiDosenDetailActivity;
 
 import java.util.ArrayList;
 
@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl.URL_FOTO_DOSEN;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_DOSEN;
 
 /**
  * Created by Faisal Amir
@@ -46,7 +47,7 @@ public class ProdiDosenViewAdapter extends RecyclerView.Adapter<ProdiDosenViewAd
     }
 
 
-    public void setDosens(ArrayList<Dosen> dosens) {
+    public void addItem(ArrayList<Dosen> dosens) {
         this.dosens = dosens;
         notifyDataSetChanged();
     }
@@ -69,7 +70,7 @@ public class ProdiDosenViewAdapter extends RecyclerView.Adapter<ProdiDosenViewAd
             public void onClick(View v) {
                 Intent intent = new Intent(context, ProdiDosenDetailActivity.class);
                 Dosen parcelDosen = dosens.get(position);
-                intent.putExtra(ProdiDosenDetailActivity.EXTRA_DOSEN, parcelDosen);
+                intent.putExtra(EXTRA_DOSEN, parcelDosen);
                 context.startActivity(intent);
             }
         });

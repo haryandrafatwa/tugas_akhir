@@ -1,22 +1,5 @@
 package org.d3ifcool.finpro.core.helpers;
 
-/**
- * Created by Faisal Amir
- * FrogoBox Inc License
- * =========================================
- * Finpro
- * Copyright (C) 27/03/2019.
- * All rights reserved
- * -----------------------------------------
- * Name     : Muhammad Faisal Amir
- * E-mail   : faisalamircs@gmail.com
- * Line     : bullbee117
- * Phone    : 081357108568
- * Majors   : D3 Teknik Informatika 2016
- * Campus   : Telkom University
- * -----------------------------------------
- * id.amirisback.frogobox
- */
 public class Constant {
 
     public Constant() {
@@ -24,6 +7,14 @@ public class Constant {
 
     public static final class ObjectConstanta {
 
+        public static final String ROLE_DOSEN = "dosen";
+        public static final String ROLE_MAHASISWA = "mahasiswa";
+        public static final String ROLE_LAK = "LAK";
+        public static final String ROLE_PRODI = "prodi";
+        // -----------------------------------------------------------------------------------------
+        public static final String EXTRA_MAHASISWA = "extra_mahasiswa";
+        public static final String EXTRA_DOSEN = "extra_dosen";
+        // -----------------------------------------------------------------------------------------
         public static final String JUDUL_STATUS_TERSEDIA = "tersedia"; // judul yang di buat dosen
         public static final String JUDUL_STATUS_PENDING = "pending"; // judul yang di buat mahasiswa
         public static final String JUDUL_STATUS_DITOLAK = "ditolak";

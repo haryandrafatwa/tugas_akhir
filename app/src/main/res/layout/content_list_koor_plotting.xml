@@ -1,25 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--
- * Created by
- * FrogoBox Inc License
- * =========================================
- *
- * Copyright (C) .
- * All rights reserved
- *
- * Name     : Muhammad Faisal Amir
- * E-mail   : faisalamircs@gmail.com
- * Line     : bullbee117
- * Phone    : 081357108568
- * Majors   : D3 Teknik Informatika 2016
- * Campus   : Telkom University
- *
- * id.amirisback.frogobox
- *
- -->
-
-
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -31,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dimen_medium_8dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_marginLeft="@dimen/dimen_big_16dp"
             android:layout_marginRight="@dimen/dimen_big_16dp"
             android:layout_marginTop="@dimen/dimen_medium_8dp"
@@ -55,18 +35,22 @@
                 app:layout_constraintVertical_bias="0.533" />
 
             <LinearLayout
+                android:id="@+id/layout_content"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingStart="@dimen/text_size_default_12sp"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/tv_indexing"
+                android:paddingHorizontal="@dimen/dimen_medium_8dp"
+                android:layout_toStartOf="@id/layout_action"
                 android:gravity="center_vertical">
 
                 <TextView
                     android:textSize="@dimen/text_size_title_small_18sp"
                     android:maxLines="1"
+                    android:ellipsize="end"
                     android:id="@+id/ctn_koor_textview_nama_dosen_1"
                     android:textColor="@color/colorPrimary"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:text="@string/dummy"/>
@@ -74,16 +58,79 @@
                 <TextView
                     android:textSize="@dimen/text_size_title_small_18sp"
                     android:maxLines="1"
+                    android:ellipsize="end"
                     android:id="@+id/ctn_koor_textview_nama_dosen_2"
                     android:textColor="@color/colorPrimary"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:text="@string/dummy"/>
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/layout_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:visibility="gone">
 
-        </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layout_hapus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginEnd="@dimen/dimen_medium_8dp">
+
+                    <ImageButton
+                        android:id="@+id/ib_tolak"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_kategori_delete"
+                        android:backgroundTint="@color/colorTextRed"/>
+
+                    <TextView
+                        android:id="@+id/tv_tolak"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_hapus"
+                        android:textColor="@color/colorTextRed"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                    <ImageButton
+                        android:id="@+id/ib_terima"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_kategori_edit"
+                        android:backgroundTint="@color/colorPrimary"/>
+
+                    <TextView
+                        android:id="@+id/tv_terima"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ubah"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

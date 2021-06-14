@@ -3,14 +3,15 @@ package org.d3ifcool.finpro.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import org.d3ifcool.finpro.R;
-import org.d3ifcool.finpro.core.helpers.SessionManager;
+import org.d3ifcool.finpro.core.components.ProgressDialog;
+import org.d3ifcool.finpro.core.components.SessionManager;
 import org.d3ifcool.finpro.core.interfaces.LoginContract;
-import org.d3ifcool.finpro.core.mediators.prodi.ProdiConcrete;
+import org.d3ifcool.finpro.core.mediators.prodi.LoginConcrete;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.LoginMediator;
 import org.d3ifcool.finpro.core.models.User;
 import org.d3ifcool.finpro.core.presenters.LoginPresenter;
 import org.d3ifcool.finpro.databinding.ActivityAuthBinding;
@@ -21,8 +22,7 @@ public class AuthActivity extends AppCompatActivity implements LoginContract.Vie
 
     private LoginPresenter mPresenter;
     private ActivityAuthBinding mBinding;
-    private SessionManager sessionManager;
-    private ProdiConcrete mediator;
+    private LoginMediator loginMediator;
 
     private boolean status;
     private static final String ROLE_DOSEN = "dosen";
@@ -31,48 +31,50 @@ public class AuthActivity extends AppCompatActivity implements LoginContract.Vie
     private static final String ROLE_PRODI = "prodi";
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_auth);
         mPresenter = new LoginPresenter(this);
         mBinding.setPresenter(mPresenter);
 
-        sessionManager = new SessionManager(this);
-        mediator = new ProdiConcrete(this);
-        mediator.message("ProgressDialog","set");
+        loginMediator = new LoginConcrete();
+        loginMediator.registerComponent(new ProgressDialog(this));
+        loginMediator.registerComponent(new SessionManager(this));
+        loginMediator.setMessagePD("Mohon tunggu . . .");
 
-        if(sessionManager.getSessionUsername() != null ){
-            mPresenter.checkUser(sessionManager.getSessionUsername());
+        if(loginMediator.getSessionUsername() != null ){
+            mPresenter.checkUser(loginMediator.getSessionUsername());
         }
     }
 
     @Override
     public void login(User user) {
         this.status = true;
-        sessionManager.createSession(user.getUsername(), user.getPengguna(),user.getToken());
+        loginMediator.createSession(user.getUsername(), user.getPengguna(),user.getToken());
         checkUserLogin(user.getPengguna());
     }
 
     public void checkUserLogin(String cekPengguna){
-
         if (cekPengguna != null) {
             if(status){
                 if (cekPengguna.equalsIgnoreCase(ROLE_MAHASISWA)){
-                    Intent j = new Intent(AuthActivity.this, MahasiswaMainActivity.class);
-                    startActivity(j);
-                    finish();
+                    startActivity(MahasiswaMainActivity.class);
                 } else if (cekPengguna.equalsIgnoreCase(ROLE_DOSEN)){
-                    Intent i = new Intent(AuthActivity.this, DosenMainActivity.class);
-                    startActivity(i);
-                    finish();
+                    startActivity(DosenMainActivity.class);
                 } else if (cekPengguna.equalsIgnoreCase(ROLE_PRODI)) {
-                    Intent k = new Intent(AuthActivity.this, ProdiMainActivity.class);
-                    startActivity(k);
-                    finish();
+                    startActivity(ProdiMainActivity.class);
+                } else if(cekPengguna.equalsIgnoreCase(ROLE_LAK)){
+                    startActivity(ProdiMainActivity.class);
                 }
             }
         }
 
+    }
+
+    private void startActivity(Class aClass){
+        Intent j = new Intent(AuthActivity.this, aClass);
+        startActivity(j);
+        finish();
     }
 
     @Override
@@ -82,17 +84,17 @@ public class AuthActivity extends AppCompatActivity implements LoginContract.Vie
 
     @Override
     public void showProgress() {
-        mediator.getProgressDialog().show();
+        loginMediator.showPD();
     }
 
     @Override
     public void hideProgress() {
-        mediator.getProgressDialog().dismiss();
+        loginMediator.dismissPD();
     }
 
     @Override
     public void setStatus(boolean status) {
         this.status = status;
-        checkUserLogin(sessionManager.getSessionPengguna());
+        checkUserLogin(loginMediator.getSessionPengguna());
     }
 }

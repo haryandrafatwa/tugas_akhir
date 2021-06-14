@@ -7,6 +7,10 @@
             name="presenter"
             type="org.d3ifcool.finpro.core.presenters.InformasiPresenter" />
 
+        <variable
+            name="token"
+            type="String" />
+
     </data>
 
     <ScrollView
@@ -72,7 +76,7 @@
                 android:text="@string/button_click_tambah_info"
                 android:textColor="@color/colorTextWhite"
                 android:background="@drawable/box_border_button_primary"
-                android:onClick="@{()->presenter.createInformasi()}"/>
+                android:onClick="@{()->presenter.createInformasi(token)}"/>
 
         </LinearLayout>
 

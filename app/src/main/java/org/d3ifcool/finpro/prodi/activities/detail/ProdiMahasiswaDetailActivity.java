@@ -1,100 +1,62 @@
 package org.d3ifcool.finpro.prodi.activities.detail;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
-
-import org.apache.commons.io.FileUtils;
-
+import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.ProdiDetailActivityMediator;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.ProdiMediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ProdiConcrete;
-import org.d3ifcool.finpro.core.mediators.prodi.ProdiDetailActivityConcrete;
+import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
-import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
 import org.d3ifcool.finpro.databinding.ActivityProdiMahasiswaDetailBinding;
-import org.d3ifcool.finpro.prodi.activities.editor.update.KoorMahasiswaUbahActivity;
 import org.d3ifcool.finpro.R;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-import es.dmoral.toasty.Toasty;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-
-import static org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl.URL_FOTO_MAHASISWA;
-import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.FILE_TYPE_PDF;
-import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.PICK_PDF_REQUEST;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_MAHASISWA;
 
 public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements MahasiswaContract.ViewModel {
 
-    public static final String EXTRA_MAHASISWA = "extra_mahasiswa";
-
+    private Message message = new Message();
     private ActivityProdiMahasiswaDetailBinding binding;
-    private MahasiswaPresenter mahasiswaPresenter;
-    private ProdiConcrete mediator;
-
-    private Mahasiswa extraMahasiswa;
-    private String displayName,size;
-    private Uri docUri;
+    private ConcreteMediator mediator;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_prodi_mahasiswa_detail);
-        mahasiswaPresenter = new MahasiswaPresenter(this);
+        mediator = new ConcreteMediator(this);
+        mediator.setMahasiswaPresenter(this);
+        binding.setPresenter(mediator.getMahasiswaPresenter());
 
         setTitle(getString(R.string.title_mahasiswa_detail));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(0f);
 
-        extraMahasiswa = getIntent().getParcelableExtra(EXTRA_MAHASISWA);
-        binding.setModel(extraMahasiswa);
+        message.setMahasiswa(getIntent().getParcelableExtra(EXTRA_MAHASISWA));
+        binding.setModel(message.getMahasiswa());
 
-        if (extraMahasiswa.getSk_status() == 1 || extraMahasiswa.getSk_status() == 3){
-            binding.actKoorProfilStatusSk.setTextColor(Color.RED);
+        mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
+        mediator.message(message.setComponent("SessionManager").setEvent("set"));
+        mediator.message(message.setComponent("ProdiMahasiswaAdapter").setEvent("set"));
+
+        mediator.setTextView(binding.actKoorProfilStatusSk);
+        if (message.getMahasiswa().getSk_status() == 1 || message.getMahasiswa().getSk_status() == 3){
+            mediator.message(message.setComponent("TextView").setEvent("setTextColor").setColor("#ffFF0000"));
         }else{
-            if(extraMahasiswa.getSk_status() == 2){
-                binding.actKoorProfilStatusSk.setTextColor(getResources().getColor(R.color.colorTextGreen));
+            if(message.getMahasiswa().getSk_status() == 2){
+                mediator.message(message.setComponent("TextView").setEvent("setTextColor").setColor("#ff4CAF50"));
             }else{
-                binding.actKoorProfilStatusSk.setTextColor(getResources().getColor(R.color.colorAccent));
+                mediator.message(message.setComponent("TextView").setEvent("setTextColor").setColor("#ffFF9800"));
             }
         }
 
-        mediator = new ProdiConcrete(this);
-        mediator.message("ProgressDialog","set");
-
-        mahasiswaPresenter.getPembimbing(extraMahasiswa.getPlot_id());
+        mediator.message(message.setComponent("MahasiswaPresenter").setEvent("getPembimbing"));
     }
 
     @Override
@@ -103,58 +65,10 @@ public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements M
         return super.onCreateOptionsMenu(menu);
     }
 
-    private File copyToTempFile(Uri uri, File tempFile) throws IOException {
-        InputStream inputStream = getContentResolver().openInputStream(uri);
-        if (inputStream == null) {
-            throw new IOException("Unable to obtain input stream from URI");
-        }
-        FileUtils.copyInputStreamToFile(inputStream, tempFile);
-        return tempFile;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_PDF_REQUEST && resultCode == RESULT_OK) {
-            docUri = data.getData();
-            File file = new File(docUri.getPath());
-            String mimeType = getContentResolver().getType(docUri);
-            Log.e("TAG", "onActivityResult: "+mimeType+": "+file.getName());
-            File outputDir = getCacheDir(); // context being the Activity pointer
-            File outputFile = null;
-            try {
-                outputFile = File.createTempFile("skta","pdf", outputDir);
-                File fileCopy = copyToTempFile(docUri, outputFile);
-                RequestBody requestBody = RequestBody.create(MediaType.parse(mimeType),fileCopy);
-                String fileName = extraMahasiswa.getMhs_nim()+"_skta.pdf";
-                MultipartBody.Part part = MultipartBody.Part.createFormData("file",fileName,requestBody);
-                mahasiswaPresenter.updateSKTA(extraMahasiswa.getMhs_nim(),part);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int i = item.getItemId();
-        if (i == android.R.id.home) {
-            finish();
-
-        } else if (i == R.id.toolbar_menu_ubah) {
-            startActivity(mahasiswaPresenter.toolbarIntent(extraMahasiswa));
-            finish();
-        } else if (i == R.id.toolbar_menu_hapus) {
-            mediator.message("AlertDialog","set");
-            mediator.message("AlertDialog","hapus");
-            mediator.getAlertDialog().setPositiveButton("Iya", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    mahasiswaPresenter.deleteMahasiswa(extraMahasiswa.getMhs_nim());
-                }
-            }).show();
-        }
+        mediator.message(message.setComponent("Toolbar").setVisibility(i).setEvent("mahasiswa"));
         return super.onOptionsItemSelected(item);
     }
 
@@ -174,35 +88,19 @@ public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements M
     }
 
     @Override
-    public void onMessage(String message) {
-        switch (message){
+    public void onMessage(String messages) {
+        switch (messages){
             case "onSuccess":
                 finish();
                 break;
             case "ShowProgressDialog":
-                mediator.getProgressDialog().show();
+                mediator.message(message.setComponent("ProgressDialog").setEvent("show"));
                 break;
             case "HideProgressDialog":
-                mediator.getProgressDialog().dismiss();
-                break;
-            case "btnSkUpdate":
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                } else {
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-                    } else {
-                        Intent intent = new Intent();
-                        intent.setType(FILE_TYPE_PDF);
-                        String[] mimetypes = {FILE_TYPE_PDF};
-                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
-                        startActivityForResult(Intent.createChooser(intent, "Pilih file"), PICK_PDF_REQUEST);
-                    }
-                }
+                mediator.message(message.setComponent("ProgressDialog").setEvent("dismiss"));
                 break;
             default:
-                Toasty.error(this, message, Toasty.LENGTH_SHORT).show();
+                mediator.message(message.setComponent("Toasty").setEvent(messages));
                 break;
         }
     }

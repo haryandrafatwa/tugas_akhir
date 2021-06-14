@@ -19,7 +19,7 @@
             android:layout_gravity="center">
 
             <TextView
-                android:text="@string/title_judulpa"
+                android:text="@string/title_judulta"
                 style="@style/content_all_list_title"/>
 
             <TextView

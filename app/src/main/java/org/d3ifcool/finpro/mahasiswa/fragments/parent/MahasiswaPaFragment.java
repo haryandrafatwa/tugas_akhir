@@ -30,7 +30,6 @@ import org.d3ifcool.finpro.core.models.Bimbingan;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.ProyekAkhir;
 import org.d3ifcool.finpro.core.presenters.BimbinganPresenter;
-import org.d3ifcool.finpro.core.presenters.DosenPresenters;
 import org.d3ifcool.finpro.core.presenters.ProyekAkhirPresenter;
 
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ public class MahasiswaPaFragment extends Fragment implements ProyekAkhirListView
     private static final String PARAM_JUDUL_STATUS = "judul_status";
     private static final String PARAM_JUDUL_ID = "judul_id";
 
-    private DosenPresenters dosenPresenters;
+//    private DosenPresenters dosenPresenters;
     private ProyekAkhirPresenter proyekAkhirPresenter;
     private BimbinganPresenter bimbinganPresenter;
 
@@ -91,11 +90,11 @@ public class MahasiswaPaFragment extends Fragment implements ProyekAkhirListView
 
         proyekAkhirPresenter = new ProyekAkhirPresenter(this);
         bimbinganPresenter = new BimbinganPresenter(this);
-        dosenPresenters = new DosenPresenters(this);
+//        dosenPresenters = new DosenPresenters(this);
 
         proyekAkhirPresenter.initContext(getContext());
         bimbinganPresenter.initContext(getContext());
-        dosenPresenters.initContext(getContext());
+//        dosenPresenters.initContext(getContext());
 
         sessionManager = new SessionManager(getContext());
         progressDialog = new ProgressDialog(getContext());
@@ -283,7 +282,7 @@ public class MahasiswaPaFragment extends Fragment implements ProyekAkhirListView
             tv_kelompok_pa.setText(arrayListProyekAkhir.get(0).getNama_tim());
 
             bimbinganPresenter.searchBimbinganAllByTwo(PARAM_BIMBINGAN_ID, stringProyekAkhirId, PARAM_BIMBINGAN_STATUS, STATUS_BIMBINGAN_DISETUJUI);
-            dosenPresenters.getDosenPembimbing(arrayListProyekAkhir.get(0).getPembimbing_dsn_nip());
+//            dosenPresenters.getDosenPembimbing(arrayListProyekAkhir.get(0).getPembimbing_dsn_nip());
 
             if (arrayListProyekAkhir.get(0).getReviewer_dsn_nip() != null) {
                 tv_dosen_reviewer_pa.setText(arrayListProyekAkhir.get(0).getReviewer_dsn_nama());

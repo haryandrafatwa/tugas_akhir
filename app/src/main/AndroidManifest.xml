@@ -42,6 +42,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activities.detail.InformasiDetailActivity"/>
+        <activity android:name=".activities.detail.InformasiUbahActivity"/>
+        <activity android:name=".activities.detail.InformasiTambahActivity"/>
+
         <activity android:name=".activities.TentangKamiActivity" />
         <activity android:name=".activities.DosenMainActivity" />
         <activity android:name=".activities.MahasiswaMainActivity" />
@@ -66,7 +71,6 @@
         <activity android:name="org.d3ifcool.finpro.dosen.activities.DosenKuotaDosenActivity"></activity>
         <activity android:name="org.d3ifcool.finpro.dosen.activities.detail.DosenJadwalKegiatanDetailActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.DosenMonevMahasiswaActivity" />
-        <activity android:name="org.d3ifcool.finpro.dosen.activities.DosenJudulPaSubdosenAccActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.DosenJudulPaArsipActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.DosenProyekAkhirActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.DosenJadwalKegiatanActivity" />
@@ -83,12 +87,8 @@
         <activity android:name="org.d3ifcool.finpro.dosen.activities.editor.update.DosenSidangUbahActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.editor.update.DosenMonevUbahActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.editor.update.DosenJudulPaSubdosenUbahActivity" />
-        <activity android:name="org.d3ifcool.finpro.dosen.activities.editor.update.DosenProfilUbahActivity" />
-        <activity android:name="org.d3ifcool.finpro.dosen.activities.editor.update.DosenInformasiUbahActivity" />
-        <activity android:name="org.d3ifcool.finpro.dosen.activities.detail.DosenInformasiDetailActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.detail.DosenJudulPaArsipDetailActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.detail.DosenMonevDetailActivity" />
-        <activity android:name="org.d3ifcool.finpro.dosen.activities.detail.DosenJudulPaSubmahasiswaDetailActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.detail.DosenJudulPaSubdosenDetailActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.detail.DosenBimbinganDetailActivity" />
 
@@ -97,20 +97,18 @@
         <activity android:name="org.d3ifcool.finpro.prodi.activities.editor.create.KoorJadwalKegiatanTambahActivity" />
         <activity android:name="org.d3ifcool.finpro.prodi.activities.KoorPemberitahuanActivity" />
         <activity android:name="org.d3ifcool.finpro.prodi.activities.KoorProfilActivity" />
+        <activity android:name="org.d3ifcool.finpro.prodi.activities.editor.ProdiPlottingEditorActivity" />
+        <activity android:name="org.d3ifcool.finpro.prodi.activities.editor.ProdiDosenEditorActivity" />
+        <activity android:name="org.d3ifcool.finpro.prodi.activities.detail.ProdiDosenDetailActivity" />
         <activity android:name="org.d3ifcool.finpro.prodi.activities.editor.create.ProdiMahasiswaTambahActivity" />
-        <activity android:name="org.d3ifcool.finpro.prodi.activities.editor.create.ProdiDosenTambahActivity" />
-        <activity android:name="org.d3ifcool.finpro.prodi.activities.editor.create.ProdiInformasiTambahActivity" />
-        <activity android:name="org.d3ifcool.finpro.prodi.activities.editor.create.ProdiPlottingTambahActivity" />
-        <activity android:name="org.d3ifcool.finpro.prodi.activities.editor.update.ProdiMahasiswaPlotPembimbingActivity" />
+        <activity android:name="org.d3ifcool.finpro.prodi.activities.editor.ProdiMahasiswaPlotPembimbingActivity" />
         <activity android:name="org.d3ifcool.finpro.prodi.activities.editor.create.KoorJudulPaSubdosenTambahActivity" />
         <activity android:name="org.d3ifcool.finpro.prodi.activities.editor.update.KoorJudulPaSubdosenUbahActivity" />
-        <activity android:name="org.d3ifcool.finpro.prodi.activities.editor.update.ProdiProfilUbahActivity" />
-        <activity android:name="org.d3ifcool.finpro.prodi.activities.editor.update.KoorInformasiUbahActivity" />
-        <activity android:name="org.d3ifcool.finpro.prodi.activities.editor.update.KoorMahasiswaUbahActivity" />
+        <activity android:name="org.d3ifcool.finpro.prodi.activities.editor.ProdiProfilUbahActivity" />
+        <activity android:name="org.d3ifcool.finpro.prodi.activities.editor.ProdiMahasiswaEditorActivity" />
         <activity android:name="org.d3ifcool.finpro.prodi.activities.editor.update.KoorDosenUbahActivity" />
         <activity android:name="org.d3ifcool.finpro.prodi.activities.detail.KoorJudulPaSubdosenDetailActivity" />
         <activity android:name="org.d3ifcool.finpro.prodi.activities.detail.KoorProyekAkhirDetailActivity" />
-        <activity android:name="org.d3ifcool.finpro.prodi.activities.detail.ProdiInformasiDetailActivity" />
         <activity android:name="org.d3ifcool.finpro.prodi.activities.detail.ProdiMahasiswaDetailActivity" />
         <activity android:name="org.d3ifcool.finpro.prodi.activities.detail.ProdiDosenDetailActivity" />
         <activity android:name="org.d3ifcool.finpro.prodi.activities.detail.KoorJudulPaArsipDetailActivity" />

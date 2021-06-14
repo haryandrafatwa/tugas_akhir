@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.d3ifcool.finpro.R;
-import org.d3ifcool.finpro.dosen.activities.DosenJudulPaSubdosenAccActivity;
 import org.d3ifcool.finpro.core.models.ProyekAkhir;
 
 import java.util.ArrayList;
@@ -76,11 +75,11 @@ public class DosenKelompokPengajuanJudulViewAdapter extends RecyclerView.Adapter
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentData = new Intent(context, DosenJudulPaSubdosenAccActivity.class);
-                intentData.putExtra(DosenJudulPaSubdosenAccActivity.EXTRA_JUDUL, judul_id);
-                ProyekAkhir parcelProyekAkhir = data.get(position);
-                intentData.putExtra(DosenJudulPaSubdosenAccActivity.EXTRA_PROYEK_AKHIR, parcelProyekAkhir);
-                context.startActivity(intentData);
+//                Intent intentData = new Intent(context, DosenJudulPaSubdosenAccActivity.class);
+//                intentData.putExtra(DosenJudulPaSubdosenAccActivity.EXTRA_JUDUL, judul_id);
+//                ProyekAkhir parcelProyekAkhir = data.get(position);
+//                intentData.putExtra(DosenJudulPaSubdosenAccActivity.EXTRA_PROYEK_AKHIR, parcelProyekAkhir);
+//                context.startActivity(intentData);
                 ((Activity)context).finish();
             }
         });

@@ -23,23 +23,21 @@ public class DosenManager {
 
     private ConnectionHelper connectionHelper = new ConnectionHelper();
     private Context context;
-    private SessionManager sessionManager;
 
     public void initContext(Context context){
         this.context = context;
-        sessionManager = new SessionManager(context);
     }
 
     public DosenManager(DosenContract.ViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
-    public void getDosen(){
+    public void getAllDosen(String token){
 
         if (connectionHelper.isConnected(context)){
             viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterface = ApiClient.getApiClient().create(ApiService.class);
-            Call<List<Dosen>> call = apiInterface.getDosen("Bearer "+sessionManager.getSessionToken());
+            Call<List<Dosen>> call = apiInterface.getAllDosen("Bearer "+token);
             call.enqueue(new Callback<List<Dosen>>() {
                 @Override
                 public void onResponse(Call<List<Dosen>> call, Response<List<Dosen>> response) {
@@ -65,12 +63,43 @@ public class DosenManager {
 
     }
 
-    public void createDosen(String nip, String nama, String kode){
+    public void getCurrentDosen(String token){
+
+        if (connectionHelper.isConnected(context)){
+            viewModel.onMessage("ShowProgressDialog");
+            ApiService apiInterface = ApiClient.getApiClient().create(ApiService.class);
+            Call<Dosen> call = apiInterface.getDosen("Bearer "+token);
+            call.enqueue(new Callback<Dosen>() {
+                @Override
+                public void onResponse(Call<Dosen> call, Response<Dosen> response) {
+                    viewModel.onMessage("HideProgressDialog");
+                    if (response.body() != null && response.isSuccessful()) {
+                        viewModel.onGetObjectDosen(response.body());
+                    } else {
+                        viewModel.onMessage("EmptyObject");
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<Dosen> call, Throwable t) {
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage(t.getMessage());
+                }
+            });
+        } else {
+            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    public void createDosen(String token, String nip, String nama, String kode){
 
         if (connectionHelper.isConnected(context)){
             viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceDosen = ApiClient.getApiClient().create(ApiService.class);
-            Call<Dosen> call = apiInterfaceDosen.createDosen("Bearer "+sessionManager.getSessionToken(),nip,nama,kode);
+            Call<Dosen> call = apiInterfaceDosen.createDosen("Bearer "+token,nip,nama,kode);
             call.enqueue(new Callback<Dosen>() {
                 @Override
                 public void onResponse(Call<Dosen> call, Response<Dosen> response) {
@@ -89,13 +118,13 @@ public class DosenManager {
         }
     }
 
-    public void deleteDosen(String nip){
+    public void deleteDosen(String token, String nip){
 
         if (connectionHelper.isConnected(context)){
             viewModel.onMessage("ShowProgressDialog");
 
             ApiService apiInterfaceDosen = ApiClient.getApiClient().create(ApiService.class);
-            Call<Dosen> call = apiInterfaceDosen.deleteDosen(nip);
+            Call<Dosen> call = apiInterfaceDosen.deleteDosen("Bearer "+token,nip);
             call.enqueue(new Callback<Dosen>() {
                 @Override
                 public void onResponse(Call<Dosen> call, Response<Dosen> response) {
@@ -116,12 +145,12 @@ public class DosenManager {
 
     }
 
-    public void updateDosen(String nip_dosen, String dsn_nama, String dsn_kode, String dsn_kontak, String dsn_email, int batas_bimbingan, int batas_reviewer) {
+    public void updateDosen(String token, String nip_dosen, String dsn_nama, String dsn_kode, String dsn_kontak, String dsn_email, int batas_bimbingan, int batas_reviewer) {
 
         if (connectionHelper.isConnected(context)){
             viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceDosen = ApiClient.getApiClient().create(ApiService.class);
-            Call<Dosen> call = apiInterfaceDosen.updateDosen(nip_dosen, dsn_nama, dsn_kode, dsn_kontak, dsn_email, batas_bimbingan, batas_reviewer);
+            Call<Dosen> call = apiInterfaceDosen.updateDosen("Bearer "+token, nip_dosen, dsn_nama, dsn_kode, dsn_kontak, dsn_email, batas_bimbingan, batas_reviewer);
             call.enqueue(new Callback<Dosen>() {
                 @Override
                 public void onResponse(Call<Dosen> call, Response<Dosen> response) {
@@ -142,11 +171,11 @@ public class DosenManager {
 
     }
 
-    public void getDosenByParameter(String dsn_nip){
+    public void getDosenByParameter(String token, String dsn_nip){
 
         if (connectionHelper.isConnected(context)){
             ApiService apiInterfaceDosen = ApiClient.getApiClient().create(ApiService.class);
-            Call<Dosen> call = apiInterfaceDosen.getDosenByParameter(dsn_nip);
+            Call<Dosen> call = apiInterfaceDosen.getDosenByParameter(token,dsn_nip);
             call.enqueue(new Callback<Dosen>() {
                 @Override
                 public void onResponse(Call<Dosen> call, Response<Dosen> response) {
