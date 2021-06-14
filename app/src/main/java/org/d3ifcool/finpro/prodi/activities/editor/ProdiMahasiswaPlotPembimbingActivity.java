@@ -1,25 +1,19 @@
-package org.d3ifcool.finpro.prodi.activities.editor.update;
+package org.d3ifcool.finpro.prodi.activities.editor;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.interfaces.lists.PlottingListView;
 import org.d3ifcool.finpro.core.interfaces.works.MahasiswaWorkView;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.ProdiFragmentMediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ProdiFragmentConcrete;
+import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
-import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
-import org.d3ifcool.finpro.core.presenters.MahasiswaPresenters;
-import org.d3ifcool.finpro.core.presenters.PlottingPresenter;
 import org.d3ifcool.finpro.prodi.activities.detail.ProdiMahasiswaDetailActivity;
 
 import java.util.ArrayList;
@@ -27,14 +21,15 @@ import java.util.List;
 
 import okhttp3.ResponseBody;
 
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_MAHASISWA;
+
 public class ProdiMahasiswaPlotPembimbingActivity extends AppCompatActivity implements PlottingListView , MahasiswaWorkView{
 
     private ArrayList<Plotting> arrayList = new ArrayList<>();
-    private ProdiFragmentMediator mediator;
-    private PlottingPresenter plottingPresenter;
-    private MahasiswaPresenters mahasiswaPresenter;
+    private ConcreteMediator mediator;
+//    private PlottingPresenter plottingPresenter;
+//    private MahasiswaPresenters mahasiswaPresenter;
 
-    public static final String EXTRA_MAHASISWA = "extra_mahasiswa";
     private Mahasiswa extraMahasiswa;
 
     @Override
@@ -45,28 +40,28 @@ public class ProdiMahasiswaPlotPembimbingActivity extends AppCompatActivity impl
         setTitle(getString(R.string.title_tambah_pembimbing));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mediator = new ProdiFragmentConcrete(findViewById(android.R.id.content).getRootView());
-        mediator.message("RefreshLayout");
-        mediator.message("RecycleView");
-        mediator.message("EmptyView");
-        mediator.message("ProgressDialog");
-        mediator.message("ProdiPlotPembimbingAdapter");
+        mediator = new ConcreteMediator(this);
+        mediator.message("RefreshLayout","set");
+        mediator.message("RecycleView","set");
+        mediator.message("EmptyView","set");
+        mediator.message("ProgressDialog","set");
+        mediator.message("ProdiPlotPembimbingAdapter","set");
 
         extraMahasiswa = getIntent().getParcelableExtra(EXTRA_MAHASISWA);
 
-        plottingPresenter = new PlottingPresenter(this);
-        plottingPresenter.initContext(this);
-        plottingPresenter.getPlotting();
-
+//        plottingPresenter = new PlottingPresenter(this);
+//        plottingPresenter.initContext(this);
+//        plottingPresenter.getPlotting();
+/*
         mediator.getRefreshLayout().setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                plottingPresenter.getPlotting();
+//                plottingPresenter.getPlotting();
             }
-        });
+        });*/
 
-        mahasiswaPresenter = new MahasiswaPresenters(this);
-        mahasiswaPresenter.initContext(this);
+//        mahasiswaPresenter = new MahasiswaPresenters(this);
+//        mahasiswaPresenter.initContext(this);
     }
 
     @Override
@@ -94,7 +89,7 @@ public class ProdiMahasiswaPlotPembimbingActivity extends AppCompatActivity impl
     private void intentToDetail(){
         Intent intent = new Intent(this, ProdiMahasiswaDetailActivity.class);
         Mahasiswa parcelMahasiswa = extraMahasiswa;
-        intent.putExtra(ProdiMahasiswaDetailActivity.EXTRA_MAHASISWA, parcelMahasiswa);
+        intent.putExtra(EXTRA_MAHASISWA, parcelMahasiswa);
         startActivity(intent);
         finish();
     }
@@ -125,7 +120,7 @@ public class ProdiMahasiswaPlotPembimbingActivity extends AppCompatActivity impl
         arrayList.clear();
         arrayList.addAll(plotting);
 
-        mediator.getProdiPlotPembimbingAdapter().setMhs_nim(extraMahasiswa.getMhs_nim());
+        /*mediator.getProdiPlotPembimbingAdapter().setMhs_nim(extraMahasiswa.getMhs_nim());
         mediator.getProdiPlotPembimbingAdapter().setMahasiswaPresenter(mahasiswaPresenter);
         mediator.getProdiPlotPembimbingAdapter().addItem(arrayList);
         mediator.getRecycleView().setAdapter(mediator.getProdiPlotPembimbingAdapter());
@@ -135,7 +130,7 @@ public class ProdiMahasiswaPlotPembimbingActivity extends AppCompatActivity impl
             mediator.getView().setVisibility(View.VISIBLE);
         } else {
             mediator.getView().setVisibility(View.GONE);
-        }
+        }*/
     }
 
     @Override
@@ -145,7 +140,7 @@ public class ProdiMahasiswaPlotPembimbingActivity extends AppCompatActivity impl
 
     @Override
     public void isEmptyListPlotting() {
-        mediator.getView().setVisibility(View.VISIBLE);
+        //mediator.getView().setVisibility(View.VISIBLE);
     }
 
 
