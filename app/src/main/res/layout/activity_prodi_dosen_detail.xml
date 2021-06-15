@@ -128,7 +128,7 @@
 
                     <TextView
                         android:id="@+id/act_koor_dosen_email"
-                        android:text="@{model.dsn_email}"
+                        android:text="@{model.dsn_email ?? `-`}"
                         style="@style/profile_all_textview_content"/>
 
                 </LinearLayout>
@@ -148,7 +148,7 @@
 
                     <TextView
                         android:id="@+id/act_koor_dosen_kontak"
-                        android:text="@{model.dsn_kontak}"
+                        android:text="@{model.dsn_kontak ?? `-`}"
                         style="@style/profile_all_textview_content"/>
 
                 </LinearLayout>

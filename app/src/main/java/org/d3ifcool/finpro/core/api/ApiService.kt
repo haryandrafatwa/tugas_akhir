@@ -331,12 +331,13 @@ interface ApiService {
     @FormUrlEncoded
     @POST(FinproUrl.URL_KOORDINATOR_PA + FinproUrl.PATH_UPDATE + FinproUrl.PARAMETER_KOOR)
     fun updateKoor(
-            @Path(FinproUrl.VAR_KOORDINATOR_PA) username: String?,
-            @Field("koor_nip") koor_nip: String?,
-            @Field("koor_nama") koor_nama: String?,
-            @Field("koor_kode") koor_kode: String?,
-            @Field("koor_kontak") koor_kontak: String?,
-            @Field("koor_email") koor_email: String?
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_KOORDINATOR_PA) username: String?,
+        @Field("koor_nip") koor_nip: String?,
+        @Field("koor_nama") koor_nama: String?,
+        @Field("koor_kode") koor_kode: String?,
+        @Field("koor_kontak") koor_kontak: String?,
+        @Field("koor_email") koor_email: String?
     ): Call<Koordinator?>?
 
     @GET(FinproUrl.URL_KOORDINATOR_PA)
@@ -686,11 +687,12 @@ interface ApiService {
     @POST(FinproUrl.URL_LOGIN)
     fun setLogin(
             @Field("username") username: String?,
-            @Field("password") password: String?): Call<User?>?
+            @Field("password") password: String?
+    ): Call<ResponseBody?>?
 
-    @GET(FinproUrl.URL_USER + FinproUrl.PARAMETER_USER)
-    fun getUserBy(
-            @Path(FinproUrl.VAR_USER) username: String?
+    @GET(FinproUrl.URL_USER)
+    fun getCurrentUser(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?
     ):Call<ResponseBody>?
 
     @POST(FinproUrl.URL_LOGOUT)

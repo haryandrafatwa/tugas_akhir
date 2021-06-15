@@ -1,134 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorBackground">
+<layout>
 
-    <RelativeLayout
+    <data>
+        <variable
+            name="presenter"
+            type="org.d3ifcool.finpro.core.presenters.ProdiPresenter" />
+    </data>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground">
 
-        <View
-            style="@style/profile_all_header"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/act_koor_profil_foto"
-            style="@style/profile_all_photo"/>
+            <View
+                style="@style/profile_all_header"/>
 
-        <LinearLayout
-            style="@style/profile_all_container_body">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/act_koor_profil_foto"
+                style="@style/profile_all_photo"/>
 
             <LinearLayout
-                style="@style/profile_all_container_textview">
+                android:id="@+id/layout_body"
+                style="@style/profile_all_container_body">
 
-                <TextView
-                    android:text="@string/text_profil_detail_nip"
-                    style="@style/profile_all_textview_subtitle"/>
+                <LinearLayout
+                    style="@style/profile_all_container_textview">
 
-                <EditText
-                    android:id="@+id/act_koor_profil_nip"
-                    android:background="@android:color/transparent"
-                    tools:text="@string/dummy_anggota_nim_2"
-                    style="@style/profile_all_textview_content"/>
+                    <TextView
+                        android:text="@string/text_profil_detail_nip"
+                        style="@style/profile_all_textview_subtitle"/>
+
+                    <EditText
+                        android:id="@+id/act_koor_profil_nip"
+                        android:background="@android:color/transparent"
+                        tools:text="@string/dummy_anggota_nim_2"
+                        android:text="@={presenter.nip}"
+                        style="@style/profile_all_textview_content"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_marginBottom="@dimen/dimen_big_super_24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorBackground"/>
+
+                <LinearLayout
+                    style="@style/profile_all_container_textview">
+
+                    <TextView
+                        android:text="@string/text_nama"
+                        style="@style/profile_all_textview_subtitle"/>
+
+                    <EditText
+                        android:id="@+id/act_koor_profil_nama"
+                        android:background="@android:color/transparent"
+                        android:text="@={presenter.nama}"
+                        tools:text="@string/dummy_anggota_nim_2"
+                        style="@style/profile_all_textview_content"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_marginBottom="@dimen/dimen_big_super_24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorBackground"/>
+
+                <LinearLayout
+                    style="@style/profile_all_container_textview">
+
+                    <TextView
+                        android:text="@string/text_kode_dosen"
+                        style="@style/profile_all_textview_subtitle"/>
+
+                    <EditText
+                        android:id="@+id/act_koor_profil_kode"
+                        android:background="@android:color/transparent"
+                        tools:text="@string/dummy_anggota_nim_2"
+                        android:text="@={presenter.kode}"
+                        style="@style/profile_all_textview_content"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_marginBottom="@dimen/dimen_big_super_24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorBackground"/>
+
+                <LinearLayout
+                    style="@style/profile_all_container_textview">
+
+                    <TextView
+                        android:text="@string/text_profil_detail_email"
+                        style="@style/profile_all_textview_subtitle"/>
+
+                    <EditText
+                        android:id="@+id/act_koor_profil_email"
+                        android:background="@android:color/transparent"
+                        tools:text="@string/dummy_email"
+                        android:text="@={presenter.email}"
+                        style="@style/profile_all_textview_content" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_marginBottom="@dimen/dimen_big_super_24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorBackground"/>
+
+                <LinearLayout
+                    style="@style/profile_all_container_textview">
+
+                    <TextView
+                        android:text="@string/text_profil_detail_notelp"
+                        style="@style/profile_all_textview_subtitle"/>
+
+                    <EditText
+                        android:id="@+id/act_koor_profil_kontak"
+                        android:background="@android:color/transparent"
+                        tools:text="@string/dummy_no_telp"
+                        android:text="@={presenter.kontak}"
+                        style="@style/profile_all_textview_content"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorBackground"/>
 
             </LinearLayout>
 
-            <View
-                android:layout_marginBottom="@dimen/dimen_big_super_24dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorBackground"/>
+            <include
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                layout="@layout/content_all_copyright_institute"
+                android:layout_below="@id/layout_body"/>
 
-            <LinearLayout
-                style="@style/profile_all_container_textview">
+        </RelativeLayout>
 
-                <TextView
-                    android:text="@string/text_nama"
-                    style="@style/profile_all_textview_subtitle"/>
-
-                <EditText
-                    android:id="@+id/act_koor_profil_nama"
-                    android:background="@android:color/transparent"
-                    tools:text="@string/dummy_anggota_nim_2"
-                    style="@style/profile_all_textview_content"/>
-
-            </LinearLayout>
-
-            <View
-                android:layout_marginBottom="@dimen/dimen_big_super_24dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorBackground"/>
-
-            <LinearLayout
-                style="@style/profile_all_container_textview">
-
-                <TextView
-                    android:text="@string/text_kode_dosen"
-                    style="@style/profile_all_textview_subtitle"/>
-
-                <EditText
-                    android:id="@+id/act_koor_profil_kode"
-                    android:background="@android:color/transparent"
-                    tools:text="@string/dummy_anggota_nim_2"
-                    style="@style/profile_all_textview_content"/>
-
-            </LinearLayout>
-
-            <View
-                android:layout_marginBottom="@dimen/dimen_big_super_24dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorBackground"/>
-
-            <LinearLayout
-                style="@style/profile_all_container_textview">
-
-                <TextView
-                    android:text="@string/text_profil_detail_email"
-                    style="@style/profile_all_textview_subtitle"/>
-
-                <EditText
-                    android:id="@+id/act_koor_profil_email"
-                    android:background="@android:color/transparent"
-                    tools:text="@string/dummy_email"
-                    style="@style/profile_all_textview_content" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_marginBottom="@dimen/dimen_big_super_24dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorBackground"/>
-
-            <LinearLayout
-                style="@style/profile_all_container_textview">
-
-                <TextView
-                    android:text="@string/text_profil_detail_notelp"
-                    style="@style/profile_all_textview_subtitle"/>
-
-                <EditText
-                    android:id="@+id/act_koor_profil_kontak"
-                    android:background="@android:color/transparent"
-                    tools:text="@string/dummy_no_telp"
-                    style="@style/profile_all_textview_content"/>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorBackground"/>
-
-        </LinearLayout>
-
-        <include
-            layout="@layout/content_all_copyright_institute"/>
-
-    </RelativeLayout>
-
-</ScrollView>
+    </ScrollView>
+</layout>

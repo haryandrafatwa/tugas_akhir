@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import com.google.android.material.navigation.NavigationView;
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.ProdiContract;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Koordinator;
@@ -19,22 +20,22 @@ import java.util.List;
 public class ProdiMainActivity extends AppCompatActivity implements ProdiContract.ViewModel,
         NavigationView.OnNavigationItemSelectedListener {
 
+    private Message message = new Message();
     private ActivityAdminMainBinding mBinding;
     private ConcreteMediator mediator;
-    private ProdiPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_admin_main);
-        mPresenter = new ProdiPresenter(this);
-
+        mBinding.setLifecycleOwner(this);
         mediator = new ConcreteMediator(this);
-        mediator.message("SessionManager","set");
-        mediator.message("ProgressDialog","set");
+        mediator.setProdiPresenter(this);
 
-        mPresenter.getProdiByNIP(mediator.getSessionManager().getSessionToken(),
-                mediator.getSessionManager().getSessionUsername());
+        mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
+        mediator.message(message.setComponent("SessionManager").setEvent("set"));
+
+        mediator.message(message.setComponent("ProdiPresenter").setEvent("getProdiByNIP"));
 
         setSupportActionBar(mBinding.includeLayout.toolbar);
 
@@ -77,42 +78,22 @@ public class ProdiMainActivity extends AppCompatActivity implements ProdiContrac
     }
 
     @Override
-    public void showProgress() {
-        mediator.message("ProgressDialog","show");
-    }
-
-    @Override
-    public void hideProgress() {
-        mediator.message("ProgressDialog","dismiss");
-    }
-
-    @Override
     public void onGetObjectProdi(Koordinator prodi) {
         mediator.getSessionManager().createSessionDataKoor(prodi);
     }
 
     @Override
-    public void isEmptyObjectProdi() {
-
-    }
-
-    @Override
-    public void onGetListProdi(List<Koordinator> prodiList) {
-
-    }
-
-    @Override
-    public void isEmptyListProdi() {
-
-    }
-
-    @Override
-    public void onSuccess() {
-
-    }
-
-    @Override
-    public void onFailed(String message) {
-
+    public void onMessage(String messages) {
+        switch (messages){
+            case "showProgress":
+                mediator.message(message.setComponent("ProgressDialog").setEvent("show"));
+                break;
+            case "dismissProgress":
+                mediator.message(message.setComponent("ProgressDialog").setEvent("dismiss"));
+                break;
+            default:
+                mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));
+                break;
+        }
     }
 }

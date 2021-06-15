@@ -24,7 +24,7 @@
     <data>
         <variable
             name="presenter"
-            type="org.d3ifcool.finpro.core.presenters.LoginPresenter"
+            type="org.d3ifcool.finpro.core.presenters.AuthPresenter"
             />
     </data>
 

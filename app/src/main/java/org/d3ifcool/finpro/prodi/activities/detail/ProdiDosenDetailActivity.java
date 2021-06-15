@@ -33,12 +33,6 @@ public class ProdiDosenDetailActivity extends AppCompatActivity implements Dosen
         mediator.setDosenPresenter(this);
 
         message.setDosen(getIntent().getParcelableExtra(EXTRA_DOSEN));
-        if(message.getDosen().getDsn_kontak() == null){
-            message.getDosen().setDsn_kontak("-");
-        }
-        if(message.getDosen().getDsn_email() == null){
-            message.getDosen().setDsn_email("-");
-        }
         binding.setModel(message.getDosen());
 
         setTitle("Detail Dosen");

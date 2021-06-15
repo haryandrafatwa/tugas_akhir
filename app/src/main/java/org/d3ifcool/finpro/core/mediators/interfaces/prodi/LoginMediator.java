@@ -9,7 +9,7 @@ public interface LoginMediator {
     void registerComponent(Component component);
 
     //todo SessionManager
-    String getSessionUsername();
+    String getSessionToken();
     String getSessionPengguna();
     void createSession(String username, String pengguna, String token);
 

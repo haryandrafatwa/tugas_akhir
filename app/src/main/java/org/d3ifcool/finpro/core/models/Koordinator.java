@@ -6,6 +6,9 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by ikhsan ramadhan
  * =========================================
@@ -57,6 +60,11 @@ public class Koordinator implements Parcelable {
         this.koor_foto = koor_foto;
         this.koor_email = koor_email;
         this.username = username;
+    }
+
+    public static Koordinator fromJson(JSONObject object) throws JSONException {
+        return new Koordinator(object.getString("koor_nip"),object.getString("koor_nama"),object.getString("koor_kode"),object.getString("koor_kontak"),object.getString("koor_foto")
+        ,object.getString("koor_email"),object.getString("username"));
     }
 
     public String getKoor_nip() {

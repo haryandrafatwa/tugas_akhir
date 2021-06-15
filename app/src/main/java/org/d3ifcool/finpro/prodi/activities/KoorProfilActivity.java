@@ -1,62 +1,59 @@
 package org.d3ifcool.finpro.prodi.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import de.hdodenhof.circleimageview.CircleImageView;
+import androidx.databinding.DataBindingUtil;
 
-import android.content.Intent;
+import okhttp3.ResponseBody;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.google.gson.Gson;
 
-import org.d3ifcool.finpro.core.helpers.SessionManager;
-import org.d3ifcool.finpro.prodi.activities.editor.ProdiProfilUbahActivity;
+import org.d3ifcool.finpro.core.helpers.Message;
+import org.d3ifcool.finpro.core.interfaces.AuthContract;
+import org.d3ifcool.finpro.core.interfaces.ProdiContract;
+import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.models.Koordinator;
+import org.d3ifcool.finpro.core.models.User;
+import org.d3ifcool.finpro.databinding.ActivityKoorProfilBinding;
 import org.d3ifcool.finpro.R;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import static org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl.URL_FOTO_KOOR;
+import java.io.IOException;
 
-public class KoorProfilActivity extends AppCompatActivity {
+public class KoorProfilActivity extends AppCompatActivity implements ProdiContract.ViewModel, AuthContract.ViewModel {
 
-    private TextView textView_nama, textView_nip, textView_kode, textView_email, textView_kontak;
-    private SessionManager sessionManager;
+    private ActivityKoorProfilBinding mBinding;
+    private Message message = new Message();
+    private ConcreteMediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_koor_profil);
+        mBinding = DataBindingUtil.setContentView(this,R.layout.activity_koor_profil);
+        mBinding.setLifecycleOwner(this);
+        mediator = new ConcreteMediator(this);
+        mediator.setAuthPresenter(this);
+        mediator.setProdiPresenter(this);
 
         setTitle(getString(R.string.title_profil));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(0f);
 
-        sessionManager = new SessionManager(this);
+        mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
+        mediator.message(message.setComponent("SessionManager").setEvent("set"));
 
-        textView_nama = findViewById(R.id.act_dsn_profil_nama);
-        textView_nip = findViewById(R.id.act_dsn_profil_nip);
-        textView_kode = findViewById(R.id.act_dsn_profil_kode);
-        textView_email = findViewById(R.id.act_dsn_profil_email);
-        textView_kontak = findViewById(R.id.act_dsn_profil_kontak);
-        CircleImageView imageView = findViewById(R.id.act_dsn_profil_foto);
+        mediator.message(message.setComponent("AuthPresenter").setEvent("getCurrentUser"));
 
-
-        Picasso.get().load(URL_FOTO_KOOR + sessionManager.getSessionKoorFoto()).into(imageView);
-
-    }
-
-    private void initContentView(){
-        textView_nama.setText(sessionManager.getSessionKoorNama());
-        textView_nip.setText(sessionManager.getSessionKoorNip());
-        textView_kode.setText(sessionManager.getSessionKoorKode());
-        textView_email.setText(sessionManager.getSessionKoorEmail());
-        textView_kontak.setText(sessionManager.getSessionKoorKontak());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        initContentView();
+        mediator.message(message.setComponent("AuthPresenter").setEvent("getCurrentUser"));
     }
 
     @Override
@@ -67,16 +64,38 @@ public class KoorProfilActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        int i = item.getItemId();
-        if (i == android.R.id.home) {
-            finish();
-
-        } else if (i == R.id.toolbar_menu_hanya_ubah) {
-            Intent intentUbah = new Intent(KoorProfilActivity.this, ProdiProfilUbahActivity.class);
-            startActivity(intentUbah);
-        }
+        mediator.message(message.setComponent("Toolbar").setVisibility(item.getItemId()).setEvent("koordinator"));
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void setStatus(boolean status) {
+
+    }
+
+    @Override
+    public void onGetObjectProdi(Koordinator prodi) {
+
+    }
+
+    @Override
+    public void onMessage(String messages) {
+        switch (messages){
+            case "showProgress":
+                mediator.message(message.setComponent("ProgressDialog").setEvent("show"));
+                break;
+            case "dismissProgress":
+                mediator.message(message.setComponent("ProgressDialog").setEvent("dismiss"));
+                break;
+            default:
+                mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));
+                break;
+        }
+    }
+
+    @Override
+    public void onRetrieveData(ResponseBody body) throws IOException, JSONException {
+        mBinding.setModel(new Gson().fromJson(new JSONObject(body.string()).getJSONObject("data").toString(),Koordinator.class));
+        message.setKoordinator(mBinding.getModel());
+    }
 }

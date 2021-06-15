@@ -32,15 +32,19 @@ import org.d3ifcool.finpro.core.helpers.FileHelper;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.helpers.MethodHelper;
 import org.d3ifcool.finpro.core.helpers.SessionManager;
+import org.d3ifcool.finpro.core.interfaces.AuthContract;
 import org.d3ifcool.finpro.core.interfaces.DosenContract;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
 import org.d3ifcool.finpro.core.interfaces.PlottingContract;
+import org.d3ifcool.finpro.core.interfaces.ProdiContract;
 import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.models.manager.AuthManager;
 import org.d3ifcool.finpro.core.models.manager.MahasiswaManager;
+import org.d3ifcool.finpro.core.presenters.AuthPresenter;
 import org.d3ifcool.finpro.core.presenters.DosenPresenter;
 import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
 import org.d3ifcool.finpro.core.presenters.PlottingPresenter;
+import org.d3ifcool.finpro.core.presenters.ProdiPresenter;
 import org.d3ifcool.finpro.dosen.activities.DosenJadwalKegiatanActivity;
 import org.d3ifcool.finpro.dosen.activities.DosenJudulPaArsipActivity;
 import org.d3ifcool.finpro.dosen.activities.DosenKuotaDosenActivity;
@@ -49,6 +53,8 @@ import org.d3ifcool.finpro.dosen.activities.DosenProfilActivity;
 import org.d3ifcool.finpro.dosen.fragments.parent.DosenJudulFragment;
 import org.d3ifcool.finpro.dosen.fragments.parent.DosenPaFragment;
 import org.d3ifcool.finpro.fragments.InformasiFragment;
+import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaProfilActivity;
+import org.d3ifcool.finpro.prodi.activities.KoorProfilActivity;
 import org.d3ifcool.finpro.prodi.adapters.ProdiDosenViewAdapter;
 import org.d3ifcool.finpro.prodi.adapters.ProdiMahasiswaViewAdapter;
 import org.d3ifcool.finpro.prodi.adapters.ProdiPlottingViewAdapter;
@@ -74,6 +80,8 @@ public class ConcreteMediator implements Mediator {
     private PlottingPresenter plottingPresenter;
     private MahasiswaPresenter mahasiswaPresenter;
     private DosenPresenter dosenPresenter;
+    private AuthPresenter authPresenter;
+    private ProdiPresenter prodiPresenter;
 
     private RelativeLayout relativeLayout;
     private LinearLayout linearLayout;
@@ -124,7 +132,13 @@ public class ConcreteMediator implements Mediator {
 
             //todo bisa dijadiin satu sama yg lain
             case R.id.toolbar_menu_profil:
-                selectIntent(DosenProfilActivity.class);
+                if (sessionManager.getSessionPengguna().equalsIgnoreCase("dosen")){
+                    selectIntent(DosenProfilActivity.class);
+                }else if(sessionManager.getSessionPengguna().equalsIgnoreCase("mahasiswa")){
+                    selectIntent(MahasiswaProfilActivity.class);
+                }else{
+                    selectIntent(KoorProfilActivity.class);
+                }
                 break;
 
             case R.id.toolbar_menu_jadwal_kegiatan:
@@ -338,6 +352,27 @@ public class ConcreteMediator implements Mediator {
     @Override
     public void message(Message message) {
         switch (message.getComponent()){
+            case "ProdiPresenter":
+                switch (message.getEvent()){
+                    case "getProdiByNIP":
+                        prodiPresenter.getProdiByNIP(getSessionToken(),getSessionUsername());
+                        break;
+                    case "showData":
+                        prodiPresenter.nama.set(message.getKoordinator().getKoor_nama());
+                        prodiPresenter.nip.set(message.getKoordinator().getKoor_nip());
+                        prodiPresenter.kode.set(message.getKoordinator().getKoor_kode());
+                        prodiPresenter.kontak.set(message.getKoordinator().getKoor_kontak());
+                        prodiPresenter.email.set(message.getKoordinator().getKoor_email());
+                        break;
+                }
+                break;
+            case "AuthPresenter":
+                switch (message.getEvent()){
+                    case "getCurrentUser":
+                        authPresenter.getUser(getSessionToken());
+                        break;
+                }
+                break;
             case "DosenPresenter":
                 switch (message.getEvent()){
                     case "getAllData":
@@ -548,6 +583,10 @@ public class ConcreteMediator implements Mediator {
                     case SET:
                         sessionManager = new SessionManager(this.activity);
                         break;
+                    case "updateKoor":
+                        sessionManager.updateSessionKoor(message.getKoordinator().getKoor_nip(),message.getKoordinator().getKoor_nama(),message.getKoordinator().getKoor_kode(),
+                                message.getKoordinator().getKoor_kontak(),message.getKoordinator().getKoor_email());
+                        break;
                 }
                 break;
             case "AlertDialog":
@@ -691,6 +730,20 @@ public class ConcreteMediator implements Mediator {
                                 break;
                         }
                         break;
+                    case R.id.toolbar_menu_ubah_yes:
+                        switch (message.getEvent()){
+                            case "koordinator":
+                                prodiPresenter.updateProdi(getSessionToken(),message.getKoordinator().getUsername());
+                                break;
+                        }
+                        break;
+                    case R.id.toolbar_menu_hanya_ubah:
+                        switch (message.getEvent()){
+                            case "koordinator":
+                                activity.startActivity(prodiPresenter.toolbarIntent(message.getKoordinator()));
+                                break;
+                        }
+                        break;
                     default:
                         activity.finish();
                         break;
@@ -735,6 +788,10 @@ public class ConcreteMediator implements Mediator {
         return this.sessionManager.getSessionToken();
     }
 
+    public String getSessionUsername() {
+        return this.sessionManager.getSessionUsername();
+    }
+
     @Override
     public boolean getPermissionFile() {
         return fileHelper.permissionCheck();
@@ -769,6 +826,14 @@ public class ConcreteMediator implements Mediator {
 
     public void setDosenPresenter(DosenContract.ViewModel viewModel) {
         this.dosenPresenter = new DosenPresenter(viewModel);
+    }
+
+    public void setAuthPresenter(AuthContract.ViewModel viewModel) {
+        this.authPresenter = new AuthPresenter(viewModel);
+    }
+
+    public void setProdiPresenter(ProdiContract.ViewModel viewModel) {
+        this.prodiPresenter = new ProdiPresenter(viewModel);
     }
 
     public String getUsernameDosen(){
@@ -819,5 +884,13 @@ public class ConcreteMediator implements Mediator {
 
     public DosenPresenter getDosenPresenter() {
         return dosenPresenter;
+    }
+
+    public AuthPresenter getAuthPresenter() {
+        return authPresenter;
+    }
+
+    public ProdiPresenter getProdiPresenter() {
+        return prodiPresenter;
     }
 }

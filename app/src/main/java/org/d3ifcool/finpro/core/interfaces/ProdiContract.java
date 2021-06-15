@@ -8,21 +8,12 @@ import java.util.List;
 public interface ProdiContract {
 
     interface ViewModel{
-        void showProgress();
-        void hideProgress();
         void onGetObjectProdi(Koordinator prodi);
-        void isEmptyObjectProdi();
-        void onGetListProdi(List<Koordinator> prodiList);
-        void isEmptyListProdi();
-        void onSuccess();
-        void onFailed(String message);
+        void onMessage(String messages);
     }
 
     interface Presenter{
-        void getAllProdi();
-        void createProdi();
-        void deleteProdi();
-        void updateProdi();
+        void updateProdi(String token, String username);
         void getProdiByNIP(String token, String dsn_nip);
     }
 

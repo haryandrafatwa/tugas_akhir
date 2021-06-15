@@ -6,20 +6,16 @@ import androidx.databinding.ObservableField;
 
 import org.d3ifcool.finpro.App;
 import org.d3ifcool.finpro.R;
-import org.d3ifcool.finpro.core.helpers.SessionManager;
-import org.d3ifcool.finpro.core.interfaces.LoginContract;
-import org.d3ifcool.finpro.core.models.User;
+import org.d3ifcool.finpro.core.interfaces.AuthContract;
 import org.d3ifcool.finpro.core.models.manager.AuthManager;
 
-import java.util.List;
-
-public class LoginPresenter implements LoginContract.Presenter {
+public class AuthPresenter implements AuthContract.Presenter {
     public ObservableField<String> username;
     public ObservableField<String> password;
-    private LoginContract.ViewModel mViewModel;
+    private AuthContract.ViewModel mViewModel;
     private AuthManager authManager;
 
-    public LoginPresenter(LoginContract.ViewModel mViewModel) {
+    public AuthPresenter(AuthContract.ViewModel mViewModel) {
         this.mViewModel = mViewModel;
         intFields();
         authManager = new AuthManager(mViewModel);
@@ -33,12 +29,12 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     private boolean isValidate(){
         if (TextUtils.isEmpty(username.get())){
-            mViewModel.onFailed(App.self().getString(R.string.text_tidak_boleh_kosong));
+            mViewModel.onMessage("Username "+App.self().getString(R.string.text_tidak_boleh_kosong));
             return false;
         }
 
         if (TextUtils.isEmpty(password.get())){
-            mViewModel.onFailed(App.self().getString(R.string.text_tidak_boleh_kosong));
+            mViewModel.onMessage("Password "+App.self().getString(R.string.text_tidak_boleh_kosong));
             return false;
         }
         return true;
@@ -52,7 +48,12 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     @Override
-    public void checkUser(String username) {
-        authManager.getUser(username);
+    public void checkUser(String token) {
+        authManager.checkUser(token);
+    }
+
+    @Override
+    public void getUser(String token) {
+        authManager.getUser(token);
     }
 }

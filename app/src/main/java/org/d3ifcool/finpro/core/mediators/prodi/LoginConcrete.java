@@ -28,8 +28,8 @@ public class LoginConcrete implements LoginMediator {
     }
 
     @Override
-    public String getSessionUsername() {
-        return sessionManager.getSessionUsername();
+    public String getSessionToken() {
+        return sessionManager.getSessionToken();
     }
 
     @Override

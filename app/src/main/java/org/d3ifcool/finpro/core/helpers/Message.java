@@ -5,6 +5,7 @@ import android.net.Uri;
 import org.d3ifcool.finpro.core.components.Components;
 import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.models.Dosen;
+import org.d3ifcool.finpro.core.models.Koordinator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
 
@@ -23,6 +24,7 @@ public class Message implements Components {
     private Mahasiswa mahasiswa;
     private Plotting plotting;
     private Dosen dosen;
+    private Koordinator koordinator;
 
     public Message() {
     }
@@ -102,6 +104,11 @@ public class Message implements Components {
         return this;
     }
 
+    public Message setKoordinator(Koordinator koordinator) {
+        this.koordinator = koordinator;
+        return this;
+    }
+
     public String getComponent() {
         return component;
     }
@@ -152,5 +159,9 @@ public class Message implements Components {
 
     public Dosen getDosen() {
         return dosen;
+    }
+
+    public Koordinator getKoordinator() {
+        return koordinator;
     }
 }
