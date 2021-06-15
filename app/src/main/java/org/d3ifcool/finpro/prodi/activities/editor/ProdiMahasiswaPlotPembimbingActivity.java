@@ -4,16 +4,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.core.helpers.Message;
+import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
+import org.d3ifcool.finpro.core.interfaces.PlottingContract;
 import org.d3ifcool.finpro.core.interfaces.lists.PlottingListView;
 import org.d3ifcool.finpro.core.interfaces.works.MahasiswaWorkView;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
+import org.d3ifcool.finpro.databinding.ActivityKoorMahasiswaPlotPembimbingBinding;
 import org.d3ifcool.finpro.prodi.activities.detail.ProdiMahasiswaDetailActivity;
 
 import java.util.ArrayList;
@@ -23,45 +29,40 @@ import okhttp3.ResponseBody;
 
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_MAHASISWA;
 
-public class ProdiMahasiswaPlotPembimbingActivity extends AppCompatActivity implements PlottingListView , MahasiswaWorkView{
+public class ProdiMahasiswaPlotPembimbingActivity extends AppCompatActivity implements PlottingContract.ViewModel, MahasiswaContract.ViewModel {
 
-    private ArrayList<Plotting> arrayList = new ArrayList<>();
+    private ActivityKoorMahasiswaPlotPembimbingBinding mBinding;
+    private Message message = new Message();
     private ConcreteMediator mediator;
-//    private PlottingPresenter plottingPresenter;
-//    private MahasiswaPresenters mahasiswaPresenter;
-
-    private Mahasiswa extraMahasiswa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_koor_mahasiswa_plot_pembimbing);
+        mBinding = DataBindingUtil.setContentView(this,R.layout.activity_koor_mahasiswa_plot_pembimbing);
+        mBinding.setLifecycleOwner(this);
+        mediator = new ConcreteMediator(this);
+        mediator.setMahasiswaPresenter(this);
+        mediator.setPlottingPresenter(this);
+        mBinding.setPlotting(mediator.getPlottingPresenter());
 
         setTitle(getString(R.string.title_tambah_pembimbing));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mediator = new ConcreteMediator(this);
-        mediator.message("RefreshLayout","set");
-        mediator.message("RecycleView","set");
-        mediator.message("EmptyView","set");
-        mediator.message("ProgressDialog","set");
-        mediator.message("ProdiPlotPembimbingAdapter","set");
+        message.setMahasiswa(getIntent().getParcelableExtra(EXTRA_MAHASISWA));
+        mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
+        mediator.message(message.setComponent("SessionManager").setEvent("set"));
+        mediator.message(message.setComponent("FileHelper").setEvent("set"));
+        mediator.message(message.setComponent("ProdiPlotPembimbingViewAdapter").setEvent("set"));
+        mediator.message(message.setComponent("ProdiPlotPembimbingViewAdapter").setEvent("setPresenter"));
+        mediator.message(message.setComponent("ProdiPlotPembimbingViewAdapter").setEvent("setToken"));
+        mediator.setRecyclerView(mBinding.frgKoorDosenHomeRecyclerview);
+        mediator.setRelativeLayout(mBinding.includeLayout.viewEmptyview);
+        mediator.setRefreshLayout(mBinding.refresh);
+        mBinding.setToken(mediator.getSessionToken());
 
-        extraMahasiswa = getIntent().getParcelableExtra(EXTRA_MAHASISWA);
+        mediator.message(message.setComponent("PlottingPresenter").setEvent("getAllData"));
 
-//        plottingPresenter = new PlottingPresenter(this);
-//        plottingPresenter.initContext(this);
-//        plottingPresenter.getPlotting();
-/*
-        mediator.getRefreshLayout().setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-//                plottingPresenter.getPlotting();
-            }
-        });*/
-
-//        mahasiswaPresenter = new MahasiswaPresenters(this);
-//        mahasiswaPresenter.initContext(this);
     }
 
     @Override
@@ -71,66 +72,46 @@ public class ProdiMahasiswaPlotPembimbingActivity extends AppCompatActivity impl
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        int i = item.getItemId();
-        if (i == android.R.id.home) {
-            finish();
-            onBackPressed();
-        }
+        mediator.message(message.setComponent("Toolbar").setVisibility(item.getItemId()));
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        intentToDetail();
-    }
-
-    private void intentToDetail(){
-        Intent intent = new Intent(this, ProdiMahasiswaDetailActivity.class);
-        Mahasiswa parcelMahasiswa = extraMahasiswa;
-        intent.putExtra(EXTRA_MAHASISWA, parcelMahasiswa);
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
-    public void showProgress() {
-        mediator.getProgressDialog().show();
-    }
-
-    @Override
-    public void hideProgress() {
-        mediator.getProgressDialog().dismiss();
-    }
-
-    @Override
-    public void onSucces() {
-        finish();
-        intentToDetail();
-    }
-
-    @Override
-    public void onSuccesGetPlotting(Plotting plotting) {
-
-    }
-
-    @Override
     public void onGetListPlotting(List<Plotting> plotting) {
+        ArrayList<Plotting> arrayList = new ArrayList<>();
         arrayList.clear();
         arrayList.addAll(plotting);
-
-        /*mediator.getProdiPlotPembimbingAdapter().setMhs_nim(extraMahasiswa.getMhs_nim());
-        mediator.getProdiPlotPembimbingAdapter().setMahasiswaPresenter(mahasiswaPresenter);
-        mediator.getProdiPlotPembimbingAdapter().addItem(arrayList);
-        mediator.getRecycleView().setAdapter(mediator.getProdiPlotPembimbingAdapter());
-        mediator.getRefreshLayout().setRefreshing(false);
+        mediator.message(message.setComponent("ProdiPlotPembimbingViewAdapter").setEvent("addItem").setItem(arrayList));
+        mediator.message(message.setComponent("ProdiPlotPembimbingViewAdapter").setEvent("setAdapter"));
+        mediator.message(message.setComponent("RefreshLayout").setEvent("setRefreshing").setEnabled(false));
 
         if (arrayList.size() == 0) {
-            mediator.getView().setVisibility(View.VISIBLE);
+            mediator.message(message.setComponent("RelativeLayout").setEvent("setVisibility").setVisibility(View.VISIBLE));
         } else {
-            mediator.getView().setVisibility(View.GONE);
-        }*/
+            mediator.message(message.setComponent("RelativeLayout").setEvent("setVisibility").setVisibility(View.GONE));
+        }
+    }
+
+    @Override
+    public void onMessage(String messages) {
+        switch (messages){
+            case "ShowProgressDialog":
+                mediator.message(message.setComponent("ProgressDialog").setEvent("show"));
+                break;
+            case "HideProgressDialog":
+                mediator.message(message.setComponent("ProgressDialog").setEvent("dismiss"));
+                break;
+            case "EmptyList":
+                mediator.message(message.setComponent("RelativeLayout").setEvent("setVisibility").setVisibility(View.VISIBLE));
+                break;
+            case "onSuccess":
+                mediator.message(message.setComponent("Toasty").setEvent("Success").setText("Tambah Pembimbing Berhasil!"));
+                finish();
+                break;
+            default:
+                mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));
+                break;
+        }
     }
 
     @Override
@@ -139,13 +120,17 @@ public class ProdiMahasiswaPlotPembimbingActivity extends AppCompatActivity impl
     }
 
     @Override
-    public void isEmptyListPlotting() {
-        //mediator.getView().setVisibility(View.VISIBLE);
+    public void onGetObjectMahasiswa(Mahasiswa mahasiswa) {
+
     }
 
+    @Override
+    public void onGetListMahasiswa(List<Mahasiswa> mahasiswaList) {
+
+    }
 
     @Override
-    public void onFailed(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void onSuccessGetPlotting(Plotting plotting) {
+
     }
 }

@@ -413,6 +413,13 @@ interface ApiService {
     ): Call<Mahasiswa?>?
 
     @Headers("Connection: close")
+    @POST(FinproUrl.URL_MAHASISWA + FinproUrl.PATH_DELETE + "/" + FinproUrl.VAR_PEMBIMBING + FinproUrl.PARAMETER_MAHASISWA)
+    fun deletePembimbing(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_MAHASISWA) mhs_nim: String?,
+    ): Call<ResponseBody?>?
+
+    @Headers("Connection: close")
     @GET(FinproUrl.URL_MAHASISWA)
     fun getMahasiswa(
             @Header(FinproUrl.VAR_AUTHORIZATION) token: String?
@@ -437,12 +444,10 @@ interface ApiService {
             @Field("judul_id") judul: Int
     ): Call<Mahasiswa?>?
 
-    @Multipart
     @POST(FinproUrl.URL_MAHASISWA + FinproUrl.PATH_UPDATE + FinproUrl.PATH_SKTA + FinproUrl.PARAMETER_MAHASISWA)
     fun updateSKTA(
             @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
-            @Path(FinproUrl.VAR_MAHASISWA) mhs_nim: String?,
-            @Part file: MultipartBody.Part?
+            @Path(FinproUrl.VAR_MAHASISWA) mhs_nim: String?
     ): Call<ResponseBody?>?
 
     // Monev

@@ -12,33 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.models.Plotting;
+import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
 
 import java.util.ArrayList;
 
-/**
- * Created by Faisal Amir
- * FrogoBox Inc License
- * =========================================
- * Finpro
- * Copyright (C) 08/03/2019.
- * All rights reserved
- * -----------------------------------------
- * Name     : Muhammad Faisal Amir
- * E-mail   : faisalamircs@gmail.com
- * Line     : bullbee117
- * Phone    : 081357108568
- * Majors   : D3 Teknik Informatika 2016
- * Campus   : Telkom University
- * -----------------------------------------
- * id.amirisback.frogobox
- */
 public class ProdiPlotPembimbingViewAdapter extends RecyclerView.Adapter<ProdiPlotPembimbingViewAdapter.ViewHolder> {
 
     private ArrayList<Plotting> data;
     private Context context;
-    private int layoutType;
     private String mhs_nim;
-//    private MahasiswaPresenters mahasiswaPresenter;
+    private String token;
+    private MahasiswaPresenter mahasiswaPresenter;
 
     public ProdiPlotPembimbingViewAdapter(Context context) {
         this.context = context;
@@ -49,17 +33,16 @@ public class ProdiPlotPembimbingViewAdapter extends RecyclerView.Adapter<ProdiPl
         notifyDataSetChanged();
     }
 
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public void setMhs_nim(String mhs_nim) {
         this.mhs_nim = mhs_nim;
     }
 
-//    public void setMahasiswaPresenter(MahasiswaPresenters mahasiswaPresenter) {
-//        this.mahasiswaPresenter = mahasiswaPresenter;
-//    }
-
-    public void setLayoutType(int layouyType) {
-        this.layoutType = layouyType;
+    public void setMahasiswaPresenter(MahasiswaPresenter mahasiswaPresenter) {
+        this.mahasiswaPresenter = mahasiswaPresenter;
     }
 
     @Override
@@ -84,8 +67,7 @@ public class ProdiPlotPembimbingViewAdapter extends RecyclerView.Adapter<ProdiPl
 
                         .setPositiveButton(R.string.iya, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-//                                mahasiswaPresenter.addPembimbing(mhs_nim,data.get(position).getId());
-//                                Log.e("TAG", "onClick: "+mhs_nim+": "+data.get(position).getId() );
+                                mahasiswaPresenter.addPembimbing(token,mhs_nim,data.get(position).getId());
                             }
                         })
                         .setNegativeButton(R.string.tidak, null)

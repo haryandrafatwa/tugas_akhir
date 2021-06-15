@@ -55,9 +55,12 @@ import org.d3ifcool.finpro.dosen.fragments.parent.DosenPaFragment;
 import org.d3ifcool.finpro.fragments.InformasiFragment;
 import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaProfilActivity;
 import org.d3ifcool.finpro.prodi.activities.KoorProfilActivity;
+import org.d3ifcool.finpro.prodi.activities.editor.ProdiMahasiswaEditorActivity;
 import org.d3ifcool.finpro.prodi.adapters.ProdiDosenViewAdapter;
 import org.d3ifcool.finpro.prodi.adapters.ProdiMahasiswaViewAdapter;
+import org.d3ifcool.finpro.prodi.adapters.ProdiPlotPembimbingViewAdapter;
 import org.d3ifcool.finpro.prodi.adapters.ProdiPlottingViewAdapter;
+import org.d3ifcool.finpro.prodi.adapters.ProdiSKTAViewAdapter;
 import org.d3ifcool.finpro.prodi.fragments.ProdiDosenFragment;
 import org.d3ifcool.finpro.prodi.fragments.ProdiMahasiswaFragment;
 import org.d3ifcool.finpro.prodi.fragments.ProdiPlottingFragment;
@@ -95,6 +98,8 @@ public class ConcreteMediator implements Mediator {
     private ProdiMahasiswaViewAdapter mahasiswaViewAdapter;
     private ProdiPlottingViewAdapter plottingViewAdapter;
     private InformasiViewAdapter informasiViewAdapter;
+    private ProdiSKTAViewAdapter prodiSKTAViewAdapter;
+    private ProdiPlotPembimbingViewAdapter prodiPlotPembimbingViewAdapter;
 
     private SessionManager sessionManager;
     private AlertDialog.Builder alertDialog;
@@ -330,26 +335,6 @@ public class ConcreteMediator implements Mediator {
     }
 
     @Override
-    public void message(String component, String event, Uri uri) {
-        switch (component){
-            case "Plotting":
-                switch (event){
-                    case "upload":
-                        plottingPresenter.uploadForm(getSessionToken(),fileHelper.getFile(uri));
-                        break;
-                }
-                break;
-            case "Mahasiswa":
-                switch (event){
-                    case "upload":
-                        mahasiswaPresenter.updateSKTA(getSessionToken(),mahasiswaPresenter.nim.get(),fileHelper.getFile(uri));
-                        break;
-                }
-                break;
-        }
-    }
-
-    @Override
     public void message(Message message) {
         switch (message.getComponent()){
             case "ProdiPresenter":
@@ -400,14 +385,21 @@ public class ConcreteMediator implements Mediator {
                     case "getAllData":
                         mahasiswaPresenter.getAllMahasiswa(getSessionToken());
                         break;
+                    case "getMahasiswaByNIM":
+                        mahasiswaPresenter.getMahasiswaByNIM(getSessionToken(),message.getMahasiswa().getMhs_nim());
+                        break;
                     case "getPembimbing":
                         mahasiswaPresenter.getPembimbing(getSessionToken(),message.getMahasiswa().getPlot_id());
                         break;
+                    case "deletePembimbing":
+                        mahasiswaPresenter.deletePembimbing(getSessionToken(),message.getMahasiswa().getMhs_nim());
+                        break;
                     case "updateSKTA":
-                        mahasiswaPresenter.updateSKTA(getSessionToken(),message.getMahasiswa().getMhs_nim(), fileHelper.getFile(message.getUri()));
+                        message(message.setComponent("AlertDialog").setEvent("set"));
+                        message(message.setComponent("AlertDialog").setEvent("updateSKTA"));
                         break;
                     case "toolbarIntent":
-                        mahasiswaPresenter.toolbarIntent(message.getMahasiswa());
+                        activity.startActivity(mahasiswaPresenter.toolbarIntent(message.getMahasiswa(),message.getaClass()));
                         break;
                     case "showData":
                         mahasiswaPresenter.nama.set(message.getMahasiswa().getMhs_nama());
@@ -445,6 +437,26 @@ public class ConcreteMediator implements Mediator {
                         break;
                 }
                 break;
+            case "ProdiPlotPembimbingViewAdapter":
+                switch (message.getEvent()){
+                    case SET:
+                        prodiPlotPembimbingViewAdapter = new ProdiPlotPembimbingViewAdapter(activity);
+                        break;
+                    case "addItem":
+                        prodiPlotPembimbingViewAdapter.addItem(message.getItem());
+                        break;
+                    case "setAdapter":
+                        recyclerView.setAdapter(prodiPlotPembimbingViewAdapter);
+                        break;
+                    case "setToken":
+                        prodiPlotPembimbingViewAdapter.setToken(getSessionToken());
+                        break;
+                    case "setPresenter":
+                        prodiPlotPembimbingViewAdapter.setMahasiswaPresenter(mahasiswaPresenter);
+                        prodiPlotPembimbingViewAdapter.setMhs_nim(message.getMahasiswa().getMhs_nim());
+                        break;
+                }
+                break;
             case "ProdiPlottingAdapter":
                 switch (message.getEvent()){
                     case SET:
@@ -457,6 +469,19 @@ public class ConcreteMediator implements Mediator {
                         break;
                     case "setAdapter":
                         recyclerView.setAdapter(plottingViewAdapter);
+                        break;
+                }
+                break;
+            case "ProdiSKTAViewAdapter":
+                switch (message.getEvent()){
+                    case SET:
+                        prodiSKTAViewAdapter = new ProdiSKTAViewAdapter(activity);
+                        break;
+                    case "addItem":
+                        prodiSKTAViewAdapter.addItem(message.getItem());
+                        break;
+                    case "setAdapter":
+                        recyclerView.setAdapter(prodiSKTAViewAdapter);
                         break;
                 }
                 break;
@@ -673,6 +698,18 @@ public class ConcreteMediator implements Mediator {
                                     }
                                 }).show();
                         break;
+
+                    case "updateSKTA":
+                        alertDialog
+                                .setTitle(R.string.dialog_update_skta)
+                                .setMessage(R.string.dialog_update_skta_text)
+                                .setPositiveButton("Iya", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        mahasiswaPresenter.updateSKTA(getSessionToken(),message.getMahasiswa().getMhs_nim());
+                                    }
+                                }).show();
+                        break;
                 }
                 break;
             case "Toasty":
@@ -723,7 +760,7 @@ public class ConcreteMediator implements Mediator {
                     case R.id.toolbar_menu_ubah:
                         switch (message.getEvent()){
                             case "mahasiswa":
-                                activity.startActivity(mahasiswaPresenter.toolbarIntent(message.getMahasiswa()));
+                                activity.startActivity(mahasiswaPresenter.toolbarIntent(message.getMahasiswa(), ProdiMahasiswaEditorActivity.class));
                                 break;
                             case "dosen":
                                 activity.startActivity(dosenPresenter.toolbarIntent(message.getDosen()));

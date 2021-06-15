@@ -153,12 +153,43 @@ public class MahasiswaManager {
         }
     }
 
-    public void updateSKTA(String token, String mhs_nim, MultipartBody.Part part){
-
+    public void deletePembimbing(String token, String mhs_nim){
         if (connectionHelper.isConnected(context)){
             viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
-            Call<ResponseBody> call = apiInterfaceMahasiswa.updateSKTA("Bearer "+token,mhs_nim, part);
+            Call<ResponseBody> call = apiInterfaceMahasiswa.deletePembimbing("Bearer "+token,mhs_nim);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.body()!=null || response.isSuccessful()){
+                        viewModel.onMessage("HideProgressDialog");
+                        viewModel.onMessage("onSuccess");
+                    }else{
+                        viewModel.onMessage("HideProgressDialog");
+                        try {
+                            viewModel.onMessage(response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage(t.getLocalizedMessage());
+                }
+            });
+        } else {
+            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void updateSKTA(String token, String mhs_nim){
+        if (connectionHelper.isConnected(context)){
+            viewModel.onMessage("ShowProgressDialog");
+            ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
+            Call<ResponseBody> call = apiInterfaceMahasiswa.updateSKTA("Bearer "+token,mhs_nim);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -261,33 +292,6 @@ public class MahasiswaManager {
                 }
             });
         }
-    }
-
-    public void updateMahasiswaJudul(String nim, int judul_id){
-
-        if (connectionHelper.isConnected(context)){
-            viewModel.onMessage("ShowProgressDialog");
-            ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
-            Call<Mahasiswa> call = apiInterfaceMahasiswa.updateJudulMahasiswa(nim, judul_id);
-            call.enqueue(new Callback<Mahasiswa>() {
-                @Override
-                public void onResponse(Call<Mahasiswa> call, Response<Mahasiswa> response) {
-                    viewModel.onMessage("HideProgressDialog");
-                    viewModel.onMessage("onSuccess");
-                }
-
-                @Override
-                public void onFailure(Call<Mahasiswa> call, Throwable t) {
-                    viewModel.onMessage("HideProgressDialog");
-                    viewModel.onMessage(t.getLocalizedMessage());
-                }
-            });
-
-        } else {
-            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
-        }
-
-
     }
 
 }

@@ -18,13 +18,16 @@ public interface MahasiswaContract {
 
     interface Presenter{
         void onCreate();
+        void onDelete();
         void getAllMahasiswa(String token);
         void createMahasiswa(String token);
         void deleteMahasiswa(String token,String nim);
         void updateMahasiswa(String token);
         void getMahasiswaByNIM(String token,String mhs_nim);
         void getPembimbing(String token,int plot_id);
-        void updateSKTA(String token,String mhs_nim, MultipartBody.Part part);
+        void addPembimbing(String token, String mhs_nim, int plot_id);
+        void deletePembimbing(String token, String mhs_nim);
+        void updateSKTA(String token,String mhs_nim);
     }
 
 }

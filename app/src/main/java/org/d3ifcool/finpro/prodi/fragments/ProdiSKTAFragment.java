@@ -1,111 +1,104 @@
 package org.d3ifcool.finpro.prodi.fragments;
 
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import org.d3ifcool.finpro.R;
-import org.d3ifcool.finpro.core.interfaces.lists.MahasiswaListView;
+import org.d3ifcool.finpro.core.helpers.Message;
+import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
+import org.d3ifcool.finpro.core.models.Plotting;
+import org.d3ifcool.finpro.databinding.FragmentKoorMahasiswaBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class ProdiSKTAFragment extends Fragment implements MahasiswaListView {
+public class ProdiSKTAFragment extends Fragment implements MahasiswaContract.ViewModel {
 
-    private ArrayList<Mahasiswa> arrayList = new ArrayList<>();
-//    private MahasiswaPresenters mahasiswaPresenter;
+    private Message message = new Message();
+    private FragmentKoorMahasiswaBinding mBinding;
     private ConcreteMediator mediator;
 
-    public ProdiSKTAFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_koor_mahasiswa,container,false);
+        mBinding.setLifecycleOwner(this);
+        mediator = new ConcreteMediator((AppCompatActivity) getActivity());
+        mediator.setMahasiswaPresenter(this);
+        mBinding.setPresenter(mediator.getMahasiswaPresenter());
 
-        View view = inflater.inflate(R.layout.fragment_koor_mahasiswa, container, false);
+        mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
+        mediator.message(message.setComponent("SessionManager").setEvent("set"));
+        mediator.message(message.setComponent("FileHelper").setEvent("set"));
+        mediator.message(message.setComponent("ProdiSKTAViewAdapter").setEvent("set"));
+        mediator.setRecyclerView(mBinding.recyclerView);
+        mediator.setRelativeLayout(mBinding.includeLayout.viewEmptyview);
+        mediator.setRefreshLayout(mBinding.refresh);
+        mBinding.setToken(mediator.getSessionToken());
 
-       /* mediator = new ProdiFragmentConcrete(view);
-        mediator.message("RefreshLayout");
-        mediator.message("RecycleView");
-        mediator.message("EmptyView");
-        mediator.message("ProgressDialog");
-        mediator.message("ProdiSKTAAdapter");
-        mediator.getFloatingButton().setVisibility(View.GONE);*/
+        mediator.message(message.setComponent("MahasiswaPresenter").setEvent("getAllData"));
 
-//        mahasiswaPresenter = new MahasiswaPresenters(this);
-//        mahasiswaPresenter.initContext(getContext());
-//        mahasiswaPresenter.getMahasiswa();
-
-        /*mediator.getRefreshLayout().setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mahasiswaPresenter.getMahasiswa();
-            }
-        });*/
-        return view;
+        return mBinding.getRoot();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        mahasiswaPresenter.getMahasiswa();
+        mediator.message(message.setComponent("MahasiswaPresenter").setEvent("getAllData"));
     }
 
     @Override
-    public void showProgress() {
-        mediator.getProgressDialog().show();
-    }
+    public void onGetObjectMahasiswa(Mahasiswa mahasiswa) {
 
-    @Override
-    public void hideProgress() {
-        mediator.getProgressDialog().dismiss();
     }
 
     @Override
     public void onGetListMahasiswa(List<Mahasiswa> mahasiswa) {
-
+        ArrayList<Mahasiswa> arrayList = new ArrayList<>();
         arrayList.clear();
         for (int i = 0; i < mahasiswa.size(); i++) {
             if (mahasiswa.get(i).getSk_status() != 2){
                 arrayList.add(mahasiswa.get(i));
-                Log.e("TAG", "onGetListMahasiswa: "+mahasiswa.get(i).getSk_status() );
             }
         }
-
-        /*mediator.getProdiSKTAAdapter().setmMahasiswa(arrayList);
-        mediator.getRecycleView().setAdapter(mediator.getProdiSKTAAdapter());
-        mediator.getRefreshLayout().setRefreshing(false);
+        mediator.message(message.setComponent("ProdiSKTAViewAdapter").setEvent("addItem").setItem(arrayList));
+        mediator.message(message.setComponent("ProdiSKTAViewAdapter").setEvent("setAdapter"));
+        mediator.message(message.setComponent("RefreshLayout").setEvent("setRefreshing").setEnabled(false));
 
         if (arrayList.size() == 0) {
-            mediator.getView().setVisibility(View.VISIBLE);
+            mediator.message(message.setComponent("RelativeLayout").setEvent("setVisibility").setVisibility(View.VISIBLE));
         } else {
-            mediator.getView().setVisibility(View.GONE);
-        }*/
+            mediator.message(message.setComponent("RelativeLayout").setEvent("setVisibility").setVisibility(View.GONE));
+        }
+    }
+
+    @Override
+    public void onSuccessGetPlotting(Plotting plotting) {
 
     }
 
     @Override
-    public void isEmptyListMahasiswa() {
-        //mediator.getView().setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onFailed(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    public void onMessage(String messages) {
+        switch (messages){
+            case "ShowProgressDialog":
+                mediator.message(message.setComponent("ProgressDialog").setEvent("show"));
+                break;
+            case "HideProgressDialog":
+                mediator.message(message.setComponent("ProgressDialog").setEvent("dismiss"));
+                break;
+            case "EmptyList":
+                mediator.message(message.setComponent("RelativeLayout").setEvent("setVisibility").setVisibility(View.VISIBLE));
+                break;
+            default:
+                mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));
+                break;
+        }
     }
 }

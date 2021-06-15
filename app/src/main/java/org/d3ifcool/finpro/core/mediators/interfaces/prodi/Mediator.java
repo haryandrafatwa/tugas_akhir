@@ -25,7 +25,6 @@ public interface Mediator {
 
     void Notify(@IdRes int id);
     void message(String component, String event);
-    void message(String component, String event, Uri uri);
     void message(Message message);
 
     void setTextView(TextView textView);

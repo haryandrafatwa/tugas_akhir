@@ -172,6 +172,8 @@
     <string name="dialog_tolak_text">Apakah anda yakin menolak kelompok ini?</string>
     <string name="dialog_keluar_title">Keluar</string>
     <string name="dialog_upload_form_plot">Upload Form</string>
+    <string name="dialog_update_skta">Update SKTA</string>
+    <string name="dialog_update_skta_text">Apakah anda yakin ingin mengupdate SKTA mahasiswa ini?</string>
     <string name="dialog_hapus_form_plot">Hapus Form</string>
     <string name="dialog_hapus_form_plot_text">Apakah anda yakin ingin menghapus file ini?</string>
     <string name="dialog_upload_text">Apakah anda yakin ingin upload ulang file?</string>
@@ -265,7 +267,7 @@
     <string name="text_mahasiswa_bimbingan">Mahasiswa yang di bimbing</string>
     <string name="text_mahasiswa_monev">Mahasiswa yang di review</string>
     <string name="text_download_disini">Silahkan unduh disini</string>
-    <string name="text_ubah_pembimbing">Ubah Pembimbing</string>
+    <string name="text_hapus_pembimbing">Hapus Pembimbing</string>
     <string name="text_sunting">Sunting</string>
     <string name="text_hapus_form">Hapus Form</string>
     <string name="text_ubah">Ubah</string>
@@ -427,7 +429,7 @@
 
     <string name="status_sk_aktif">Aktif hingga</string>
     <string name="status_sk_pasif">SK TA Belum Diterbitkan</string>
-    <string name="status_sk_kadaluwarsa">Kadaluwarsa (</string>
+    <string name="status_sk_kadaluwarsa">Kadaluwarsa ( </string>
     <string name="status_sk_perpanjang">Sedang mengajukan perpanjangan</string>
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>

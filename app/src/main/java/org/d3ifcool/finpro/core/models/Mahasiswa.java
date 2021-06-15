@@ -198,7 +198,7 @@ public class Mahasiswa implements Parcelable {
                 if(sk_status == 2){
                     detail = App.self().getResources().getString(R.string.status_sk_aktif)+" "+tempJudul;
                 }else if(sk_status == 3){
-                    detail = App.self().getResources().getString(R.string.status_sk_kadaluwarsa)+" "+tempJudul;
+                    detail = App.self().getResources().getString(R.string.status_sk_kadaluwarsa)+" "+tempJudul+" )";
                 }else{
                     detail = App.self().getResources().getString(R.string.status_sk_perpanjang);
                 }

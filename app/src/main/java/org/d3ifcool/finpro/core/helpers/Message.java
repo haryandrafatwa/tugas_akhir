@@ -21,6 +21,7 @@ public class Message implements Components {
     private Mediator mediator;
     private int visibility;
     private ResponseBody body;
+    private Class aClass;
     private Mahasiswa mahasiswa;
     private Plotting plotting;
     private Dosen dosen;
@@ -89,6 +90,11 @@ public class Message implements Components {
         return this;
     }
 
+    public Message setaClass(Class aClass) {
+        this.aClass = aClass;
+        return this;
+    }
+
     public Message setMahasiswa(Mahasiswa mahasiswa) {
         this.mahasiswa = mahasiswa;
         return this;
@@ -147,6 +153,10 @@ public class Message implements Components {
 
     public ResponseBody getBody() {
         return body;
+    }
+
+    public Class getaClass() {
+        return aClass;
     }
 
     public Mahasiswa getMahasiswa() {

@@ -7,15 +7,25 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.gson.Gson;
+
 import org.d3ifcool.finpro.core.helpers.Message;
+import org.d3ifcool.finpro.core.interfaces.AuthContract;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.models.Koordinator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.databinding.ActivityProdiMahasiswaDetailBinding;
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.prodi.activities.editor.ProdiMahasiswaPlotPembimbingActivity;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.List;
+
+import okhttp3.ResponseBody;
 
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_MAHASISWA;
 
@@ -45,18 +55,13 @@ public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements M
         mediator.message(message.setComponent("SessionManager").setEvent("set"));
         mediator.message(message.setComponent("ProdiMahasiswaAdapter").setEvent("set"));
 
-        mediator.setTextView(binding.actKoorProfilStatusSk);
-        if (message.getMahasiswa().getSk_status() == 1 || message.getMahasiswa().getSk_status() == 3){
-            mediator.message(message.setComponent("TextView").setEvent("setTextColor").setColor("#ffFF0000"));
-        }else{
-            if(message.getMahasiswa().getSk_status() == 2){
-                mediator.message(message.setComponent("TextView").setEvent("setTextColor").setColor("#ff4CAF50"));
-            }else{
-                mediator.message(message.setComponent("TextView").setEvent("setTextColor").setColor("#ffFF9800"));
-            }
-        }
-
         mediator.message(message.setComponent("MahasiswaPresenter").setEvent("getPembimbing"));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mediator.message(message.setComponent("MahasiswaPresenter").setEvent("getMahasiswaByNIM"));
     }
 
     @Override
@@ -67,14 +72,15 @@ public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements M
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int i = item.getItemId();
-        mediator.message(message.setComponent("Toolbar").setVisibility(i).setEvent("mahasiswa"));
+        mediator.message(message.setComponent("Toolbar").setVisibility(item.getItemId()).setEvent("mahasiswa"));
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onGetObjectMahasiswa(Mahasiswa mahasiswa) {
-
+        binding.setModel(mahasiswa);
+        message.setMahasiswa(mahasiswa);
+        mediator.message(message.setComponent("MahasiswaPresenter").setEvent("getPembimbing"));
     }
 
     @Override
@@ -85,13 +91,26 @@ public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements M
     @Override
     public void onSuccessGetPlotting(Plotting plotting) {
         binding.setPlot(plotting);
+        message.setPlotting(plotting);
+
+        mediator.setTextView(binding.actKoorProfilStatusSk);
+        if (message.getMahasiswa().getSk_status() == 1 || message.getMahasiswa().getSk_status() == 3){
+            mediator.message(message.setComponent("TextView").setEvent("setTextColor").setColor("#ffFF0000"));
+        }else{
+            if(message.getMahasiswa().getSk_status() == 2){
+                mediator.message(message.setComponent("TextView").setEvent("setTextColor").setColor("#ff4CAF50"));
+            }else{
+                mediator.message(message.setComponent("TextView").setEvent("setTextColor").setColor("#ffFF9800"));
+            }
+        }
     }
 
     @Override
     public void onMessage(String messages) {
         switch (messages){
             case "onSuccess":
-                finish();
+                mediator.message(message.setComponent("Toasty").setEvent("Success").setText("Berhasil hapus pembimbing"));
+                onResume();
                 break;
             case "ShowProgressDialog":
                 mediator.message(message.setComponent("ProgressDialog").setEvent("show"));
@@ -99,9 +118,19 @@ public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements M
             case "HideProgressDialog":
                 mediator.message(message.setComponent("ProgressDialog").setEvent("dismiss"));
                 break;
+            case "btnSkUpdate":
+                mediator.message(message.setComponent("MahasiswaPresenter").setEvent("updateSKTA"));
+                break;
+            case "AddPembimbing":
+                mediator.message(message.setComponent("MahasiswaPresenter").setEvent("toolbarIntent").setaClass(ProdiMahasiswaPlotPembimbingActivity.class));
+                break;
+            case "onDelete":
+                mediator.message(message.setComponent("MahasiswaPresenter").setEvent("deletePembimbing"));
+                break;
             default:
-                mediator.message(message.setComponent("Toasty").setEvent(messages));
+                mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));
                 break;
         }
     }
+
 }

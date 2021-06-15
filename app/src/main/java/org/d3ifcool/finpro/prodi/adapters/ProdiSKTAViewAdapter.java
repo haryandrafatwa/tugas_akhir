@@ -28,45 +28,23 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl.URL_FOTO_MAHASISWA;
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_MAHASISWA;
 
-/**
- * Created by Faisal Amir
- * FrogoBox Inc License
- * =========================================
- * Finpro
- * Copyright (C) 08/03/2019.
- * All rights reserved
- * -----------------------------------------
- * Name     : Muhammad Faisal Amir
- * E-mail   : faisalamircs@gmail.com
- * Line     : bullbee117
- * Phone    : 081357108568
- * Majors   : D3 Teknik Informatika 2016
- * Campus   : Telkom University
- * -----------------------------------------
- * id.amirisback.frogobox
- */
 public class ProdiSKTAViewAdapter extends RecyclerView.Adapter<ProdiSKTAViewAdapter.ViewHolder> {
 
     private Context mContext;
     private ArrayList<Mahasiswa> mMahasiswa;
-    private int layoutType;
 
     public ProdiSKTAViewAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
-    public void setmMahasiswa(ArrayList<Mahasiswa> mMahasiswa) {
+    public void addItem(ArrayList<Mahasiswa> mMahasiswa) {
         this.mMahasiswa = mMahasiswa;
         notifyDataSetChanged();
     }
 
-    public void setLayoutType(int layoutType) {
-        this.layoutType = layoutType;
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(layoutType,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.content_list_koor_mahasiswa,parent,false);
         return new ViewHolder(view);
     }
 

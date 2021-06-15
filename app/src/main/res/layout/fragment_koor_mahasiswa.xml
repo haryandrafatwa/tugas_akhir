@@ -2,7 +2,6 @@
 <layout>
 
     <data>
-
         <variable
             name="presenter"
             type="org.d3ifcool.finpro.core.presenters.MahasiswaPresenter" />
@@ -10,7 +9,6 @@
         <variable
             name="token"
             type="String" />
-
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

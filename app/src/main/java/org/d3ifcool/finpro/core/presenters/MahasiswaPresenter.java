@@ -98,6 +98,27 @@ public class MahasiswaPresenter implements MahasiswaContract.Presenter {
     }
 
     @Override
+    public void onDelete() {
+        viewModel.onMessage("onDelete");
+    }
+
+    public void btnSKUpdate(int plot_id) {
+        if (plot_id > 0){
+            viewModel.onMessage("btnSkUpdate");
+        }else{
+            viewModel.onMessage("Mahasiswa belum memiliki pembimbing");
+        }
+    }
+
+    public void btnAddPembimbing(){
+        viewModel.onMessage("AddPembimbing");
+    }
+
+    public void floatButton(){
+        viewModel.onMessage("FloatButton");
+    }
+
+    @Override
     public void getAllMahasiswa(String token) {
         mahasiswaManager.getMahasiswa(token);
     }
@@ -132,20 +153,22 @@ public class MahasiswaPresenter implements MahasiswaContract.Presenter {
     }
 
     @Override
-    public void updateSKTA(String token, String mhs_nim, MultipartBody.Part part) {
-        mahasiswaManager.updateSKTA(token, mhs_nim,part);
+    public void addPembimbing(String token, String mhs_nim, int plot_id) {
+        mahasiswaManager.addPembimbing(token, mhs_nim, plot_id);
     }
 
-    public void btnSKUpdate() {
-        viewModel.onMessage("btnSkUpdate");
+    @Override
+    public void deletePembimbing(String token, String mhs_nim) {
+        mahasiswaManager.deletePembimbing(token,mhs_nim);
     }
 
-    public void floatButton(){
-        viewModel.onMessage("FloatButton");
+    @Override
+    public void updateSKTA(String token, String mhs_nim) {
+        mahasiswaManager.updateSKTA(token, mhs_nim);
     }
 
-    public Intent toolbarIntent(Mahasiswa mahasiswa){
-        Intent intent = new Intent(App.self(), ProdiMahasiswaEditorActivity.class);
+    public Intent toolbarIntent(Mahasiswa mahasiswa, Class aClass){
+        Intent intent = new Intent(App.self(), aClass);
         intent.putExtra(Constant.ObjectConstanta.EXTRA_MAHASISWA,mahasiswa);
         return intent;
     }
