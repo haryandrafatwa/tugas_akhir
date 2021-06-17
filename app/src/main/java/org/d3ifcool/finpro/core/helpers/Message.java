@@ -6,11 +6,13 @@ import org.d3ifcool.finpro.core.components.Components;
 import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.models.Bimbingan;
 import org.d3ifcool.finpro.core.models.Dosen;
+import org.d3ifcool.finpro.core.models.JadwalKegiatan;
 import org.d3ifcool.finpro.core.models.Koordinator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 
@@ -28,6 +30,8 @@ public class Message implements Components {
     private Dosen dosen;
     private Koordinator koordinator;
     private Bimbingan bimbingan;
+    private JadwalKegiatan jadwalKegiatan;
+    private List<JadwalKegiatan> kegiatanList;
 
     public Message() {
     }
@@ -127,6 +131,15 @@ public class Message implements Components {
         return this;
     }
 
+    public Message setJadwalKegiatan(JadwalKegiatan jadwalKegiatan) {
+        this.jadwalKegiatan = jadwalKegiatan;
+        return this;
+    }
+
+    public void setKegiatanList(List<JadwalKegiatan> kegiatanList) {
+        this.kegiatanList = kegiatanList;
+    }
+
     public String getComponent() {
         return component;
     }
@@ -193,5 +206,13 @@ public class Message implements Components {
 
     public Bimbingan getBimbingan() {
         return bimbingan;
+    }
+
+    public JadwalKegiatan getJadwalKegiatan() {
+        return jadwalKegiatan;
+    }
+
+    public List<JadwalKegiatan> getKegiatanList() {
+        return kegiatanList;
     }
 }

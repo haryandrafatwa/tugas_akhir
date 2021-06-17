@@ -17,6 +17,8 @@ import org.d3ifcool.finpro.databinding.ActivityAdminMainBinding;
 
 import java.util.List;
 
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.ROLE_PRODI;
+
 public class ProdiMainActivity extends AppCompatActivity implements ProdiContract.ViewModel,
         NavigationView.OnNavigationItemSelectedListener {
 
@@ -63,7 +65,7 @@ public class ProdiMainActivity extends AppCompatActivity implements ProdiContrac
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        mediator.Notify(item.getItemId());
+        mediator.message(message.setComponent("Toolbar").setVisibility(item.getItemId()).setEvent(ROLE_PRODI));
         return super.onOptionsItemSelected(item);
     }
 

@@ -227,6 +227,41 @@ interface ApiService {
             @Path(FinproUrl.VAR_INFORMASI) informasi_id: Int
     ): Call<Informasi?>?
 
+    // Jadwal
+    // ---------------------------------------------------------------------------------------------
+
+    @FormUrlEncoded
+    @POST(FinproUrl.URL_JADWAL)
+    fun createJadwal(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Field("nama_kegiatan") nama_kegiatan: String?,
+        @Field("tanggal_mulai") tanggal_mulai: String?,
+        @Field("tanggal_berakhir") tanggal_berakhir: String?
+    ): Call<JadwalKegiatan?>?
+
+    @FormUrlEncoded
+    @POST(FinproUrl.URL_JADWAL + FinproUrl.PATH_UPDATE + FinproUrl.PARAMETER_JADWAL)
+    fun updateJadwal(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_JADWAL) jadwal_id: Int,
+        @Field("nama_kegiatan") nama_kegiatan: String?,
+        @Field("tanggal_mulai") tanggal_mulai: String?,
+        @Field("tanggal_akhir") tanggal_akhir: String?
+    ): Call<JadwalKegiatan?>?
+
+    @Headers("Connection:close")
+    @GET(FinproUrl.URL_JADWAL)
+    fun getJadwal(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?
+    ): Call<List<JadwalKegiatan?>?>?
+
+    // Ga perlu pake @FormUrlEncoded karena tidak menggunakan field
+    @POST(FinproUrl.URL_JADWAL + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_JADWAL)
+    fun deleteJadwal(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_JADWAL) jadwal_id: Int
+    ): Call<JadwalKegiatan?>?
+
     // Judul
     // ---------------------------------------------------------------------------------------------
 

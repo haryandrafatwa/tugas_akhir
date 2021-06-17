@@ -25,6 +25,7 @@ public class ProdiMahasiswaViewAdapter extends RecyclerView.Adapter<ProdiMahasis
 
     private Context mContext;
     private ArrayList<Mahasiswa> mMahasiswa;
+    private String pengguna;
 
     public ProdiMahasiswaViewAdapter(Context mContext) {
         this.mContext = mContext;
@@ -33,6 +34,10 @@ public class ProdiMahasiswaViewAdapter extends RecyclerView.Adapter<ProdiMahasis
     public void addItem(ArrayList<Mahasiswa> mMahasiswa) {
         this.mMahasiswa = mMahasiswa;
         notifyDataSetChanged();
+    }
+
+    public void setPengguna(String pengguna) {
+        this.pengguna = pengguna;
     }
 
     @Override
@@ -67,6 +72,10 @@ public class ProdiMahasiswaViewAdapter extends RecyclerView.Adapter<ProdiMahasis
         String VAR_STATUS = "Status: ";
         String ADA = "Sudah mendapatkan pembimbing.";
         String TIDAK = "Belum mendapatkan pembimbing.";
+
+        if (pengguna.equalsIgnoreCase("lak")){
+            holder.status_judul.setVisibility(View.GONE);
+        }
 
         if(mMahasiswa.get(position).getPlot_id() > 0){
             holder.status_judul.setTextColor(mContext.getResources().getColor(R.color.colorBackgroundGreen));

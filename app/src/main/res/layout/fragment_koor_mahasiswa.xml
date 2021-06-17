@@ -41,6 +41,7 @@
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/frg_koor_dosen_home_fab"
                 style="@style/fab_all_add"
+                android:visibility="gone"
                 android:onClick="@{()->presenter.floatButton()}"/>
 
 

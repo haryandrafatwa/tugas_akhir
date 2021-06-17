@@ -1,16 +1,16 @@
-package org.d3ifcool.finpro.prodi.fragments;
+package org.d3ifcool.finpro.lak;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
+import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
@@ -18,7 +18,6 @@ import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.databinding.FragmentKoorMahasiswaBinding;
 import org.d3ifcool.finpro.prodi.activities.editor.ProdiMahasiswaEditorActivity;
-import org.d3ifcool.finpro.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProdiMahasiswaFragment extends Fragment implements MahasiswaContract.ViewModel {
+public class LAKMahasiswaFragment extends Fragment implements MahasiswaContract.ViewModel {
 
     private Message message = new Message();
     private ConcreteMediator mediator;
@@ -47,9 +46,6 @@ public class ProdiMahasiswaFragment extends Fragment implements MahasiswaContrac
         mediator.setRelativeLayout(binding.includeLayout.viewEmptyview);
         mediator.setRefreshLayout(binding.refresh);
         binding.setToken(mediator.getSessionToken());
-        if (mediator.getSessionPengguna().equalsIgnoreCase("prodi")){
-            binding.frgKoorDosenHomeFab.setVisibility(View.VISIBLE);
-        }
 
         mediator.message(message.setComponent("MahasiswaPresenter").setEvent("getAllData"));
         return binding.getRoot();

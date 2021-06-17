@@ -111,7 +111,6 @@ public class MethodHelper {
                 textView.setText(currentDateString);
             }
         };
-
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,6 +131,41 @@ public class MethodHelper {
                 cal.set(Calendar.DAY_OF_MONTH, day);
                 cal.set(Calendar.YEAR,year);
                 dialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+                dialog.show();
+            }
+        });
+    }
+
+    public void secondDatePicker(final Context context, final TextView textView){
+
+        final DatePickerDialog.OnDateSetListener datePickerDialog;
+        datePickerDialog = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                Calendar c = Calendar.getInstance();
+                c.set(Calendar.YEAR,year);
+                c.set(Calendar.MONTH,month);
+                c.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+                Locale locale = new Locale("in", "ID");
+                String month_name = new SimpleDateFormat("MMMM", Locale.ENGLISH).format(c.getTime());
+                String currentDateString = dayOfMonth+" "+month_name+" "+year;
+                textView.setText(currentDateString);
+            }
+        };
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(context,
+                        R.style.Theme_AppCompat_DayNight_Dialog_MinWidth,
+                        datePickerDialog,year,month,day);
+                dialog.getDatePicker().setMinDate(cal.getTimeInMillis());
+
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
                 dialog.show();
             }

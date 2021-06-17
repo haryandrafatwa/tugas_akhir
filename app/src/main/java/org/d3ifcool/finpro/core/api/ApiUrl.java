@@ -44,6 +44,7 @@ public class ApiUrl {
         public static final String VAR_MAHASISWA = "mahasiswa";
         public static final String VAR_KOORDINATOR_PA = "koor";
         public static final String VAR_INFORMASI = "informasi";
+        public static final String VAR_JADWAL = "jadwal_kegiatan";
         public static final String VAR_PLOTTING = "plotting";
         public static final String VAR_PEMBIMBING = "pembimbing";
         public static final String VAR_SKTA = "skta";
@@ -75,6 +76,7 @@ public class ApiUrl {
         public static final String PATH_MAHASISWA = "/" + VAR_MAHASISWA;
         public static final String PATH_KOORDINATOR_PA = "/" + VAR_KOORDINATOR_PA;
         public static final String PATH_INFORMASI = "/" + VAR_INFORMASI;
+        public static final String PATH_JADWAL = "/" + VAR_JADWAL;
         public static final String PATH_PLOTTING = "/" + VAR_PLOTTING;
         public static final String PATH_CHECKFORMPLOT = "/" + VAR_CHECKFORMPLOT;
         public static final String PATH_JUDUL = "/" + VAR_JUDUL;
@@ -111,6 +113,7 @@ public class ApiUrl {
         public static final String URL_CHECKFORMPLOT = PATH_API + PATH_CHECKFORMPLOT;
         public static final String URL_KOORDINATOR_PA = PATH_API + PATH_KOORDINATOR_PA;
         public static final String URL_INFORMASI = PATH_API + PATH_INFORMASI;
+        public static final String URL_JADWAL = PATH_API + PATH_JADWAL;
         public static final String URL_PLOTTING = PATH_API + PATH_PLOTTING;
         public static final String URL_JUDUL_PA = PATH_API + PATH_JUDUL;
         public static final String URL_KATEGORI_JUDUL = PATH_API + PATH_KATEGORI_JUDUL;
@@ -136,6 +139,7 @@ public class ApiUrl {
         public static final String PARAMETER_MAHASISWA = "/{" + VAR_MAHASISWA + "}";
         public static final String PARAMETER_KOOR = "/{" + VAR_KOORDINATOR_PA + "}";
         public static final String PARAMETER_INFORMASI = "/{" + VAR_INFORMASI + "}";
+        public static final String PARAMETER_JADWAL = "/{" + VAR_JADWAL + "}";
         public static final String PARAMETER_JUDUL = "/{" + VAR_JUDUL + "}";
         public static final String PARAMETER_KATEGORI_JUDUL = "/{" + VAR_KATEGORI_JUDUL + "}";
         public static final String PARAMETER_NOTIFIKASI = "/{" + VAR_NOTIFIKASI + "}";

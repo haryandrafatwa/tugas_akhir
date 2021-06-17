@@ -50,6 +50,10 @@
         <activity android:name=".activities.TentangKamiActivity" />
         <activity android:name=".activities.DosenMainActivity" />
         <activity android:name=".activities.MahasiswaMainActivity" />
+
+        <activity android:name=".activities.LAKMainActivity" />
+        <activity android:name=".lak.LAKJadwalEditorActivity"/>
+
         <activity
             android:name=".activities.ProdiMainActivity"
             android:theme="@style/AppTheme.NoActionBar" />

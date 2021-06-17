@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,6 +26,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
@@ -31,6 +35,7 @@ import com.squareup.picasso.Picasso;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.activities.AuthActivity;
 import org.d3ifcool.finpro.adapters.InformasiViewAdapter;
+import org.d3ifcool.finpro.core.adapters.KegiatanAdapter;
 import org.d3ifcool.finpro.core.helpers.FileHelper;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.helpers.MethodHelper;
@@ -38,14 +43,17 @@ import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.core.interfaces.AuthContract;
 import org.d3ifcool.finpro.core.interfaces.BimbinganContract;
 import org.d3ifcool.finpro.core.interfaces.DosenContract;
+import org.d3ifcool.finpro.core.interfaces.JadwalContract;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
 import org.d3ifcool.finpro.core.interfaces.PlottingContract;
 import org.d3ifcool.finpro.core.interfaces.ProdiContract;
 import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
+import org.d3ifcool.finpro.core.models.JadwalKegiatan;
 import org.d3ifcool.finpro.core.models.manager.AuthManager;
 import org.d3ifcool.finpro.core.presenters.AuthPresenter;
 import org.d3ifcool.finpro.core.presenters.BimbinganPresenter;
 import org.d3ifcool.finpro.core.presenters.DosenPresenter;
+import org.d3ifcool.finpro.core.presenters.JadwalPresenter;
 import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
 import org.d3ifcool.finpro.core.presenters.PlottingPresenter;
 import org.d3ifcool.finpro.core.presenters.ProdiPresenter;
@@ -54,6 +62,7 @@ import org.d3ifcool.finpro.dosen.adapters.recyclerview.DosenBimbinganViewAdapter
 import org.d3ifcool.finpro.dosen.adapters.recyclerview.DosenMahasiswaBimbinganViewAdapter;
 import org.d3ifcool.finpro.dosen.fragments.DosenMahasiswaBimbinganFragment;
 import org.d3ifcool.finpro.fragments.InformasiFragment;
+import org.d3ifcool.finpro.lak.LAKJadwalKegiatanFragment;
 import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaJadwalKegiatanActivity;
 import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaPemberitahuanActivity;
 import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaProfilActivity;
@@ -75,8 +84,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -85,6 +96,7 @@ import es.dmoral.toasty.Toasty;
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_DEFAULT;
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.FILE_TYPE_XLS;
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.FILE_TYPE_XLSX;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.ROLE_LAK;
 
 public class ConcreteMediator implements Mediator {
 
@@ -100,6 +112,7 @@ public class ConcreteMediator implements Mediator {
     private AuthPresenter authPresenter;
     private ProdiPresenter prodiPresenter;
     private BimbinganPresenter bimbinganPresenter;
+    private JadwalPresenter jadwalPresenter;
 
     private RelativeLayout relativeLayout;
     private LinearLayout linearLayout;
@@ -110,6 +123,7 @@ public class ConcreteMediator implements Mediator {
     private CircleImageView circleImageView;
     private CardView cardView;
     private FloatingActionButton floatingActionButton;
+    private CompactCalendarView compactCalendarView;
 
     private ProdiDosenViewAdapter dosenViewAdapter;
     private ProdiMahasiswaViewAdapter mahasiswaViewAdapter;
@@ -324,8 +338,27 @@ public class ConcreteMediator implements Mediator {
     }
 
     @Override
-    public void message(Message message) {
+    public void message(Message message){
         switch (message.getComponent()){
+            case "JadwalPresenter":
+                switch (message.getEvent()){
+                    case "getAllData":
+                        jadwalPresenter.getAllJadwal(getSessionToken());
+                        break;
+                    case "createJadwal":
+                        jadwalPresenter.createJadwal(getSessionToken());
+                        break;
+                    case "updateBimbingan":
+                        bimbinganPresenter.updateBimbingan(getSessionToken(),message.getBimbingan().getBimbingan_id());
+                        break;
+                    case "acceptBimbingan":
+                        bimbinganPresenter.ubahStatus(getSessionToken(),message.getBimbingan().getBimbingan_id(),"approve");
+                        break;
+                    case "rejectBimbingan":
+                        bimbinganPresenter.ubahStatus(getSessionToken(),message.getBimbingan().getBimbingan_id(),"decline");
+                        break;
+                }
+                break;
             case "BimbinganPresenter":
                 switch (message.getEvent()){
                     case "getAllData":
@@ -572,6 +605,7 @@ public class ConcreteMediator implements Mediator {
                         break;
                     case "setAdapter":
                         recyclerView.setAdapter(mahasiswaViewAdapter);
+                        mahasiswaViewAdapter.setPengguna(getSessionPengguna());
                         break;
                 }
                 break;
@@ -606,6 +640,9 @@ public class ConcreteMediator implements Mediator {
                     case "setDataPicker":
                         methodHelper.setDatePicker(activity, textView);
                         break;
+                    case "secondDataPicker":
+                        methodHelper.secondDatePicker(activity, textView);
+                        break;
                 }
                 break;
             case "Spinner":
@@ -629,6 +666,58 @@ public class ConcreteMediator implements Mediator {
                         break;
                     case "setImage":
                         Picasso.get().load(message.getUrl()).into(circleImageView);
+                        break;
+                }
+                break;
+            case "CompactCalendar":
+                switch (message.getEvent()){
+                    case "setListener":
+                        SimpleDateFormat formatter = new SimpleDateFormat("MMMM, yyyy",new Locale("in","ID"));
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",new Locale("in","ID"));
+                        textView.setText(formatter.format(new Date()));
+                        compactCalendarView.removeAllEvents();
+                        for (int i = 0; i < message.getKegiatanList().size(); i++) {
+                            JadwalKegiatan jadwalKegiatan = message.getKegiatanList().get(i);
+                            try {
+                                Calendar start = Calendar.getInstance();
+                                Calendar end = Calendar.getInstance();
+                                start.setTime(dateFormat.parse(jadwalKegiatan.getTanggal_mulai()));
+                                end.setTime(dateFormat.parse(jadwalKegiatan.getTanggal_akhir()));
+                                end.add(Calendar.DATE,1);
+                                for (Date date = start.getTime(); start.before(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
+                                    compactCalendarView.addEvent(new Event(Color.RED,date.getTime(),jadwalKegiatan.getNama_kegiatan()));
+                                }
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        this.compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
+                            @Override
+                            public void onDayClick(Date dateClicked) {
+                                List<Event> events = compactCalendarView.getEvents(dateClicked);
+                                ArrayList<String> dataList = new ArrayList<>();
+                                for (int i = 0; i < events.size(); i++) {
+                                    dataList.add(events.get(i).getData().toString());
+                                }
+                                KegiatanAdapter kegiatanAdapter = new KegiatanAdapter(activity);
+                                kegiatanAdapter.setDosens(dataList);
+                                recyclerView.setAdapter(kegiatanAdapter);
+                            }
+
+                            @Override
+                            public void onMonthScroll(Date firstDayOfNewMonth) {
+                                textView.setText(formatter.format(firstDayOfNewMonth));
+                            }
+                        });
+                        break;
+                    case "setTextColor":
+                        this.textView.setTextColor(Color.parseColor(message.getColor()));
+                        break;
+                    case "setVisibility":
+                        this.textView.setVisibility(message.getVisibility());
+                        break;
+                    case "setEnabled":
+                        this.textView.setEnabled(message.isEnabled());
                         break;
                 }
                 break;
@@ -959,6 +1048,14 @@ public class ConcreteMediator implements Mediator {
                         methodHelper.applyFragment(new SidangFragment(), "SidangFragment");
                         activity.setTitle(R.string.title_sidang);
                         break;
+                    case R.id.bottom_menu_mahasiswa:
+                        methodHelper.applyFragment(new ProdiMahasiswaFragment(),"ProdiMahasiswaFragment");
+                        activity.setTitle(R.string.title_mahasiswa_ta);
+                        break;
+                    case R.id.bottom_menu_mhs_jadwal_kegiatan:
+                        methodHelper.applyFragment(new LAKJadwalKegiatanFragment(), "LAKJadwalKegiatanFragment");
+                        activity.setTitle(R.string.title_jadwal_kegiatan);
+                        break;
                 }
                 break;
             default:
@@ -1002,6 +1099,10 @@ public class ConcreteMediator implements Mediator {
         this.floatingActionButton = floatingActionButton;
     }
 
+    public void setCompactCalendarView(CompactCalendarView compactCalendarView) {
+        this.compactCalendarView = compactCalendarView;
+    }
+
     @Override
     public void setTextView(TextView textView) {
         this.textView = textView;
@@ -1036,6 +1137,10 @@ public class ConcreteMediator implements Mediator {
         this.bimbinganPresenter = new BimbinganPresenter(viewModel);
     }
 
+    public void setJadwalPresenter(JadwalContract.ViewModel viewModel) {
+        this.jadwalPresenter = new JadwalPresenter(viewModel);
+    }
+
     @Override
     public String getSessionToken() {
         return this.sessionManager.getSessionToken();
@@ -1043,6 +1148,10 @@ public class ConcreteMediator implements Mediator {
 
     public String getSessionUsername() {
         return this.sessionManager.getSessionUsername();
+    }
+
+    public String getSessionPengguna(){
+        return this.sessionManager.getSessionPengguna();
     }
 
     @Override
@@ -1127,5 +1236,9 @@ public class ConcreteMediator implements Mediator {
 
     public BimbinganPresenter getBimbinganPresenter() {
         return bimbinganPresenter;
+    }
+
+    public JadwalPresenter getJadwalPresenter() {
+        return jadwalPresenter;
     }
 }

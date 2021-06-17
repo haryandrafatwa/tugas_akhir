@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="presenter"
+            type="org.d3ifcool.finpro.core.presenters.JadwalPresenter" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <TextView
+            android:id="@+id/tv_bulan"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_big_ultra_32dp"
+            android:textSize="@dimen/text_size_medium_16sp"
+            android:text="Januari"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorTextWhite"
+            />
+
+        <com.github.sundeepk.compactcalendarview.CompactCalendarView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/compactcalendar_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/min_height_info_200dp"
+            android:layout_below="@id/tv_bulan"
+            android:padding="@dimen/dimen_big_16dp"
+            app:compactCalendarTargetHeight="@dimen/min_height_info_200dp"
+            app:compactCalendarTextSize="@dimen/text_size_default_12sp"
+            app:compactCalendarBackgroundColor="@color/colorPrimary"
+            app:compactCalendarTextColor="#fff"
+            app:compactCalendarCurrentSelectedDayBackgroundColor="@color/colorAccent"
+            app:compactCalendarCurrentDayBackgroundColor="#fff"
+            app:compactCalendarCurrentDayTextColor="#000"
+            app:compactCalendarEventIndicatorStyle="fill_large_indicator"
+            app:compactCalendarMultiEventIndicatorColor="#fff"
+            />
+
+        <TextView
+            android:id="@+id/tv_title_kegiatan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Daftar kegiatan"
+            android:layout_below="@id/compactcalendar_view"
+            android:layout_marginTop="@dimen/dimen_big_16dp"
+            android:layout_marginHorizontal="@dimen/dimen_big_16dp"
+            android:textColor="@color/colorPrimary"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recyclerView"
+            android:layout_marginHorizontal="@dimen/dimen_big_16dp"
+            android:layout_marginTop="@dimen/dimen_medium_8dp"
+            android:layout_below="@id/tv_title_kegiatan"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/frg_koor_kegiatan_home_fab"
+            android:onClick="@{()->presenter.onCreate()}"
+            style="@style/fab_all_add"/>
+
+    </RelativeLayout>
+
+</layout>

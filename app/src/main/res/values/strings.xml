@@ -48,6 +48,7 @@
     <string name="title_judulpa_dosen_tambah">Tambah Judul Proyek Akhir</string>
     <string name="title_judulpa_mahasiswa">Judul Mahasiswa</string>
     <string name="title_mahasiswa">Mahasiswa</string>
+    <string name="title_mahasiswa_ta">Mahasiswa Tugas Akhir</string>
     <string name="title_tolak">Tolak</string>
     <string name="title_setuju">Setuju</string>
     <string name="title_pengajuan_judulpa">Pengajuan Judul PA</string>
@@ -112,6 +113,8 @@
     <string name="button_click_tambah_judul">Tambah Judul</string>
     <string name="button_click_tambah_mahasiswa">Tambah Mahasiswa</string>
     <string name="button_click_tambah_plotting">Tambah Plotting</string>
+    <string name="button_click_tambah_jadwal">Tambah Jadwal</string>
+    <string name="button_click_ubah_jadwal">Ubah Jadwal</string>
     <string name="button_click_ubah_mahasiswa">Ubah Mahasiswa</string>
     <string name="button_click_tambah_monev">Tambah Monev</string>
     <string name="button_click_tambah_bimbingan">Tambah Bimbingan</string>
@@ -248,6 +251,9 @@
     <string name="hint_batas_bimbingan">Masukkan Batas Bimbingan</string>
     <string name="hint_kuota_dosen_variable">Masukkan Variable</string>
     <string name="hint_kuota_dosen_value">Masukkan Value</string>
+    <string name="hint_nama_kegiatan">Masukkan Nama Kegiatan</string>
+    <string name="hint_tgl_mulai">Masukkan Tanggal Mulai</string>
+    <string name="hint_tgl_akhir">Masukkan Tanggal Berakhir</string>
 
     <string name="text_profil_detail_nama">Nama</string>
     <string name="text_profil_detail_nip">NIP</string>
@@ -334,6 +340,9 @@
     <string name="text_judul_bimbingan">Judul Bimbingan</string>
     <string name="text_review_bimbingan">Review Bimbingan</string>
     <string name="text_tanggal_bimbingan">Tanggal Bimbingan</string>
+    <string name="text_tanggal_mulai">Tanggal Mulai</string>
+    <string name="text_nama_kegiatan">Nama Kegiatan</string>
+    <string name="text_tanggal_akhir">Tanggal Berakhir</string>
     <string name="text_belum_siap_sidang">Belum Siap Sidang</string>
     <string name="text_belum_sidang">Belum Sidang</string>
     <string name="text_aturan_judul_mandiri_1">Pastikan anda tidak memilih judul yang ada di daftar judul dosen</string>
@@ -419,7 +428,6 @@
     <string name="text_berkas_untuk_diupload">Berkas untuk di upload</string>
     <string name="text_nama_file">Nama File</string>
     <string name="text_kegiatan">Kegiatan</string>
-    <string name="text_tanggal_mulai">Tanggal Mulai</string>
     <string name="text_tanggal_berakhir">Tanggal Berakhir</string>
     <string name="text_pelaku">Pelaku</string>
     <string name="text_keterangan">Keterangan</string>

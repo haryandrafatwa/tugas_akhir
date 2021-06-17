@@ -6,7 +6,9 @@
         <variable
             name="presenter"
             type="org.d3ifcool.finpro.core.presenters.MahasiswaPresenter" />
-
+        <variable
+            name="pengguna"
+            type="String" />
         <variable
             name="model"
             type="org.d3ifcool.finpro.core.models.Mahasiswa" />
@@ -168,43 +170,49 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/title_sk"
-                android:text="@string/text_sk"
-                android:layout_below="@+id/profile_body_container"
+            <LinearLayout
+                android:id="@+id/layout_sk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_big_16dp"
-                android:layout_marginEnd="@dimen/dimen_big_16dp"
-                android:layout_marginTop="@dimen/dimen_medium_8dp"
-                android:textSize="@dimen/text_size_medium_16sp"
-                android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold"/>
-
-            <LinearLayout
-                style="@style/profile_all_container_status_sk">
+                android:orientation="vertical"
+                android:layout_below="@+id/profile_body_container">
+                <TextView
+                    android:id="@+id/title_sk"
+                    android:text="@string/text_sk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_big_16dp"
+                    android:layout_marginEnd="@dimen/dimen_big_16dp"
+                    android:layout_marginTop="@dimen/dimen_medium_8dp"
+                    android:textSize="@dimen/text_size_medium_16sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"/>
 
                 <LinearLayout
-                    style="@style/profile_all_container_textview">
+                    style="@style/profile_all_container_status_sk">
 
-                    <TextView
-                        android:text="@string/text_profil_detail_status"
-                        style="@style/profile_all_textview_subtitle"/>
+                    <LinearLayout
+                        style="@style/profile_all_container_textview">
 
-                    <TextView
-                        android:id="@+id/act_koor_profil_status_sk"
-                        tools:text="@{model.setSk_detail()}"
-                        style="@style/profile_all_textview_content"/>
+                        <TextView
+                            android:text="@string/text_profil_detail_status"
+                            style="@style/profile_all_textview_subtitle"/>
+
+                        <TextView
+                            android:id="@+id/act_koor_profil_status_sk"
+                            tools:text="@{model.setSk_detail()}"
+                            style="@style/profile_all_textview_content"/>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btn_update_status_sk"
+                        style="@style/button_all_primary"
+                        android:layout_marginTop="@dimen/text_size_medium_16sp"
+                        android:text="@string/text_update_status_sk"
+                        android:onClick="@{()->presenter.btnSKUpdate(model.plot_id)}"/>
 
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/btn_update_status_sk"
-                    style="@style/button_all_primary"
-                    android:layout_marginTop="@dimen/text_size_medium_16sp"
-                    android:text="@string/text_update_status_sk"
-                    android:onClick="@{()->presenter.btnSKUpdate(model.plot_id)}"/>
-
             </LinearLayout>
 
             <LinearLayout
@@ -213,7 +221,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="2"
-                android:layout_below="@+id/profile_body_status_sk"
+                android:layout_below="@+id/layout_sk"
                 android:layout_marginStart="@dimen/dimen_big_16dp"
                 android:layout_marginEnd="@dimen/dimen_big_16dp"
                 android:layout_marginTop="@dimen/dimen_medium_8dp">

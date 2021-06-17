@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.gson.Gson;
 
@@ -28,6 +29,8 @@ import java.util.List;
 import okhttp3.ResponseBody;
 
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_MAHASISWA;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.ROLE_LAK;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.ROLE_PRODI;
 
 public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements MahasiswaContract.ViewModel {
 
@@ -56,6 +59,11 @@ public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements M
         mediator.message(message.setComponent("ProdiMahasiswaAdapter").setEvent("set"));
 
         mediator.message(message.setComponent("MahasiswaPresenter").setEvent("getPembimbing"));
+        if (mediator.getSessionPengguna().equalsIgnoreCase(ROLE_LAK)){
+            binding.btnPlotPembimbing.setVisibility(View.GONE);
+            binding.layoutSk.setVisibility(View.GONE);
+            binding.tvChangePembimbing.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -66,7 +74,9 @@ public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements M
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_edit_delete,menu);
+        if(mediator.getSessionPengguna().equalsIgnoreCase("prodi")){
+            getMenuInflater().inflate(R.menu.menu_edit_delete,menu);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
