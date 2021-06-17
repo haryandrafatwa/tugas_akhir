@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="@dimen/dimen_medium_8dp"
-            tools:listitem="@layout/content_list_all_pa_judul"/>
+            tools:listitem="@layout/content_list_all_mahasiswa_judul"/>
 
     </RelativeLayout>
 

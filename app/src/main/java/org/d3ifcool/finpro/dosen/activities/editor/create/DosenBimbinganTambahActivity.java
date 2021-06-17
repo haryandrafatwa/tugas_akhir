@@ -33,8 +33,8 @@ public class DosenBimbinganTambahActivity extends AppCompatActivity implements I
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.text_progress_dialog));
-        final BimbinganPresenter bimbinganPresenter = new BimbinganPresenter(this);
-        bimbinganPresenter.initContext(this);
+//        final BimbinganPresenter bimbinganPresenter = new BimbinganPresenter(this);
+//        bimbinganPresenter.initContext(this);
 
         MethodHelper methodHelper = new MethodHelper();
 
@@ -60,9 +60,9 @@ public class DosenBimbinganTambahActivity extends AppCompatActivity implements I
                 }else if (review.isEmpty()){
                     et_review.setError(getString(R.string.text_tidak_boleh_kosong));
                 }else{
-                    bimbinganPresenter.createBimbingan(review,"tidak hadir",tanggal,"pending",extraArrayProyekAkhir.get(0).getProyek_akhir_id());
+//                    bimbinganPresenter.createBimbingan(review,"tidak hadir",tanggal,"pending",extraArrayProyekAkhir.get(0).getProyek_akhir_id());
                     if (extraArrayProyekAkhir.size()==2){
-                        bimbinganPresenter.createBimbingan(review,"tidak hadir",tanggal,"pending",extraArrayProyekAkhir.get(extraArrayProyekAkhir.size()-1).getProyek_akhir_id());
+//                        bimbinganPresenter.createBimbingan(review,"tidak hadir",tanggal,"pending",extraArrayProyekAkhir.get(extraArrayProyekAkhir.size()-1).getProyek_akhir_id());
                     }
                 }
 

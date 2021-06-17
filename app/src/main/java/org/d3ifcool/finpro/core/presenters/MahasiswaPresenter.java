@@ -11,9 +11,12 @@ import org.d3ifcool.finpro.core.helpers.Constant;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.manager.MahasiswaManager;
+import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaBimbinganActivity;
 import org.d3ifcool.finpro.prodi.activities.editor.ProdiMahasiswaEditorActivity;
 
 import okhttp3.MultipartBody;
+
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_DOSEN;
 
 public class MahasiswaPresenter implements MahasiswaContract.Presenter {
 
@@ -100,6 +103,14 @@ public class MahasiswaPresenter implements MahasiswaContract.Presenter {
     @Override
     public void onDelete() {
         viewModel.onMessage("onDelete");
+    }
+
+    @Override
+    public void onBimbingan(String dsn_nip) {
+        Intent intent = new Intent(App.self(), MahasiswaBimbinganActivity.class);
+        intent.putExtra(EXTRA_DOSEN,dsn_nip);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        App.self().startActivity(intent);
     }
 
     public void btnSKUpdate(int plot_id) {

@@ -252,7 +252,8 @@
 
                 <LinearLayout
                     android:id="@+id/container_pembimbing_1"
-                    style="@style/profile_all_container_pembimbing">
+                    style="@style/profile_all_container_pembimbing"
+                    android:layout_marginTop="@dimen/dimen_medium_8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -289,7 +290,8 @@
 
                 <LinearLayout
                     android:id="@+id/container_pembimbing_2"
-                    style="@style/profile_all_container_pembimbing">
+                    style="@style/profile_all_container_pembimbing"
+                    android:layout_marginTop="@dimen/dimen_medium_8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"

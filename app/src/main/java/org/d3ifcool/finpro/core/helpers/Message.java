@@ -4,6 +4,7 @@ import android.net.Uri;
 
 import org.d3ifcool.finpro.core.components.Components;
 import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
+import org.d3ifcool.finpro.core.models.Bimbingan;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.Koordinator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import okhttp3.ResponseBody;
 
 public class Message implements Components {
-    private String component, event, text, color, url;
+    private String component, event, text, color, url, extraIntent;
     private boolean isEnabled;
     private Uri uri;
     private ArrayList item;
@@ -26,6 +27,7 @@ public class Message implements Components {
     private Plotting plotting;
     private Dosen dosen;
     private Koordinator koordinator;
+    private Bimbingan bimbingan;
 
     public Message() {
     }
@@ -62,6 +64,11 @@ public class Message implements Components {
 
     public Message setUrl(String url) {
         this.url = url;
+        return this;
+    }
+
+    public Message setExtraIntent(String extraIntent) {
+        this.extraIntent = extraIntent;
         return this;
     }
 
@@ -115,6 +122,11 @@ public class Message implements Components {
         return this;
     }
 
+    public Message setBimbingan(Bimbingan bimbingan) {
+        this.bimbingan = bimbingan;
+        return this;
+    }
+
     public String getComponent() {
         return component;
     }
@@ -133,6 +145,10 @@ public class Message implements Components {
 
     public String getUrl() {
         return url;
+    }
+
+    public String getExtraIntent() {
+        return extraIntent;
     }
 
     public boolean isEnabled() {
@@ -173,5 +189,9 @@ public class Message implements Components {
 
     public Koordinator getKoordinator() {
         return koordinator;
+    }
+
+    public Bimbingan getBimbingan() {
+        return bimbingan;
     }
 }

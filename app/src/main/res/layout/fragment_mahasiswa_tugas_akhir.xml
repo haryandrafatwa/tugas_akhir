@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="plot"
+            type="org.d3ifcool.finpro.core.models.Plotting" />
+        <variable
+            name="mahasiswa"
+            type="org.d3ifcool.finpro.core.models.Mahasiswa" />
+        <variable
+            name="token"
+            type="String" />
+        <variable
+            name="mhs_nim"
+            type="String" />
+        <variable
+            name="presenter"
+            type="org.d3ifcool.finpro.core.presenters.MahasiswaPresenter" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:onRefreshListener="@{()->presenter.getMahasiswaByNIM(token,mhs_nim)}">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/enable_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorBackground"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/layout_judul"
+                        layout="@layout/content_all_pa_judul_kelompok"
+                        app:mahasiswa="@{mahasiswa}"/>
+
+                    <LinearLayout
+                        android:id="@+id/title_pembimbing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        android:layout_below="@+id/profile_body_status_sk"
+                        android:layout_marginStart="@dimen/dimen_big_16dp"
+                        android:layout_marginEnd="@dimen/dimen_big_16dp"
+                        android:layout_marginTop="@dimen/dimen_medium_8dp">
+
+                        <TextView
+                            android:text="@string/text_dosen_pembimbing"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_size_medium_16sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/list_pembimbing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/title_pembimbing"
+                        android:layout_marginTop="@dimen/dimen_medium_8dp"
+                        android:layout_marginBottom="@dimen/dimen_big_16dp"
+                        android:orientation="vertical"
+                        android:visibility="@{mahasiswa.plot_id > 0 ? View.VISIBLE : View.GONE}">
+
+                        <LinearLayout
+                            android:id="@+id/container_pembimbing_1"
+                            style="@style/profile_all_container_pembimbing"
+                            android:weightSum="12"
+                            android:orientation="horizontal"
+                            android:onClick="@{()->presenter.onBimbingan(plot.nip_pembimbing_1)}">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="10"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_nama_pembimbing_1"
+                                    android:text="@{plot.nama_pembimbing_1}"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textStyle="bold"
+                                    android:textSize="@dimen/text_size_medium_16sp"/>
+
+                                <TextView
+                                    android:id="@+id/tv_nip_pembimbing_1"
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="wrap_content"
+                                    android:text="@{plot.nip_pembimbing_1}"
+                                    android:textColor="@color/colorAccent"
+                                    android:textStyle="bold"
+                                    android:textSize="@dimen/text_size_medium_16sp"/>
+
+                                <TextView
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent"
+                                    android:text="@string/text_pembimbing_1"
+                                    android:layout_gravity="center_vertical"/>
+
+                            </LinearLayout>
+
+                            <ImageButton
+                                android:id="@+id/ib_chevron_1"
+                                android:layout_width="0dp"
+                                android:layout_weight="2"
+                                android:layout_height="@dimen/dimen_large_64dp"
+                                android:background="@drawable/ic_chevron_right"
+                                android:backgroundTint="@color/colorPrimaryDark"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/container_pembimbing_2"
+                            style="@style/profile_all_container_pembimbing"
+                            android:layout_weight="12"
+                            android:layout_marginTop="@dimen/dimen_medium_8dp"
+                            android:orientation="horizontal"
+                            android:onClick="@{()->presenter.onBimbingan(plot.nip_pembimbing_2)}">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="10"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_nama_pembimbing_2"
+                                    android:text="@{plot.nama_pembimbing_2}"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textStyle="bold"
+                                    android:textSize="@dimen/text_size_medium_16sp"/>
+
+                                <TextView
+                                    android:id="@+id/tv_nip_pembimbing_2"
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="wrap_content"
+                                    android:text="@{plot.nip_pembimbing_2}"
+                                    android:textColor="@color/colorAccent"
+                                    android:textStyle="bold"
+                                    android:textSize="@dimen/text_size_medium_16sp"/>
+
+                                <TextView
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent"
+                                    android:text="@string/text_pembimbing_2"
+                                    android:layout_gravity="center_vertical"/>
+
+                            </LinearLayout>
+
+                            <ImageButton
+                                android:id="@+id/ib_chevron_2"
+                                android:layout_width="0dp"
+                                android:layout_weight="2"
+                                android:layout_height="@dimen/dimen_large_64dp"
+                                android:background="@drawable/ic_chevron_right"
+                                android:backgroundTint="@color/colorPrimaryDark"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </RelativeLayout>
+
+</layout>

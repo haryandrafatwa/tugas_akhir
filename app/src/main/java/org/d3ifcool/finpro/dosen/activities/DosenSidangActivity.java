@@ -72,12 +72,12 @@ public class DosenSidangActivity extends AppCompatActivity implements SidangList
 
         proyekAkhirPresenter = new ProyekAkhirPresenter(this);
         sidangPresenter = new SidangPresenter(this);
-        bimbinganPresenter = new BimbinganPresenter(this);
+//        bimbinganPresenter = new BimbinganPresenter(this);
         MonevDetailPresenter detailMonevPresenter = new MonevDetailPresenter(this);
 
         proyekAkhirPresenter.initContext(this);
         sidangPresenter.initContext(this);
-        bimbinganPresenter.initContext(this);
+//        bimbinganPresenter.initContext(this);
         detailMonevPresenter.initContext(this);
 
         tv_nama1 = findViewById(R.id.dsn_sidang_textview_nama_1);
@@ -282,7 +282,7 @@ public class DosenSidangActivity extends AppCompatActivity implements SidangList
         proyekAkhirArrayList.addAll(proyekAkhirList);
 
         String stringProyekAkhirId = String.valueOf(proyekAkhirArrayList.get(0).getProyek_akhir_id());
-        bimbinganPresenter.searchBimbinganAllBy(PARAM_BIMBINGAN, stringProyekAkhirId);
+//        bimbinganPresenter.searchBimbinganAllBy(PARAM_BIMBINGAN, stringProyekAkhirId);
         sidangPresenter.searchAllSidangBy(PARAM_PROYEK_AKHIR, extraJudulId);
 
         if (proyekAkhirArrayList.size() == 2) {

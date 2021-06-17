@@ -19,6 +19,7 @@ public interface MahasiswaContract {
     interface Presenter{
         void onCreate();
         void onDelete();
+        void onBimbingan(String dsn_nip);
         void getAllMahasiswa(String token);
         void createMahasiswa(String token);
         void deleteMahasiswa(String token,String nim);

@@ -86,7 +86,7 @@
                     android:textSize="@dimen/text_size_title_small_18sp"
                     android:maxLines="1"
                     android:textStyle="bold"
-                    android:text="@string/title_proyekakhir"/>
+                    android:text="@string/title_judulta"/>
 
                 <View
                     style="@style/view_all_line_horizontal"/>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/cardview_list_all_clicked"
+    android:focusable="true">
+
+    <LinearLayout
+        android:id="@+id/container_bimbingan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/circle_profile_body"
+        android:minHeight="@dimen/min_height_list_bimbingan_95dp"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/dimen_big_16dp"
+        android:paddingTop="@dimen/dimen_medium_8dp"
+        android:paddingEnd="@dimen/dimen_big_16dp"
+        android:paddingBottom="@dimen/dimen_medium_8dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/ctn_mhs_pa_bimbingan_textview_tanggal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dummy_tanggal"
+                android:textColor="@color/colorTextBlack"
+                android:layout_centerVertical="true"/>
+
+            <LinearLayout
+                android:id="@+id/layout_editor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true">
+                <TextView
+                    android:id="@+id/tv_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ubah"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_marginEnd="@dimen/dimen_medium_8dp"
+                    android:layout_toStartOf="@id/tv_hapus"/>
+
+                <TextView
+                    android:id="@+id/tv_hapus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hapus"
+                    android:textColor="@color/colorTextRed"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <View style="@style/view_all_line_horizontal" />
+
+        <TextView
+            android:id="@+id/ctn_mhs_pa_bimbingan_textview_isi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:text="@string/dummyLong"
+            android:textColor="@color/colorTextBlack" />
+
+        <TextView
+            android:id="@+id/ctn_mhs_pa_bimbingan_textview_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_medium_8dp"
+            android:gravity="end"
+            android:text="@string/status_pending"
+            android:textColor="@color/colorBackgroundYellow" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

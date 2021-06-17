@@ -1,128 +1,48 @@
 package org.d3ifcool.finpro.activities;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import androidx.fragment.app.Fragment;
+import androidx.databinding.DataBindingUtil;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import org.d3ifcool.finpro.R;
-import org.d3ifcool.finpro.core.interfaces.objects.MahasiswaView;
-import org.d3ifcool.finpro.fragments.InformasiFragment;
-import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaJadwalKegiatanActivity;
-import org.d3ifcool.finpro.mahasiswa.fragments.parent.MahasiswaJudulPaFragment;
-import org.d3ifcool.finpro.mahasiswa.fragments.parent.MahasiswaPaFragment;
+import org.d3ifcool.finpro.core.helpers.Message;
+import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
+import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.models.Plotting;
+import org.d3ifcool.finpro.databinding.ActivityMahasiswaMainBinding;
 import org.d3ifcool.finpro.core.helpers.SessionManager;
-import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaPemberitahuanActivity;
-import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaProfilActivity;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 
-public class MahasiswaMainActivity extends AppCompatActivity implements MahasiswaView {
+import java.util.List;
+
+public class MahasiswaMainActivity extends AppCompatActivity implements MahasiswaContract.ViewModel {
 
     private SessionManager sessionManager;
+    private ActivityMahasiswaMainBinding mBinding;
+    private Message message = new Message();
+    private ConcreteMediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mahasiswa_main);
+        mBinding = DataBindingUtil.setContentView(this,R.layout.activity_mahasiswa_main);
+        mBinding.setLifecycleOwner(this);
+        mediator = new ConcreteMediator(this);
+        mediator.setMahasiswaPresenter(this);
+
+        mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
+        mediator.message(message.setComponent("SessionManager").setEvent("set"));
+
+        mediator.message(message.setComponent("MahasiswaPresenter").setEvent("getMahasiswaBySession"));
 
         setTitle(R.string.title_informasi);
         getSupportActionBar().setElevation(0);
-        // -----------------------------------------------------------------------------------------
-//        mViewPager = findViewById(R.id.act_mhs_home_viewpager);
-//        MahasiswaPagerAdapter mPagerAdapter = new MahasiswaPagerAdapter(this, getSupportFragmentManager());
-//        mViewPager.setAdapter(mPagerAdapter);
 
-        //    private MenuItem prevMenuItem = null;
-        //    private ViewPager mViewPager;
-        BottomNavigationView bottomNavigationView = findViewById(R.id.act_mhs_home_bottom_navigation);
-        sessionManager = new SessionManager(this);
-//        MahasiswaPresenters mahasiswaPresenter = new MahasiswaPresenters(this);
-//        mahasiswaPresenter.initContext(this);
-
-//        mahasiswaPresenter.getMahasiswaByParameter(sessionManager.getSessionToken(),sessionManager.getSessionUsername());
-
-
-
-        openFragment(new InformasiFragment());
-
-        // -----------------------------------------------------------------------------------------
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                switch (menuItem.getItemId()) {
-                    case R.id.bottom_menu_mhs_informasi:
-//                        mViewPager.setCurrentItem(0);
-                        openFragment(new InformasiFragment());
-                        setTitle(R.string.title_informasi);
-                        break;
-                    case R.id.bottom_menu_mhs_proyekakhir:
-//                        mViewPager.setCurrentItem(1);
-                        openFragment(new MahasiswaPaFragment());
-                        setTitle(R.string.title_proyekakhir);
-                        break;
-                    case R.id.bottom_menu_mhs_judulpa:
-//                        mViewPager.setCurrentItem(2);
-                        openFragment(new MahasiswaJudulPaFragment());
-                        setTitle(R.string.title_judulta);
-                        break;
-                }
-//                return false;
-                return true;
-            }
-        });
-
-//        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                if (prevMenuItem != null)
-//                    prevMenuItem.setChecked(false);
-//                else
-//                    bottomNavigationView.getMenu().getItem(0).setChecked(false);
-//
-//                bottomNavigationView.getMenu().getItem(position).setChecked(true);
-//                prevMenuItem = bottomNavigationView.getMenu().getItem(position);
-//
-//                switch (position) {
-//                    case 0:
-//                        setTitle(R.string.title_informasi);
-//                        break;
-//                    case 1:
-//                        setTitle(R.string.title_proyekakhir);
-//                        break;
-//                    case 2:
-//                        setTitle(R.string.title_judulpa);
-//                        break;
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
-
-
-    }
-
-    private void openFragment(Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.framelayout_container, fragment)
-                .commit();
+        mediator.setBottomNavigationView(mBinding.actMhsHomeBottomNavigation);
+        mediator.message(message.setComponent("BottomNavigationView").setEvent("setOnNavigationItemSelectedListener"));
+        mediator.message(message.setComponent("BottomNavigationView").setEvent("setFirstOpen").setText("mahasiswa"));
     }
 
     @Override
@@ -133,80 +53,38 @@ public class MahasiswaMainActivity extends AppCompatActivity implements Mahasisw
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.toolbar_menu_pemberitahuan:
-                Intent intentPemberitahuan = new Intent(MahasiswaMainActivity.this, MahasiswaPemberitahuanActivity.class);
-                startActivity(intentPemberitahuan);
-                break;
-
-            case R.id.toolbar_menu_profil:
-                Intent intentProfil = new Intent(MahasiswaMainActivity.this, MahasiswaProfilActivity.class);
-                startActivity(intentProfil);
-                break;
-
-            case R.id.toolbar_menu_jadwal_kegiatan:
-                Intent intentJadwal = new Intent(MahasiswaMainActivity.this, MahasiswaJadwalKegiatanActivity.class);
-                startActivity(intentJadwal);
-                break;
-
-            case R.id.toolbar_menu_keluar:
-                new AlertDialog
-                        .Builder(this)
-                        .setTitle(getString(R.string.dialog_keluar_title))
-                        .setMessage(getString(R.string.dialog_keluar_text))
-
-                        .setPositiveButton("Keluar", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intentKeluar = new Intent(MahasiswaMainActivity.this, AuthActivity.class);
-                                startActivity(intentKeluar);
-                                sessionManager.removeSession();
-                                finish();
-                            }
-                        })
-
-                        .setNegativeButton("Batal", null)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-               ;
-                break;
-
-            case R.id.toolbar_menu_tentang_kami:
-                Intent intentTentangKami = new Intent(MahasiswaMainActivity.this, TentangKamiActivity.class);
-                startActivity(intentTentangKami);
-                break;
-
-            default:
-                break;
-        }
-
+        mediator.message(message.setComponent("Toolbar").setVisibility(item.getItemId()).setEvent("mahasiswa"));
         return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
     }
 
     @Override
     public void onGetObjectMahasiswa(Mahasiswa mahasiswa) {
-        sessionManager.createSessionDataMahasiswa(mahasiswa);
+        mediator.message(message.setComponent("SessionManager").setEvent("createMahasiswa").setMahasiswa(mahasiswa));
     }
 
     @Override
-    public void isEmptyObjectMahasiswa() {
+    public void onGetListMahasiswa(List<Mahasiswa> mahasiswaList) {
 
     }
 
     @Override
-    public void onFailed(String message) {
+    public void onSuccessGetPlotting(Plotting plotting) {
 
+    }
+
+    @Override
+    public void onMessage(String messages) {
+        switch (messages){
+            case "ShowProgressDialog":
+                mediator.message(message.setComponent("ProgressDialog").setEvent("show"));
+                break;
+            case "HideProgressDialog":
+                mediator.message(message.setComponent("ProgressDialog").setEvent("dismiss"));
+                break;
+            default:
+                mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));
+                break;
+        }
     }
 
 }

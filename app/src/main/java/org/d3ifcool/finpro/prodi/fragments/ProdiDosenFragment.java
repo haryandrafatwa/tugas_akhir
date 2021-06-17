@@ -86,7 +86,7 @@ public class ProdiDosenFragment extends Fragment implements DosenContract.ViewMo
                 mediator.message(message.setComponent("RelativeLayout").setEvent("setVisibility").setVisibility(View.VISIBLE));
                 break;
             case "FloatButton":
-                mediator.selectIntent(ProdiDosenEditorActivity.class);
+                mediator.selectIntent(new Message().setaClass(ProdiDosenEditorActivity.class));
                 break;
             default:
                 mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));

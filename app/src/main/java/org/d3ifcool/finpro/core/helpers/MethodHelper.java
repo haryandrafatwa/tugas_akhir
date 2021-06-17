@@ -28,8 +28,11 @@ import org.d3ifcool.finpro.activities.MahasiswaMainActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 
@@ -98,9 +101,14 @@ public class MethodHelper {
         datePickerDialog = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month = month + 1;
-                date[0] = year + "-"+ setTwoNumber(month)+ "-" + setTwoNumber(dayOfMonth) ;
-                textView.setText(date[0]);
+                Calendar c = Calendar.getInstance();
+                c.set(Calendar.YEAR,year);
+                c.set(Calendar.MONTH,month);
+                c.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+                Locale locale = new Locale("in", "ID");
+                String month_name = new SimpleDateFormat("MMMM", Locale.ENGLISH).format(c.getTime());
+                String currentDateString = dayOfMonth+" "+month_name+" "+year;
+                textView.setText(currentDateString);
             }
         };
 

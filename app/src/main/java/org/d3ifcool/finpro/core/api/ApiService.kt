@@ -11,29 +11,43 @@ interface ApiService {
 
     // Bimbingan
     // ---------------------------------------------------------------------------------------------
-
     @FormUrlEncoded
     @POST(FinproUrl.URL_BIMBINGAN)
     fun createBimbingan(
-            @Field("bimbingan_review") bimbingan_review: String?,
-            @Field("bimbingan_kehadiran") bimbingan_kehadiran: String?,
-            @Field("bimbingan_tanggal") bimbingan_tanggal: String?,
-            @Field("bimbingan_status") bimbingan_status: String?,
-            @Field("proyek_akhir_id") proyek_akhir_id: Int
-    ): Call<Bimbingan?>?
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Field("bimbingan_review") bimbingan_review: String?,
+        @Field("bimbingan_tanggal") bimbingan_tanggal: String?,
+        @Field("dsn_nip") dsn_nip: String?,
+    ): Call<ResponseBody?>?
 
     @FormUrlEncoded
     @POST(FinproUrl.URL_BIMBINGAN + FinproUrl.PATH_UPDATE + FinproUrl.PARAMETER_BIMBINGAN)
-    fun updateBimbingan(@Path(FinproUrl.VAR_BIMBINGAN) bimbingan_id: String?,
-                        @Field("bimbingan_review") bimbingan_review: String?,
-                        @Field("bimbingan_tanggal") bimbingan_tanggal: String?
-    ): Call<Bimbingan?>?
+    fun updateBimbingan(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_BIMBINGAN) bimbingan_id: Int?,
+        @Field("bimbingan_review") bimbingan_review: String?,
+        @Field("bimbingan_tanggal") bimbingan_tanggal: String?
+    ): Call<ResponseBody?>?
+
+    @GET(FinproUrl.URL_BIMBINGAN)
+    fun getAllBimbingan(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+    ): Call<ResponseBody>?
+
+    @GET(FinproUrl.URL_BIMBINGAN+FinproUrl.PARAMETER_BIMBINGAN)
+    fun getBimbinganByParameter(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_BIMBINGAN) username: String?
+    ): Call<ResponseBody>?
 
     @GET(FinproUrl.URL_BIMBINGAN)
     fun getBimbingan(): Call<List<Bimbingan?>?>?
 
     @POST(FinproUrl.URL_BIMBINGAN + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_BIMBINGAN)
-    fun deleteBimbingan(@Path(FinproUrl.VAR_BIMBINGAN) bimbingan_id: String?): Call<Bimbingan?>?
+    fun deleteBimbingan(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_BIMBINGAN) bimbingan_id: Int?
+    ): Call<Bimbingan?>?
 
     @GET(FinproUrl.URL_BIMBINGAN + FinproUrl.PATH_SEARCH + FinproUrl.PATH_ALL + FinproUrl.BASE_PARAMETER + FinproUrl.PARAMETER_QUERY)
     fun searchBimbinganAllBy(
@@ -60,7 +74,11 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST(FinproUrl.URL_BIMBINGAN + FinproUrl.PATH_UPDATE + FinproUrl.PATH_STATUS + FinproUrl.PARAMETER_BIMBINGAN)
-    fun updateBimbinganStatus(@Path(FinproUrl.VAR_BIMBINGAN) bimbingan_id: String?, @Field("bimbingan_status") bimbingan_status: String?): Call<Bimbingan?>?
+    fun updateBimbinganStatus(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_BIMBINGAN) bimbingan_id: Int?,
+        @Field("bimbingan_status") bimbingan_status: String?
+    ): Call<Bimbingan?>?
 
     // Dosen
     // ---------------------------------------------------------------------------------------------

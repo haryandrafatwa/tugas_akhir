@@ -72,6 +72,7 @@
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textStyle">bold</item>
         <item name="android:text">@string/dummy</item>
+        <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
     </style>
 
@@ -96,7 +97,6 @@
         <item name="android:layout_marginBottom">@dimen/dimen_medium_8dp</item>
         <item name="android:layout_marginStart">@dimen/dimen_medium_8dp</item>
         <item name="android:layout_marginEnd">@dimen/dimen_medium_8dp</item>
-        <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="spinner_all">
@@ -237,10 +237,8 @@
     <style name="profile_all_container_pembimbing">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/dimen_medium_8dp</item>
         <item name="android:layout_marginLeft">@dimen/dimen_big_16dp</item>
         <item name="android:layout_marginRight">@dimen/dimen_big_16dp</item>
-        <item name="android:layout_marginBottom">@dimen/dimen_medium_8dp</item>
         <item name="android:background">@drawable/circle_profile_body</item>
         <item name="android:orientation">vertical</item>
         <item name="android:padding">@dimen/dimen_big_super_24dp</item>

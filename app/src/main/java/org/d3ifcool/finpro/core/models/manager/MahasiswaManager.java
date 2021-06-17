@@ -67,7 +67,6 @@ public class MahasiswaManager {
     }
 
     public void createMahasiswa(String token, String nim, String nama){
-
         if (connectionHelper.isConnected(context)){
             viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
@@ -88,9 +87,6 @@ public class MahasiswaManager {
         } else {
             Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
         }
-
-
-
     }
 
     public void updateMahasiswa(String token, String nim, String nama, String angkatan, String kontak, String email, String judul, String judul_inggris){
@@ -244,7 +240,6 @@ public class MahasiswaManager {
     }
 
     public void getMahasiswaByParameter(String token, String mhs_nim){
-
         if (connectionHelper.isConnected(context)){
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
             Call<Mahasiswa> call = apiInterfaceMahasiswa.getMahasiswaByParameter("Bearer "+token,mhs_nim);

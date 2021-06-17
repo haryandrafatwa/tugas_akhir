@@ -42,17 +42,17 @@ public class DosenProyekAkhirMonevActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dosen_proyek_akhir_monev);
 
-        setTitle(getString(R.string.title_proyekakhir_detail));
+        setTitle(getString(R.string.title_tugasakhir_detail));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(0);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.text_progress_dialog));
         proyekAkhirPresenter = new ProyekAkhirPresenter(this);
-        bimbinganPresenter = new BimbinganPresenter(this);
+//        bimbinganPresenter = new BimbinganPresenter(this);
 
-        proyekAkhirPresenter.initContext(this);
-        bimbinganPresenter.initContext(this);
+//        proyekAkhirPresenter.initContext(this);
+//        bimbinganPresenter.initContext(this);
 
         TextView textViewJudul = findViewById(R.id.frg_mhs_pa_textview_judulpa);
         TextView textViewKelompok = findViewById(R.id.frg_mhs_pa_textview_kelompokpa);
@@ -145,7 +145,7 @@ public class DosenProyekAkhirMonevActivity extends AppCompatActivity implements 
 
         String stringProyekAkhirId = String.valueOf(proyekAkhirArrayList.get(0).getProyek_akhir_id());
 
-        bimbinganPresenter.searchBimbinganAllBy(PARAM_BIMBINGAN, stringProyekAkhirId);
+//        bimbinganPresenter.searchBimbinganAllBy(PARAM_BIMBINGAN, stringProyekAkhirId);
 
         if (proyekAkhirArrayList.size() == 2) {
             textViewNama1.setText(proyekAkhirArrayList.get(0).getMhs_nama());

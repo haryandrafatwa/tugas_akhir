@@ -1,4 +1,4 @@
-package org.d3ifcool.finpro.mahasiswa.fragments.parent;
+package org.d3ifcool.finpro.mahasiswa.fragments;
 
 
 import android.app.ProgressDialog;
@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.d3ifcool.finpro.R;
-import org.d3ifcool.finpro.mahasiswa.adapters.viewpager.MahasiswaJudulPaPagerAdapter;
+import org.d3ifcool.finpro.mahasiswa.adapters.viewpager.BimbinganPagerAdapter;
 import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.core.interfaces.lists.JudulListView;
 import org.d3ifcool.finpro.core.models.Judul;
@@ -33,7 +33,7 @@ import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.JUDUL_ST
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MahasiswaJudulPaFragment extends Fragment implements JudulListView {
+public class SidangFragment extends Fragment implements JudulListView {
 
     private SessionManager sessionManager;
     private TabLayout mTabLayout;
@@ -47,9 +47,9 @@ public class MahasiswaJudulPaFragment extends Fragment implements JudulListView 
 
     private TextView textViewJudul, textViewDosen, textViewStatus;
 
-    private MahasiswaJudulPaPagerAdapter adapter;
+    private BimbinganPagerAdapter adapter;
 
-    public MahasiswaJudulPaFragment() {
+    public SidangFragment() {
         // Required empty public constructor
     }
 
@@ -106,7 +106,7 @@ public class MahasiswaJudulPaFragment extends Fragment implements JudulListView 
             judulPresenter.searchJudulBy(PARAM_JUDUL, String.valueOf(sessionManager.getSessionMahasiswaIdJudul()));
         } else {
             // Membuat ViewPager (SLIDER)
-            adapter = new MahasiswaJudulPaPagerAdapter(requireContext(),getChildFragmentManager());
+            adapter = new BimbinganPagerAdapter(getChildFragmentManager());
             mViewPager.setAdapter(adapter);
             mTabLayout.setupWithViewPager(mViewPager);
             // -------------------------------------------------------------------------------------

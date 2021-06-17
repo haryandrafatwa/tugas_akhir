@@ -140,7 +140,7 @@ public class ProdiPlottingFragment extends Fragment implements PlottingContract.
                 mediator.message(message.setComponent("AlertDialog").setEvent("hapusForm"));
                 break;
             case "AddButton":
-                mediator.selectIntent(ProdiPlottingEditorActivity.class);
+                mediator.selectIntent(new Message().setaClass(ProdiPlottingEditorActivity.class));
                 break;
             case "EmptyList":
                 mediator.message(message.setComponent("RelativeLayout").setEvent("setVisibility").setVisibility(View.VISIBLE));

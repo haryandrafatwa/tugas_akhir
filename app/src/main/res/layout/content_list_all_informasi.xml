@@ -80,7 +80,7 @@
             android:layout_marginStart="@dimen/dimen_big_16dp"
             android:layout_marginEnd="@dimen/dimen_big_16dp"
             android:maxLines="1"
-            android:text="@string/title_proyekakhir"
+            android:text="@string/title_judulta"
             android:textColor="@color/colorTextBlack"
             android:textSize="@dimen/text_size_title_small_18sp"
             android:textStyle="bold" />

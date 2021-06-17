@@ -93,7 +93,16 @@ public class Mahasiswa implements Parcelable {
     @SerializedName("username")
     private String username;
 
-    public Mahasiswa(String mhs_nim, String mhs_nama, String angkatan, String mhs_kontak, String mhs_foto, String mhs_email, String judul, String judul_inggris, int plot_id, String sk_expired, int sk_status, String username, String nip_pembimbing_1, String nip_pembimbing_2) {
+    @Expose
+    @SerializedName("bimbingan_sum")
+    private int bimbingan_sum;
+
+    @Expose
+    @SerializedName("pending_sum")
+    private int pending_sum;
+
+    public Mahasiswa(String mhs_nim, String mhs_nama, String angkatan, String mhs_kontak, String mhs_foto, String mhs_email, String judul, String judul_inggris, int plot_id,
+                     String sk_expired, int sk_status, String username, String nip_pembimbing_1, String nip_pembimbing_2, int bimbingan_sum, int pending_sum) {
         this.mhs_nim = mhs_nim;
         this.mhs_nama = mhs_nama;
         this.angkatan = angkatan;
@@ -108,6 +117,8 @@ public class Mahasiswa implements Parcelable {
         this.username = username;
         this.nip_pembimbing_1 = nip_pembimbing_1;
         this.nip_pembimbing_2 = nip_pembimbing_2;
+        this.bimbingan_sum = bimbingan_sum;
+        this.pending_sum = pending_sum;
     }
 
     public String getMhs_nim() {
@@ -249,6 +260,22 @@ public class Mahasiswa implements Parcelable {
         this.judul_inggris = judul_inggris;
     }
 
+    public int getBimbingan_sum() {
+        return bimbingan_sum;
+    }
+
+    public void setBimbingan_sum(int bimbingan_sum) {
+        this.bimbingan_sum = bimbingan_sum;
+    }
+
+    public int getPending_sum() {
+        return pending_sum;
+    }
+
+    public void setPending_sum(int pending_sum) {
+        this.pending_sum = pending_sum;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -270,6 +297,8 @@ public class Mahasiswa implements Parcelable {
         dest.writeInt(this.sk_status);
         dest.writeString(this.nip_pembimbing_1);
         dest.writeString(this.nip_pembimbing_2);
+        dest.writeInt(this.bimbingan_sum);
+        dest.writeInt(this.pending_sum);
     }
 
     protected Mahasiswa(Parcel in) {
@@ -287,6 +316,8 @@ public class Mahasiswa implements Parcelable {
         this.sk_status = in.readInt();
         this.nip_pembimbing_1 = in.readString();
         this.nip_pembimbing_2 = in.readString();
+        this.bimbingan_sum = in.readInt();
+        this.pending_sum = in.readInt();
     }
 
     public static final Creator<Mahasiswa> CREATOR = new Creator<Mahasiswa>() {

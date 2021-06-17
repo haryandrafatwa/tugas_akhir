@@ -45,8 +45,8 @@ public class MahasiswaPaBimbinganTambahActivity extends AppCompatActivity implem
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.text_progress_dialog));
 
-        final BimbinganPresenter bimbinganPresenter = new BimbinganPresenter(this);
-        bimbinganPresenter.initContext(this);
+//        final BimbinganPresenter bimbinganPresenter = new BimbinganPresenter(this);
+//        bimbinganPresenter.initContext(this);
 
         MethodHelper methodHelper = new MethodHelper();
         SessionManager sessionManager = new SessionManager(this);
@@ -115,11 +115,11 @@ public class MahasiswaPaBimbinganTambahActivity extends AppCompatActivity implem
                 }else{
 
                     if (extraArrayProyekAkhir.size() != 2){
-                        bimbinganPresenter.createBimbingan(review, kehadiran_1, tanggal, STATUS_BIMBINGAN_PENDING, extraArrayProyekAkhir.get(0).getProyek_akhir_id());
+//                        bimbinganPresenter.createBimbingan(review, kehadiran_1, tanggal, STATUS_BIMBINGAN_PENDING, extraArrayProyekAkhir.get(0).getProyek_akhir_id());
 
                     } else {
-                        bimbinganPresenter.createBimbingan(review, kehadiran_1, tanggal, STATUS_BIMBINGAN_PENDING, extraArrayProyekAkhir.get(0).getProyek_akhir_id());
-                        bimbinganPresenter.createBimbingan(review, kehadiran_2, tanggal, STATUS_BIMBINGAN_PENDING, extraArrayProyekAkhir.get(1).getProyek_akhir_id());
+//                        bimbinganPresenter.createBimbingan(review, kehadiran_1, tanggal, STATUS_BIMBINGAN_PENDING, extraArrayProyekAkhir.get(0).getProyek_akhir_id());
+//                        bimbinganPresenter.createBimbingan(review, kehadiran_2, tanggal, STATUS_BIMBINGAN_PENDING, extraArrayProyekAkhir.get(1).getProyek_akhir_id());
                     }
                 }
 

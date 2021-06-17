@@ -40,6 +40,7 @@
     <string name="title_profil">Profil</string>
     <string name="title_informasi">Informasi</string>
     <string name="title_judulta">Judul Tugas Akhir</string>
+    <string name="title_ta">Tugas Akhir</string>
     <string name="title_judultainggris">Judul Tugas Akhir Inggris</string>
     <string name="title_judulpakategori">Kategori Judul Proyek Akhir</string>
     <string name="title_judulpa_pendek">Judul PA</string>
@@ -50,7 +51,6 @@
     <string name="title_tolak">Tolak</string>
     <string name="title_setuju">Setuju</string>
     <string name="title_pengajuan_judulpa">Pengajuan Judul PA</string>
-    <string name="title_proyekakhir">Proyek Akhir</string>
     <string name="title_informasi_detail">Detail Informasi</string>
     <string name="title_informasi_tambah">Tambah Informasi</string>
     <string name="title_bimbingan_detail">Detail Bimbingan</string>
@@ -71,7 +71,7 @@
     <string name="title_profil_ubah">Ubah Profil</string>
     <string name="title_kontak_dosen">No Telepon</string>
     <string name="title_dosen_detail">Detail Dosen</string>
-    <string name="title_proyekakhir_detail">Detail Proyek Akhir</string>
+    <string name="title_tugasakhir_detail">Detail Tugas Akhir</string>
     <string name="title_tambah_dosen">Tambah Dosen</string>
     <string name="title_tambah_pemetaan">Tambah Pemetaan Monev</string>
     <string name="title_dosen_ubah">Ubah Dosen</string>
@@ -242,6 +242,7 @@
     <string name="hint_masukkan_minimal_jumlah_bimbingan">Masukkan Minimal Jumlah BImbingan</string>
     <string name="hint_kegiatan">Masukkan Kegiatan</string>
     <string name="hint_pelaku">Masukkan Pelaku</string>
+    <string name="hint_tanggal_bimbingan">Masukkan Tanggal Bimbingan</string>
     <string name="hint_keterangan">Masukkan Keterangan</string>
     <string name="hint_batas_reviewer">Masukkan Batas Reviewer</string>
     <string name="hint_batas_bimbingan">Masukkan Batas Bimbingan</string>
@@ -259,7 +260,9 @@
     <string name="text_bimbingan_home_judul">Bimbingan Kelompok Proyek Akhir</string>
     <string name="text_dosen_pembimbing">Dosen Pembimbing</string>\
     <string name="text_jumlah_bimbingan">Jumlah Bimbingan</string>
+    <string name="text_status_pending">Belum Approve</string>
     <string name="text_title_pa">Data Proyek Akhir Mahasiswa</string>
+    <string name="text_title_ta">Data Tugas Akhir Mahasiswa</string>
     <string name="text_monev_terakhir">Monev Terakhir</string>
     <string name="text_dosen_reviewer">Dosen Reviewer</string>
     <string name="text_daftar_bimbingan">Daftar Bimbingan</string>
@@ -312,6 +315,7 @@
     <string name="text_judul">Judul</string>
     <string name="text_profil_detail_email">Email</string>
     <string name="text_daftar_pa_mahasiswa">Daftar Judul Proyek Akhir Mahasiswa Bimbingan</string>
+    <string name="text_daftar_ta_mahasiswa">Daftar Judul Tugas Akhir Mahasiswa Bimbingan</string>
     <string name="text_tidak_boleh_kosong">Tidak boleh kosong</string>
     <string name="text_pilih_dosen_dahulu">Pilih dosen terlebih dahulu</string>
     <string name="text_tidak_boleh_sama">Dosen tidak boleh sama</string>
@@ -431,6 +435,7 @@
     <string name="status_sk_pasif">SK TA Belum Diterbitkan</string>
     <string name="status_sk_kadaluwarsa">Kadaluwarsa ( </string>
     <string name="status_sk_perpanjang">Sedang mengajukan perpanjangan</string>
+    <string name="status_pending">Status: Belum Approve</string>
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="subscribe_to_news">Subscribe to news</string>

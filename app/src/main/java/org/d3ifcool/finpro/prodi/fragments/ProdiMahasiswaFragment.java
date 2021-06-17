@@ -95,7 +95,7 @@ public class ProdiMahasiswaFragment extends Fragment implements MahasiswaContrac
                 mediator.message(message.setComponent("RelativeLayout").setEvent("setVisibility").setVisibility(View.VISIBLE));
                 break;
             case "FloatButton":
-                mediator.selectIntent(ProdiMahasiswaEditorActivity.class);
+                mediator.selectIntent(new Message().setaClass(ProdiMahasiswaEditorActivity.class));
                 break;
             default:
                 mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));

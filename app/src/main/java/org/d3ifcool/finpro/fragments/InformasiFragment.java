@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.activities.detail.InformasiTambahActivity;
+import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.InformasiContract;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Informasi;
@@ -46,6 +47,9 @@ public class InformasiFragment extends Fragment implements InformasiContract.Vie
         mediator.message("InformasiViewAdapter","set");
         mediator.message("SessionManager","set");
         binding.setToken(mediator.getSessionManager().getSessionToken());
+        if (mediator.getSessionManager().getSessionPengguna().equalsIgnoreCase("mahasiswa")){
+            binding.frgKoorDosenHomeFab.setVisibility(View.GONE);
+        }
         informasiPresenter.getAllInformasi(mediator.getSessionManager().getSessionToken());
         return binding.getRoot();
     }
@@ -92,7 +96,7 @@ public class InformasiFragment extends Fragment implements InformasiContract.Vie
                 binding.includeLayout.viewEmptyview.setVisibility(View.VISIBLE);
                 break;
             case "FloatButton":
-                mediator.selectIntent(InformasiTambahActivity.class);
+                mediator.selectIntent(new Message().setaClass(InformasiTambahActivity.class));
                 break;
             default:
                 Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();

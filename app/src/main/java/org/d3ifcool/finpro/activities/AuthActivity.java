@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.google.gson.Gson;
+
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.components.ProgressDialog;
 import org.d3ifcool.finpro.core.components.SessionManager;
@@ -62,7 +64,7 @@ public class AuthActivity extends AppCompatActivity implements AuthContract.View
                 } else if (cekPengguna.equalsIgnoreCase(ROLE_PRODI)) {
                     startActivity(ProdiMainActivity.class);
                 } else if(cekPengguna.equalsIgnoreCase(ROLE_LAK)){
-                    startActivity(ProdiMainActivity.class);
+                    startActivity(LAKMainActivity.class);
                 }
             }
         }
@@ -100,9 +102,7 @@ public class AuthActivity extends AppCompatActivity implements AuthContract.View
     public void onRetrieveData(ResponseBody body) throws IOException, JSONException {
         this.status = true;
         JSONObject object = new JSONObject(body.string());
-        User user = (User) object.get("data");
-        /*User user = new User(object.getString("token"),object.getString("username"),object.getString("pengguna"),
-                object.getBoolean("success"),object.getString("message"));*/
+        User user = new Gson().fromJson(object.toString(),User.class);
         loginMediator.createSession(user.getUsername(), user.getPengguna(),user.getToken());
         checkUserLogin(user.getPengguna());
     }
