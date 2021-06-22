@@ -20,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.BimbinganContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.databinding.ActivityMahasiswaBimbinganBinding;
@@ -41,7 +42,7 @@ public class MahasiswaBimbinganActivity extends AppCompatActivity implements Bim
 
     private ActivityMahasiswaBimbinganBinding mBinding;
     private Message message = new Message();
-    private ConcreteMediator mediator;
+    private Mediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

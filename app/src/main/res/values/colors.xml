@@ -10,20 +10,21 @@
     <color name="colorPrimary">#005485</color>
     <color name="colorPrimaryDark">#003957</color>
     <color name="colorAccent">#FF9800</color>
+    <color name="colorSecondary">#2c3b41</color>
 
     <!-- Tema Warna Utama Website -->
-    <!--<color name="colorPrimary">#2c3b41</color>-->
-    <!--<color name="colorPrimaryDark">#1e282c</color>-->
-    <!--<color name="colorAccent">#337ab7</color>-->
+    <!--<color name="colorPrimary">#2c3b41</color>
+    <color name="colorPrimaryDark">#1e282c</color>
+    <color name="colorAccent">#337ab7</color>-->
 
     <!-- Tema Warna Custom -->
-    <!--<color name="colorPrimary">#795548</color>-->
-    <!--<color name="colorPrimaryDark">#3E2723</color>-->
-    <!--<color name="colorAccent">#E65100</color>-->
+    <!--<color name="colorPrimary">#795548</color>
+    <color name="colorPrimaryDark">#3E2723</color>
+    <color name="colorAccent">#E65100</color>-->
 
-    <!--<color name="colorPrimary">#720d5d</color>-->
-    <!--<color name="colorPrimaryDark">#430033</color>-->
-    <!--<color name="colorAccent">#FF9800</color>-->
+    <!--<color name="colorPrimary">#720d5d</color>
+    <color name="colorPrimaryDark">#430033</color>
+    <color name="colorAccent">#FF9800</color>-->
 
     <color name="colorTabText">#A1FFFFFF</color>
     <color name="colorSelectedItem">#FFFFFF</color>

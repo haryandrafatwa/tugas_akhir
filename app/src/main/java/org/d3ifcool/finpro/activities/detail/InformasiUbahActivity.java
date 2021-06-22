@@ -9,7 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.InformasiContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Informasi;
 import org.d3ifcool.finpro.core.presenters.InformasiPresenter;
@@ -23,7 +25,8 @@ public class InformasiUbahActivity extends AppCompatActivity implements Informas
 
     private InformasiPresenter informasiPresenter;
     private ActivityKoorInformasiUbahBinding mBinding;
-    private ConcreteMediator mediator;
+    private Mediator mediator;
+    private Message message = new Message();
 
     public static final String EXTRA_INFORMASI = "extra_informasi";
     private Informasi extraInfo;
@@ -43,8 +46,8 @@ public class InformasiUbahActivity extends AppCompatActivity implements Informas
         informasiPresenter.setDeskripsi(extraInfo.getInfo_deskripsi());
 
         mediator = new ConcreteMediator(this);
-        mediator.message("ProgressDialog","set");
-        mediator.message("SessionManager","set");
+        mediator.message(message.setComponent("SessionManager").setEvent("set"));
+        mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
 
     }
 
@@ -67,11 +70,11 @@ public class InformasiUbahActivity extends AppCompatActivity implements Informas
     }
 
     @Override
-    public void onMessage(String message) {
-        switch (message){
+    public void onMessage(String messages) {
+        switch (messages){
             case "AlertUbah":
-                mediator.message("AlertDialog","set");
-                mediator.message("AlertDialog","ubah");
+                mediator.message(message.setComponent("AlertDialog").setEvent("set"));
+                mediator.message(message.setComponent("AlertDialog").setEvent("ubah"));
                 mediator.getAlertDialog().setPositiveButton("Iya", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -80,16 +83,16 @@ public class InformasiUbahActivity extends AppCompatActivity implements Informas
                 }).show();
                 break;
             case "ShowProgressDialog":
-                mediator.message("ProgressDialog","show");
+                mediator.message(message.setComponent("ProgressDialog").setEvent("show"));
                 break;
             case "HideProgressDialog":
-                mediator.message("ProgressDialog","dismiss");
+                mediator.message(message.setComponent("ProgressDialog").setEvent("dismiss"));
                 break;
             case "onSuccess":
                 finish();
                 break;
             default:
-                Toasty.warning(this, message, Toast.LENGTH_SHORT).show();
+                mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));
                 break;
         }
     }

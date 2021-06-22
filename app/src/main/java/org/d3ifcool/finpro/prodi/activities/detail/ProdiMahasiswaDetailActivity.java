@@ -8,36 +8,31 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.gson.Gson;
 
 import org.d3ifcool.finpro.core.helpers.Message;
-import org.d3ifcool.finpro.core.interfaces.AuthContract;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
-import org.d3ifcool.finpro.core.models.Koordinator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.databinding.ActivityProdiMahasiswaDetailBinding;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.prodi.activities.editor.ProdiMahasiswaPlotPembimbingActivity;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.List;
 
+
+import es.dmoral.toasty.Toasty;
 import okhttp3.ResponseBody;
 
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_MAHASISWA;
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.ROLE_LAK;
-import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.ROLE_PRODI;
 
 public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements MahasiswaContract.ViewModel {
 
     private Message message = new Message();
     private ActivityProdiMahasiswaDetailBinding binding;
-    private ConcreteMediator mediator;
-
+    private Mediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +42,7 @@ public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements M
         mediator.setMahasiswaPresenter(this);
         binding.setPresenter(mediator.getMahasiswaPresenter());
 
-        setTitle(getString(R.string.title_mahasiswa_detail));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setElevation(0f);
+        mediator.setTitleContextWithHomeAsUp("Detail Mahasiswa");
 
         message.setMahasiswa(getIntent().getParcelableExtra(EXTRA_MAHASISWA));
         binding.setModel(message.getMahasiswa());
@@ -60,16 +53,20 @@ public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements M
 
         mediator.message(message.setComponent("MahasiswaPresenter").setEvent("getPembimbing"));
         if (mediator.getSessionPengguna().equalsIgnoreCase(ROLE_LAK)){
-            binding.btnPlotPembimbing.setVisibility(View.GONE);
-            binding.layoutSk.setVisibility(View.GONE);
+            mediator.setButton(binding.btnPlotPembimbing);
+            mediator.message(message.setComponent("Button").setEvent("setVisibility").setVisibility(View.GONE));
+            mediator.setLinearLayout(binding.layoutSk);
+            mediator.message(message.setComponent("LinearLayout").setEvent("setVisibility").setVisibility(View.GONE));
+            mediator.setTextView(binding.tvChangePembimbing);
+            mediator.message(message.setComponent("TextView").setEvent("setVisibility").setVisibility(View.GONE));
             binding.tvChangePembimbing.setVisibility(View.GONE);
         }
+        mediator.message(message.setComponent("MahasiswaPresenter").setEvent("getMahasiswaByNIM"));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mediator.message(message.setComponent("MahasiswaPresenter").setEvent("getMahasiswaByNIM"));
     }
 
     @Override
@@ -116,11 +113,16 @@ public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements M
     }
 
     @Override
+    public void onGetBody(ResponseBody body, String filename) {
+
+    }
+
+    @Override
     public void onMessage(String messages) {
         switch (messages){
             case "onSuccess":
-                mediator.message(message.setComponent("Toasty").setEvent("Success").setText("Berhasil hapus pembimbing"));
-                onResume();
+                mediator.message(message.setComponent("Toasty").setEvent("Success").setText("Berhasil hapus Mahasiswa"));
+                finish();
                 break;
             case "ShowProgressDialog":
                 mediator.message(message.setComponent("ProgressDialog").setEvent("show"));

@@ -16,6 +16,7 @@ import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
 import org.d3ifcool.finpro.core.interfaces.PlottingContract;
 import org.d3ifcool.finpro.core.interfaces.lists.PlottingListView;
 import org.d3ifcool.finpro.core.interfaces.works.MahasiswaWorkView;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
@@ -33,7 +34,7 @@ public class ProdiMahasiswaPlotPembimbingActivity extends AppCompatActivity impl
 
     private ActivityKoorMahasiswaPlotPembimbingBinding mBinding;
     private Message message = new Message();
-    private ConcreteMediator mediator;
+    private Mediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

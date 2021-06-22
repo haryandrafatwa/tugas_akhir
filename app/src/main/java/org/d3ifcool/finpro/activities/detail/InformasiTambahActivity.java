@@ -9,8 +9,10 @@ import androidx.databinding.DataBindingUtil;
 
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Constant;
+import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.InformasiContract;
 import org.d3ifcool.finpro.core.interfaces.works.NotifikasiWorkView;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Informasi;
 import org.d3ifcool.finpro.core.presenters.InformasiPresenter;
@@ -29,8 +31,9 @@ public class InformasiTambahActivity extends AppCompatActivity implements Inform
     private InformasiPresenter informasiPresenter;
     private NotifikasiPresenter notifikasiPresenter;
 
-    private ConcreteMediator mediator;
+    private Mediator mediator;
     private ActivityKoorInformasiTambahBinding binding;
+    private Message message = new Message();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +47,8 @@ public class InformasiTambahActivity extends AppCompatActivity implements Inform
 
         mediator = new ConcreteMediator(this);
 
-        mediator.message("SessionManager","set");
-        mediator.message("ProgressDialog","set");
+        mediator.message(message.setComponent("SessionManager").setEvent("set"));
+        mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
         binding.setToken(mediator.getSessionManager().getSessionToken());
 
         if (mediator.getSessionManager().getSessionPengguna().equalsIgnoreCase(Constant.ObjectConstanta.ROLE_DOSEN)){
@@ -84,13 +87,13 @@ public class InformasiTambahActivity extends AppCompatActivity implements Inform
     }
 
     @Override
-    public void onMessage(String message) {
-        switch (message){
+    public void onMessage(String messages) {
+        switch (messages){
             case "ShowProgressDialog":
-                mediator.message("ProgressDialog","show");
+                mediator.message(message.setComponent("ProgressDialog").setEvent("show"));
                 break;
             case "HideProgressDialog":
-                mediator.message("ProgressDialog","dismiss");
+                mediator.message(message.setComponent("ProgressDialog").setEvent("dismiss"));
                 break;
             case "onSuccess":
                 if (mediator.getSessionManager().getSessionPengguna().equalsIgnoreCase(Constant.ObjectConstanta.ROLE_DOSEN)){
@@ -106,7 +109,7 @@ public class InformasiTambahActivity extends AppCompatActivity implements Inform
                 finish();
                 break;
             default:
-                Toasty.error(this, message, Toasty.LENGTH_SHORT).show();
+                mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));
                 break;
         }
     }

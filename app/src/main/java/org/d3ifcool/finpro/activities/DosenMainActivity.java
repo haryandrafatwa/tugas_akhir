@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.DosenContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.presenters.DosenPresenter;
 import org.d3ifcool.finpro.databinding.ActivityDosenMainBinding;
@@ -20,8 +22,9 @@ import java.util.List;
 public class DosenMainActivity extends AppCompatActivity implements DosenContract.ViewModel, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private ActivityDosenMainBinding mBinding;
-    private ConcreteMediator mediator;
+    private Mediator mediator;
     private DosenPresenter mPresenter;
+    private Message message = new Message();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,7 @@ public class DosenMainActivity extends AppCompatActivity implements DosenContrac
         getSupportActionBar().setElevation(0);
 
         mediator = new ConcreteMediator(this);
-        mediator.message("SessionManager","set");
+        mediator.message(message.setComponent("SessionManager").setEvent("set"));
         mPresenter.getCurrentDosen(mediator.getSessionManager().getSessionToken());
 
         mBinding.actDsnHomeBottomNavigation.setOnNavigationItemSelectedListener(this);
@@ -50,7 +53,7 @@ public class DosenMainActivity extends AppCompatActivity implements DosenContrac
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        mediator.Notify(item.getItemId());
+        mediator.message(message.setComponent("Toolbar").setVisibility(item.getItemId()));
         return super.onOptionsItemSelected(item);
     }
 
@@ -72,7 +75,7 @@ public class DosenMainActivity extends AppCompatActivity implements DosenContrac
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         item.setChecked(true);
-        mediator.Notify(item.getItemId());
+        mediator.message(message.setComponent("BottomNavigation").setVisibility(item.getItemId()));
         return false;
     }
 }

@@ -131,4 +131,29 @@ public class JadwalKegiatanManager {
         }
     }
 
+    public void getJadwalByParameter (String token, String like){
+        if (connectionHelper.isConnected(context)){
+            viewModel.onMessage("ShowProgressDialog");
+            ApiService apiInterface = ApiClient.getApiClient().create(ApiService.class);
+            Call<List<JadwalKegiatan>> call = apiInterface.getJadwalByLike("Bearer "+token, like);
+            call.enqueue(new Callback<List<JadwalKegiatan>>() {
+                @Override
+                public void onResponse(Call<List<JadwalKegiatan>> call, Response<List<JadwalKegiatan>> response) {
+                    viewModel.onMessage("HideProgressDialog");
+                    if (response.body() != null && response.isSuccessful()) {
+                        viewModel.onGetListJadwal(response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<JadwalKegiatan>> call, Throwable t) {
+                    viewModel.onMessage("HideProgressDialog");
+//                    viewModel.onMessage(t.getLocalizedMessage());
+                    call.clone().enqueue(this);
+                }
+            });
+        } else {
+            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
+        }
+    }
 }

@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import org.d3ifcool.finpro.core.helpers.Constant;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.ProdiContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Koordinator;
 import org.d3ifcool.finpro.R;
@@ -19,7 +20,7 @@ public class ProdiProfilUbahActivity extends AppCompatActivity implements ProdiC
 
     private ActivityKoorProfilUbahBinding mbinding;
     private Message message = new Message();
-    private ConcreteMediator mediator;
+    private Mediator mediator;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {

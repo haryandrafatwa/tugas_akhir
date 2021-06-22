@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
@@ -20,11 +21,13 @@ import org.d3ifcool.finpro.databinding.FragmentKoorMahasiswaBinding;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
+
 public class ProdiSKTAFragment extends Fragment implements MahasiswaContract.ViewModel {
 
     private Message message = new Message();
     private FragmentKoorMahasiswaBinding mBinding;
-    private ConcreteMediator mediator;
+    private Mediator mediator;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,7 +39,6 @@ public class ProdiSKTAFragment extends Fragment implements MahasiswaContract.Vie
 
         mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
         mediator.message(message.setComponent("SessionManager").setEvent("set"));
-        mediator.message(message.setComponent("FileHelper").setEvent("set"));
         mediator.message(message.setComponent("ProdiSKTAViewAdapter").setEvent("set"));
         mediator.setRecyclerView(mBinding.recyclerView);
         mediator.setRelativeLayout(mBinding.includeLayout.viewEmptyview);
@@ -81,6 +83,11 @@ public class ProdiSKTAFragment extends Fragment implements MahasiswaContract.Vie
 
     @Override
     public void onSuccessGetPlotting(Plotting plotting) {
+
+    }
+
+    @Override
+    public void onGetBody(ResponseBody body, String filename) {
 
     }
 

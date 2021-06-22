@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.PlottingContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.databinding.FragmentKoorPlottingBinding;
@@ -31,7 +32,7 @@ import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.PICK_EXC
 public class ProdiPlottingFragment extends Fragment implements PlottingContract.ViewModel {
 
     private Message message = new Message();
-    private ConcreteMediator mediator;
+    private Mediator mediator;
     private boolean status;
     private FragmentKoorPlottingBinding mBinding;
 
@@ -59,7 +60,7 @@ public class ProdiPlottingFragment extends Fragment implements PlottingContract.
 
     private void intentPickFile(){
         if (mediator.getPermissionFile()){;
-            startActivityForResult(Intent.createChooser(mediator.findFileIntent(), "Pilih file"), PICK_EXCEL_REQUEST);
+            startActivityForResult(Intent.createChooser(mediator.findFileIntent("XLS"), "Pilih file"), PICK_EXCEL_REQUEST);
         }
     }
 
@@ -95,7 +96,7 @@ public class ProdiPlottingFragment extends Fragment implements PlottingContract.
 
     @Override
     public void onGetBody(ResponseBody body, String filename) {
-        mediator.message(message.setComponent("FileHelper").setEvent("openFile").setResponseBody(body).setText(filename));
+        mediator.message(message.setComponent("FileHelper").setEvent("openFileXLS").setResponseBody(body).setText(filename));
     }
 
     @Override

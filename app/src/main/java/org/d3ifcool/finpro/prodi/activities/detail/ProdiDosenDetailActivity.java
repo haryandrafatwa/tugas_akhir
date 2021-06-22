@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.DosenContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.databinding.ActivityProdiDosenDetailBinding;
@@ -22,22 +23,21 @@ import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_DO
 public class ProdiDosenDetailActivity extends AppCompatActivity implements DosenContract.ViewModel {
 
     private Message message = new Message();
-    private ConcreteMediator mediator;
+    private Mediator mediator;
+    private ActivityProdiDosenDetailBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityProdiDosenDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_prodi_dosen_detail);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_prodi_dosen_detail);
         mediator = new ConcreteMediator(this);
         mediator.setDosenPresenter(this);
 
         message.setDosen(getIntent().getParcelableExtra(EXTRA_DOSEN));
         binding.setModel(message.getDosen());
 
-        setTitle("Detail Dosen");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setElevation(0f);
+        mediator.setTitleContextWithHomeAsUp("Detail Dosen");
 
         mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
         mediator.message(message.setComponent("SessionManager").setEvent("set"));
@@ -45,6 +45,11 @@ public class ProdiDosenDetailActivity extends AppCompatActivity implements Dosen
         mediator.message(message.setComponent("CircleImageView").setEvent("setImage").setUrl(URL_FOTO_DOSEN+message.getDosen().getDsn_foto()));
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mediator.message(message.setComponent("DosenPresenter").setEvent("getDosenByNIP"));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -61,7 +66,8 @@ public class ProdiDosenDetailActivity extends AppCompatActivity implements Dosen
 
     @Override
     public void onGetObjectDosen(Dosen dosen) {
-
+        binding.setModel(dosen);
+        message.setDosen(dosen);
     }
 
     @Override

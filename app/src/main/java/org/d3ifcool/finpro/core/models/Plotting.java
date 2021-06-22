@@ -32,6 +32,30 @@ public class Plotting implements Parcelable {
     private int id;
 
     @Expose
+    @SerializedName("nip_dosen_1")
+    private String nip_dosen_1;
+
+    @Expose
+    @SerializedName("nama_dosen_1")
+    private String nama_dosen_1;
+
+    @Expose
+    @SerializedName("kode_dosen_1")
+    private String kode_dosen_1;
+
+    @Expose
+    @SerializedName("kode_dosen_2")
+    private String kode_dosen_2;
+
+    @Expose
+    @SerializedName("nip_dosen_2")
+    private String nip_dosen_2;
+
+    @Expose
+    @SerializedName("nama_dosen_2")
+    private String nama_dosen_2;
+
+    @Expose
     @SerializedName("nip_pembimbing_1")
     private String nip_pembimbing_1;
 
@@ -76,6 +100,18 @@ public class Plotting implements Parcelable {
         this.kode_pembimbing_2 = kode_pembimbing_2;
         this.nip_pembimbing_2 = nip_pembimbing_2;
         this.nama_pembimbing_2 = nama_pembimbing_2;
+        this.success = success;
+        this.message = message;
+    }
+
+    public Plotting(int id, String nip_dosen_1, String nama_dosen_1, String kode_dosen_1, String kode_dosen_2, String nip_dosen_2, String nama_dosen_2, int success, String message) {
+        this.id = id;
+        this.nip_dosen_1 = nip_dosen_1;
+        this.nama_dosen_1 = nama_dosen_1;
+        this.kode_dosen_1 = kode_dosen_1;
+        this.kode_dosen_2 = kode_dosen_2;
+        this.nip_dosen_2 = nip_dosen_2;
+        this.nama_dosen_2 = nama_dosen_2;
         this.success = success;
         this.message = message;
     }
@@ -152,6 +188,58 @@ public class Plotting implements Parcelable {
         this.message = message;
     }
 
+    public String getNip_dosen_1() {
+        return nip_dosen_1;
+    }
+
+    public void setNip_dosen_1(String nip_dosen_1) {
+        this.nip_dosen_1 = nip_dosen_1;
+    }
+
+    public String getNama_dosen_1() {
+        return nama_dosen_1;
+    }
+
+    public void setNama_dosen_1(String nama_dosen_1) {
+        this.nama_dosen_1 = nama_dosen_1;
+    }
+
+    public String getKode_dosen_1() {
+        return kode_dosen_1;
+    }
+
+    public void setKode_dosen_1(String kode_dosen_1) {
+        this.kode_dosen_1 = kode_dosen_1;
+    }
+
+    public String getKode_dosen_2() {
+        return kode_dosen_2;
+    }
+
+    public void setKode_dosen_2(String kode_dosen_2) {
+        this.kode_dosen_2 = kode_dosen_2;
+    }
+
+    public String getNip_dosen_2() {
+        return nip_dosen_2;
+    }
+
+    public void setNip_dosen_2(String nip_dosen_2) {
+        this.nip_dosen_2 = nip_dosen_2;
+    }
+
+    public String getNama_dosen_2() {
+        return nama_dosen_2;
+    }
+
+    public void setNama_dosen_2(String nama_dosen_2) {
+        this.nama_dosen_2 = nama_dosen_2;
+    }
+
+    public static Creator<Plotting> getCREATOR() {
+        return CREATOR;
+    }
+
     protected Plotting(Parcel in) {
         id = in.readInt();
         nip_pembimbing_1 = in.readString();
@@ -160,6 +248,13 @@ public class Plotting implements Parcelable {
         nip_pembimbing_2 = in.readString();
         nama_pembimbing_2 = in.readString();
         kode_pembimbing_2 = in.readString();
+
+        nip_dosen_1 = in.readString();
+        nama_dosen_1 = in.readString();
+        kode_dosen_1 = in.readString();
+        nip_dosen_2 = in.readString();
+        nama_dosen_2 = in.readString();
+        kode_dosen_2 = in.readString();
         success = in.readInt();
         message = in.readString();
     }
@@ -173,6 +268,13 @@ public class Plotting implements Parcelable {
         dest.writeString(nip_pembimbing_2);
         dest.writeString(nama_pembimbing_2);
         dest.writeString(kode_pembimbing_2);
+
+        dest.writeString(nip_dosen_1);
+        dest.writeString(nama_dosen_1);
+        dest.writeString(kode_dosen_1);
+        dest.writeString(nip_dosen_2);
+        dest.writeString(nama_dosen_2);
+        dest.writeString(kode_dosen_2);
         dest.writeInt(success);
         dest.writeString(message);
     }

@@ -101,4 +101,9 @@ public class JadwalPresenter implements JadwalContract.Presenter {
         jadwalKegiatanManager.updateJadwal(token, id,nama.get(), tgl_mulai.get(),tgl_akhir.get());
     }
 
+    @Override
+    public void getJadwalByParameter(String token, String like) {
+        jadwalKegiatanManager.getJadwalByParameter(token,like);
+    }
+
 }

@@ -22,6 +22,7 @@ import org.d3ifcool.finpro.core.interfaces.BimbinganContract;
 import org.d3ifcool.finpro.core.interfaces.lists.BimbinganListView;
 import org.d3ifcool.finpro.core.interfaces.lists.MonevDetailListView;
 import org.d3ifcool.finpro.core.interfaces.lists.ProyekAkhirListView;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Bimbingan;
 import org.d3ifcool.finpro.core.models.DetailMonev;
@@ -48,7 +49,7 @@ public class DosenTugasAkhirActivity extends AppCompatActivity implements Bimbin
 
     private ActivityDosenTugasAkhirBinding mBinding;
     private Message message = new Message();
-    private ConcreteMediator mediator;
+    private Mediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

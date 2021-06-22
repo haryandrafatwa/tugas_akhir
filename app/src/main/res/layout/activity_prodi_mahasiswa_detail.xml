@@ -200,7 +200,7 @@
 
                         <TextView
                             android:id="@+id/act_koor_profil_status_sk"
-                            tools:text="@{model.setSk_detail()}"
+                            android:text="@{model.setSk_detail()}"
                             style="@style/profile_all_textview_content"/>
 
                     </LinearLayout>
@@ -210,7 +210,7 @@
                         style="@style/button_all_primary"
                         android:layout_marginTop="@dimen/text_size_medium_16sp"
                         android:text="@string/text_update_status_sk"
-                        android:onClick="@{()->presenter.btnSKUpdate(model.plot_id)}"/>
+                        android:onClick="@{()->presenter.btnSKUpdate(model.plot_pembimbing)}"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -245,7 +245,7 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:onClick="@{()->presenter.onDelete()}"
                     android:gravity="end"
-                    android:visibility="@{model.plot_id > 0 ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{model.plot_pembimbing > 0 ? View.VISIBLE : View.GONE}"
                     android:layout_gravity="center_vertical"/>
 
             </LinearLayout>
@@ -256,7 +256,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title_pembimbing"
                 android:orientation="vertical"
-                android:visibility="@{model.plot_id > 0 ? View.VISIBLE : View.GONE}">
+                android:visibility="@{model.plot_pembimbing > 0 ? View.VISIBLE : View.GONE}">
 
                 <LinearLayout
                     android:id="@+id/container_pembimbing_1"
@@ -347,7 +347,7 @@
                 android:layout_marginEnd="@dimen/dimen_big_16dp"
                 android:layout_marginVertical="@dimen/dimen_medium_8dp"
                 android:gravity="center"
-                android:visibility="@{model.plot_id > 0 ? View.GONE : View.VISIBLE}">
+                android:visibility="@{model.plot_pembimbing > 0 ? View.GONE : View.VISIBLE}">
 
                 <ImageView
                     android:layout_width="@dimen/dimen_profil_photo_medium"

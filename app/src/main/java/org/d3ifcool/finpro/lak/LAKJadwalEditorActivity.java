@@ -17,6 +17,7 @@ import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.DosenContract;
 import org.d3ifcool.finpro.core.interfaces.JadwalContract;
 import org.d3ifcool.finpro.core.interfaces.PlottingContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.JadwalKegiatan;
@@ -34,7 +35,7 @@ public class LAKJadwalEditorActivity extends AppCompatActivity implements Jadwal
 
     private Message message = new Message();
     private ActivityLakJadwalEditorBinding mBinding;
-    private ConcreteMediator mediator;
+    private Mediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

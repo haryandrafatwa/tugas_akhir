@@ -24,6 +24,8 @@ import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_INFORMASI;
+
 /**
  * Created by Faisal Amir
  * FrogoBox Inc License
@@ -90,7 +92,7 @@ public class InformasiViewAdapter extends RecyclerView.Adapter<InformasiViewAdap
             public void onClick(View v) {
                 Intent intent = new Intent(context, InformasiDetailActivity.class);
                 Informasi parcelInfo = data.get(position);
-                intent.putExtra(InformasiDetailActivity.EXTRA_INFORMASI, parcelInfo);
+                intent.putExtra(EXTRA_INFORMASI, parcelInfo);
                 context.startActivity(intent);
             }
         });

@@ -16,6 +16,7 @@ import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.DosenContract;
 import org.d3ifcool.finpro.core.interfaces.PlottingContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.Plotting;
@@ -33,7 +34,7 @@ public class ProdiPlottingEditorActivity extends AppCompatActivity implements Pl
     private DosenPresenter dosenPresenter;
     private ActivityKoorPlottingTambahBinding mBinding;
 
-    private ConcreteMediator mediator;
+    private Mediator mediator;
     private String dosen_1,dosen_2;
 
     @Override

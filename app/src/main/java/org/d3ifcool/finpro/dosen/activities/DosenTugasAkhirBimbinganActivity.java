@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.BimbinganContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Bimbingan;
 import org.d3ifcool.finpro.core.models.Dosen;
@@ -43,7 +44,7 @@ public class DosenTugasAkhirBimbinganActivity extends AppCompatActivity implemen
 
     private ActivityDosenTugasAkhirBimbinganBinding mBinding;
     private Message message = new Message();
-    private ConcreteMediator mediator;
+    private Mediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

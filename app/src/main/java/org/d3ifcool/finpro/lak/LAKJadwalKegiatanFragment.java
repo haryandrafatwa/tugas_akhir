@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.JadwalContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.JadwalKegiatan;
 import org.d3ifcool.finpro.databinding.FragmentLakJadwalKegiatanBinding;
@@ -21,7 +22,7 @@ public class LAKJadwalKegiatanFragment extends Fragment implements JadwalContrac
 
     private FragmentLakJadwalKegiatanBinding mBinding;
     private Message message = new Message();
-    private ConcreteMediator mediator;
+    private Mediator mediator;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -18,23 +18,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * Created by Faisal Amir
- * FrogoBox Inc License
- * =========================================
- * Finpro
- * Copyright (C) 24/12/2018.
- * All rights reserved
- * -----------------------------------------
- * Name     : Muhammad Faisal Amir
- * E-mail   : faisalamircs@gmail.com
- * Line     : bullbee117
- * Phone    : 081357108568
- * Majors   : D3 Teknik Informatika 2016
- * Campus   : Telkom University
- * -----------------------------------------
- * id.amirisback.frogobox
- */
 public class Mahasiswa implements Parcelable {
 
     @Expose
@@ -70,8 +53,12 @@ public class Mahasiswa implements Parcelable {
     private String mhs_email;
 
     @Expose
-    @SerializedName("plot_id")
-    private int plot_id;
+    @SerializedName("plot_pembimbing")
+    private int plot_pembimbing;
+
+    @Expose
+    @SerializedName("plot_penguji")
+    private int plot_penguji;
 
     @Expose
     @SerializedName("nip_pembimbing_1")
@@ -90,6 +77,14 @@ public class Mahasiswa implements Parcelable {
     private int sk_status;
 
     @Expose
+    @SerializedName("sidang_tanggal")
+    private String sidang_tanggal;
+
+    @Expose
+    @SerializedName("sidang_status")
+    private String sidang_status;
+
+    @Expose
     @SerializedName("username")
     private String username;
 
@@ -101,8 +96,8 @@ public class Mahasiswa implements Parcelable {
     @SerializedName("pending_sum")
     private int pending_sum;
 
-    public Mahasiswa(String mhs_nim, String mhs_nama, String angkatan, String mhs_kontak, String mhs_foto, String mhs_email, String judul, String judul_inggris, int plot_id,
-                     String sk_expired, int sk_status, String username, String nip_pembimbing_1, String nip_pembimbing_2, int bimbingan_sum, int pending_sum) {
+    public Mahasiswa(String mhs_nim, String mhs_nama, String angkatan, String mhs_kontak, String mhs_foto, String mhs_email, String judul, String judul_inggris, int plot_pembimbing, int plot_penguji,
+                     String sk_expired, int sk_status, String sidang_tanggal, String sidang_status, String username, String nip_pembimbing_1, String nip_pembimbing_2, int bimbingan_sum, int pending_sum) {
         this.mhs_nim = mhs_nim;
         this.mhs_nama = mhs_nama;
         this.angkatan = angkatan;
@@ -111,9 +106,12 @@ public class Mahasiswa implements Parcelable {
         this.mhs_email = mhs_email;
         this.judul = judul;
         this.judul_inggris = judul_inggris;
-        this.plot_id = plot_id;
+        this.plot_pembimbing = plot_pembimbing;
+        this.plot_penguji = plot_penguji;
         this.sk_expired = sk_expired;
         this.sk_status = sk_status;
+        this.sidang_tanggal = sidang_tanggal;
+        this.sidang_status = sidang_status;
         this.username = username;
         this.nip_pembimbing_1 = nip_pembimbing_1;
         this.nip_pembimbing_2 = nip_pembimbing_2;
@@ -169,12 +167,20 @@ public class Mahasiswa implements Parcelable {
         this.mhs_email = mhs_email;
     }
 
-    public int getPlot_id() {
-        return plot_id;
+    public int getPlot_pembimbing() {
+        return plot_pembimbing;
     }
 
-    public void setPlot_id(int plot_id) {
-        this.plot_id = plot_id;
+    public void setPlot_pembimbing(int plot_pembimbing) {
+        this.plot_pembimbing = plot_pembimbing;
+    }
+
+    public int getPlot_penguji() {
+        return plot_penguji;
+    }
+
+    public void setPlot_penguji(int plot_penguji) {
+        this.plot_penguji = plot_penguji;
     }
 
     public String getNip_pembimbing_1() {
@@ -195,26 +201,28 @@ public class Mahasiswa implements Parcelable {
 
     public String setSk_detail(){
         String detail = null;
-        if (sk_status == 1){
+        if (this.sk_status == 1){
             detail = App.self().getResources().getString(R.string.status_sk_pasif);
         }else{
-            Locale locale = new Locale("in", "ID");
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", locale);
-            try {
-                Date date = format.parse(sk_expired);
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(date);
-                String month_name = new SimpleDateFormat("MMMM", locale).format(calendar.getTime());
-                String tempJudul = calendar.get(Calendar.DATE)+" "+month_name+" "+calendar.get(Calendar.YEAR);
-                if(sk_status == 2){
-                    detail = App.self().getResources().getString(R.string.status_sk_aktif)+" "+tempJudul;
-                }else if(sk_status == 3){
-                    detail = App.self().getResources().getString(R.string.status_sk_kadaluwarsa)+" "+tempJudul+" )";
-                }else{
-                    detail = App.self().getResources().getString(R.string.status_sk_perpanjang);
+            if (this.sk_expired != null){
+                Locale locale = new Locale("in", "ID");
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", locale);
+                try {
+                    Date date = format.parse(this.sk_expired);
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(date);
+                    String month_name = new SimpleDateFormat("MMMM", locale).format(calendar.getTime());
+                    String tempJudul = calendar.get(Calendar.DATE)+" "+month_name+" "+calendar.get(Calendar.YEAR);
+                    if(sk_status == 2){
+                        detail = App.self().getResources().getString(R.string.status_sk_aktif)+" "+tempJudul;
+                    }else if(sk_status == 3){
+                        detail = App.self().getResources().getString(R.string.status_sk_kadaluwarsa)+" "+tempJudul+" )";
+                    }else{
+                        detail = App.self().getResources().getString(R.string.status_sk_perpanjang);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-            } catch (ParseException e) {
-                e.printStackTrace();
             }
         }
         return detail;
@@ -242,6 +250,22 @@ public class Mahasiswa implements Parcelable {
 
     public void setSk_status(int sk_status) {
         this.sk_status = sk_status;
+    }
+
+    public String getSidang_tanggal() {
+        return sidang_tanggal;
+    }
+
+    public void setSidang_tanggal(String sidang_tanggal) {
+        this.sidang_tanggal = sidang_tanggal;
+    }
+
+    public String getSidang_status() {
+        return sidang_status;
+    }
+
+    public void setSidang_status(String sidang_status) {
+        this.sidang_status = sidang_status;
     }
 
     public String getJudul() {
@@ -291,10 +315,13 @@ public class Mahasiswa implements Parcelable {
         dest.writeString(this.mhs_email);
         dest.writeString(this.judul);
         dest.writeString(this.judul_inggris);
-        dest.writeInt(this.plot_id);
+        dest.writeInt(this.plot_pembimbing);
+        dest.writeInt(this.plot_penguji);
         dest.writeString(this.username);
         dest.writeString(this.sk_expired);
         dest.writeInt(this.sk_status);
+        dest.writeString(this.sidang_status);
+        dest.writeString(this.sidang_tanggal);
         dest.writeString(this.nip_pembimbing_1);
         dest.writeString(this.nip_pembimbing_2);
         dest.writeInt(this.bimbingan_sum);
@@ -310,10 +337,13 @@ public class Mahasiswa implements Parcelable {
         this.mhs_email = in.readString();
         this.judul = in.readString();
         this.judul_inggris = in.readString();
-        this.plot_id = in.readInt();
+        this.plot_pembimbing = in.readInt();
+        this.plot_penguji = in.readInt();
         this.username = in.readString();
         this.sk_expired = in.readString();
         this.sk_status = in.readInt();
+        this.sidang_status = in.readString();
+        this.sidang_tanggal = in.readString();
         this.nip_pembimbing_1 = in.readString();
         this.nip_pembimbing_2 = in.readString();
         this.bimbingan_sum = in.readInt();

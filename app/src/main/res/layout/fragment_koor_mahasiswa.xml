@@ -30,11 +30,16 @@
                 android:id="@+id/include_layout"
                 layout="@layout/content_list_all_is_empty"/>
 
+            <include
+                android:id="@+id/layout_konfirmasi"
+                layout="@layout/content_all_ask_sidang_terjadwal"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/dimen_medium_8dp"
+                android:layout_below="@id/layout_konfirmasi"
                 tools:listitem="@layout/content_list_koor_mahasiswa"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 

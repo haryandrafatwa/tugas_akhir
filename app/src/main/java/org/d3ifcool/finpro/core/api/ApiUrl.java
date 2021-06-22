@@ -48,6 +48,7 @@ public class ApiUrl {
         public static final String VAR_PLOTTING = "plotting";
         public static final String VAR_PEMBIMBING = "pembimbing";
         public static final String VAR_SKTA = "skta";
+        public static final String VAR_PENGUJI = "penguji";
         public static final String VAR_JUDUL = "judul";
         public static final String VAR_KATEGORI_JUDUL = "kategori_judul";
         public static final String VAR_NOTIFIKASI = "notifikasi";
@@ -65,6 +66,11 @@ public class ApiUrl {
         public static final String VAR_CHECKFORMPLOT = "checkFormPlot";
         public static final String VAR_DOWNLOADFORMPLOT = "downloadFormPlot";
         public static final String VAR_DELETEFORMPLOT = "deleteFormPlot";
+        public static final String VAR_ASKSIDANG= "askSidang";
+        public static final String VAR_KONFIRMASISIDANG= "konfirmasiSidang";
+        public static final String VAR_PENGAJUAN= "pengajuan";
+        public static final String VAR_PERPANJANGSK= "perpanjangSK";
+        public static final String VAR_UPLOADFORMSIDANG= "uploadFormSidang";
         // -----------------------------------------------------------------------------------------
         public static final String VAR_PARAMS = "parameter";
         public static final String VAR_QUERY = "query";
@@ -93,10 +99,18 @@ public class ApiUrl {
         public static final String PATH_KUOTA_DOSEN = "/" + VAR_KUOTA_DOSEN;
         public static final String PATH_SIAP_SIDANG = "/" + VAR_SIAP_SIDANG;
         public static final String PATH_SKTA = "/" + VAR_SKTA;
+        public static final String PATH_PEMBIMBING = "/" + VAR_PEMBIMBING;
+        public static final String PATH_PENGUJI= "/" + VAR_PENGUJI;
         public static final String PATH_DOWNLOADFORMPLOT = "/" + VAR_DOWNLOADFORMPLOT;
         public static final String PATH_DELETEFORMPLOT = "/" + VAR_DELETEFORMPLOT;
+        public static final String PATH_ASKSIDANG = "/" + VAR_ASKSIDANG;
+        public static final String PATH_KONFIRMASISIDANG = "/" + VAR_KONFIRMASISIDANG;
+        public static final String PATH_PENGAJUAN = "/" + VAR_PENGAJUAN;
+        public static final String PATH_PERPANJANGSK = "/" + VAR_PERPANJANGSK;
+        public static final String PATH_UPLOADFORMSIDANG = "/" + VAR_UPLOADFORMSIDANG;
         // -----------------------------------------------------------------------------------------
         public static final String PATH_UPDATE = "/update";
+        public static final String PATH_DOWNLOAD = "/download";
         public static final String PATH_UPLOAD = "/upload";
         public static final String PATH_DELETE = "/delete";
         public static final String PATH_SEARCH = "/search";
@@ -127,6 +141,9 @@ public class ApiUrl {
         public static final String URL_KUOTA_DOSEN = PATH_API + PATH_KUOTA_DOSEN;
         public static final String URL_DOWNLOADFORMPLOT = PATH_API + PATH_DOWNLOADFORMPLOT;
         public static final String URL_DELETEFORMPLOT = PATH_API + PATH_DELETEFORMPLOT;
+        public static final String URL_ASKSIDANG = PATH_API + PATH_ASKSIDANG;
+        public static final String URL_KONFIRMASISIDANG = PATH_API + PATH_KONFIRMASISIDANG;
+        public static final String URL_UPLOADFORMSIDANG = PATH_API + PATH_UPLOADFORMSIDANG;
         // -----------------------------------------------------------------------------------------
         public static final String BASE_PARAMETER = "/{" + VAR_PARAMS + "}";
         public static final String BASE_PARAMETER_1 = "/{" + VAR_PARAMS + "1}";

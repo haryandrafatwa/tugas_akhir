@@ -10,6 +10,7 @@ import com.google.android.material.navigation.NavigationView;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.ProdiContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Koordinator;
 import org.d3ifcool.finpro.core.presenters.ProdiPresenter;
@@ -24,7 +25,7 @@ public class ProdiMainActivity extends AppCompatActivity implements ProdiContrac
 
     private Message message = new Message();
     private ActivityAdminMainBinding mBinding;
-    private ConcreteMediator mediator;
+    private Mediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,7 @@ public class ProdiMainActivity extends AppCompatActivity implements ProdiContrac
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        mediator.Notify(item.getItemId());
+        mediator.message(message.setComponent("Toolbar").setVisibility(item.getItemId()));
         mBinding.drawerLayout.closeDrawer(GravityCompat.START);
         item.setCheckable(true);
         return true;

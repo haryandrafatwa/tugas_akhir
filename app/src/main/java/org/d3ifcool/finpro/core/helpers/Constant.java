@@ -17,6 +17,7 @@ public class Constant {
         public static final String EXTRA_KOORDINATOR= "extra_koordinator";
         public static final String EXTRA_BIMBINGAN = "extra_bimbingan";
         public static final String EXTRA_DEFAULT= "extra_default";
+        public static final String EXTRA_INFORMASI = "extra_informasi";
         // -----------------------------------------------------------------------------------------
         public static final String JUDUL_STATUS_TERSEDIA = "tersedia"; // judul yang di buat dosen
         public static final String JUDUL_STATUS_PENDING = "pending"; // judul yang di buat mahasiswa

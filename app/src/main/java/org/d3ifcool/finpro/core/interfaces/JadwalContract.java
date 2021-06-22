@@ -17,6 +17,7 @@ public interface JadwalContract {
         void createJadwal(String token);
         void deleteJadwal(String token, int id);
         void updateJadwal(String token, int id);
+        void getJadwalByParameter(String token, String like);
     }
 
 }

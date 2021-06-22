@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.DosenContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.R;
@@ -24,7 +25,7 @@ import java.util.List;
 public class ProdiDosenFragment extends Fragment implements DosenContract.ViewModel {
 
     private Message message = new Message();
-    private ConcreteMediator mediator;
+    private Mediator mediator;
     private FragmentProdiDosenBinding binding;
 
     @Override

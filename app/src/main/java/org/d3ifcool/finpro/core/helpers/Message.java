@@ -6,6 +6,7 @@ import org.d3ifcool.finpro.core.components.Components;
 import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.models.Bimbingan;
 import org.d3ifcool.finpro.core.models.Dosen;
+import org.d3ifcool.finpro.core.models.Informasi;
 import org.d3ifcool.finpro.core.models.JadwalKegiatan;
 import org.d3ifcool.finpro.core.models.Koordinator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
@@ -30,6 +31,7 @@ public class Message implements Components {
     private Dosen dosen;
     private Koordinator koordinator;
     private Bimbingan bimbingan;
+    private Informasi informasi;
     private JadwalKegiatan jadwalKegiatan;
     private List<JadwalKegiatan> kegiatanList;
 
@@ -131,6 +133,10 @@ public class Message implements Components {
         return this;
     }
 
+    public void setInformasi(Informasi informasi) {
+        this.informasi = informasi;
+    }
+
     public Message setJadwalKegiatan(JadwalKegiatan jadwalKegiatan) {
         this.jadwalKegiatan = jadwalKegiatan;
         return this;
@@ -206,6 +212,10 @@ public class Message implements Components {
 
     public Bimbingan getBimbingan() {
         return bimbingan;
+    }
+
+    public Informasi getInformasi() {
+        return informasi;
     }
 
     public JadwalKegiatan getJadwalKegiatan() {

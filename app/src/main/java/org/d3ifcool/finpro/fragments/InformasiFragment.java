@@ -15,6 +15,7 @@ import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.activities.detail.InformasiTambahActivity;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.InformasiContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Informasi;
 import org.d3ifcool.finpro.core.presenters.InformasiPresenter;
@@ -31,8 +32,9 @@ public class InformasiFragment extends Fragment implements InformasiContract.Vie
     private ArrayList<Informasi> arrayList = new ArrayList<>();
     private InformasiPresenter informasiPresenter;
 
-    private ConcreteMediator mediator;
+    private Mediator mediator;
     private FragmentKoorInformasiBinding binding;
+    private Message message = new Message();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,9 +45,9 @@ public class InformasiFragment extends Fragment implements InformasiContract.Vie
         binding.setPresenter(informasiPresenter);
 
         mediator = new ConcreteMediator((AppCompatActivity) getActivity());
-        mediator.message("ProgressDialog","set");
-        mediator.message("InformasiViewAdapter","set");
-        mediator.message("SessionManager","set");
+        mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
+        mediator.message(message.setComponent("SessionManager").setEvent("set"));
+        mediator.message(message.setComponent("InformasiViewAdapter").setEvent("set"));
         binding.setToken(mediator.getSessionManager().getSessionToken());
         if (mediator.getSessionManager().getSessionPengguna().equalsIgnoreCase("mahasiswa")){
             binding.frgKoorDosenHomeFab.setVisibility(View.GONE);
@@ -84,13 +86,13 @@ public class InformasiFragment extends Fragment implements InformasiContract.Vie
     }
 
     @Override
-    public void onMessage(String message) {
-        switch (message){
+    public void onMessage(String messages) {
+        switch (messages){
             case "ShowProgressDialog":
-                mediator.message("ProgressDialog","show");
+                mediator.message(message.setComponent("ProgressDialog").setEvent("show"));
                 break;
             case "HideProgressDialog":
-                mediator.message("ProgressDialog","dismiss");
+                mediator.message(message.setComponent("ProgressDialog").setEvent("dismiss"));
                 break;
             case "EmptyList":
                 binding.includeLayout.viewEmptyview.setVisibility(View.VISIBLE);
@@ -99,7 +101,7 @@ public class InformasiFragment extends Fragment implements InformasiContract.Vie
                 mediator.selectIntent(new Message().setaClass(InformasiTambahActivity.class));
                 break;
             default:
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));
                 break;
         }
     }

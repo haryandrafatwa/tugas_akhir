@@ -154,6 +154,12 @@ interface ApiService {
             @Header(FinproUrl.VAR_AUTHORIZATION) token: String?
     ): Call<List<Plotting?>?>?
 
+    @GET(FinproUrl.URL_PLOTTING + FinproUrl.PATH_PEMBIMBING + FinproUrl.PARAMETER_PLOTTING)
+    fun getPembimbing(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_PLOTTING) id: Int?
+    ): Call<Plotting?>?
+
     @GET(FinproUrl.URL_PLOTTING + FinproUrl.PARAMETER_PLOTTING)
     fun getPlottingByParamter(
             @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
@@ -172,6 +178,21 @@ interface ApiService {
     fun uploadFormPlotting(
             @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
             @Part file: MultipartBody.Part?
+    ): Call<ResponseBody?>?
+
+    @Multipart
+    @POST(FinproUrl.URL_MAHASISWA + FinproUrl.PATH_UPLOAD + FinproUrl.PATH_PENGAJUAN + FinproUrl.PATH_PERPANJANGSK + FinproUrl.PARAMETER_MAHASISWA)
+    fun uploadFormPengajuanPerpanjangSK(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_MAHASISWA) username: String?,
+        @Part file: MultipartBody.Part?
+    ): Call<ResponseBody?>?
+
+    @Multipart
+    @POST(FinproUrl.URL_UPLOADFORMSIDANG)
+    fun uploadFormSidang(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Part file: MultipartBody.Part?
     ): Call<ResponseBody?>?
 
     @Headers("Connection:close")
@@ -253,6 +274,13 @@ interface ApiService {
     @GET(FinproUrl.URL_JADWAL)
     fun getJadwal(
         @Header(FinproUrl.VAR_AUTHORIZATION) token: String?
+    ): Call<List<JadwalKegiatan?>?>?
+
+    @Headers("Connection:close")
+    @GET(FinproUrl.URL_JADWAL + FinproUrl.PARAMETER_JADWAL)
+    fun getJadwalByLike(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_JADWAL) like: String
     ): Call<List<JadwalKegiatan?>?>?
 
     // Ga perlu pake @FormUrlEncoded karena tidak menggunakan field
@@ -478,6 +506,20 @@ interface ApiService {
             @Header(FinproUrl.VAR_AUTHORIZATION) token: String?
     ): Call<List<Mahasiswa?>?>?
 
+    @Headers("Connection: close")
+    @GET(FinproUrl.URL_ASKSIDANG)
+    fun askSidang(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?
+    ): Call<ResponseBody>?
+
+    @Headers("Connection: close")
+    @FormUrlEncoded
+    @POST(FinproUrl.URL_KONFIRMASISIDANG)
+    fun konfirmasiSidang(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Field("konfirmasi") konfirmasi: String?
+    ): Call<ResponseBody>?
+
     @POST(FinproUrl.URL_MAHASISWA + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_MAHASISWA)
     fun deleteMahasiswa(
         @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
@@ -501,6 +543,12 @@ interface ApiService {
     fun updateSKTA(
             @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
             @Path(FinproUrl.VAR_MAHASISWA) mhs_nim: String?
+    ): Call<ResponseBody?>?
+
+    @GET(FinproUrl.URL_MAHASISWA + FinproUrl.PATH_DOWNLOAD + FinproUrl.PATH_SKTA + FinproUrl.PARAMETER_MAHASISWA)
+    fun downloadSKTA(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_MAHASISWA) mhs_nim: String?
     ): Call<ResponseBody?>?
 
     // Monev

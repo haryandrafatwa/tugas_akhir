@@ -11,6 +11,8 @@ import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
@@ -74,8 +76,17 @@ public class MahasiswaManager {
             call.enqueue(new Callback<Mahasiswa>() {
                 @Override
                 public void onResponse(Call<Mahasiswa> call, Response<Mahasiswa> response) {
-                    viewModel.onMessage("HideProgressDialog");
-                    viewModel.onMessage("onSuccess");
+                    if (response.body()!=null || response.isSuccessful()){
+                        viewModel.onMessage("HideProgressDialog");
+                        viewModel.onMessage("onSuccess");
+                    }else{
+                        viewModel.onMessage("HideProgressDialog");
+                        try {
+                            viewModel.onMessage(response.errorBody().string().trim());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
 
                 @Override
@@ -213,6 +224,98 @@ public class MahasiswaManager {
         }
     }
 
+    public void downloadSKTA(String token, String mhs_nim){
+        if (connectionHelper.isConnected(context)){
+            viewModel.onMessage("ShowProgressDialog");
+            ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
+            Call<ResponseBody> call = apiInterfaceMahasiswa.downloadSKTA("Bearer "+token,mhs_nim);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.body()!=null || response.isSuccessful()){
+                        viewModel.onMessage("HideProgressDialog");
+                        String filename = response.headers().get("Content-Disposition").split("=")[1];
+                        viewModel.onGetBody(response.body(),filename);
+                    }else{
+                        call.clone().enqueue(this);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage(t.getLocalizedMessage());
+                }
+            });
+        } else {
+            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void uploadFormPengajuanPerpanjangSK(String token, String username, MultipartBody.Part part){
+        viewModel.onMessage("ShowProgressDialog");
+        if (connectionHelper.isConnected(context)){
+            ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
+            Call<ResponseBody> call = apiInterfaceMahasiswa.uploadFormPengajuanPerpanjangSK("Bearer "+token,username,part);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.body()!=null){
+                        if (response.isSuccessful()){
+                            viewModel.onMessage("HideProgressDialog");
+                            viewModel.onMessage("onSuccess");
+                        }
+                    }else{
+                        try {
+                            viewModel.onMessage(response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    call.clone().enqueue(this);
+                }
+            });
+        } else {
+            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void uploadFormSidang(String token, MultipartBody.Part part){
+        viewModel.onMessage("ShowProgressDialog");
+        if (connectionHelper.isConnected(context)){
+            ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
+            Call<ResponseBody> call = apiInterfaceMahasiswa.uploadFormSidang("Bearer "+token,part);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.body()!=null){
+                        if (response.isSuccessful()){
+                            viewModel.onMessage("HideProgressDialog");
+                            viewModel.onMessage("onSuccess");
+                        }
+                    }else{
+                        try {
+                            viewModel.onMessage(response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    call.clone().enqueue(this);
+                }
+            });
+        } else {
+            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void deleteMahasiswa(String token, String nim){
 
         if (connectionHelper.isConnected(context)){
@@ -252,7 +355,6 @@ public class MahasiswaManager {
                     } else {
                         viewModel.onMessage("EmptyObject");
                     }
-
                 }
 
                 @Override
@@ -263,16 +365,13 @@ public class MahasiswaManager {
         } else {
             Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
         }
-
-
-
     }
 
     public void getPembimbing(String token, int plotId){
         if (connectionHelper.isConnected(context)){
             viewModel.onMessage("ShowProgressDialog");
             ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
-            Call<Plotting> call = apiInterfaceMahasiswa.getPlottingByParamter("Bearer "+token,plotId);
+            Call<Plotting> call = apiInterfaceMahasiswa.getPembimbing("Bearer "+token,plotId);
             call.enqueue(new Callback<Plotting>() {
                 @Override
                 public void onResponse(Call<Plotting> call, Response<Plotting> response) {
@@ -286,6 +385,63 @@ public class MahasiswaManager {
                     viewModel.onMessage(t.getMessage());
                 }
             });
+        }
+    }
+
+    public void askSidang(String token){
+        if (connectionHelper.isConnected(context)){
+            viewModel.onMessage("ShowProgressDialog");
+            ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
+            Call<ResponseBody> call = apiInterfaceMahasiswa.askSidang("Bearer "+token);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.body() != null && response.isSuccessful()) {
+                        viewModel.onMessage("HideProgressDialog");
+                        viewModel.onMessage("onSuccessAsk");
+                    }else{
+                        viewModel.onMessage("HideProgressDialog");
+                        try {
+                            String s = response.errorBody().string();
+                            JSONObject jsonObject = new JSONObject(s);
+                            viewModel.onMessage(jsonObject.getString("message"));
+                        } catch (IOException | JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    call.clone().enqueue(this);
+                }
+            });
+        } else {
+            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void konfirmasi(String token, String status){
+        if (connectionHelper.isConnected(context)){
+            viewModel.onMessage("ShowProgressDialog");
+            ApiService apiInterfaceMahasiswa = ApiClient.getApiClient().create(ApiService.class);
+            Call<ResponseBody> call = apiInterfaceMahasiswa.konfirmasiSidang("Bearer "+token,status);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.body() != null && response.isSuccessful()) {
+                        viewModel.onMessage("HideProgressDialog");
+                        viewModel.onMessage("onSuccessConfirm");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    call.clone().enqueue(this);
+                }
+            });
+        } else {
+            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
         }
     }
 

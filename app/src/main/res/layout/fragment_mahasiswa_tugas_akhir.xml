@@ -50,6 +50,169 @@
                         app:mahasiswa="@{mahasiswa}"/>
 
                     <LinearLayout
+                        android:id="@+id/layout_sk"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_below="@+id/profile_body_container">
+                        <TextView
+                            android:id="@+id/title_sk"
+                            android:text="@string/text_sk"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_big_16dp"
+                            android:layout_marginEnd="@dimen/dimen_big_16dp"
+                            android:layout_marginTop="@dimen/dimen_medium_8dp"
+                            android:textSize="@dimen/text_size_medium_16sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textStyle="bold"/>
+
+                        <LinearLayout
+                            style="@style/profile_all_container_status_sk">
+
+                            <LinearLayout
+                                style="@style/profile_all_container_textview">
+
+                                <TextView
+                                    android:text="@string/text_profil_detail_status"
+                                    style="@style/profile_all_textview_subtitle"/>
+
+                                <TextView
+                                    android:id="@+id/act_koor_profil_status_sk"
+                                    android:text="@{mahasiswa.setSk_detail()}"
+                                    style="@style/profile_all_textview_content"/>
+
+                            </LinearLayout>
+
+                            <Button
+                                android:id="@+id/btn_download_status_sk"
+                                android:layout_width="match_parent"
+                                android:layout_height="42dp"
+                                android:background="@drawable/box_border_button_primary"
+                                android:layout_marginHorizontal="@dimen/dimen_medium_8dp"
+                                android:layout_marginTop="@dimen/text_size_medium_16sp"
+                                android:textAllCaps="false"
+                                android:text="@string/text_download_status_sk"
+                                android:textColor="@color/colorTextWhite"
+                                android:onClick="@{()->presenter.downloadSKTA(token,mhs_nim)}"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_validasi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{mahasiswa.sidang_status.equals(&quot;konfirmasi&quot;) ? View.VISIBLE : View.GONE}"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:id="@+id/title_validasi"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2"
+                            android:layout_below="@+id/profile_body_status_sk"
+                            android:layout_marginStart="@dimen/dimen_big_16dp"
+                            android:layout_marginEnd="@dimen/dimen_big_16dp"
+                            android:layout_marginTop="@dimen/dimen_medium_8dp">
+
+                            <TextView
+                                android:text="@string/dialog_validasi_sidang"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_medium_16sp"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textStyle="bold"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/content_validasi_sidang"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/title_pembimbing"
+                            android:layout_marginTop="@dimen/dimen_medium_8dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                style="@style/profile_all_container_pembimbing"
+                                android:weightSum="12"
+                                android:orientation="vertical"
+                                android:onClick="@{()->presenter.onBimbingan(plot.nip_pembimbing_1)}">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/dialog_validasi_sidang_text_mahasiswa"/>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dimen_big_16dp"
+                                    android:gravity="center"
+                                    android:weightSum="12">
+
+                                    <LinearLayout
+                                        android:id="@+id/layout_tolak"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="6"
+                                        android:layout_height="48dp"
+                                        android:background="@drawable/circle_background"
+                                        android:backgroundTint="@color/colorTextRed"
+                                        android:layout_marginEnd="@dimen/dimen_medium_8dp"
+                                        android:gravity="center">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:src="@drawable/ic_clear_white_24dp"
+                                            android:layout_marginEnd="@dimen/dimen_medium_8dp"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Tolak"
+                                            android:textColor="@color/colorTextWhite"
+                                            android:textSize="@dimen/text_size_title_small_18sp"/>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/layout_accept"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="6"
+                                        android:layout_height="48dp"
+                                        android:background="@drawable/circle_background"
+                                        android:backgroundTint="@color/colorBackgroundGreen"
+                                        android:layout_marginStart="@dimen/dimen_medium_8dp"
+                                        android:gravity="center">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:src="@drawable/ic_toolbar_accept"
+                                            android:layout_marginEnd="@dimen/dimen_medium_8dp"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Terima"
+                                            android:textColor="@color/colorTextWhite"
+                                            android:textSize="@dimen/text_size_title_small_18sp"/>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/title_pembimbing"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -79,7 +242,7 @@
                         android:layout_marginTop="@dimen/dimen_medium_8dp"
                         android:layout_marginBottom="@dimen/dimen_big_16dp"
                         android:orientation="vertical"
-                        android:visibility="@{mahasiswa.plot_id > 0 ? View.VISIBLE : View.GONE}">
+                        android:visibility="@{mahasiswa.plot_pembimbing > 0 ? View.VISIBLE : View.GONE}">
 
                         <LinearLayout
                             android:id="@+id/container_pembimbing_1"

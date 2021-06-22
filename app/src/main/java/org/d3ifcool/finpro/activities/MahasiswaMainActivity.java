@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.databinding.ActivityMahasiswaMainBinding;
@@ -17,12 +18,14 @@ import org.d3ifcool.finpro.core.models.Mahasiswa;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
+
 public class MahasiswaMainActivity extends AppCompatActivity implements MahasiswaContract.ViewModel {
 
     private SessionManager sessionManager;
     private ActivityMahasiswaMainBinding mBinding;
     private Message message = new Message();
-    private ConcreteMediator mediator;
+    private Mediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,11 @@ public class MahasiswaMainActivity extends AppCompatActivity implements Mahasisw
 
     @Override
     public void onSuccessGetPlotting(Plotting plotting) {
+
+    }
+
+    @Override
+    public void onGetBody(ResponseBody body, String filename) {
 
     }
 

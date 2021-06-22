@@ -11,7 +11,9 @@ import androidx.databinding.DataBindingUtil;
 
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Constant;
+import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.InformasiContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Informasi;
 import org.d3ifcool.finpro.core.presenters.InformasiPresenter;
@@ -19,29 +21,30 @@ import org.d3ifcool.finpro.databinding.ActivityKoorInformasiDetailBinding;
 
 import java.util.List;
 
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_INFORMASI;
+
 public class InformasiDetailActivity extends AppCompatActivity implements InformasiContract.ViewModel {
 
-    public static final String EXTRA_INFORMASI = "extra_informasi";
-    private Informasi extraInfo;
-
-    private InformasiPresenter informasiPresenter;
-    private ConcreteMediator mediator;
+    private Mediator mediator;
+    private ActivityKoorInformasiDetailBinding binding;
+    private Message message = new Message();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityKoorInformasiDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_koor_informasi_detail);
-        extraInfo = getIntent().getParcelableExtra(EXTRA_INFORMASI);
-        binding.setModel(extraInfo);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_koor_informasi_detail);
+        mediator = new ConcreteMediator(this);
+        mediator.setInformasiPresenter(this);
+        message.setInformasi(getIntent().getParcelableExtra(EXTRA_INFORMASI));
+
+        binding.setModel(message.getInformasi());
 
         setTitle("Detail Informasi");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(0f);
 
-        informasiPresenter = new InformasiPresenter(this);
-        mediator = new ConcreteMediator(this);
-        mediator.message("ProgressDialog","set");
-        mediator.message("SessionManager","set");
+        mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
+        mediator.message(message.setComponent("SessionManager").setEvent("set"));
 
     }
 
@@ -49,11 +52,11 @@ public class InformasiDetailActivity extends AppCompatActivity implements Inform
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_edit_delete, menu);
         if (mediator.getSessionManager().getSessionPengguna().equalsIgnoreCase(Constant.ObjectConstanta.ROLE_DOSEN)){
-            if (!mediator.getSessionManager().getSessionDosenNama().equalsIgnoreCase(extraInfo.getPenerbit())){
+            if (!mediator.getSessionManager().getSessionDosenNama().equalsIgnoreCase(binding.getModel().getPenerbit())){
                 menu.clear();
             }
         }else{
-            if (!mediator.getSessionManager().getSessionKoorNama().equalsIgnoreCase(extraInfo.getPenerbit())){
+            if (!mediator.getSessionManager().getSessionKoorNama().equalsIgnoreCase(binding.getModel().getPenerbit())){
                 menu.clear();
             }
         }
@@ -62,25 +65,7 @@ public class InformasiDetailActivity extends AppCompatActivity implements Inform
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        int i = item.getItemId();
-
-        if (i == android.R.id.home) {
-            finish();
-
-        } else if (i == R.id.toolbar_menu_ubah) {
-            startActivity(informasiPresenter.toolbarIntent(extraInfo));
-        } else if (i == R.id.toolbar_menu_hapus) {
-            mediator.message("AlertDialog","set");
-            mediator.message("AlertDialog","hapus");
-            mediator.getAlertDialog().setPositiveButton("Iya", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    informasiPresenter.deleteInformasi(mediator.getSessionManager().getSessionToken(),extraInfo.getId());
-                }
-            }).show();
-        }
-
+        mediator.message(message.setComponent("Toolbar").setVisibility(item.getItemId()).setEvent("informasi"));
         return super.onOptionsItemSelected(item);
     }
 
@@ -95,19 +80,19 @@ public class InformasiDetailActivity extends AppCompatActivity implements Inform
     }
 
     @Override
-    public void onMessage(String message) {
-        switch (message){
+    public void onMessage(String messages) {
+        switch (messages){
             case "ShowProgressDialog":
-                mediator.message("ProgressDialog","show");
+                mediator.message(message.setComponent("ProgressDialog").setEvent("show"));
                 break;
             case "HideProgressDialog":
-                mediator.message("ProgressDialog","dismiss");
+                mediator.message(message.setComponent("ProgressDialog").setEvent("dismiss"));
                 break;
             case "onSuccess":
                 finish();
                 break;
             default:
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+                mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));
                 break;
         }
     }

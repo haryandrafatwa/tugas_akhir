@@ -57,7 +57,7 @@ public class SessionManager {
         editor.putString(MHS_ANGKATAN, mahasiswa.getAngkatan());
         editor.putString(MHS_JUDUL, mahasiswa.getNip_pembimbing_1());
         editor.putString(MHS_JUDUL_DESKRIPSI, mahasiswa.getNip_pembimbing_2());
-        editor.putInt(MHS_ID_JUDUL, mahasiswa.getPlot_id());
+        editor.putInt(MHS_ID_JUDUL, mahasiswa.getPlot_pembimbing());
         editor.apply();
         editor.commit();
     }

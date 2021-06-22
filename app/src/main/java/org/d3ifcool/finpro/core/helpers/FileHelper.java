@@ -27,6 +27,7 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
 import static android.app.Activity.RESULT_OK;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.FILE_TYPE_PDF;
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.FILE_TYPE_XLS;
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.FILE_TYPE_XLSX;
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.PICK_EXCEL_REQUEST;
@@ -121,7 +122,7 @@ public class FileHelper {
         }
     }
 
-    public void openFile(ResponseBody body, String filename){
+    public void openFileXLS(ResponseBody body, String filename){
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + filename);
         if (!file.exists()){
             boolean writtenToDisk = writeResponseBodyToDisk(body,filename);
@@ -130,6 +131,21 @@ public class FileHelper {
         }
         Intent target = new Intent(Intent.ACTION_VIEW);
         target.setDataAndType(FileProvider.getUriForFile(activity,context.getPackageName()+".fileprovider",file),FILE_TYPE_XLS);
+        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        activity.startActivity(Intent.createChooser(target,"Open File"));
+    }
+
+    public void openFilePDF(ResponseBody body, String filename){
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + filename);
+        if (!file.exists()){
+            boolean writtenToDisk = writeResponseBodyToDisk(body,filename);
+            if (writtenToDisk)
+                Log.e("TAG", "onGetBody: Hasil Download");
+        }
+        Intent target = new Intent(Intent.ACTION_VIEW);
+        target.setDataAndType(FileProvider.getUriForFile(activity,context.getPackageName()+".fileprovider",file),FILE_TYPE_PDF);
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 

@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -43,6 +44,7 @@ import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.core.interfaces.AuthContract;
 import org.d3ifcool.finpro.core.interfaces.BimbinganContract;
 import org.d3ifcool.finpro.core.interfaces.DosenContract;
+import org.d3ifcool.finpro.core.interfaces.InformasiContract;
 import org.d3ifcool.finpro.core.interfaces.JadwalContract;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
 import org.d3ifcool.finpro.core.interfaces.PlottingContract;
@@ -53,6 +55,7 @@ import org.d3ifcool.finpro.core.models.manager.AuthManager;
 import org.d3ifcool.finpro.core.presenters.AuthPresenter;
 import org.d3ifcool.finpro.core.presenters.BimbinganPresenter;
 import org.d3ifcool.finpro.core.presenters.DosenPresenter;
+import org.d3ifcool.finpro.core.presenters.InformasiPresenter;
 import org.d3ifcool.finpro.core.presenters.JadwalPresenter;
 import org.d3ifcool.finpro.core.presenters.MahasiswaPresenter;
 import org.d3ifcool.finpro.core.presenters.PlottingPresenter;
@@ -76,10 +79,12 @@ import org.d3ifcool.finpro.prodi.adapters.ProdiMahasiswaViewAdapter;
 import org.d3ifcool.finpro.prodi.adapters.ProdiPlotPembimbingViewAdapter;
 import org.d3ifcool.finpro.prodi.adapters.ProdiPlottingViewAdapter;
 import org.d3ifcool.finpro.prodi.adapters.ProdiSKTAViewAdapter;
+import org.d3ifcool.finpro.prodi.adapters.ProdiSidangViewAdapter;
 import org.d3ifcool.finpro.prodi.fragments.ProdiDosenFragment;
 import org.d3ifcool.finpro.prodi.fragments.ProdiMahasiswaFragment;
 import org.d3ifcool.finpro.prodi.fragments.ProdiPlottingFragment;
 import org.d3ifcool.finpro.prodi.fragments.ProdiSKTAFragment;
+import org.d3ifcool.finpro.prodi.fragments.ProdiSidangFragment;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
@@ -94,6 +99,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import es.dmoral.toasty.Toasty;
 
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_DEFAULT;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.FILE_TYPE_PDF;
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.FILE_TYPE_XLS;
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.FILE_TYPE_XLSX;
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.ROLE_LAK;
@@ -113,6 +119,7 @@ public class ConcreteMediator implements Mediator {
     private ProdiPresenter prodiPresenter;
     private BimbinganPresenter bimbinganPresenter;
     private JadwalPresenter jadwalPresenter;
+    private InformasiPresenter informasiPresenter;
 
     private RelativeLayout relativeLayout;
     private LinearLayout linearLayout;
@@ -122,6 +129,7 @@ public class ConcreteMediator implements Mediator {
     private Spinner spinner;
     private CircleImageView circleImageView;
     private CardView cardView;
+    private Button button;
     private FloatingActionButton floatingActionButton;
     private CompactCalendarView compactCalendarView;
 
@@ -134,6 +142,7 @@ public class ConcreteMediator implements Mediator {
     private MahasiswaBimbinganViewAdapter mahasiswaBimbinganViewAdapter;
     private DosenMahasiswaBimbinganViewAdapter dosenMahasiswaBimbinganViewAdapter;
     private DosenBimbinganViewAdapter dosenBimbinganViewAdapter;
+    private ProdiSidangViewAdapter prodiSidangViewAdapter;
 
     private SessionManager sessionManager;
     private AlertDialog.Builder alertDialog;
@@ -150,194 +159,6 @@ public class ConcreteMediator implements Mediator {
     private static final String SET = "set";
 
     @Override
-    public void Notify(int id) {
-        switch (id){
-            case R.id.bottom_menu_dsn_informasi:
-                methodHelper.applyFragment(new InformasiFragment(), "DosenInformasiFragment");
-                this.activity.setTitle(R.string.title_informasi);
-                break;
-            case R.id.bottom_menu_dsn_bimbingan:
-                methodHelper.applyFragment(new DosenMahasiswaBimbinganFragment(),"DosenMahasiswaBimbinganFragment");
-                this.activity.setTitle(R.string.title_bimbingan);
-                break;
-            case R.id.bottom_menu_dsn_sidang:
-                methodHelper.applyFragment(new DosenMahasiswaBimbinganFragment(),"DosenJudulFragment");
-                this.activity.setTitle(R.string.title_sidang);
-                break;
-
-            case R.id.toolbar_menu_keluar:
-                message("AlertDialog",SET);
-                message("AlertDialog","logout");
-                break;
-
-            case R.id.toolbar_menu_hapus:
-                message("AlertDialog",SET);
-                message("AlertDialog","hapus");
-                break;
-
-            case R.id.nav_menu_informasi:
-                Notify(R.id.bottom_menu_dsn_informasi);
-                break;
-            case R.id.nav_menu_mahasiswa:
-                this.activity.setTitle(R.string.title_mahasiswa);
-                methodHelper.applyFragment(new ProdiMahasiswaFragment(),"ProdiMahasiswaFragment");
-                break;
-            case R.id.nav_menu_dosen:
-                this.activity.setTitle(R.string.title_dosen);
-                methodHelper.applyFragment(new ProdiDosenFragment(),"ProdiDosenFragment");
-                break;
-            case R.id.nav_menu_plotting:
-                this.activity.setTitle(R.string.menu_plotting_pembimbing);
-                methodHelper.applyFragment(new ProdiPlottingFragment(),"ProdiPlottingFragment");
-                break;
-            case R.id.nav_menu_skta:
-                this.activity.setTitle(R.string.menu_sk_ta);
-                methodHelper.applyFragment(new ProdiSKTAFragment(),"ProdiSKTAFragment");
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void message(String component, String event) {
-        switch (component){
-            case "ProdiPlottingAdapter":
-                switch (event){
-                    case SET:
-                        plottingViewAdapter = new ProdiPlottingViewAdapter(activity);
-                        plottingViewAdapter.setToken(getSessionToken());
-                        plottingViewAdapter.setPlottingPresenter(this.plottingPresenter);
-                        break;
-                }
-                break;
-            case "InformasiViewAdapter":
-                switch (event){
-                    case SET:
-                        informasiViewAdapter = new InformasiViewAdapter(activity);
-                        break;
-                }
-                break;
-            case "ProdiMahasiswaAdapter":
-                switch (event){
-                    case SET:
-                        mahasiswaViewAdapter = new ProdiMahasiswaViewAdapter(activity);
-                        break;
-                }
-                break;
-            case "ProdiDosenAdapter":
-                switch (event){
-                    case SET:
-                        dosenViewAdapter = new ProdiDosenViewAdapter(activity);
-                        break;
-                }
-                break;
-            case "FileHelper":
-                switch (event){
-                    case SET:
-                        fileHelper = new FileHelper(activity.getApplicationContext(),activity);
-                        break;
-                }
-                break;
-            case "RefreshLayout":
-                switch (event){
-                    case "false":
-                        this.refreshLayout.setRefreshing(false);
-                        break;
-                    case "true":
-                        this.refreshLayout.setRefreshing(true);
-                        break;
-                }
-            case "ProgressDialog":
-                switch (event){
-                    case SET:
-                        progressDialog = new ProgressDialog(activity);
-                        progressDialog.setMessage(activity.getString(R.string.text_progress_dialog));
-                        break;
-                    case "show":
-                        progressDialog.show();
-                        break;
-                    case "dismiss":
-                        progressDialog.dismiss();
-                        break;
-                }
-                break;
-            case "SessionManager":
-                switch (event){
-                    case SET:
-                        sessionManager = new SessionManager(this.activity);
-                        break;
-                }
-                break;
-            case "AlertDialog":
-                switch (event){
-                    case SET:
-                        alertDialog = new AlertDialog.Builder(activity).setIcon(android.R.drawable.ic_dialog_alert).setNegativeButton("Batal",null);
-                        break;
-
-                    case "logout":
-                        alertDialog
-                                .setTitle(R.string.dialog_keluar_title)
-                                .setMessage(R.string.dialog_keluar_text)
-                                .setPositiveButton("Keluar", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Intent intentKeluar = new Intent(activity, AuthActivity.class);
-                                        activity.startActivity(intentKeluar);
-                                        authManager.logout(sessionManager.getSessionToken());
-                                        sessionManager.removeSession();
-                                        authManager.initContext(activity);
-                                        activity.finish();
-                                    }
-                                })
-                                .show();
-                        break;
-
-                    case "hapus":
-                        alertDialog
-                                .setTitle(R.string.dialog_hapus_title)
-                                .setMessage(R.string.dialog_hapus_text);
-                        break;
-
-                    case "ubah":
-                        alertDialog
-                                .setTitle(R.string.dialog_ubah_title)
-                                .setMessage(R.string.dialog_ubah_text);
-                        break;
-
-                    case "hapusForm":
-                        alertDialog
-                                .setTitle(R.string.dialog_hapus_form_plot)
-                                .setMessage(R.string.dialog_hapus_form_plot_text);
-                        break;
-
-                    case "uploadForm":
-                        alertDialog
-                                .setTitle(R.string.dialog_upload_form_plot)
-                                .setMessage(R.string.dialog_upload_text);
-                        break;
-                }
-                break;
-            case "Warning":
-                Toasty.warning(activity,event,Toasty.LENGTH_LONG).show();
-                break;
-            case "Info":
-                Toasty.info(activity,event,Toasty.LENGTH_LONG).show();
-                break;
-            case "Success":
-                Toasty.success(activity,event,Toasty.LENGTH_LONG).show();
-                break;
-            case "Normal":
-                Toasty.normal(activity,event,Toasty.LENGTH_LONG).show();
-                break;
-            case "Error":
-                Toasty.error(activity,event,Toasty.LENGTH_LONG).show();
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
     public void message(Message message){
         switch (message.getComponent()){
             case "JadwalPresenter":
@@ -348,14 +169,37 @@ public class ConcreteMediator implements Mediator {
                     case "createJadwal":
                         jadwalPresenter.createJadwal(getSessionToken());
                         break;
-                    case "updateBimbingan":
-                        bimbinganPresenter.updateBimbingan(getSessionToken(),message.getBimbingan().getBimbingan_id());
+                    case "getJadwalByLike":
+                        jadwalPresenter.getJadwalByParameter(getSessionToken(),message.getText());
                         break;
-                    case "acceptBimbingan":
-                        bimbinganPresenter.ubahStatus(getSessionToken(),message.getBimbingan().getBimbingan_id(),"approve");
-                        break;
-                    case "rejectBimbingan":
-                        bimbinganPresenter.ubahStatus(getSessionToken(),message.getBimbingan().getBimbingan_id(),"decline");
+                    case "showKegiatanList":
+                        switch (message.getText()){
+                            case "ProdiMahasiswaFragment":
+                                if (message.getKegiatanList().size() > 0){
+                                    JadwalKegiatan jadwalKegiatan = message.getKegiatanList().get(0);
+                                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                    try {
+                                        Date start = format.parse(jadwalKegiatan.getTanggal_mulai());
+                                        Date end = format.parse(jadwalKegiatan.getTanggal_akhir());
+                                        Date now = new Date();
+                                        if (now.after(start) && now.before(end)){
+                                            relativeLayout.setVisibility(View.VISIBLE);
+                                        }else{
+                                            relativeLayout.setVisibility(View.GONE);
+                                        }
+                                        button.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                message(message.setComponent("AlertDialog").setEvent("set"));
+                                                message(message.setComponent("AlertDialog").setEvent("validasiSidang"));
+                                            }
+                                        });
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                break;
+                        }
                         break;
                 }
                 break;
@@ -437,6 +281,9 @@ public class ConcreteMediator implements Mediator {
                     case "updateDosen":
                         dosenPresenter.updateDosen(getSessionToken());
                         break;
+                    case "getDosenByNIP":
+                        dosenPresenter.getDosenByNIP(getSessionToken(),message.getDosen().getDsn_nip());
+                        break;
                 }
                 break;
             case "MahasiswaPresenter":
@@ -451,10 +298,13 @@ public class ConcreteMediator implements Mediator {
                         mahasiswaPresenter.getMahasiswaByNIM(getSessionToken(),getSessionUsername());
                         break;
                     case "getPembimbing":
-                        mahasiswaPresenter.getPembimbing(getSessionToken(),message.getMahasiswa().getPlot_id());
+                        mahasiswaPresenter.getPembimbing(getSessionToken(),message.getMahasiswa().getPlot_pembimbing());
                         break;
                     case "deletePembimbing":
                         mahasiswaPresenter.deletePembimbing(getSessionToken(),message.getMahasiswa().getMhs_nim());
+                        break;
+                    case "uploadFormPengajuanPerpanjangSK":
+                        mahasiswaPresenter.uploadFormPengajuanPerpanjangSK(getSessionToken(),getSessionUsername(),fileHelper.getFile(message.getUri()));
                         break;
                     case "updateSKTA":
                         message(message.setComponent("AlertDialog").setEvent("set"));
@@ -477,6 +327,13 @@ public class ConcreteMediator implements Mediator {
                         break;
                     case "updateMahasiswa":
                         mahasiswaPresenter.updateMahasiswa(getSessionToken());
+                        break;
+                    case "konfirmasiSidang":
+                        message(message.setComponent("AlertDialog").setEvent(SET));
+                        message(message.setComponent("AlertDialog").setEvent("konfirmasiSidang"));
+                        break;
+                    case "uploadFormSidang":
+                        mahasiswaPresenter.uploadFormSidang(getSessionToken(),fileHelper.getFile(message.getUri()));
                         break;
                 }
                 break;
@@ -575,6 +432,19 @@ public class ConcreteMediator implements Mediator {
                         break;
                 }
                 break;
+            case "ProdiSidangViewAdapter":
+                switch (message.getEvent()){
+                    case SET:
+                        prodiSidangViewAdapter = new ProdiSidangViewAdapter(activity);
+                        break;
+                    case "addItem":
+                        prodiSidangViewAdapter.addItem(message.getItem());
+                        break;
+                    case "setAdapter":
+                        recyclerView.setAdapter(prodiSidangViewAdapter);
+                        break;
+                }
+                break;
             case "ProdiSKTAViewAdapter":
                 switch (message.getEvent()){
                     case SET:
@@ -627,8 +497,11 @@ public class ConcreteMediator implements Mediator {
                     case SET:
                         fileHelper = new FileHelper(activity.getApplicationContext(),activity);
                         break;
-                    case "openFile":
-                        fileHelper.openFile(message.getBody(),message.getText());
+                    case "openFileXLS":
+                        fileHelper.openFileXLS(message.getBody(),message.getText());
+                        break;
+                    case "openFilePDF":
+                        fileHelper.openFilePDF(message.getBody(),message.getText());
                         break;
                 }
                 break;
@@ -737,6 +610,39 @@ public class ConcreteMediator implements Mediator {
                         break;
                 }
                 break;
+            case "Button":
+                switch (message.getEvent()){
+                    case "setVisibility":
+                        this.button.setVisibility(message.getVisibility());
+                        break;
+                    case "setEnabled":
+                        this.button.setEnabled(message.isEnabled());
+                        break;
+                    case "setText":
+                        this.button.setText(message.getText());
+                        break;
+                    case "setOnClick":
+                        switch (message.getText()){
+                            case "perpanjangSK":
+                                button.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        mahasiswaPresenter.onPerpanjang();
+                                    }
+                                });
+                                break;
+                            case "downloadSK":
+                                button.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        mahasiswaPresenter.downloadSKTA(getSessionToken(),getSessionUsername());
+                                    }
+                                });
+                                break;
+                        }
+                        break;
+                }
+                break;
             case "FloatButton":
                 switch (message.getEvent()){
                     case "setVisibility":
@@ -744,6 +650,40 @@ public class ConcreteMediator implements Mediator {
                         break;
                     case "setEnabled":
                         this.floatingActionButton.setEnabled(message.isEnabled());
+                        break;
+                    case "setBackground":
+                        switch (message.getText()){
+                            case "ic_upload":
+                                this.floatingActionButton.setImageDrawable(activity.getDrawable(R.drawable.ic_fab_pa_pengajuan));
+                                break;
+                        }
+                        break;
+                    case "setOnClick":
+                        switch (message.getText()){
+                            case "ProdiSidangFragment":
+                                floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        if (message.getKegiatanList().size() < 1){
+                                            message(message.setComponent("Toasty").setEvent("Info").setText("Jadwal Pendaftaran Belum Tersedia"));
+                                        }else{
+                                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                            try {
+                                                Date end = format.parse(message.getKegiatanList().get(0).getTanggal_akhir());
+                                                Date now = new Date();
+                                                if (now.before(end)){
+                                                    message(message.setComponent("Toasty").setEvent("Info").setText("Periode Pendaftaran Sidang Masih Berlangsung"));
+                                                }else{
+                                                    mahasiswaPresenter.onUpload();
+                                                }
+                                            } catch (ParseException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                });
+                                break;
+                        }
                         break;
                 }
                 break;
@@ -858,7 +798,7 @@ public class ConcreteMediator implements Mediator {
                                 }).show();
                         break;
 
-                        case "hapusDataMahasiswa":
+                    case "hapusDataMahasiswa":
                         alertDialog
                                 .setTitle(R.string.dialog_hapus_title)
                                 .setMessage(R.string.dialog_hapus_text)
@@ -869,8 +809,7 @@ public class ConcreteMediator implements Mediator {
                                     }
                                 }).show();
                         break;
-
-                        case "hapusDataDosen":
+                    case "hapusDataDosen":
                         alertDialog
                                 .setTitle(R.string.dialog_hapus_title)
                                 .setMessage(R.string.dialog_hapus_text)
@@ -878,6 +817,16 @@ public class ConcreteMediator implements Mediator {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         dosenPresenter.deleteDosen(getSessionToken(),message.getDosen().getDsn_nip());
+                                    }
+                                }).show();
+                        break;
+                    case "hapusDataInformasi":
+                        message(message.setComponent("AlertDialog").setEvent("hapus"));
+                        alertDialog
+                                .setPositiveButton("Iya", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        informasiPresenter.deleteInformasi(getSessionToken(),message.getInformasi().getId());
                                     }
                                 }).show();
                         break;
@@ -903,6 +852,28 @@ public class ConcreteMediator implements Mediator {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         mahasiswaPresenter.updateSKTA(getSessionToken(),message.getMahasiswa().getMhs_nim());
+                                    }
+                                }).show();
+                        break;
+                    case "validasiSidang":
+                        alertDialog
+                                .setTitle(R.string.dialog_validasi_sidang)
+                                .setMessage(R.string.dialog_validasi_sidang_text)
+                                .setPositiveButton("Iya", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        mahasiswaPresenter.askSidang(getSessionToken());
+                                    }
+                                }).show();
+                        break;
+                    case "konfirmasiSidang":
+                        alertDialog
+                                .setTitle(R.string.dialog_konfirmasi_sidang)
+                                .setMessage(R.string.dialog_konfirmasi_sidang_text)
+                                .setPositiveButton("Iya", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        mahasiswaPresenter.konfirmasiSidang(getSessionToken(),message.getText());
                                     }
                                 }).show();
                         break;
@@ -972,6 +943,10 @@ public class ConcreteMediator implements Mediator {
                                 message(message.setComponent("AlertDialog").setEvent("set"));
                                 message(message.setComponent("AlertDialog").setEvent("hapusDataDosen"));
                                 break;
+                            case "informasi":
+                                message(message.setComponent("AlertDialog").setEvent("set"));
+                                message(message.setComponent("AlertDialog").setEvent("hapusDataInformasi"));
+                                break;
                         }
                         break;
                     case R.id.toolbar_menu_ubah:
@@ -981,6 +956,9 @@ public class ConcreteMediator implements Mediator {
                                 break;
                             case "dosen":
                                 activity.startActivity(dosenPresenter.toolbarIntent(message.getDosen()));
+                                break;
+                            case "informasi":
+                                activity.startActivity(informasiPresenter.toolbarIntent(message.getInformasi()));
                                 break;
                         }
                         break;
@@ -1026,10 +1004,33 @@ public class ConcreteMediator implements Mediator {
                         }
                         break;
                     case R.id.toolbar_menu_keluar:
-                        message("AlertDialog",SET);
-                        message("AlertDialog","logout");
+                        message(message.setComponent("AlertDialog").setEvent(SET));
+                        message(message.setComponent("AlertDialog").setEvent("logout"));
                         break;
-                        case android.R.id.home:
+                    case R.id.nav_menu_informasi:
+                        message(message.setComponent("BottomNavigation").setVisibility(R.id.bottom_menu_dsn_informasi));
+                        break;
+                    case R.id.nav_menu_mahasiswa:
+                        this.activity.setTitle(R.string.title_mahasiswa);
+                        methodHelper.applyFragment(new ProdiMahasiswaFragment(),"ProdiMahasiswaFragment");
+                        break;
+                    case R.id.nav_menu_dosen:
+                        this.activity.setTitle(R.string.title_dosen);
+                        methodHelper.applyFragment(new ProdiDosenFragment(),"ProdiDosenFragment");
+                        break;
+                    case R.id.nav_menu_plotting:
+                        this.activity.setTitle(R.string.menu_plotting_pembimbing);
+                        methodHelper.applyFragment(new ProdiPlottingFragment(),"ProdiPlottingFragment");
+                        break;
+                    case R.id.nav_menu_skta:
+                        this.activity.setTitle(R.string.menu_sk_ta);
+                        methodHelper.applyFragment(new ProdiSKTAFragment(),"ProdiSKTAFragment");
+                        break;
+                    case R.id.nav_menu_sidang:
+                        this.activity.setTitle(R.string.title_sidang);
+                        methodHelper.applyFragment(new ProdiSidangFragment(),"ProdiSidangFragment");
+                        break;
+                    case android.R.id.home:
                         activity.finish();
                         break;
                 }
@@ -1055,6 +1056,18 @@ public class ConcreteMediator implements Mediator {
                     case R.id.bottom_menu_mhs_jadwal_kegiatan:
                         methodHelper.applyFragment(new LAKJadwalKegiatanFragment(), "LAKJadwalKegiatanFragment");
                         activity.setTitle(R.string.title_jadwal_kegiatan);
+                        break;
+                    case R.id.bottom_menu_dsn_informasi:
+                        methodHelper.applyFragment(new InformasiFragment(), "DosenInformasiFragment");
+                        this.activity.setTitle(R.string.title_informasi);
+                        break;
+                    case R.id.bottom_menu_dsn_bimbingan:
+                        methodHelper.applyFragment(new DosenMahasiswaBimbinganFragment(),"DosenMahasiswaBimbinganFragment");
+                        this.activity.setTitle(R.string.title_bimbingan);
+                        break;
+                    case R.id.bottom_menu_dsn_sidang:
+                        methodHelper.applyFragment(new DosenMahasiswaBimbinganFragment(),"DosenJudulFragment");
+                        this.activity.setTitle(R.string.title_sidang);
                         break;
                 }
                 break;
@@ -1104,6 +1117,11 @@ public class ConcreteMediator implements Mediator {
     }
 
     @Override
+    public void setButton(Button button) {
+        this.button = button;
+    }
+
+    @Override
     public void setTextView(TextView textView) {
         this.textView = textView;
     }
@@ -1123,6 +1141,11 @@ public class ConcreteMediator implements Mediator {
 
     public void setDosenPresenter(DosenContract.ViewModel viewModel) {
         this.dosenPresenter = new DosenPresenter(viewModel);
+    }
+
+    @Override
+    public void setInformasiPresenter(InformasiContract.ViewModel viewModel) {
+        this.informasiPresenter = new InformasiPresenter(viewModel);
     }
 
     public void setAuthPresenter(AuthContract.ViewModel viewModel) {
@@ -1167,12 +1190,25 @@ public class ConcreteMediator implements Mediator {
         activity.startActivity(intent);
     }
 
-    public Intent findFileIntent(){
+    @Override
+    public void setTitleContextWithHomeAsUp(String title) {
+        activity.setTitle(title);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setElevation(0f);
+    }
+
+    public Intent findFileIntent(String format){
         Intent intent = new Intent();
-        intent.setType(FILE_TYPE_XLS);
-        String[] mimetypes = {FILE_TYPE_XLS,FILE_TYPE_XLSX};
+        if (format.equalsIgnoreCase("xls")){
+            intent.setType(FILE_TYPE_XLS);
+            String[] mimetypes = {FILE_TYPE_XLS,FILE_TYPE_XLSX};
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+        }else if (format.equalsIgnoreCase("pdf")){
+            intent.setType(FILE_TYPE_PDF);
+            String[] mimetypes = {FILE_TYPE_PDF};
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+        }
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
         return intent;
     }
 

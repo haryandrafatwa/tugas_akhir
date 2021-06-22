@@ -20,6 +20,7 @@ import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.helpers.MethodHelper;
 import org.d3ifcool.finpro.core.interfaces.BimbinganContract;
 import org.d3ifcool.finpro.core.interfaces.works.ICreate;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Bimbingan;
 import org.d3ifcool.finpro.core.models.Dosen;
@@ -41,7 +42,7 @@ public class MahasiswaBimbinganEditorActivity extends AppCompatActivity implemen
 
     private ActivityMahasiswaBimbinganEditorBinding mBinding;
     private Message message = new Message();
-    private ConcreteMediator mediator;
+    private Mediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -2,7 +2,6 @@
 <layout>
 
     <data>
-
         <variable
             name="model"
             type="org.d3ifcool.finpro.core.models.Dosen" />

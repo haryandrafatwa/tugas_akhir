@@ -1,16 +1,16 @@
 package org.d3ifcool.finpro.prodi.fragments;
 
-
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
+import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.JadwalContract;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
@@ -20,48 +20,65 @@ import org.d3ifcool.finpro.core.models.JadwalKegiatan;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.databinding.FragmentKoorMahasiswaBinding;
-import org.d3ifcool.finpro.prodi.activities.editor.ProdiMahasiswaEditorActivity;
-import org.d3ifcool.finpro.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class ProdiMahasiswaFragment extends Fragment implements MahasiswaContract.ViewModel, JadwalContract.ViewModel {
+import static android.app.Activity.RESULT_OK;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.PICK_EXCEL_REQUEST;
+
+public class ProdiSidangFragment extends Fragment implements MahasiswaContract.ViewModel, JadwalContract.ViewModel {
 
     private Message message = new Message();
+    private FragmentKoorMahasiswaBinding mBinding;
     private Mediator mediator;
-    private FragmentKoorMahasiswaBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_koor_mahasiswa,container,false);
+        mBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_koor_mahasiswa,container,false);
+        mBinding.setLifecycleOwner(this);
         mediator = new ConcreteMediator((AppCompatActivity) getActivity());
         mediator.setMahasiswaPresenter(this);
         mediator.setJadwalPresenter(this);
-        binding.setPresenter(mediator.getMahasiswaPresenter());
+        mBinding.setPresenter(mediator.getMahasiswaPresenter());
 
         mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
         mediator.message(message.setComponent("SessionManager").setEvent("set"));
-        mediator.message(message.setComponent("ProdiMahasiswaAdapter").setEvent("set"));
-        mediator.setRecyclerView(binding.recyclerView);
-        mediator.setRefreshLayout(binding.refresh);
-        binding.setToken(mediator.getSessionToken());
-        if (mediator.getSessionPengguna().equalsIgnoreCase("prodi")){
-            binding.frgKoorDosenHomeFab.setVisibility(View.VISIBLE);
-        }
+        mediator.message(message.setComponent("FileHelper").setEvent("set"));
+        mediator.message(message.setComponent("ProdiSidangViewAdapter").setEvent("set"));
+        mediator.setRecyclerView(mBinding.recyclerView);
+        mediator.setRelativeLayout(mBinding.includeLayout.viewEmptyview);
+        mediator.setRefreshLayout(mBinding.refresh);
+        mBinding.setToken(mediator.getSessionToken());
+        mediator.setFloatingActionButton(mBinding.frgKoorDosenHomeFab);
+        mediator.message(message.setComponent("FloatButton").setEvent("setVisibility").setVisibility(View.VISIBLE));
+        mediator.message(message.setComponent("FloatButton").setEvent("setBackground").setText("ic_upload"));
+
         mediator.message(message.setComponent("MahasiswaPresenter").setEvent("getAllData"));
-        return binding.getRoot();
+
+        return mBinding.getRoot();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        mediator.message(message.setComponent("MahasiswaPresenter").setEvent("getAllData"));
+    }
+
+    private void intentPickFile(){
+        if (mediator.getPermissionFile()){;
+            startActivityForResult(Intent.createChooser(mediator.findFileIntent("XLS"), "Pilih file"), PICK_EXCEL_REQUEST);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_EXCEL_REQUEST && resultCode == RESULT_OK) {
+            mediator.message(message.setComponent("MahasiswaPresenter").setEvent("uploadFormSidang").setUri(data.getData()));
+        }
     }
 
     @Override
@@ -72,11 +89,17 @@ public class ProdiMahasiswaFragment extends Fragment implements MahasiswaContrac
     @Override
     public void onGetListMahasiswa(List<Mahasiswa> mahasiswa) {
         ArrayList<Mahasiswa> arrayList = new ArrayList<>();
-        arrayList.addAll(mahasiswa);
-        mediator.message(message.setComponent("ProdiMahasiswaAdapter").setEvent("addItem").setItem(arrayList));
-        mediator.message(message.setComponent("ProdiMahasiswaAdapter").setEvent("setAdapter"));
+        arrayList.clear();
+        for (int i = 0; i < mahasiswa.size(); i++) {
+            if (mahasiswa.get(i).getSidang_status()!=null){
+                if (mahasiswa.get(i).getSidang_status().equalsIgnoreCase("terjadwalkan")){
+                    arrayList.add(mahasiswa.get(i));
+                }
+            }
+        }
+        mediator.message(message.setComponent("ProdiSidangViewAdapter").setEvent("addItem").setItem(arrayList));
+        mediator.message(message.setComponent("ProdiSidangViewAdapter").setEvent("setAdapter"));
         mediator.message(message.setComponent("RefreshLayout").setEvent("setRefreshing").setEnabled(false));
-        mediator.setRelativeLayout(binding.includeLayout.viewEmptyview);
         if (arrayList.size() == 0) {
             mediator.message(message.setComponent("RelativeLayout").setEvent("setVisibility").setVisibility(View.VISIBLE));
         } else {
@@ -98,9 +121,7 @@ public class ProdiMahasiswaFragment extends Fragment implements MahasiswaContrac
     @Override
     public void onGetListJadwal(List<JadwalKegiatan> kegiatanList) {
         message.setKegiatanList(kegiatanList);
-        mediator.setRelativeLayout(binding.layoutKonfirmasi.containerAskAllSidang);
-        mediator.setButton(binding.layoutKonfirmasi.btnAcceptAllBimbingan);
-        mediator.message(message.setComponent("JadwalPresenter").setEvent("showKegiatanList").setText("ProdiMahasiswaFragment"));
+        mediator.message(message.setComponent("FloatButton").setEvent("setOnClick").setText(this.getClass().getSimpleName()));
     }
 
     @Override
@@ -113,14 +134,13 @@ public class ProdiMahasiswaFragment extends Fragment implements MahasiswaContrac
                 mediator.message(message.setComponent("ProgressDialog").setEvent("dismiss"));
                 break;
             case "EmptyList":
-                mediator.setRelativeLayout(binding.includeLayout.viewEmptyview);
                 mediator.message(message.setComponent("RelativeLayout").setEvent("setVisibility").setVisibility(View.VISIBLE));
                 break;
-            case "onSuccessAsk":
-                mediator.message(message.setComponent("Toasty").setEvent("Success").setText("Berhasil melakukan aksi!"));
+            case "onUploadForm":
+                intentPickFile();
                 break;
-            case "FloatButton":
-                mediator.selectIntent(new Message().setaClass(ProdiMahasiswaEditorActivity.class));
+            case "onSuccess":
+                onResume();
                 break;
             default:
                 mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));

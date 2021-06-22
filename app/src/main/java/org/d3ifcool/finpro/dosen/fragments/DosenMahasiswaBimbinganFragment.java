@@ -1,14 +1,10 @@
 package org.d3ifcool.finpro.dosen.fragments;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,38 +13,21 @@ import android.view.ViewGroup;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.BimbinganContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Bimbingan;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.databinding.FragmentDosenBimbinganBinding;
-import org.d3ifcool.finpro.dosen.adapters.recyclerview.DosenMahasiswaBimbinganViewAdapter;
-import org.d3ifcool.finpro.core.helpers.SessionManager;
-import org.d3ifcool.finpro.core.models.Judul;
-import org.d3ifcool.finpro.core.presenters.JudulPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.JUDUL_STATUS_DIGUNAKAN;
-
 public class DosenMahasiswaBimbinganFragment extends Fragment implements BimbinganContract.ViewModel {
-
-    private static final String PARAMS_1 = "judul.judul_status";
-    private static final String PARAMS_2 = "judul.dsn_nip";
-
-    private RecyclerView recyclerView;
-    private DosenMahasiswaBimbinganViewAdapter adapter;
-    private JudulPresenter judulPresenter;
-    private ProgressDialog progressDialog;
-    private ArrayList<Judul> arrayList = new ArrayList<>();
-    private SessionManager sessionManager;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private View empty_view;
 
     private FragmentDosenBimbinganBinding mBinding;
     private Message message = new Message();
-    private ConcreteMediator mediator;
+    private Mediator mediator;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -59,8 +59,8 @@ public class ProdiPlottingViewAdapter extends RecyclerView.Adapter<ProdiPlotting
         Plotting model = data.get(position);
 
         holder.tv_indexing.setText((position+1)+"");
-        holder.tv_nama_dosen_1.setText(model.getNama_pembimbing_1());
-        holder.tv_nama_dosen_2.setText(model.getNama_pembimbing_2());
+        holder.tv_nama_dosen_1.setText(model.getNama_dosen_1());
+        holder.tv_nama_dosen_2.setText(model.getNama_dosen_2());
         holder.linearLayout.setVisibility(View.VISIBLE);
         holder.ib_hapus.setOnClickListener(new View.OnClickListener() {
             @Override

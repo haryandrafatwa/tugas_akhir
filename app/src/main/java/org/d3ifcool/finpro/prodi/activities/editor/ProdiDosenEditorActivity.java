@@ -12,6 +12,7 @@ import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Constant;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.DosenContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.databinding.ActivityKoorDosenEditorBinding;
@@ -22,7 +23,7 @@ public class ProdiDosenEditorActivity extends AppCompatActivity implements Dosen
 
     private ActivityKoorDosenEditorBinding mBinding;
     private Message message = new Message();
-    private ConcreteMediator mediator;
+    private Mediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

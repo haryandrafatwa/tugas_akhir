@@ -101,8 +101,18 @@ public class MahasiswaPresenter implements MahasiswaContract.Presenter {
     }
 
     @Override
+    public void onUpload() {
+        viewModel.onMessage("onUploadForm");
+    }
+
+    @Override
     public void onDelete() {
         viewModel.onMessage("onDelete");
+    }
+
+    @Override
+    public void onPerpanjang() {
+        viewModel.onMessage("perpanjangSK");
     }
 
     @Override
@@ -176,6 +186,31 @@ public class MahasiswaPresenter implements MahasiswaContract.Presenter {
     @Override
     public void updateSKTA(String token, String mhs_nim) {
         mahasiswaManager.updateSKTA(token, mhs_nim);
+    }
+
+    @Override
+    public void uploadFormPengajuanPerpanjangSK(String token, String username, MultipartBody.Part part) {
+        mahasiswaManager.uploadFormPengajuanPerpanjangSK(token,username,part);
+    }
+
+    @Override
+    public void uploadFormSidang(String token, MultipartBody.Part part) {
+        mahasiswaManager.uploadFormSidang(token,part);
+    }
+
+    @Override
+    public void downloadSKTA(String token, String mhs_nim) {
+        mahasiswaManager.downloadSKTA(token,mhs_nim);
+    }
+
+    @Override
+    public void askSidang(String token) {
+        mahasiswaManager.askSidang(token);
+    }
+
+    @Override
+    public void konfirmasiSidang(String token, String status) {
+        mahasiswaManager.konfirmasi(token,status);
     }
 
     public Intent toolbarIntent(Mahasiswa mahasiswa, Class aClass){

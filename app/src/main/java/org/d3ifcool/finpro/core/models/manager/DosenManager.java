@@ -172,10 +172,9 @@ public class DosenManager {
     }
 
     public void getDosenByParameter(String token, String dsn_nip){
-
         if (connectionHelper.isConnected(context)){
             ApiService apiInterfaceDosen = ApiClient.getApiClient().create(ApiService.class);
-            Call<Dosen> call = apiInterfaceDosen.getDosenByParameter(token,dsn_nip);
+            Call<Dosen> call = apiInterfaceDosen.getDosenByParameter("Bearer "+token,dsn_nip);
             call.enqueue(new Callback<Dosen>() {
                 @Override
                 public void onResponse(Call<Dosen> call, Response<Dosen> response) {

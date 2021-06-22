@@ -90,13 +90,9 @@ public class DosenPresenter implements DosenContract.Presenter {
 
     @Override
     public void updateDosen(String token) {
-        if (kontak.get().equalsIgnoreCase("-")){
-            kontak.set(null);
+        if (isValidate()){
+            dosenManager.updateDosen(token, nip.get(), nama.get(), kode.get(), kontak.get(), email.get(), kuota_bimbingan.get(), kuota_reviewer.get());
         }
-        if (email.get().equalsIgnoreCase("-")){
-            email.set(null);
-        }
-        dosenManager.updateDosen(token, nip.get(), nama.get(), kode.get(), kontak.get(), email.get(), kuota_bimbingan.get(), kuota_reviewer.get());
     }
 
     @Override

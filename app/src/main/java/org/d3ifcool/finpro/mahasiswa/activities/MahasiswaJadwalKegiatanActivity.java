@@ -1,6 +1,7 @@
 package org.d3ifcool.finpro.mahasiswa.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -12,54 +13,51 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import org.d3ifcool.finpro.core.helpers.Message;
+import org.d3ifcool.finpro.core.interfaces.JadwalContract;
 import org.d3ifcool.finpro.core.interfaces.lists.KegiatanListView;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
+import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.models.JadwalKegiatan;
 import org.d3ifcool.finpro.core.models.Kegiatan;
 import org.d3ifcool.finpro.core.presenters.KegiatanPresenter;
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.databinding.ActivityMahasiswaJadwalKegiatanBinding;
+import org.d3ifcool.finpro.lak.LAKJadwalEditorActivity;
 import org.d3ifcool.finpro.mahasiswa.adapters.recyclerview.MahasiswaJadwalKegiatanViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MahasiswaJadwalKegiatanActivity extends AppCompatActivity implements KegiatanListView {
+public class MahasiswaJadwalKegiatanActivity extends AppCompatActivity implements JadwalContract.ViewModel {
 
-    private ProgressDialog progressDialog;
-    private RecyclerView recyclerView;
-    private View empty_view;
-    private SwipeRefreshLayout swipeRefreshLayout;
-
-    private MahasiswaJadwalKegiatanViewAdapter mahasiswaJadwalKegiatanViewAdapter;
-    private ArrayList<Kegiatan> arrayListKegiatan = new ArrayList<>();
-    private KegiatanPresenter kegiatanPresenter;
+    private ActivityMahasiswaJadwalKegiatanBinding mBinding;
+    private Message message = new Message();
+    private Mediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mahasiswa_jadwal_kegiatan);
+        mBinding = DataBindingUtil.setContentView(this,R.layout.activity_mahasiswa_jadwal_kegiatan);
+        mBinding.setLifecycleOwner(this);
+        mediator = new ConcreteMediator(this);
+        mediator.setJadwalPresenter(this);
 
-        setTitle(getString(R.string.title_jadwal_kegiatan));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mediator.setTitleContextWithHomeAsUp("Jadwal Kegiatan");
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(getString(R.string.text_progress_dialog));
+        mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
+        mediator.message(message.setComponent("SessionManager").setEvent("set"));
 
-        kegiatanPresenter = new KegiatanPresenter(this);
-        kegiatanPresenter.initContext(this);
+        mediator.setTextView(mBinding.tvBulan);
+        mediator.setCompactCalendarView(mBinding.compactcalendarView);
+        mediator.setRecyclerView(mBinding.recyclerView);
 
-        mahasiswaJadwalKegiatanViewAdapter = new MahasiswaJadwalKegiatanViewAdapter(this);
-        recyclerView = findViewById(R.id.all_recyclerview_kegiatan);
-        empty_view = findViewById(R.id.view_emptyview);
-        swipeRefreshLayout = findViewById(R.id.swipe_refresh_kegiatan);
+    }
 
-        kegiatanPresenter.getKegiatan();
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                kegiatanPresenter.getKegiatan();
-            }
-        });
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        mediator.message(message.setComponent("JadwalPresenter").setEvent("getAllData"));
     }
 
     @Override
@@ -69,51 +67,31 @@ public class MahasiswaJadwalKegiatanActivity extends AppCompatActivity implement
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        int i = item.getItemId();
-
-        if (i == android.R.id.home) {
-            finish();
-        }
-
+        mediator.message(message.setComponent("Toolbar").setVisibility(item.getItemId()));
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void showProgress() {
-        progressDialog.show();
+    public void onGetListJadwal(List<JadwalKegiatan> kegiatanList) {
+        message.setKegiatanList(kegiatanList);
+        mediator.message(message.setComponent("CompactCalendar").setEvent("setListener"));
     }
 
     @Override
-    public void hideProgress() {
-        progressDialog.hide();
-    }
-
-    @Override
-    public void onGetListKegiatan(List<Kegiatan> kegiatan) {
-        arrayListKegiatan.clear();
-        arrayListKegiatan.addAll(kegiatan);
-
-        mahasiswaJadwalKegiatanViewAdapter.addItem(arrayListKegiatan);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(mahasiswaJadwalKegiatanViewAdapter);
-        swipeRefreshLayout.setRefreshing(false);
-
-        if (arrayListKegiatan.size() == 0) {
-            empty_view.setVisibility(View.VISIBLE);
-        } else {
-            empty_view.setVisibility(View.GONE);
+    public void onMessage(String messages) {
+        switch (messages){
+            case "ShowProgressDialog":
+                mediator.message(message.setComponent("ProgressDialog").setEvent("show"));
+                break;
+            case "HideProgressDialog":
+                mediator.message(message.setComponent("ProgressDialog").setEvent("dismiss"));
+                break;
+            case "onCreate":
+                mediator.selectIntent(message.setaClass(LAKJadwalEditorActivity.class));
+                break;
+            default:
+                mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));
+                break;
         }
-
-    }
-
-    @Override
-    public void isEmptyListKegiatan() {
-        empty_view.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onFailed(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

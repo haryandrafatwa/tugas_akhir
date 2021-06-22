@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
+import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
 import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
@@ -22,13 +23,15 @@ import org.d3ifcool.finpro.prodi.activities.editor.ProdiMahasiswaEditorActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class LAKMahasiswaFragment extends Fragment implements MahasiswaContract.ViewModel {
 
     private Message message = new Message();
-    private ConcreteMediator mediator;
+    private Mediator mediator;
     private FragmentKoorMahasiswaBinding binding;
 
     @Override
@@ -79,6 +82,11 @@ public class LAKMahasiswaFragment extends Fragment implements MahasiswaContract.
 
     @Override
     public void onSuccessGetPlotting(Plotting plotting) {
+
+    }
+
+    @Override
+    public void onGetBody(ResponseBody body, String filename) {
 
     }
 
