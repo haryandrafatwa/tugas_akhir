@@ -10,6 +10,7 @@ import org.d3ifcool.finpro.core.helpers.ConnectionHelper;
 import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.core.interfaces.DosenContract;
 import org.d3ifcool.finpro.core.models.Dosen;
+import org.d3ifcool.finpro.core.models.Mahasiswa;
 
 import java.util.List;
 
@@ -196,7 +197,68 @@ public class DosenManager {
         } else {
             Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
         }
+    }
 
+    public void getMahasiswaSidang(String token){
+        if (connectionHelper.isConnected(context)){
+            viewModel.onMessage("ShowProgressDialog");
+            ApiService apiInterfaceDosen = ApiClient.getApiClient().create(ApiService.class);
+            Call<List<Mahasiswa>> call = apiInterfaceDosen.getMahasiswaSidang("Bearer "+token);
+            call.enqueue(new Callback<List<Mahasiswa>>() {
+                @Override
+                public void onResponse(Call<List<Mahasiswa>> call, Response<List<Mahasiswa>> response) {
+                    if (response.body() != null && response.isSuccessful()) {
+                        viewModel.onMessage("HideProgressDialog");
+                        if (response.body().size() > 0){
+                            viewModel.onGetListMahasiswa(response.body());
+                        }else{
+                            viewModel.onMessage("EmptyList");
+                        }
+                    } else {
+                        call.clone().enqueue(this);
+                    }
 
+                }
+
+                @Override
+                public void onFailure(Call<List<Mahasiswa>> call, Throwable t) {
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage(t.getLocalizedMessage());
+                }
+            });
+        } else {
+            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void getMahasiswaSidangByUsername(String token, String username){
+        if (connectionHelper.isConnected(context)){
+            viewModel.onMessage("ShowProgressDialog");
+            ApiService apiInterfaceDosen = ApiClient.getApiClient().create(ApiService.class);
+            Call<Mahasiswa> call = apiInterfaceDosen.getMahasiswaSidangByUsername("Bearer "+token,username);
+            call.enqueue(new Callback<Mahasiswa>() {
+                @Override
+                public void onResponse(Call<Mahasiswa> call, Response<Mahasiswa> response) {
+                    if (response.body() != null && response.isSuccessful()) {
+                        viewModel.onMessage("HideProgressDialog");
+                        if (response.body() != null){
+                            viewModel.onGetObjectMahasiswa(response.body());
+                        }else{
+                            viewModel.onMessage("EmptyObject");
+                        }
+                    } else {
+                        call.clone().enqueue(this);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Mahasiswa> call, Throwable t) {
+                    viewModel.onMessage("HideProgressDialog");
+                    viewModel.onMessage(t.getLocalizedMessage());
+                }
+            });
+        } else {
+            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
+        }
     }
 }

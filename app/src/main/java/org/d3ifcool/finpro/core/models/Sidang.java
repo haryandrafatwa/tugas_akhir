@@ -6,23 +6,6 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Faisal Amir
- * FrogoBox Inc License
- * =========================================
- * Finpro
- * Copyright (C) 27/01/2019.
- * All rights reserved
- * -----------------------------------------
- * Name     : Muhammad Faisal Amir
- * E-mail   : faisalamircs@gmail.com
- * Line     : bullbee117
- * Phone    : 081357108568
- * Majors   : D3 Teknik Informatika 2016
- * Campus   : Telkom University
- * -----------------------------------------
- * id.amirisback.frogobox
- */
 public class Sidang implements Parcelable {
 
     @Expose
@@ -38,24 +21,64 @@ public class Sidang implements Parcelable {
     private String sidang_tanggal;
 
     @Expose
-    @SerializedName("nilai_proposal")
-    private int nilai_proposal;
+    @SerializedName("jam_mulai")
+    private String jam_mulai;
 
     @Expose
-    @SerializedName("nilai_penguji_1")
-    private int nilai_penguji_1;
+    @SerializedName("jam_berakhir")
+    private String jam_berakhir;
 
     @Expose
-    @SerializedName("nilai_penguji_2")
-    private int nilai_penguji_2;
+    @SerializedName("nilai_penguji_1_clo1")
+    private String nilai_penguji_1_clo1;
 
     @Expose
-    @SerializedName("nilai_pembimbing")
-    private int nilai_pembimbing;
+    @SerializedName("nilai_penguji_1_clo2")
+    private String nilai_penguji_1_clo2;
+
+    @Expose
+    @SerializedName("nilai_penguji_1_clo3")
+    private String nilai_penguji_1_clo3;
+
+    @Expose
+    @SerializedName("nilai_penguji_2_clo1")
+    private String nilai_penguji_2_clo1;
+
+    @Expose
+    @SerializedName("nilai_penguji_2_clo2")
+    private String nilai_penguji_2_clo2;
+
+    @Expose
+    @SerializedName("nilai_penguji_2_clo3")
+    private String nilai_penguji_2_clo3;
+
+    @Expose
+    @SerializedName("nilai_pembimbing_1_clo1")
+    private String nilai_pembimbing_1_clo1;
+
+    @Expose
+    @SerializedName("nilai_pembimbing_1_clo2")
+    private String nilai_pembimbing_1_clo2;
+
+    @Expose
+    @SerializedName("nilai_pembimbing_1_clo3")
+    private String nilai_pembimbing_1_clo3;
+
+    @Expose
+    @SerializedName("nilai_pembimbing_2_clo1")
+    private String nilai_pembimbing_2_clo1;
+
+    @Expose
+    @SerializedName("nilai_pembimbing_2_clo2")
+    private String nilai_pembimbing_2_clo2;
+
+    @Expose
+    @SerializedName("nilai_pembimbing_2_clo3")
+    private String nilai_pembimbing_2_clo3;
 
     @Expose
     @SerializedName("nilai_total")
-    private double nilai_total;
+    private String nilai_total;
 
 
     @Expose
@@ -63,35 +86,33 @@ public class Sidang implements Parcelable {
     private String sidang_status;
 
     @Expose
-    @SerializedName("proyek_akhir_id")
-    private int proyek_akhir_id;
-
-    @Expose
-    @SerializedName("nama_tim")
-    private String nama_tim;
-
-    @Expose
     @SerializedName("mhs_nim")
     private String mhs_nim;
 
-    @Expose
-    @SerializedName("judul_id")
-    private int judul_id;
-
-    public Sidang(String sidang_id, String sidang_review, String sidang_tanggal, int nilai_proposal, int nilai_penguji_1, int nilai_penguji_2, int nilai_pembimbing, double nilai_total, String sidang_status, int proyek_akhir_id, String nama_tim, String mhs_nim, int judul_id) {
+    public Sidang(String sidang_id, String sidang_review, String sidang_tanggal, String jam_mulai, String jam_berakhir, String nilai_penguji_1_clo1,
+                  String nilai_penguji_1_clo2, String nilai_penguji_1_clo3, String nilai_penguji_2_clo1, String nilai_penguji_2_clo2, String nilai_penguji_2_clo3,
+                  String nilai_pembimbing_1_clo1, String nilai_pembimbing_1_clo2, String nilai_pembimbing_1_clo3, String nilai_pembimbing_2_clo1, String nilai_pembimbing_2_clo2,
+                  String nilai_pembimbing_2_clo3, String nilai_total, String sidang_status, String mhs_nim) {
         this.sidang_id = sidang_id;
         this.sidang_review = sidang_review;
         this.sidang_tanggal = sidang_tanggal;
-        this.nilai_proposal = nilai_proposal;
-        this.nilai_penguji_1 = nilai_penguji_1;
-        this.nilai_penguji_2 = nilai_penguji_2;
-        this.nilai_pembimbing = nilai_pembimbing;
+        this.jam_mulai = jam_mulai;
+        this.jam_berakhir = jam_berakhir;
+        this.nilai_penguji_1_clo1 = nilai_penguji_1_clo1;
+        this.nilai_penguji_1_clo2 = nilai_penguji_1_clo2;
+        this.nilai_penguji_1_clo3 = nilai_penguji_1_clo3;
+        this.nilai_penguji_2_clo1 = nilai_penguji_2_clo1;
+        this.nilai_penguji_2_clo2 = nilai_penguji_2_clo2;
+        this.nilai_penguji_2_clo3 = nilai_penguji_2_clo3;
+        this.nilai_pembimbing_1_clo1 = nilai_pembimbing_1_clo1;
+        this.nilai_pembimbing_1_clo2 = nilai_pembimbing_1_clo2;
+        this.nilai_pembimbing_1_clo3 = nilai_pembimbing_1_clo3;
+        this.nilai_pembimbing_2_clo1 = nilai_pembimbing_2_clo1;
+        this.nilai_pembimbing_2_clo2 = nilai_pembimbing_2_clo2;
+        this.nilai_pembimbing_2_clo3 = nilai_pembimbing_2_clo3;
         this.nilai_total = nilai_total;
         this.sidang_status = sidang_status;
-        this.proyek_akhir_id = proyek_akhir_id;
-        this.nama_tim = nama_tim;
         this.mhs_nim = mhs_nim;
-        this.judul_id = judul_id;
     }
 
     public String getSidang_id() {
@@ -118,43 +139,123 @@ public class Sidang implements Parcelable {
         this.sidang_tanggal = sidang_tanggal;
     }
 
-    public int getNilai_proposal() {
-        return nilai_proposal;
+    public String getJam_mulai() {
+        return jam_mulai;
     }
 
-    public void setNilai_proposal(int nilai_proposal) {
-        this.nilai_proposal = nilai_proposal;
+    public void setJam_mulai(String jam_mulai) {
+        this.jam_mulai = jam_mulai;
     }
 
-    public int getNilai_penguji_1() {
-        return nilai_penguji_1;
+    public String getJam_berakhir() {
+        return jam_berakhir;
     }
 
-    public void setNilai_penguji_1(int nilai_penguji_1) {
-        this.nilai_penguji_1 = nilai_penguji_1;
+    public void setJam_berakhir(String jam_berakhir) {
+        this.jam_berakhir = jam_berakhir;
     }
 
-    public int getNilai_penguji_2() {
-        return nilai_penguji_2;
+    public String getNilai_penguji_1_clo1() {
+        return nilai_penguji_1_clo1;
     }
 
-    public void setNilai_penguji_2(int nilai_penguji_2) {
-        this.nilai_penguji_2 = nilai_penguji_2;
+    public void setNilai_penguji_1_clo1(String nilai_penguji_1_clo1) {
+        this.nilai_penguji_1_clo1 = nilai_penguji_1_clo1;
     }
 
-    public int getNilai_pembimbing() {
-        return nilai_pembimbing;
+    public String getNilai_penguji_1_clo2() {
+        return nilai_penguji_1_clo2;
     }
 
-    public void setNilai_pembimbing(int nilai_pembimbing) {
-        this.nilai_pembimbing = nilai_pembimbing;
+    public void setNilai_penguji_1_clo2(String nilai_penguji_1_clo2) {
+        this.nilai_penguji_1_clo2 = nilai_penguji_1_clo2;
     }
 
-    public double getNilai_total() {
+    public String getNilai_penguji_1_clo3() {
+        return nilai_penguji_1_clo3;
+    }
+
+    public void setNilai_penguji_1_clo3(String nilai_penguji_1_clo3) {
+        this.nilai_penguji_1_clo3 = nilai_penguji_1_clo3;
+    }
+
+    public String getNilai_penguji_2_clo1() {
+        return nilai_penguji_2_clo1;
+    }
+
+    public void setNilai_penguji_2_clo1(String nilai_penguji_2_clo1) {
+        this.nilai_penguji_2_clo1 = nilai_penguji_2_clo1;
+    }
+
+    public String getNilai_penguji_2_clo2() {
+        return nilai_penguji_2_clo2;
+    }
+
+    public void setNilai_penguji_2_clo2(String nilai_penguji_2_clo2) {
+        this.nilai_penguji_2_clo2 = nilai_penguji_2_clo2;
+    }
+
+    public String getNilai_penguji_2_clo3() {
+        return nilai_penguji_2_clo3;
+    }
+
+    public void setNilai_penguji_2_clo3(String nilai_penguji_2_clo3) {
+        this.nilai_penguji_2_clo3 = nilai_penguji_2_clo3;
+    }
+
+    public String getNilai_pembimbing_1_clo1() {
+        return nilai_pembimbing_1_clo1;
+    }
+
+    public void setNilai_pembimbing_1_clo1(String nilai_pembimbing_1_clo1) {
+        this.nilai_pembimbing_1_clo1 = nilai_pembimbing_1_clo1;
+    }
+
+    public String getNilai_pembimbing_1_clo2() {
+        return nilai_pembimbing_1_clo2;
+    }
+
+    public void setNilai_pembimbing_1_clo2(String nilai_pembimbing_1_clo2) {
+        this.nilai_pembimbing_1_clo2 = nilai_pembimbing_1_clo2;
+    }
+
+    public String getNilai_pembimbing_1_clo3() {
+        return nilai_pembimbing_1_clo3;
+    }
+
+    public void setNilai_pembimbing_1_clo3(String nilai_pembimbing_1_clo3) {
+        this.nilai_pembimbing_1_clo3 = nilai_pembimbing_1_clo3;
+    }
+
+    public String getNilai_pembimbing_2_clo1() {
+        return nilai_pembimbing_2_clo1;
+    }
+
+    public void setNilai_pembimbing_2_clo1(String nilai_pembimbing_2_clo1) {
+        this.nilai_pembimbing_2_clo1 = nilai_pembimbing_2_clo1;
+    }
+
+    public String getNilai_pembimbing_2_clo2() {
+        return nilai_pembimbing_2_clo2;
+    }
+
+    public void setNilai_pembimbing_2_clo2(String nilai_pembimbing_2_clo2) {
+        this.nilai_pembimbing_2_clo2 = nilai_pembimbing_2_clo2;
+    }
+
+    public String getNilai_pembimbing_2_clo3() {
+        return nilai_pembimbing_2_clo3;
+    }
+
+    public void setNilai_pembimbing_2_clo3(String nilai_pembimbing_2_clo3) {
+        this.nilai_pembimbing_2_clo3 = nilai_pembimbing_2_clo3;
+    }
+
+    public String getNilai_total() {
         return nilai_total;
     }
 
-    public void setNilai_total(double nilai_total) {
+    public void setNilai_total(String nilai_total) {
         this.nilai_total = nilai_total;
     }
 
@@ -166,22 +267,6 @@ public class Sidang implements Parcelable {
         this.sidang_status = sidang_status;
     }
 
-    public int getProyek_akhir_id() {
-        return proyek_akhir_id;
-    }
-
-    public void setProyek_akhir_id(int proyek_akhir_id) {
-        this.proyek_akhir_id = proyek_akhir_id;
-    }
-
-    public String getNama_tim() {
-        return nama_tim;
-    }
-
-    public void setNama_tim(String nama_tim) {
-        this.nama_tim = nama_tim;
-    }
-
     public String getMhs_nim() {
         return mhs_nim;
     }
@@ -190,14 +275,9 @@ public class Sidang implements Parcelable {
         this.mhs_nim = mhs_nim;
     }
 
-    public int getJudul_id() {
-        return judul_id;
+    public static Creator<Sidang> getCREATOR() {
+        return CREATOR;
     }
-
-    public void setJudul_id(int judul_id) {
-        this.judul_id = judul_id;
-    }
-
 
     @Override
     public int describeContents() {
@@ -209,32 +289,42 @@ public class Sidang implements Parcelable {
         dest.writeString(this.sidang_id);
         dest.writeString(this.sidang_review);
         dest.writeString(this.sidang_tanggal);
-        dest.writeInt(this.nilai_proposal);
-        dest.writeInt(this.nilai_penguji_1);
-        dest.writeInt(this.nilai_penguji_2);
-        dest.writeInt(this.nilai_pembimbing);
-        dest.writeDouble(this.nilai_total);
+        dest.writeString(this.nilai_penguji_1_clo1);
+        dest.writeString(this.nilai_penguji_1_clo2);
+        dest.writeString(this.nilai_penguji_1_clo3);
+        dest.writeString(this.nilai_penguji_2_clo1);
+        dest.writeString(this.nilai_penguji_2_clo2);
+        dest.writeString(this.nilai_penguji_2_clo3);
+        dest.writeString(this.nilai_pembimbing_1_clo1);
+        dest.writeString(this.nilai_pembimbing_1_clo2);
+        dest.writeString(this.nilai_pembimbing_1_clo3);
+        dest.writeString(this.nilai_pembimbing_2_clo1);
+        dest.writeString(this.nilai_pembimbing_2_clo2);
+        dest.writeString(this.nilai_pembimbing_2_clo3);
+        dest.writeString(this.nilai_total);
         dest.writeString(this.sidang_status);
-        dest.writeInt(this.proyek_akhir_id);
-        dest.writeString(this.nama_tim);
         dest.writeString(this.mhs_nim);
-        dest.writeInt(this.judul_id);
     }
 
     protected Sidang(Parcel in) {
         this.sidang_id = in.readString();
         this.sidang_review = in.readString();
         this.sidang_tanggal = in.readString();
-        this.nilai_proposal = in.readInt();
-        this.nilai_penguji_1 = in.readInt();
-        this.nilai_penguji_2 = in.readInt();
-        this.nilai_pembimbing = in.readInt();
-        this.nilai_total = in.readDouble();
+        this.nilai_penguji_1_clo1 = in.readString();
+        this.nilai_penguji_1_clo2 = in.readString();
+        this.nilai_penguji_1_clo3 = in.readString();
+        this.nilai_penguji_2_clo1 = in.readString();
+        this.nilai_penguji_2_clo2 = in.readString();
+        this.nilai_penguji_2_clo3 = in.readString();
+        this.nilai_pembimbing_1_clo1 = in.readString();
+        this.nilai_pembimbing_1_clo2 = in.readString();
+        this.nilai_pembimbing_1_clo3 = in.readString();
+        this.nilai_pembimbing_2_clo1 = in.readString();
+        this.nilai_pembimbing_2_clo2 = in.readString();
+        this.nilai_pembimbing_2_clo3 = in.readString();
+        this.nilai_total = in.readString();
         this.sidang_status = in.readString();
-        this.proyek_akhir_id = in.readInt();
-        this.nama_tim = in.readString();
         this.mhs_nim = in.readString();
-        this.judul_id = in.readInt();
     }
 
     public static final Creator<Sidang> CREATOR = new Creator<Sidang>() {

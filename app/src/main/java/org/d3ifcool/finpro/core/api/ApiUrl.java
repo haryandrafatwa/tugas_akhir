@@ -55,6 +55,9 @@ public class ApiUrl {
         public static final String VAR_PROYEK_AKHIR = "proyek_akhir";
         public static final String VAR_DISTINCT = "distinct";
         public static final String VAR_NILAI = "nilai";
+        public static final String VAR_REVISI= "revisi";
+        public static final String VAR_JURNAL= "jurnal";
+        public static final String VAR_REVIEW= "review";
         public static final String VAR_SIDANG = "sidang";
         public static final String VAR_BIMBINGAN = "bimbingan";
         public static final String VAR_MONEV = "monev";
@@ -108,10 +111,14 @@ public class ApiUrl {
         public static final String PATH_PENGAJUAN = "/" + VAR_PENGAJUAN;
         public static final String PATH_PERPANJANGSK = "/" + VAR_PERPANJANGSK;
         public static final String PATH_UPLOADFORMSIDANG = "/" + VAR_UPLOADFORMSIDANG;
+        public static final String PATH_REVIEW = "/" + VAR_REVIEW;
+        public static final String PATH_REVISI = "/" + VAR_REVISI;
+        public static final String PATH_JURNAL = "/" + VAR_JURNAL;
         // -----------------------------------------------------------------------------------------
         public static final String PATH_UPDATE = "/update";
         public static final String PATH_DOWNLOAD = "/download";
         public static final String PATH_UPLOAD = "/upload";
+        public static final String PATH_CHECK = "/check";
         public static final String PATH_DELETE = "/delete";
         public static final String PATH_SEARCH = "/search";
         public static final String PATH_STATUS = "/status";

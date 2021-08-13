@@ -14,16 +14,15 @@ import android.widget.Toast;
 
 import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.core.interfaces.NotifikasiContract;
 import org.d3ifcool.finpro.mahasiswa.adapters.recyclerview.MahasiswaPemberitahuanViewAdapter;
-import org.d3ifcool.finpro.core.interfaces.lists.NotifikasiListView;
-import org.d3ifcool.finpro.core.interfaces.works.NotifikasiWorkView;
 import org.d3ifcool.finpro.core.models.Notifikasi;
 import org.d3ifcool.finpro.core.presenters.NotifikasiPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MahasiswaPemberitahuanActivity extends AppCompatActivity implements NotifikasiListView, NotifikasiWorkView {
+public class MahasiswaPemberitahuanActivity extends AppCompatActivity implements NotifikasiContract.ViewModel {
 
     private RecyclerView recyclerView;
     private NotifikasiPresenter notifikasiPresenter;
@@ -45,7 +44,7 @@ public class MahasiswaPemberitahuanActivity extends AppCompatActivity implements
 
         progressDialog = new ProgressDialog(this);
 
-        notifikasiPresenter = new NotifikasiPresenter(this, this);
+        notifikasiPresenter = new NotifikasiPresenter(this);
         notifikasiPresenter.initContext(this);
 
         sessionManager = new SessionManager(this);
@@ -103,6 +102,21 @@ public class MahasiswaPemberitahuanActivity extends AppCompatActivity implements
             empty_view.setVisibility(View.VISIBLE);
         }
 
+
+    }
+
+    @Override
+    public void isEmptyListNotifikasi() {
+
+    }
+
+    @Override
+    public void onGetObjectNotifikasi(Notifikasi notifikasi) {
+
+    }
+
+    @Override
+    public void isEmptyObjectNotifikasi() {
 
     }
 

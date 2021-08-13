@@ -10,8 +10,8 @@ import android.view.MenuItem;
 import org.d3ifcool.finpro.core.helpers.Constant;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.ProdiContract;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Koordinator;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.databinding.ActivityKoorProfilUbahBinding;
@@ -33,9 +33,7 @@ public class ProdiProfilUbahActivity extends AppCompatActivity implements ProdiC
 
         message.setKoordinator(getIntent().getParcelableExtra(Constant.ObjectConstanta.EXTRA_KOORDINATOR));
 
-        setTitle(getString(R.string.title_profil_ubah));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setElevation(0f);
+        mediator.setTitleContextWithHomeAsUp("Ubah Profile");
 
         mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
         mediator.message(message.setComponent("SessionManager").setEvent("set"));

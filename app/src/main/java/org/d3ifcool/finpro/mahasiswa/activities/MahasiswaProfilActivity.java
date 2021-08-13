@@ -3,103 +3,66 @@ package org.d3ifcool.finpro.mahasiswa.activities;
 import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import org.d3ifcool.finpro.R;
+import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.helpers.SessionManager;
+import org.d3ifcool.finpro.core.interfaces.AuthContract;
+import org.d3ifcool.finpro.core.interfaces.DosenContract;
+import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.models.Dosen;
+import org.d3ifcool.finpro.core.models.Mahasiswa;
+import org.d3ifcool.finpro.core.models.Plotting;
+import org.d3ifcool.finpro.databinding.ActivityDosenProfilBinding;
+import org.d3ifcool.finpro.databinding.ActivityMahasiswaProfilBinding;
 import org.d3ifcool.finpro.mahasiswa.activities.editor.MahasiswaProfilUbahActivity;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.List;
 
 import static org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl.URL_FOTO_MAHASISWA;
 
-public class MahasiswaProfilActivity extends AppCompatActivity {
+public class MahasiswaProfilActivity extends AppCompatActivity implements AuthContract.ViewModel  {
 
-    private SessionManager sessionManager;
-    private CircleImageView mahasiswa_foto;
-    private TextView mahasiswa_nama, mahasiswa_nim, mahasiswa_email, mahasiswa_kontak, mahasiswa_angkatan;
-
-//    private static final int PERMISSION_CODE =1;
-//    private static final int IMAGE_PICK_CODE =2;
+    private ActivityMahasiswaProfilBinding mBinding;
+    private Message message = new Message();
+    private Mediator mediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mahasiswa_profil);
+        mBinding = DataBindingUtil.setContentView(this,R.layout.activity_mahasiswa_profil);
+        mBinding.setLifecycleOwner(this);
+        mediator = new ConcreteMediator(this);
+        mediator.setAuthPresenter(this);
 
-        setTitle(getString(R.string.title_profil));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setElevation(0f);
+        mediator.setTitleContextWithHomeAsUp("Profile");
 
-        sessionManager = new SessionManager(this);
-
-        mahasiswa_nama = findViewById(R.id.act_mhs_profil_nama);
-        mahasiswa_nim = findViewById(R.id.act_mhs_profil_nim);
-        mahasiswa_email = findViewById(R.id.act_mhs_profil_email);
-        mahasiswa_kontak = findViewById(R.id.act_mhs_profil_kontak);
-        mahasiswa_foto = findViewById(R.id.act_mhs_profil_foto);
-        mahasiswa_angkatan = findViewById(R.id.act_mhs_profil_angkatan);
-
-        initContentView();
-        Picasso.get().load(URL_FOTO_MAHASISWA + sessionManager.getSessionMahasiswaFoto()).into(mahasiswa_foto);
-
-//        mahasiswa_foto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(Intent.ACTION_PICK);
-//                intent.setType("image/*");
-//                startActivityForResult(intent, IMAGE_PICK_CODE);
-//            }
-//        });
-
-    }
-
-    private void initContentView(){
-        mahasiswa_nama.setText(sessionManager.getSessionMahasiswaNama());
-        mahasiswa_nim.setText(sessionManager.getSessionMahasiswaNim());
-        mahasiswa_email.setText(sessionManager.getSessionMahasiswaEmail());
-        mahasiswa_kontak.setText(sessionManager.getSessionMahasiswaKontak());
-        mahasiswa_angkatan.setText(sessionManager.getSessionMahasiswaAngkatan());
+        mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
+        mediator.message(message.setComponent("SessionManager").setEvent("set"));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        initContentView();
+        mediator.message(message.setComponent("AuthPresenter").setEvent("getCurrentUser"));
     }
-
-    //    private void pickImageFromGallery() {
-//        Intent galeri = new Intent(Intent.ACTION_PICK);
-//        galeri.setType("image/*");
-//        startActivityForResult(galeri, IMAGE_PICK_CODE);
-//    }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        switch (requestCode){
-//            case PERMISSION_CODE:{
-//                if (grantResults.length > 0 && grantResults[0] ==
-//                        PackageManager.PERMISSION_GRANTED){
-//                    pickImageFromGallery();
-//                }
-//                else {
-//                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        }
-//    }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE){
-//            mahasiswa_foto.setImageURI(data.getData());
-//        }
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -109,16 +72,33 @@ public class MahasiswaProfilActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int i = item.getItemId();
-        if (i == android.R.id.home) {
-            finish();
-        } else if (i == R.id.toolbar_menu_hanya_ubah) {
-            Intent intentUbah = new Intent(MahasiswaProfilActivity.this, MahasiswaProfilUbahActivity.class);
-            startActivity(intentUbah);
-
-        } else {
-        }
+        mediator.message(message.setComponent("Toolbar").setVisibility(item.getItemId()).setEvent("mahasiswa"));
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void setStatus(boolean status) {
+
+    }
+
+    @Override
+    public void onRetrieveData(ResponseBody body) throws IOException, JSONException {
+        mBinding.setModel(new Gson().fromJson(new JSONObject(body.string()).getJSONObject("data").toString(), Mahasiswa.class));
+        message.setMahasiswa(mBinding.getModel());
+    }
+
+    @Override
+    public void onMessage(String messages) {
+        switch (messages){
+            case "showProgress":
+                mediator.message(message.setComponent("ProgressDialog").setEvent("show"));
+                break;
+            case "dismissProgress":
+                mediator.message(message.setComponent("ProgressDialog").setEvent("dismiss"));
+                break;
+            default:
+                mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));
+                break;
+        }
+    }
 }

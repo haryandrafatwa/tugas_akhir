@@ -1,51 +1,37 @@
 package org.d3ifcool.finpro.dosen.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import org.d3ifcool.finpro.core.adapters.AnggotaViewAdapter;
 import org.d3ifcool.finpro.core.helpers.Message;
-import org.d3ifcool.finpro.core.helpers.ViewAdapterHelper;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.interfaces.BimbinganContract;
-import org.d3ifcool.finpro.core.interfaces.lists.BimbinganListView;
-import org.d3ifcool.finpro.core.interfaces.lists.MonevDetailListView;
-import org.d3ifcool.finpro.core.interfaces.lists.ProyekAkhirListView;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.interfaces.SidangContract;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Bimbingan;
-import org.d3ifcool.finpro.core.models.DetailMonev;
 import org.d3ifcool.finpro.core.models.Dosen;
-import org.d3ifcool.finpro.core.models.Judul;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
-import org.d3ifcool.finpro.core.models.ProyekAkhir;
-import org.d3ifcool.finpro.core.presenters.BimbinganPresenter;
-import org.d3ifcool.finpro.core.presenters.MonevDetailPresenter;
-import org.d3ifcool.finpro.core.presenters.ProyekAkhirPresenter;
+import org.d3ifcool.finpro.core.models.Sidang;
 import org.d3ifcool.finpro.databinding.ActivityDosenTugasAkhirBinding;
+import org.d3ifcool.finpro.dosen.activities.detail.SidangDetailActivity;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
+import okhttp3.ResponseBody;
 
-import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_DOSEN;
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_MAHASISWA;
-import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.JUDUL_STATUS_DIGUNAKAN;
-import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.JUMLAH_BIMBINGAN_SIDANG;
 
-public class DosenTugasAkhirActivity extends AppCompatActivity implements BimbinganContract .ViewModel{
+public class DosenTugasAkhirActivity extends AppCompatActivity implements BimbinganContract .ViewModel, SidangContract.ViewModel {
 
     private ActivityDosenTugasAkhirBinding mBinding;
     private Message message = new Message();
@@ -58,15 +44,37 @@ public class DosenTugasAkhirActivity extends AppCompatActivity implements Bimbin
         mBinding.setLifecycleOwner(this);
         mediator = new ConcreteMediator(this);
         mediator.setBimbinganPresenter(this);
+        mediator.setSidangPresenter(this);
 
-        setTitle(R.string.title_tugasakhir_detail);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mediator.setTitleContextWithHomeAsUp("Detail Tugas Akhir");
 
         mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
         mediator.message(message.setComponent("SessionManager").setEvent("set"));
 
-        mediator.setCardView(mBinding.frgMhsPaCardviewBimbingan);
-        mediator.message(message.setComponent("CardView").setEvent("setOnClick").setaClass(DosenTugasAkhirBimbinganActivity.class).setExtraIntent(getIntent().getStringExtra(EXTRA_MAHASISWA)));
+        mBinding.frgMhsPaCardviewSidang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediator.selectIntent(message.setaClass(SidangDetailActivity.class).setExtraIntent(getIntent().getStringExtra(EXTRA_MAHASISWA)));
+            }
+        });
+        mBinding.frgMhsPaCardviewBimbingan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediator.selectIntent(message.setaClass(DosenTugasAkhirBimbinganActivity.class).setExtraIntent(getIntent().getStringExtra(EXTRA_MAHASISWA)));
+            }
+        });
+        mBinding.layoutAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediator.message(message.setComponent("SidangPresenter").setEvent("updateStatusSidang").setText(getIntent().getStringExtra(EXTRA_MAHASISWA)).setUrl("dijadwalkan"));
+            }
+        });
+        mBinding.layoutTolak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediator.message(message.setComponent("SidangPresenter").setEvent("updateStatusSidang").setText(getIntent().getStringExtra(EXTRA_MAHASISWA)).setUrl("ditolak"));
+            }
+        });
     }
 
     @Override
@@ -89,6 +97,43 @@ public class DosenTugasAkhirActivity extends AppCompatActivity implements Bimbin
     @Override
     public void onGetListBimbingan(List<Bimbingan> bimbinganList, Dosen dosen, Mahasiswa mahasiswa) {
         mBinding.setModel(mahasiswa);
+        mediator.setTextView(mBinding.actDsnPaBimbinganTextviewStatusSidang);
+        if (mahasiswa.getSidang_status() != null){
+            if (mahasiswa.getSidang_status().equalsIgnoreCase("terjadwalkan")){
+                mediator.message(message.setComponent("TextView").setEvent("setText").setText(mahasiswa.setSidangStatus()));
+                mediator.message(message.setComponent("TextView").setEvent("setTextColor").setColor("#ff2c3b41"));
+            }else if(mahasiswa.getSidang_status().equalsIgnoreCase("revisi")){
+                mediator.message(message.setComponent("TextView").setEvent("setText").setText("Lulus Bersyarat"));
+                mediator.message(message.setComponent("TextView").setEvent("setTextColor").setColor("#FF888888"));
+            }else if(mahasiswa.getSidang_status().equalsIgnoreCase("tidak lulus")){
+                mediator.message(message.setComponent("TextView").setEvent("setText").setText("Tidak Lulus"));
+                mediator.message(message.setComponent("TextView").setEvent("setTextColor").setColor("#FFFF0000"));
+            }else{
+                mediator.message(message.setComponent("TextView").setEvent("setText").setText("Lulus"));
+                mediator.message(message.setComponent("TextView").setEvent("setTextColor").setColor("#FF4CAF50"));
+            }
+        }else{
+            mediator.message(message.setComponent("TextView").setEvent("setText").setText("Belum terdaftar sidang"));
+            mediator.message(message.setComponent("TextView").setEvent("setTextColor").setColor("#FFFF0000"));
+            mBinding.frgMhsPaCardviewSidang.setEnabled(false);
+        }
+        mBinding.frgMhsPaCardviewSidang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date openDate = format.parse(mahasiswa.getSidang_tanggal());
+                    Date now = new Date();
+                    if(now.before(openDate)){
+                        onMessage("Sidang belum berlangsung!");
+                    }else{
+                        mediator.selectIntent(message.setaClass(SidangDetailActivity.class).setExtraIntent(mahasiswa.getMhs_nim()));
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -97,7 +142,36 @@ public class DosenTugasAkhirActivity extends AppCompatActivity implements Bimbin
     }
 
     @Override
-    public void onMessage(String message) {
+    public void onGetObjectSidang(Sidang sidang) {
 
+    }
+
+    @Override
+    public void onGetObjectMahasiswa(Mahasiswa mahasiswa) {
+
+    }
+
+    @Override
+    public void onGetBody(ResponseBody body, String filename) {
+
+    }
+
+    @Override
+    public void onMessage(String messages) {
+        switch (messages){
+            case "ShowProgressDialog":
+                mediator.message(message.setComponent("ProgressDialog").setEvent("show"));
+                break;
+            case "HideProgressDialog":
+                mediator.message(message.setComponent("ProgressDialog").setEvent("dismiss"));
+                break;
+            case "onSuccess":
+                mediator.message(message.setComponent("Toasty").setEvent("Success").setText("Berhasil konfirmasi pengajuan sidang"));
+                onResume();
+                break;
+            default:
+                mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));
+                break;
+        }
     }
 }

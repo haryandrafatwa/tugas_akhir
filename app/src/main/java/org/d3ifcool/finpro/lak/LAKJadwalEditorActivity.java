@@ -1,35 +1,21 @@
 package org.d3ifcool.finpro.lak;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
-import org.d3ifcool.finpro.core.interfaces.DosenContract;
 import org.d3ifcool.finpro.core.interfaces.JadwalContract;
-import org.d3ifcool.finpro.core.interfaces.PlottingContract;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
-import org.d3ifcool.finpro.core.models.Dosen;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.JadwalKegiatan;
-import org.d3ifcool.finpro.core.models.Plotting;
-import org.d3ifcool.finpro.core.presenters.DosenPresenter;
-import org.d3ifcool.finpro.databinding.ActivityKoorPlottingTambahBinding;
 import org.d3ifcool.finpro.databinding.ActivityLakJadwalEditorBinding;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.ResponseBody;
 
 public class LAKJadwalEditorActivity extends AppCompatActivity implements JadwalContract.ViewModel {
 
@@ -45,8 +31,7 @@ public class LAKJadwalEditorActivity extends AppCompatActivity implements Jadwal
         mediator.setJadwalPresenter(this);
         mBinding.setPresenter(mediator.getJadwalPresenter());
 
-        setTitle(getString(R.string.button_click_tambah_bimbingan));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mediator.setTitleContextWithHomeAsUp("Tambah Jadwal Kegiatan");
 
         mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
         mediator.message(message.setComponent("SessionManager").setEvent("set"));

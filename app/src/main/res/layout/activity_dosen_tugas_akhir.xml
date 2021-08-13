@@ -5,6 +5,7 @@
         <variable
             name="model"
             type="org.d3ifcool.finpro.core.models.Mahasiswa" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -29,6 +30,117 @@
             <include
                 layout="@layout/content_all_pa_judul_kelompok"
                 mahasiswa="@{model}"/>
+
+            <LinearLayout
+                android:id="@+id/layout_validasi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{model.sidang_status.equals(&quot;mengajukan&quot;) ? View.VISIBLE : View.GONE}"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/title_validasi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_below="@+id/profile_body_status_sk"
+                    android:layout_marginStart="@dimen/dimen_big_16dp"
+                    android:layout_marginEnd="@dimen/dimen_big_16dp"
+                    android:layout_marginTop="@dimen/dimen_medium_8dp">
+
+                    <TextView
+                        android:text="@string/dialog_konfirmasi_sidang"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_medium_16sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/content_validasi_sidang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/title_pembimbing"
+                    android:layout_marginTop="@dimen/dimen_medium_8dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        style="@style/profile_all_container_pembimbing"
+                        android:weightSum="12"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dialog_validasi_sidang_text_dosen"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_big_16dp"
+                            android:gravity="center"
+                            android:weightSum="12">
+
+                            <LinearLayout
+                                android:id="@+id/layout_tolak"
+                                android:layout_width="0dp"
+                                android:layout_weight="6"
+                                android:layout_height="48dp"
+                                android:background="@drawable/circle_background"
+                                android:backgroundTint="@color/colorTextRed"
+                                android:layout_marginEnd="@dimen/dimen_medium_8dp"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_clear_white_24dp"
+                                    android:layout_marginEnd="@dimen/dimen_medium_8dp"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Tolak"
+                                    android:textColor="@color/colorTextWhite"
+                                    android:textSize="@dimen/text_size_title_small_18sp"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layout_accept"
+                                android:layout_width="0dp"
+                                android:layout_weight="6"
+                                android:layout_height="48dp"
+                                android:background="@drawable/circle_background"
+                                android:backgroundTint="@color/colorBackgroundGreen"
+                                android:layout_marginStart="@dimen/dimen_medium_8dp"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_toolbar_accept"
+                                    android:layout_marginEnd="@dimen/dimen_medium_8dp"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Terima"
+                                    android:textColor="@color/colorTextWhite"
+                                    android:textSize="@dimen/text_size_title_small_18sp"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/text"
@@ -113,6 +225,7 @@
                 android:focusable="true"
                 android:elevation="@dimen/dimen_elevation"
                 android:layout_width="match_parent"
+                android:layout_marginBottom="@dimen/dimen_big_16dp"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
@@ -129,13 +242,14 @@
                         android:text="@string/text_status_sidang"/>
 
                     <TextView
-                        android:textAllCaps="true"
+                        android:textAllCaps="false"
                         android:textStyle="bold"
                         android:textColor="@color/colorBackgroundYellow"
-                        android:textSize="@dimen/text_size_medium_16sp"
+                        android:textSize="@dimen/text_size_title_small_18sp"
                         tools:text="@string/dummy_status_sidang"
                         android:id="@+id/act_dsn_pa_bimbingan_textview_status_sidang"
                         android:layout_marginStart="@dimen/dimen_big_16dp"
+                        android:layout_marginTop="@dimen/dimen_medium_8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 

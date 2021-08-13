@@ -10,21 +10,13 @@ import org.d3ifcool.finpro.core.api.ApiClient;
 import org.d3ifcool.finpro.core.api.ApiService;
 import org.d3ifcool.finpro.core.helpers.ConnectionHelper;
 import org.d3ifcool.finpro.core.interfaces.BimbinganContract;
-import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
-import org.d3ifcool.finpro.core.interfaces.lists.BimbinganListView;
-import org.d3ifcool.finpro.core.interfaces.lists.BimbinganSearchListView;
-import org.d3ifcool.finpro.core.interfaces.lists.SiapSidangListView;
-import org.d3ifcool.finpro.core.interfaces.objects.BimbinganView;
-import org.d3ifcool.finpro.core.interfaces.works.ICreate;
 import org.d3ifcool.finpro.core.models.Bimbingan;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
-import org.d3ifcool.finpro.core.models.SiapSidang;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -89,7 +81,6 @@ public class BimbinganManager {
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    viewModel.onMessage("HideProgressDialog");
                     if (response.body() != null && response.isSuccessful()) {
                         try {
                             JSONObject jsonObject = new JSONObject(response.body().string());
@@ -98,12 +89,13 @@ public class BimbinganManager {
 
                             Dosen dosen = new Gson().fromJson(jsonObject.getJSONObject("dosen").toString(),Dosen.class);
                             Mahasiswa mahasiswa = new Gson().fromJson(jsonObject.getJSONObject("mahasiswa").toString(),Mahasiswa.class);
+                            viewModel.onMessage("HideProgressDialog");
                             viewModel.onGetListBimbingan(bimbinganList,dosen,mahasiswa);
                         } catch (IOException | JSONException e) {
                             e.printStackTrace();
                         }
                     } else {
-                        viewModel.onMessage("EmptyList");
+                        call.clone().enqueue(this);
                     }
                 }
 

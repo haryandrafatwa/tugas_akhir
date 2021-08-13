@@ -14,8 +14,8 @@ import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.JadwalContract;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.JadwalKegiatan;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
@@ -92,8 +92,10 @@ public class ProdiSidangFragment extends Fragment implements MahasiswaContract.V
         arrayList.clear();
         for (int i = 0; i < mahasiswa.size(); i++) {
             if (mahasiswa.get(i).getSidang_status()!=null){
-                if (mahasiswa.get(i).getSidang_status().equalsIgnoreCase("terjadwalkan")){
-                    arrayList.add(mahasiswa.get(i));
+                if (!mahasiswa.get(i).getSidang_status().equalsIgnoreCase("ditolak")){
+                    if (!mahasiswa.get(i).getSidang_status().equalsIgnoreCase("dijadwalkan")){
+                        arrayList.add(mahasiswa.get(i));
+                    }
                 }
             }
         }

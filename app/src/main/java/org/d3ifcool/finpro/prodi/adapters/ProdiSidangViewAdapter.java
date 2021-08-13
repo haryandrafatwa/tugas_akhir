@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
+import org.d3ifcool.finpro.dosen.activities.detail.SidangDetailActivity;
 import org.d3ifcool.finpro.prodi.activities.detail.ProdiMahasiswaDetailActivity;
 
 import java.text.ParseException;
@@ -26,6 +27,7 @@ import java.util.Locale;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static org.d3ifcool.finpro.core.api.ApiUrl.FinproUrl.URL_FOTO_MAHASISWA;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_DEFAULT;
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_MAHASISWA;
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.STATUS_SIDANG_LULUS;
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.STATUS_SIDANG_LULUS_BERSYARAT;
@@ -108,9 +110,9 @@ public class ProdiSidangViewAdapter extends RecyclerView.Adapter<ProdiSidangView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, ProdiMahasiswaDetailActivity.class);
+                Intent intent = new Intent(mContext, SidangDetailActivity.class);
                 Mahasiswa parcelMahasiswa = mMahasiswa.get(position);
-                intent.putExtra(EXTRA_MAHASISWA, parcelMahasiswa);
+                intent.putExtra(EXTRA_DEFAULT, parcelMahasiswa.getMhs_nim());
                 mContext.startActivity(intent);
             }
         });

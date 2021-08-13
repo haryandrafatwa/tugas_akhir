@@ -1,117 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorBackground">
-
-    <RelativeLayout
+<layout>
+    <data>
+        <variable
+            name="model"
+            type="org.d3ifcool.finpro.core.models.Mahasiswa" />
+    </data>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground">
 
-        <View
-            style="@style/profile_all_header"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/act_mhs_profil_foto"
-            style="@style/profile_all_photo"/>
+            <View
+                style="@style/profile_all_header"/>
 
-        <TextView
-            android:id="@+id/act_mhs_profil_nama"
-            android:layout_below="@+id/act_mhs_profil_foto"
-            android:text="@string/dummy_mahasiswa_nama"
-            style="@style/profile_all_header_name"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/act_mhs_profil_foto"
+                style="@style/profile_all_photo"/>
 
-        <LinearLayout
-            style="@style/profile_all_container_body">
+            <TextView
+                android:id="@+id/act_mhs_profil_nama"
+                android:layout_below="@+id/act_mhs_profil_foto"
+                android:text="@{model.mhs_nama}"
+                style="@style/profile_all_header_name"/>
 
             <LinearLayout
-                style="@style/profile_all_container_textview">
+                android:id="@+id/linear_layout"
+                style="@style/profile_all_container_body">
 
-                <TextView
-                    android:text="@string/text_profil_detail_nim"
-                    style="@style/profile_all_textview_subtitle"/>
+                <LinearLayout
+                    style="@style/profile_all_container_textview">
 
-                <TextView
-                    android:id="@+id/act_mhs_profil_nim"
-                    tools:text="@string/dummy_anggota_nim_2"
-                    style="@style/profile_all_textview_content"/>
+                    <TextView
+                        android:text="@string/text_profil_detail_nim"
+                        style="@style/profile_all_textview_subtitle"/>
+
+                    <TextView
+                        android:id="@+id/act_mhs_profil_nim"
+                        tools:text="@string/dummy_anggota_nim_2"
+                        android:text="@{model.mhs_nim}"
+                        style="@style/profile_all_textview_content"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_marginBottom="@dimen/dimen_big_super_24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_view_line"
+                    android:background="@color/colorBackground" />
+
+                <LinearLayout
+                    style="@style/profile_all_container_textview">
+
+                    <TextView
+                        android:text="@string/text_angkatan"
+                        style="@style/profile_all_textview_subtitle"/>
+
+                    <TextView
+                        android:id="@+id/act_mhs_profil_angkatan"
+                        tools:text="@string/dummy_no_telp"
+                        android:text="@{model.angkatan}"
+                        style="@style/profile_all_textview_content"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_marginBottom="@dimen/dimen_big_super_24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_view_line"
+                    android:background="@color/colorBackground" />
+
+                <LinearLayout
+                    style="@style/profile_all_container_textview">
+
+                    <TextView
+                        android:text="@string/text_profil_detail_email"
+                        style="@style/profile_all_textview_subtitle"/>
+
+                    <TextView
+                        android:id="@+id/act_mhs_profil_email"
+                        tools:text="@string/dummy_kelas"
+                        android:text="@{model.mhs_email}"
+                        style="@style/profile_all_textview_content"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_marginBottom="@dimen/dimen_big_super_24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_view_line"
+                    android:background="@color/colorBackground" />
+
+                <LinearLayout
+                    style="@style/profile_all_container_textview">
+
+                    <TextView
+                        android:text="@string/text_profil_detail_notelp"
+                        style="@style/profile_all_textview_subtitle"/>
+
+                    <TextView
+                        android:id="@+id/act_mhs_profil_kontak"
+                        tools:text="@string/dummy_no_telp"
+                        android:text="@{model.mhs_kontak}"
+                        style="@style/profile_all_textview_content"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_view_line"
+                    android:background="@color/colorBackground" />
 
             </LinearLayout>
 
-            <View
-                android:layout_marginBottom="@dimen/dimen_big_super_24dp"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_view_line"
-                android:background="@color/colorBackground" />
+            <include
+                layout="@layout/content_all_copyright_institute"/>
 
-            <LinearLayout
-                style="@style/profile_all_container_textview">
-
-                <TextView
-                    android:text="@string/text_angkatan"
-                    style="@style/profile_all_textview_subtitle"/>
-
-                <TextView
-                    android:id="@+id/act_mhs_profil_angkatan"
-                    tools:text="@string/dummy_no_telp"
-                    style="@style/profile_all_textview_content"/>
-
-            </LinearLayout>
-
-            <View
-                android:layout_marginBottom="@dimen/dimen_big_super_24dp"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_view_line"
-                android:background="@color/colorBackground" />
-
-            <LinearLayout
-                style="@style/profile_all_container_textview">
-
-                <TextView
-                    android:text="@string/text_profil_detail_email"
-                    style="@style/profile_all_textview_subtitle"/>
-
-                <TextView
-                    android:id="@+id/act_mhs_profil_email"
-                    tools:text="@string/dummy_kelas"
-                    style="@style/profile_all_textview_content"/>
-
-            </LinearLayout>
-
-            <View
-                android:layout_marginBottom="@dimen/dimen_big_super_24dp"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_view_line"
-                android:background="@color/colorBackground" />
-
-            <LinearLayout
-                style="@style/profile_all_container_textview">
-
-                <TextView
-                    android:text="@string/text_profil_detail_notelp"
-                    style="@style/profile_all_textview_subtitle"/>
-
-                <TextView
-                    android:id="@+id/act_mhs_profil_kontak"
-                    tools:text="@string/dummy_no_telp"
-                    style="@style/profile_all_textview_content"/>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_view_line"
-                android:background="@color/colorBackground" />
-
-        </LinearLayout>
-
-        <include
-            layout="@layout/content_all_copyright_institute"/>
-
-    </RelativeLayout>
+        </RelativeLayout>
 
 
 
-</ScrollView>
+    </ScrollView>
+</layout>

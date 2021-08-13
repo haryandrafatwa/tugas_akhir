@@ -1,228 +1,155 @@
 package org.d3ifcool.finpro.core.presenters;
 
-import android.content.Context;
-import android.widget.Toast;
+import android.content.Intent;
+import android.text.TextUtils;
 
+import androidx.databinding.ObservableField;
+
+import org.d3ifcool.finpro.App;
 import org.d3ifcool.finpro.R;
-import org.d3ifcool.finpro.core.helpers.ConnectionHelper;
-import org.d3ifcool.finpro.core.interfaces.lists.SidangListView;
-import org.d3ifcool.finpro.core.interfaces.objects.SidangView;
-import org.d3ifcool.finpro.core.interfaces.works.SidangWorkView;
-import org.d3ifcool.finpro.core.models.Sidang;
-import org.d3ifcool.finpro.core.api.ApiClient;
-import org.d3ifcool.finpro.core.api.ApiService;
+import org.d3ifcool.finpro.core.helpers.Constant;
+import org.d3ifcool.finpro.core.interfaces.DosenContract;
+import org.d3ifcool.finpro.core.interfaces.SidangContract;
+import org.d3ifcool.finpro.core.models.Dosen;
+import org.d3ifcool.finpro.core.models.manager.DosenManager;
+import org.d3ifcool.finpro.core.models.manager.SidangManager;
+import org.d3ifcool.finpro.prodi.activities.editor.ProdiDosenEditorActivity;
 
-import java.util.List;
+import okhttp3.MultipartBody;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+public class SidangPresenter implements SidangContract.Presenter {
 
-public class SidangPresenter {
+    public ObservableField<String> clo1;
+    public ObservableField<String> clo2;
+    public ObservableField<String> clo3;
+    public ObservableField<String> review;
 
-    private SidangListView viewResult;
-    private SidangWorkView viewEditor;
-    private SidangView viewObject;
+    private SidangContract.ViewModel viewModel;
+    private SidangManager sidangManager;
 
-    private ConnectionHelper connectionHelper = new ConnectionHelper();
-    private Context context;
-
-    public void initContext(Context context){
-        this.context = context;
+    public SidangPresenter(SidangContract.ViewModel viewModel) {
+        this.viewModel = viewModel;
+        sidangManager = new SidangManager(viewModel);
+        sidangManager.initContext(App.self());
+        initFields();
     }
 
-    public SidangPresenter(SidangListView viewResult, SidangWorkView viewEditor, SidangView viewObject) {
-        this.viewResult = viewResult;
-        this.viewEditor = viewEditor;
-        this.viewObject = viewObject;
+    private void initFields(){
+        clo1 = new ObservableField<>();
+        clo2 = new ObservableField<>();
+        clo3 = new ObservableField<>();
+        review = new ObservableField<>();
     }
 
-    public SidangPresenter(SidangListView viewResult) {
-        this.viewResult = viewResult;
-    }
-
-    public SidangPresenter(SidangWorkView viewEditor) {
-        this.viewEditor = viewEditor;
-    }
-
-    public SidangPresenter(SidangView viewObject) {
-        this.viewObject = viewObject;
-    }
-
-    public SidangPresenter(SidangListView viewResult, SidangWorkView viewEditor) {
-        this.viewResult = viewResult;
-        this.viewEditor = viewEditor;
-    }
-
-    public void createSidang(String sidang_review, String sidang_tanggal, int nilai_proposal, int nilai_penguji_1, int nilai_penguji_2, int nilai_pembimbing, double nilai_total, String status,int proyek_akhir_id){
-
-        if (connectionHelper.isConnected(context)){
-            viewEditor.showProgress();
-            ApiService apiInterfaceSidang = ApiClient.getApiClient().create(ApiService.class);
-            Call<Sidang> call = apiInterfaceSidang.createSidang(sidang_review, sidang_tanggal, nilai_proposal , nilai_penguji_1,nilai_penguji_2,nilai_pembimbing, nilai_total, status, proyek_akhir_id);
-            call.enqueue(new Callback<Sidang>() {
-                @Override
-                public void onResponse(Call<Sidang> call, Response<Sidang> response) {
-                    viewEditor.hideProgress();
-                    viewEditor.onSucces();
-                }
-
-                @Override
-                public void onFailure(Call<Sidang> call, Throwable t) {
-                    viewEditor.hideProgress();
-                    viewEditor.onFailed(t.getMessage());
-                }
-            });
-        } else {
-            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
+    private boolean isNilaiValid(){
+        if (TextUtils.isEmpty(clo1.get())){
+            viewModel.onMessage("Nilai CLO 1 tidak boleh kosong");
+            return false;
+        }else{
+            if (!clo1.get().matches("(A|AB|B|BC|C|D|E)")){
+                viewModel.onMessage("Nilai CLO 1 tidak valid");
+                return false;
+            }
         }
-
-
+        if (TextUtils.isEmpty(clo2.get())){
+            viewModel.onMessage("Nilai CLO 2 tidak boleh kosong");
+            return false;
+        }else{
+            if (!clo2.get().matches("(A|AB|B|BC|C|D|E)")){
+                viewModel.onMessage("Nilai CLO 2 tidak valid");
+                return false;
+            }
+        }
+        if (TextUtils.isEmpty(clo3.get())){
+            viewModel.onMessage("Nilai CLO 3 tidak boleh kosong");
+            return false;
+        }else{
+            if (!clo3.get().matches("(A|AB|B|BC|C|D|E)")){
+                viewModel.onMessage("Nilai CLO 3 tidak valid");
+                return false;
+            }
+        }
+        return true;
     }
 
-    public void getSidang(){
-
-        if (connectionHelper.isConnected(context)){
-            viewResult.showProgress();
-            ApiService apiInterfaceSidang = ApiClient.getApiClient().create(ApiService.class);
-            Call<List<Sidang>> call = apiInterfaceSidang.getSidang();
-            call.enqueue(new Callback<List<Sidang>>() {
-                @Override
-                public void onResponse(Call<List<Sidang>> call, Response<List<Sidang>> response) {
-                    viewResult.hideProgress();
-                    if (response.body() != null && response.isSuccessful()) {
-                        viewResult.onGetListSidang(response.body());
-                    } else {
-                        viewResult.isEmptyListSidang();
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<List<Sidang>> call, Throwable t) {
-                    viewResult.hideProgress();
-                    viewResult.onFailed(t.getMessage());
-                }
-            });
-        } else {
-            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
+    private boolean isReviewValid(){
+        if (TextUtils.isEmpty(review.get())){
+            viewModel.onMessage("Review sidang tidak boleh kosong");
+            return false;
+        }else{
+            if (review.get().length() < 30){
+                viewModel.onMessage("Review sidang terlalu pendek");
+                return false;
+            }
         }
-
-
+        return true;
     }
 
-    public void deleteSidang(String sidang_id){
-
-        if (connectionHelper.isConnected(context)){
-            viewEditor.showProgress();
-            ApiService apiInterfaceSidang = ApiClient.getApiClient().create(ApiService.class);
-            Call<Sidang> call = apiInterfaceSidang.deleteSidang(sidang_id);
-            call.enqueue(new Callback<Sidang>() {
-                @Override
-                public void onResponse(Call<Sidang> call, Response<Sidang> response) {
-                    viewEditor.hideProgress();
-                    viewEditor.onSucces();
-                }
-
-                @Override
-                public void onFailure(Call<Sidang> call, Throwable t) {
-                    viewResult.hideProgress();
-                    viewResult.onFailed(t.getMessage());
-                }
-            });
-        } else {
-            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
+    @Override
+    public void onSave() {
+        if (isNilaiValid()){
+            viewModel.onMessage("saveNilai");
         }
-
-
     }
 
-
-    public void updateSidang(String sidang_id, String sidang_review, String sidang_tanggal, int nilai_proposal, int nilai_penguji_1, int nilai_penguji_2, int nilai_pembimbing, double nilai_total, String sidang_status){
-
-        if (connectionHelper.isConnected(context)){
-            viewEditor.showProgress();
-            ApiService apiInterfaceSidang = ApiClient.getApiClient().create(ApiService.class);
-            Call<Sidang> call = apiInterfaceSidang.updateSidang(sidang_id,sidang_review, sidang_tanggal, nilai_proposal , nilai_penguji_1,nilai_penguji_2,nilai_pembimbing, nilai_total, sidang_status);
-            call.enqueue(new Callback<Sidang>() {
-                @Override
-                public void onResponse(Call<Sidang> call, Response<Sidang> response) {
-                    viewEditor.hideProgress();
-                    viewEditor.onSucces();
-                }
-
-                @Override
-                public void onFailure(Call<Sidang> call, Throwable t) {
-                    viewEditor.hideProgress();
-                    viewEditor.onFailed(t.getMessage());
-                }
-            });
-        } else {
-            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
+    @Override
+    public void onSaveReview() {
+        if (isReviewValid()){
+            viewModel.onMessage("saveReview");
         }
-
-
     }
 
-    public void searchAllSidangBy(String parameter, String query){
-
-        if (connectionHelper.isConnected(context)){
-            viewResult.showProgress();
-            ApiService apiInterfaceSidang = ApiClient.getApiClient().create(ApiService.class);
-            Call<List<Sidang>> call = apiInterfaceSidang.searchAllSidangBy(parameter, query);
-            call.enqueue(new Callback<List<Sidang>>() {
-                @Override
-                public void onResponse(Call<List<Sidang>> call, Response<List<Sidang>> response) {
-                    viewResult.hideProgress();
-                    if (response.body() != null && response.isSuccessful()) {
-                        viewResult.onGetListSidang(response.body());
-                    } else {
-                        viewResult.isEmptyListSidang();
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<List<Sidang>> call, Throwable t) {
-                    viewResult.hideProgress();
-                    viewResult.onFailed(t.getLocalizedMessage());
-                }
-            });
-        } else {
-            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
-        }
-
-
+    @Override
+    public void onUploadRevisi() {
+        viewModel.onMessage("onUploadRevisi");
     }
 
-    public void searchAllSidangByTwo(String parameter1, String query1, String parameter2, String query2){
+    @Override
+    public void checkFormRevisi(String token, String mhs_nim) {
+        sidangManager.checkFormRevisi(token,mhs_nim);
+    }
 
-        if (connectionHelper.isConnected(context)){
-            viewResult.showProgress();
-            ApiService apiInterfaceSidang = ApiClient.getApiClient().create(ApiService.class);
-            Call<List<Sidang>> call = apiInterfaceSidang.searchAllSidangByTwo(parameter1, query1, parameter2, query2);
-            call.enqueue(new Callback<List<Sidang>>() {
-                @Override
-                public void onResponse(Call<List<Sidang>> call, Response<List<Sidang>> response) {
-                    viewResult.hideProgress();
-                    if (response.body() != null && response.isSuccessful()) {
-                        viewResult.onGetListSidang(response.body());
-                    } else {
-                        viewResult.isEmptyListSidang();
-                    }
+    @Override
+    public void uploadRevisi(String token, MultipartBody.Part part) {
+        sidangManager.uploadFormRevisi(token,part);
+    }
 
-                }
+    @Override
+    public void uploadDraftJurnal(String token, String mhs_nim, MultipartBody.Part part) {
+        sidangManager.uploadDraftJurnal(token, mhs_nim, part);
+    }
 
-                @Override
-                public void onFailure(Call<List<Sidang>> call, Throwable t) {
-                    viewResult.hideProgress();
-                    viewResult.onFailed(t.getLocalizedMessage());
-                }
-            });
-        } else {
-            Toast.makeText(context, context.getString(R.string.validate_no_connection), Toast.LENGTH_SHORT).show();
-        }
+    @Override
+    public void downloadRevisi(String token, String mhs_nim) {
+        sidangManager.downloadFormRevisi(token, mhs_nim);
+    }
 
+    @Override
+    public void saveNilai(String token, String mhs_nim) {
+        sidangManager.saveNilaiSidang(token,mhs_nim,clo1.get(),clo2.get(),clo3.get());
+    }
 
+    @Override
+    public void saveReview(String token, String mhs_nim, String status) {
+        sidangManager.saveReviewSidang(token,mhs_nim,review.get(), status);
+    }
+
+    @Override
+    public void getSidangByNIM(String token, String mhs_nim) {
+        sidangManager.getSidangByNIM(token,mhs_nim);
+    }
+
+    @Override
+    public void getMahasiswaSidangByUsername(String token, String username) {
+        sidangManager.getMahasiswaSidangByUsername(token, username);
+    }
+
+    @Override
+    public void updateStatusSidang(String token, String mhs_nim, String status) {
+        sidangManager.updateStatusSidang(token, mhs_nim, status);
+    }
+
+    public void floatButton(){
+        viewModel.onMessage("FloatButton");
     }
 }

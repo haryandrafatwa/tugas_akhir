@@ -3,37 +3,22 @@ package org.d3ifcool.finpro.mahasiswa.activities.editor;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
-import org.d3ifcool.finpro.core.helpers.MethodHelper;
 import org.d3ifcool.finpro.core.interfaces.BimbinganContract;
-import org.d3ifcool.finpro.core.interfaces.works.ICreate;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Bimbingan;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
-import org.d3ifcool.finpro.core.presenters.BimbinganPresenter;
 import org.d3ifcool.finpro.databinding.ActivityMahasiswaBimbinganEditorBinding;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_BIMBINGAN;
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_DEFAULT;

@@ -8,9 +8,12 @@ import androidx.databinding.ObservableField;
 import org.d3ifcool.finpro.App;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Constant;
+import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
+import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.manager.MahasiswaManager;
+import org.d3ifcool.finpro.dosen.activities.editor.DosenProfilUbahActivity;
 import org.d3ifcool.finpro.mahasiswa.activities.MahasiswaBimbinganActivity;
 import org.d3ifcool.finpro.prodi.activities.editor.ProdiMahasiswaEditorActivity;
 
@@ -213,9 +216,9 @@ public class MahasiswaPresenter implements MahasiswaContract.Presenter {
         mahasiswaManager.konfirmasi(token,status);
     }
 
-    public Intent toolbarIntent(Mahasiswa mahasiswa, Class aClass){
-        Intent intent = new Intent(App.self(), aClass);
-        intent.putExtra(Constant.ObjectConstanta.EXTRA_MAHASISWA,mahasiswa);
+    public Intent toolbarIntent(Message message){
+        Intent intent = new Intent(App.self(), message.getaClass());
+        intent.putExtra(Constant.ObjectConstanta.EXTRA_MAHASISWA,message.getMahasiswa());
         return intent;
     }
 }

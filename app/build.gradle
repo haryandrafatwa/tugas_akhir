@@ -70,6 +70,7 @@ dependencies {
     kapt 'com.android.databinding:compiler:3.2.1'
 
     implementation 'com.github.sundeepk:compact-calendar-view:3.0.0'
+    implementation 'com.github.cazaea:sweet-alert-dialog:1.0.0'
 
     testImplementation 'junit:junit:4.13.1'
 

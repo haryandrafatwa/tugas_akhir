@@ -8,10 +8,7 @@ import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.api.ApiClient;
 import org.d3ifcool.finpro.core.api.ApiService;
 import org.d3ifcool.finpro.core.helpers.ConnectionHelper;
-import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.core.interfaces.PlottingContract;
-import org.d3ifcool.finpro.core.interfaces.lists.PlottingListView;
-import org.d3ifcool.finpro.core.interfaces.works.PlottingWorkView;
 import org.d3ifcool.finpro.core.models.Plotting;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -120,7 +117,7 @@ public class PlottingManager {
                     }else{
                         try {
                             JSONObject jsonObject = new JSONObject(response.errorBody().string());
-                            viewModel.onMessage(jsonObject.getString("message"));
+                            viewModel.onMessage(jsonObject.getString("msg"));
                         } catch (IOException | JSONException e) {
                             e.printStackTrace();
                         }

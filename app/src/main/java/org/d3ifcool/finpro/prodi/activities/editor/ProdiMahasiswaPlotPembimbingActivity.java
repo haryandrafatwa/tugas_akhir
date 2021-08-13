@@ -1,11 +1,9 @@
 package org.d3ifcool.finpro.prodi.activities.editor;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -14,14 +12,11 @@ import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
 import org.d3ifcool.finpro.core.interfaces.PlottingContract;
-import org.d3ifcool.finpro.core.interfaces.lists.PlottingListView;
-import org.d3ifcool.finpro.core.interfaces.works.MahasiswaWorkView;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.databinding.ActivityKoorMahasiswaPlotPembimbingBinding;
-import org.d3ifcool.finpro.prodi.activities.detail.ProdiMahasiswaDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="presenter"
+            type="org.d3ifcool.finpro.core.presenters.SidangPresenter" />
+    </data>
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_big_16dp">
+
+            <LinearLayout
+                android:id="@+id/header_clo_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/title_clo_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_title_small_18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/title_nilai_clo_1"
+                    />
+                <ImageButton
+                    android:id="@+id/info_clo_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_nav_informasi"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:layout_marginStart="@dimen/dimen_small_4dp"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_default_12sp"
+                android:justificationMode="inter_word"
+                android:text="@string/title_deskripsi_clo_1"
+                />
+
+            <EditText
+                android:id="@+id/act_dsn_edittext_clo_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapCharacters"
+                android:maxLength="2"
+                android:text="@={presenter.clo1}"
+                android:digits="A,AB,B,BC,C,D,E"
+                android:hint="@string/hint_clo_1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_default_12sp"
+                android:textStyle="italic"
+                android:text="@string/title_deskripsi_nilai"
+                />
+
+            <LinearLayout
+                android:id="@+id/header_clo_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_medium_8dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/title_clo_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_title_small_18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/title_nilai_clo_2"
+                    />
+                <ImageButton
+                    android:id="@+id/info_clo_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_nav_informasi"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:layout_marginStart="@dimen/dimen_small_4dp"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_default_12sp"
+                android:justificationMode="inter_word"
+                android:text="@string/title_deskripsi_clo_2"
+                />
+
+            <EditText
+                android:id="@+id/act_dsn_edittext_clo_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapCharacters"
+                android:maxLength="2"
+                android:text="@={presenter.clo2}"
+                android:digits="A,AB,B,BC,C,D,E"
+                android:hint="@string/hint_clo_2"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_default_12sp"
+                android:textStyle="italic"
+                android:text="@string/title_deskripsi_nilai"
+                />
+
+            <LinearLayout
+                android:id="@+id/header_clo_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_medium_8dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/title_clo_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_title_small_18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/title_nilai_clo_3"
+                    />
+                <ImageButton
+                    android:id="@+id/info_clo_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_nav_informasi"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:layout_marginStart="@dimen/dimen_small_4dp"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_default_12sp"
+                android:justificationMode="inter_word"
+                android:text="@string/title_deskripsi_clo_3"
+                />
+
+            <EditText
+                android:id="@+id/act_dsn_edittext_clo_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapCharacters"
+                android:maxLength="2"
+                android:text="@={presenter.clo3}"
+                android:digits="A,AB,B,BC,C,D,E"
+                android:hint="@string/hint_clo_3"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_default_12sp"
+                android:textStyle="italic"
+                android:text="@string/title_deskripsi_nilai"
+                />
+
+            <Button
+                android:id="@+id/act_dsn_info_button_ubah"
+                android:text="@string/text_simpan_nilai"
+                android:layout_marginTop="@dimen/dimen_big_16dp"
+                android:onClick="@{()->presenter.onSave()}"
+                style="@style/button_all_primary"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

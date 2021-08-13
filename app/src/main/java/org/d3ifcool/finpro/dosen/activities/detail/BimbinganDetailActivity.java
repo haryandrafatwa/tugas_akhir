@@ -3,36 +3,24 @@ package org.d3ifcool.finpro.dosen.activities.detail;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.BimbinganContract;
-import org.d3ifcool.finpro.core.interfaces.lists.BimbinganListView;
-import org.d3ifcool.finpro.core.interfaces.works.ICreate;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Bimbingan;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
-import org.d3ifcool.finpro.core.models.ProyekAkhir;
-import org.d3ifcool.finpro.core.presenters.BimbinganPresenter;
 import org.d3ifcool.finpro.databinding.ActivityDosenBimbinganDetailBinding;
-import org.d3ifcool.finpro.mahasiswa.activities.editor.MahasiswaBimbinganEditorActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_BIMBINGAN;
-import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.STATUS_BIMBINGAN_DISETUJUI;
 
 public class BimbinganDetailActivity extends AppCompatActivity implements BimbinganContract.ViewModel{
 

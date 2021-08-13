@@ -1,157 +1,177 @@
 package org.d3ifcool.finpro.mahasiswa.fragments;
 
 
-import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import org.d3ifcool.finpro.R;
-import org.d3ifcool.finpro.mahasiswa.adapters.viewpager.BimbinganPagerAdapter;
-import org.d3ifcool.finpro.core.helpers.SessionManager;
-import org.d3ifcool.finpro.core.interfaces.lists.JudulListView;
-import org.d3ifcool.finpro.core.models.Judul;
-import org.d3ifcool.finpro.core.presenters.JudulPresenter;
+import org.d3ifcool.finpro.core.helpers.Message;
+import org.d3ifcool.finpro.core.interfaces.SidangContract;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
+import org.d3ifcool.finpro.core.models.Mahasiswa;
+import org.d3ifcool.finpro.core.models.Sidang;
+import org.d3ifcool.finpro.databinding.FragmentMahasiswaSidangDetailBinding;
+import org.d3ifcool.finpro.dosen.activities.editor.NilaiSidangEditorActivity;
 
-import java.util.List;
+import okhttp3.ResponseBody;
 
-import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.JUDUL_STATUS_DISETUJUI;
-import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.JUDUL_STATUS_MENUNGGU;
-import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.JUDUL_STATUS_PENDING;
-import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.JUDUL_STATUS_TERSEDIA;
+import static android.app.Activity.RESULT_OK;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_DEFAULT;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.PICK_EXCEL_REQUEST;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.PICK_PDF_REQUEST;
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.ROLE_PRODI;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SidangFragment extends Fragment implements JudulListView {
+public class SidangFragment extends Fragment implements SidangContract.ViewModel {
 
-    private SessionManager sessionManager;
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
-    private View mDisableView;
-
-    private String PARAM_JUDUL = "judul.judul_id";
-    private ProgressDialog progressDialog;
-
-    private JudulPresenter judulPresenter;
-
-    private TextView textViewJudul, textViewDosen, textViewStatus;
-
-    private BimbinganPagerAdapter adapter;
-
-    public SidangFragment() {
-        // Required empty public constructor
-    }
-
+    private Message message = new Message();
+    private FragmentMahasiswaSidangDetailBinding mBinding;
+    private Mediator mediator;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_mahasiswa_judul_pa, container, false);
-        // -----------------------------------------------------------------------------------------
-        progressDialog = new ProgressDialog(requireContext());
-        progressDialog.setMessage(getString(R.string.text_progress_dialog));
-        // -----------------------------------------------------------------------------------------
-        judulPresenter = new JudulPresenter(this);
-        judulPresenter.initContext(requireContext());
-        // -----------------------------------------------------------------------------------------
-        return rootView;
+        mBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_mahasiswa_sidang_detail,container,false);
+        mBinding.setLifecycleOwner(this);
+        mediator = new ConcreteMediator((AppCompatActivity) getActivity());
+        mediator.setSidangPresenter(this);
+
+        mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
+        mediator.message(message.setComponent("SessionManager").setEvent("set"));
+        mediator.message(message.setComponent("FileHelper").setEvent("set"));
+
+        mediator.setButton(mBinding.btnDownloadFormRevisi);
+        mediator.message(message.setComponent("Button").setEvent("setOnClick").setText("uploadRevisi"));
+
+        return mBinding.getRoot();
+
     }
 
-
+    private void intentPickFile(String event){
+        if (mediator.getPermissionFile()){
+            if (event.equalsIgnoreCase("uploadFormRevisi")){
+                startActivityForResult(Intent.createChooser(mediator.findFileIntent("PDF"), "Pilih file"), PICK_PDF_REQUEST);
+            }else{
+                startActivityForResult(Intent.createChooser(mediator.findFileIntent("PDF"), "Pilih file"), PICK_EXCEL_REQUEST);
+            }
+        }
+    }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        // -----------------------------------------------------------------------------------------
-        sessionManager = new SessionManager(requireContext());
-        // -----------------------------------------------------------------------------------------
-        // Deklarasi Element XML
-        mTabLayout = view.findViewById(R.id.frg_mhs_judul_pa_tablayout);
-        mViewPager = view.findViewById(R.id.frg_mhs_judul_pa_viewpager);
-        mDisableView = view.findViewById(R.id.disable_view);
-        // -----------------------------------------------------------------------------------------
-        textViewJudul = view.findViewById(R.id.dis_judul);
-        textViewDosen = view.findViewById(R.id.dis_dosen_pembimbing);
-        textViewStatus = view.findViewById(R.id.dis_status);
-        // -----------------------------------------------------------------------------------------
-        checkStatusJudulMahasiswa(sessionManager.getSessionMahasiswaIdJudul());
-
-
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_PDF_REQUEST && resultCode == RESULT_OK) {
+            mediator.message(message.setComponent("SidangPresenter").setEvent("uploadFormRevisi").setUri(data.getData()));
+        }else if (requestCode == PICK_EXCEL_REQUEST && resultCode == RESULT_OK) {
+            mediator.message(message.setComponent("SidangPresenter").setEvent("uploadDraftJurnal").setUri(data.getData()));
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        checkStatusJudulMahasiswa(sessionManager.getSessionMahasiswaIdJudul());
+        mediator.message(message.setComponent("SidangPresenter").setEvent("getMahasiswaSidangByUsername").setText(mediator.getSessionUsername()));
     }
 
-    private void checkStatusJudulMahasiswa(int judulId){
-        if (judulId != 0){
-            mDisableView.setVisibility(View.VISIBLE);
-            mTabLayout.setVisibility(View.GONE);
-            mViewPager.setVisibility(View.GONE);
-            judulPresenter.searchJudulBy(PARAM_JUDUL, String.valueOf(sessionManager.getSessionMahasiswaIdJudul()));
-        } else {
-            // Membuat ViewPager (SLIDER)
-            adapter = new BimbinganPagerAdapter(getChildFragmentManager());
-            mViewPager.setAdapter(adapter);
-            mTabLayout.setupWithViewPager(mViewPager);
-            // -------------------------------------------------------------------------------------
-            mDisableView.setVisibility(View.GONE);
-            mTabLayout.setVisibility(View.VISIBLE);
-            mViewPager.setVisibility(View.VISIBLE);
+    @Override
+    public void onGetObjectSidang(Sidang sidang) {
+
+    }
+
+    @Override
+    public void onGetObjectMahasiswa(Mahasiswa mahasiswa) {
+        mBinding.setModel(mahasiswa);
+        message.setMahasiswa(mahasiswa);
+        if (mahasiswa.getSidang_status() == null || mahasiswa.getSidang_status().equalsIgnoreCase("ditolak")){
+            mBinding.disableView.setVisibility(View.VISIBLE);
+            mBinding.btnAddSidangReguler.setVisibility(View.VISIBLE);
+            mBinding.btnAddSidangReguler.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    intentPickFile("uploadDraftJurnal");
+                }
+            });
+        }else{
+            if (mahasiswa.getSidang_status().equalsIgnoreCase("terjadwalkan")){
+                mBinding.layoutContent.setVisibility(View.VISIBLE);
+            }else if(mahasiswa.getSidang_status().equalsIgnoreCase("dijadwalkan")){
+                mBinding.disableView.setVisibility(View.VISIBLE);
+                mBinding.disMenunggu.setVisibility(View.VISIBLE);
+            }else{
+                mBinding.layoutContent.setVisibility(View.VISIBLE);
+            }
         }
+
+        mBinding.btnAddSidangReguler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mahasiswa.getPlot_pembimbing() == 0){
+                    onMessage("Anda belum memiliki pembimbing");
+                }
+            }
+        });
+        mBinding.frgMhsPaCardviewNilaiPembimbing1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediator.selectIntent(message.setaClass(NilaiSidangEditorActivity.class).setExtraIntent(mediator.getSessionUsername()).setSecondExtraIntent("Pembimbing 1"));
+            }
+        });
+        mBinding.frgMhsPaCardviewNilaiPembimbing2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediator.selectIntent(message.setaClass(NilaiSidangEditorActivity.class).setExtraIntent(mahasiswa.getMhs_nim()).setSecondExtraIntent("Pembimbing 2"));
+            }
+        });
+        mBinding.frgMhsPaCardviewNilaiPenguji1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediator.selectIntent(message.setaClass(NilaiSidangEditorActivity.class).setExtraIntent(mahasiswa.getMhs_nim()).setSecondExtraIntent("Penguji 1"));
+            }
+        });
+        mBinding.frgMhsPaCardviewNilaiPenguji2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediator.selectIntent(message.setaClass(NilaiSidangEditorActivity.class).setExtraIntent(mahasiswa.getMhs_nim()).setSecondExtraIntent("Penguji 2"));
+            }
+        });
     }
 
-
     @Override
-    public void showProgress() {
-        progressDialog.show();
+    public void onGetBody(ResponseBody body, String filename) {
+
     }
 
     @Override
-    public void hideProgress() {
-        progressDialog.hide();
-    }
-
-    @Override
-    public void onGetListJudul(List<Judul> judulpa) {
-        textViewJudul.setText(judulpa.get(0).getJudul());
-        textViewDosen.setText(judulpa.get(0).getDsn_nama());
-        String getStatus = judulpa.get(0).getJudul_status();
-        if (getStatus.equalsIgnoreCase(JUDUL_STATUS_TERSEDIA) || getStatus.equalsIgnoreCase(JUDUL_STATUS_PENDING)) {
-            textViewStatus.setText(JUDUL_STATUS_MENUNGGU);
-        } else if (getStatus.equalsIgnoreCase(JUDUL_STATUS_DISETUJUI)){
-            sessionManager.createSessionJudulStatusMahasiswa(getStatus);
-            textViewStatus.setText(JUDUL_STATUS_DISETUJUI);
-            textViewStatus.setTextColor(getResources().getColor(R.color.colorBackgroundGreen));
-        } else {
-            sessionManager.createSessionJudulStatusMahasiswa(getStatus);
-            textViewStatus.setText(JUDUL_STATUS_DISETUJUI);
-            textViewStatus.setTextColor(getResources().getColor(R.color.colorBackgroundGreen));
+    public void onMessage(String messages) {
+        switch (messages){
+            case "ShowProgressDialog":
+                mediator.message(message.setComponent("ProgressDialog").setEvent("show"));
+                break;
+            case "HideProgressDialog":
+                mediator.message(message.setComponent("ProgressDialog").setEvent("dismiss"));
+                break;
+            case "onUploadRevisi":
+                intentPickFile("uploadFormRevisi");
+                break;
+            case "onSuccess":
+                mediator.message(message.setComponent("Toasty").setEvent("Success").setText("Berhasil upload data!"));
+                onResume();
+                break;
+            default:
+                mediator.message(message.setComponent("Toasty").setEvent("Warning").setText(messages));
+                break;
         }
-    }
-
-    @Override
-    public void isEmptyListJudul() {
-
-    }
-
-    @Override
-    public void onFailed(String message) {
-//        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

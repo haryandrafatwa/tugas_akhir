@@ -13,8 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import org.d3ifcool.finpro.core.helpers.SessionManager;
-import org.d3ifcool.finpro.core.interfaces.lists.NotifikasiListView;
-import org.d3ifcool.finpro.core.interfaces.works.NotifikasiWorkView;
+import org.d3ifcool.finpro.core.interfaces.NotifikasiContract;
 import org.d3ifcool.finpro.core.models.Notifikasi;
 import org.d3ifcool.finpro.core.presenters.NotifikasiPresenter;
 import org.d3ifcool.finpro.R;
@@ -23,7 +22,7 @@ import org.d3ifcool.finpro.prodi.adapters.KoorPemberitahuanViewAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KoorPemberitahuanActivity extends AppCompatActivity implements NotifikasiListView, NotifikasiWorkView {
+public class KoorPemberitahuanActivity extends AppCompatActivity implements NotifikasiContract.ViewModel {
 
     private RecyclerView recyclerView;
     private NotifikasiPresenter notifikasiPresenter;
@@ -45,7 +44,7 @@ public class KoorPemberitahuanActivity extends AppCompatActivity implements Noti
 
         progressDialog = new ProgressDialog(this);
 
-        notifikasiPresenter = new NotifikasiPresenter(this, this);
+        notifikasiPresenter = new NotifikasiPresenter(this);
         notifikasiPresenter.initContext(this);
 
         sessionManager = new SessionManager(this);
@@ -104,6 +103,21 @@ public class KoorPemberitahuanActivity extends AppCompatActivity implements Noti
         } else {
             empty_view.setVisibility(View.VISIBLE);
         }
+
+    }
+
+    @Override
+    public void isEmptyListNotifikasi() {
+
+    }
+
+    @Override
+    public void onGetObjectNotifikasi(Notifikasi notifikasi) {
+
+    }
+
+    @Override
+    public void isEmptyObjectNotifikasi() {
 
     }
 

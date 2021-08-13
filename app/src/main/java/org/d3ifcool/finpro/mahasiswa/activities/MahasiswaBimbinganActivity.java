@@ -2,36 +2,24 @@ package org.d3ifcool.finpro.mahasiswa.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.BimbinganContract;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.databinding.ActivityMahasiswaBimbinganBinding;
 import org.d3ifcool.finpro.mahasiswa.activities.editor.MahasiswaBimbinganEditorActivity;
-import org.d3ifcool.finpro.mahasiswa.activities.editor.MahasiswaPaBimbinganTambahActivity;
-import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.core.models.Bimbingan;
-import org.d3ifcool.finpro.mahasiswa.adapters.recyclerview.MahasiswaBimbinganViewAdapter;
 import org.d3ifcool.finpro.core.models.Dosen;
-import org.d3ifcool.finpro.core.models.ProyekAkhir;
-import org.d3ifcool.finpro.core.presenters.BimbinganPresenter;
 
 import java.util.ArrayList;
 import java.util.List;

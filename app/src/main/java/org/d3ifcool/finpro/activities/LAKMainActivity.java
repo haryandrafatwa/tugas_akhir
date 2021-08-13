@@ -10,10 +10,12 @@ import androidx.databinding.DataBindingUtil;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.ProdiContract;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Koordinator;
 import org.d3ifcool.finpro.databinding.ActivityLakMainBinding;
+
+import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.ROLE_PRODI;
 
 public class LAKMainActivity extends AppCompatActivity implements ProdiContract.ViewModel {
 
@@ -32,7 +34,7 @@ public class LAKMainActivity extends AppCompatActivity implements ProdiContract.
         mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
         mediator.message(message.setComponent("SessionManager").setEvent("set"));
 
-        mediator.message(message.setComponent("ProdiPresenter").setEvent("getMahasiswaBySession"));
+        mediator.message(message.setComponent("ProdiPresenter").setEvent("getProdiByNIP"));
 
         setTitle(R.string.title_informasi);
         getSupportActionBar().setElevation(0);
@@ -50,7 +52,7 @@ public class LAKMainActivity extends AppCompatActivity implements ProdiContract.
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        mediator.message(message.setComponent("Toolbar").setVisibility(item.getItemId()).setEvent("mahasiswa"));
+        mediator.message(message.setComponent("Toolbar").setVisibility(item.getItemId()).setEvent(ROLE_PRODI));
         return super.onOptionsItemSelected(item);
     }
 

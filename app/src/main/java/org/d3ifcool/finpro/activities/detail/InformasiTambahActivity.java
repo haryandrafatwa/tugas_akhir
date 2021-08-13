@@ -11,10 +11,11 @@ import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Constant;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.InformasiContract;
-import org.d3ifcool.finpro.core.interfaces.works.NotifikasiWorkView;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.interfaces.NotifikasiContract;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Informasi;
+import org.d3ifcool.finpro.core.models.Notifikasi;
 import org.d3ifcool.finpro.core.presenters.InformasiPresenter;
 import org.d3ifcool.finpro.core.presenters.NotifikasiPresenter;
 import org.d3ifcool.finpro.databinding.ActivityKoorInformasiTambahBinding;
@@ -26,7 +27,7 @@ import es.dmoral.toasty.Toasty;
 import static org.d3ifcool.finpro.core.helpers.ConstantNotif.ConstantaNotif.NOTIF_KATEGORI_INFORMASI;
 import static org.d3ifcool.finpro.core.helpers.ConstantNotif.ConstantaNotif.UNTUK_SEMUA;
 
-public class InformasiTambahActivity extends AppCompatActivity implements InformasiContract.ViewModel, NotifikasiWorkView {
+public class InformasiTambahActivity extends AppCompatActivity implements InformasiContract.ViewModel, NotifikasiContract.ViewModel {
 
     private InformasiPresenter informasiPresenter;
     private NotifikasiPresenter notifikasiPresenter;
@@ -83,6 +84,26 @@ public class InformasiTambahActivity extends AppCompatActivity implements Inform
 
     @Override
     public void onGetListInformasi(List<Informasi> informasiList) {
+
+    }
+
+    @Override
+    public void onGetListNotifikasi(List<Notifikasi> notifikasiList) {
+
+    }
+
+    @Override
+    public void isEmptyListNotifikasi() {
+
+    }
+
+    @Override
+    public void onGetObjectNotifikasi(Notifikasi notifikasi) {
+
+    }
+
+    @Override
+    public void isEmptyObjectNotifikasi() {
 
     }
 

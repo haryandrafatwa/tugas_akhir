@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.R;
@@ -25,7 +25,6 @@ import java.util.List;
 import okhttp3.ResponseBody;
 
 import static android.app.Activity.RESULT_OK;
-import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.PICK_EXCEL_REQUEST;
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.PICK_PDF_REQUEST;
 
 public class MahasiswaTugasAkhirFragment extends Fragment implements MahasiswaContract.ViewModel {

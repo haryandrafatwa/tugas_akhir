@@ -3,7 +3,7 @@ package org.d3ifcool.finpro.core.helpers;
 import android.net.Uri;
 
 import org.d3ifcool.finpro.core.components.Components;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
+import org.d3ifcool.finpro.core.mediators.Mediator;
 import org.d3ifcool.finpro.core.models.Bimbingan;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.Informasi;
@@ -11,6 +11,7 @@ import org.d3ifcool.finpro.core.models.JadwalKegiatan;
 import org.d3ifcool.finpro.core.models.Koordinator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
+import org.d3ifcool.finpro.core.models.Sidang;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 
 public class Message implements Components {
-    private String component, event, text, color, url, extraIntent;
+    private String component, event, text, color, url, extraIntent, secondExtraIntent;
     private boolean isEnabled;
     private Uri uri;
     private ArrayList item;
@@ -33,6 +34,7 @@ public class Message implements Components {
     private Bimbingan bimbingan;
     private Informasi informasi;
     private JadwalKegiatan jadwalKegiatan;
+    private Sidang sidang;
     private List<JadwalKegiatan> kegiatanList;
 
     public Message() {
@@ -118,6 +120,11 @@ public class Message implements Components {
         return this;
     }
 
+    public Message setSidang(Sidang sidang) {
+        this.sidang = sidang;
+        return this;
+    }
+
     public Message setDosen(Dosen dosen) {
         this.dosen = dosen;
         return this;
@@ -144,6 +151,15 @@ public class Message implements Components {
 
     public void setKegiatanList(List<JadwalKegiatan> kegiatanList) {
         this.kegiatanList = kegiatanList;
+    }
+
+    public String getSecondExtraIntent() {
+        return secondExtraIntent;
+    }
+
+    public Message setSecondExtraIntent(String secondExtraIntent) {
+        this.secondExtraIntent = secondExtraIntent;
+        return this;
     }
 
     public String getComponent() {
@@ -220,6 +236,10 @@ public class Message implements Components {
 
     public JadwalKegiatan getJadwalKegiatan() {
         return jadwalKegiatan;
+    }
+
+    public Sidang getSidang() {
+        return sidang;
     }
 
     public List<JadwalKegiatan> getKegiatanList() {

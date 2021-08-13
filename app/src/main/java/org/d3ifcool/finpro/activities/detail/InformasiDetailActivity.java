@@ -1,10 +1,8 @@
 package org.d3ifcool.finpro.activities.detail;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -13,10 +11,9 @@ import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Constant;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.InformasiContract;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Informasi;
-import org.d3ifcool.finpro.core.presenters.InformasiPresenter;
 import org.d3ifcool.finpro.databinding.ActivityKoorInformasiDetailBinding;
 
 import java.util.List;
@@ -55,10 +52,16 @@ public class InformasiDetailActivity extends AppCompatActivity implements Inform
             if (!mediator.getSessionManager().getSessionDosenNama().equalsIgnoreCase(binding.getModel().getPenerbit())){
                 menu.clear();
             }
-        }else{
+        }else if (mediator.getSessionManager().getSessionPengguna().equalsIgnoreCase(Constant.ObjectConstanta.ROLE_PRODI)){
             if (!mediator.getSessionManager().getSessionKoorNama().equalsIgnoreCase(binding.getModel().getPenerbit())){
                 menu.clear();
             }
+        }else if (mediator.getSessionManager().getSessionPengguna().equalsIgnoreCase(Constant.ObjectConstanta.ROLE_LAK)){
+            if (!mediator.getSessionManager().getSessionKoorNama().equalsIgnoreCase(binding.getModel().getPenerbit())){
+                menu.clear();
+            }
+        }else{
+            menu.clear();
         }
         return super.onCreateOptionsMenu(menu);
     }

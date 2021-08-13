@@ -29,7 +29,7 @@
             <TextView
                 android:id="@+id/ctn_all_ta_textview_judul"
                 style="@style/content_all_text_bold_color_primary"
-                android:text="@{mahasiswa.judul}"
+                android:text="@{mahasiswa.judul == null ? `Belum mengajukan judul` : mahasiswa.judul}"
                 tools:text="@string/dummy_pa_judul" />
 
             <View
@@ -48,9 +48,37 @@
             <TextView
                 android:id="@+id/ctn_all_ta_textview_inggris"
                 tools:text="@string/dummy_mahasiswa_kelompok"
-                android:text="@{mahasiswa.judul_inggris}"
+                android:text="@{mahasiswa.judul_inggris == null ? `Belum mengajukan judul` : mahasiswa.judul_inggris}"
                 android:textStyle="italic"
                 style="@style/content_all_text_bold_color_black"
+                android:layout_marginBottom="@dimen/dimen_medium_8dp"/>
+
+            <View
+                android:layout_marginTop="@dimen/dimen_medium_8dp"
+                android:layout_marginBottom="@dimen/dimen_medium_8dp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_view_line"
+                android:background="@color/colorBackground"/>
+
+            <TextView
+                android:layout_marginStart="@dimen/dimen_big_16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_sidang_nilai_akhir"/>
+
+            <TextView
+                android:id="@+id/ctn_all_ta_textview_nilai_akhir"
+                tools:text="AB"
+                android:text="@{mahasiswa.nilai_total == null ? `-`:mahasiswa.nilai_total}"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/dimen_big_16dp"
+                android:background="@drawable/circle_border_nilai_monev"
+                android:textSize="@dimen/text_size_title_medium_20sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorTextWhite"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dimen_medium_8dp"
                 android:layout_marginBottom="@dimen/dimen_medium_8dp"/>
 
         </LinearLayout>

@@ -55,8 +55,8 @@ public class ProdiPlotPembimbingViewAdapter extends RecyclerView.Adapter<ProdiPl
     public void onBindViewHolder(ProdiPlotPembimbingViewAdapter.ViewHolder holder, final int position) {
 
         holder.tv_indexing.setText((position+1)+"");
-        holder.tv_nama_dosen_1.setText(data.get(position).getNama_pembimbing_1());
-        holder.tv_nama_dosen_2.setText(data.get(position).getNama_pembimbing_2());
+        holder.tv_nama_dosen_1.setText(data.get(position).getNama_dosen_1());
+        holder.tv_nama_dosen_2.setText(data.get(position).getNama_dosen_2());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -58,40 +58,28 @@
             android:name=".activities.ProdiMainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name="org.d3ifcool.finpro.mahasiswa.activities.detail.MahasiswaJadwalKegiatanDetailActivity" />
         <activity android:name="org.d3ifcool.finpro.mahasiswa.activities.MahasiswaJadwalKegiatanActivity" />
         <activity android:name="org.d3ifcool.finpro.mahasiswa.activities.MahasiswaBimbinganActivity" />
         <activity android:name="org.d3ifcool.finpro.mahasiswa.activities.MahasiswaProfilActivity" />
         <activity android:name="org.d3ifcool.finpro.mahasiswa.activities.MahasiswaPemberitahuanActivity" />
         <activity android:name="org.d3ifcool.finpro.mahasiswa.activities.editor.MahasiswaBimbinganEditorActivity" />
-        <activity android:name="org.d3ifcool.finpro.mahasiswa.activities.editor.MahasiswaPaBimbinganTambahActivity" />
         <activity android:name="org.d3ifcool.finpro.mahasiswa.activities.editor.MahasiswaProfilUbahActivity" />
-        <activity android:name="org.d3ifcool.finpro.mahasiswa.activities.detail.MahasiswaJudulPaArsipDetailActivity" />
-        <activity android:name="org.d3ifcool.finpro.mahasiswa.activities.detail.MahasiswaPaSidangDetailActivity" />
-        <activity android:name="org.d3ifcool.finpro.mahasiswa.activities.detail.MahasiswaPaMonevDetailActivity" />
 
-        <activity android:name="org.d3ifcool.finpro.dosen.activities.DosenKuotaDosenActivity"></activity>
-        <activity android:name="org.d3ifcool.finpro.dosen.activities.detail.DosenJadwalKegiatanDetailActivity" />
-        <activity android:name="org.d3ifcool.finpro.dosen.activities.DosenMonevMahasiswaActivity" />
-        <activity android:name="org.d3ifcool.finpro.dosen.activities.DosenJudulPaArsipActivity" />
+        <activity android:name=".dosen.activities.detail.SidangDetailActivity"/>
+        <activity android:name=".dosen.activities.editor.NilaiSidangEditorActivity"/>
+        <activity android:name=".dosen.activities.editor.ReviewSidangEditorActivity"/>
+        <activity android:name=".dosen.activities.editor.DosenProfilUbahActivity"/>
         <activity android:name="org.d3ifcool.finpro.dosen.activities.DosenTugasAkhirActivity" />
-        <activity android:name="org.d3ifcool.finpro.dosen.activities.DosenJadwalKegiatanActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.DosenPemberitahuanActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.DosenTugasAkhirBimbinganActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.DosenSidangActivity" />
-        <activity android:name="org.d3ifcool.finpro.dosen.activities.DosenProyekAkhirMonevActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.DosenProfilActivity" />
-        <activity android:name="org.d3ifcool.finpro.dosen.activities.editor.create.DosenSidangTambahActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.editor.create.DosenMonevTambahActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.editor.create.DosenBimbinganTambahActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.editor.create.DosenJudulPaSubdosenTambahActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.editor.create.DosenInformasiTambahActivity" />
-        <activity android:name="org.d3ifcool.finpro.dosen.activities.editor.update.DosenSidangUbahActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.editor.update.DosenMonevUbahActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.editor.update.DosenJudulPaSubdosenUbahActivity" />
-        <activity android:name="org.d3ifcool.finpro.dosen.activities.detail.DosenJudulPaArsipDetailActivity" />
-        <activity android:name="org.d3ifcool.finpro.dosen.activities.detail.DosenMonevDetailActivity" />
-        <activity android:name="org.d3ifcool.finpro.dosen.activities.detail.DosenJudulPaSubdosenDetailActivity" />
         <activity android:name="org.d3ifcool.finpro.dosen.activities.detail.BimbinganDetailActivity" />
 
         <activity android:name="org.d3ifcool.finpro.prodi.activities.detail.KoorJadwalKegiatanDetailActivity" />

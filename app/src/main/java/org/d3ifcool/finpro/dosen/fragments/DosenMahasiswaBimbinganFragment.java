@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.BimbinganContract;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Bimbingan;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
@@ -65,7 +65,7 @@ public class DosenMahasiswaBimbinganFragment extends Fragment implements Bimbing
     public void onGetListMahasiswa(List<Mahasiswa> mahasiswaList) {
         ArrayList<Mahasiswa> arrayList = new ArrayList<>();
         arrayList.addAll(mahasiswaList);
-        mediator.message(message.setComponent("DosenMahasiswaBimbinganViewAdapter").setEvent("addItem").setItem(arrayList));
+        mediator.message(message.setComponent("DosenMahasiswaBimbinganViewAdapter").setEvent("addItem").setItem(arrayList).setText("pembimbing"));
         mediator.message(message.setComponent("DosenMahasiswaBimbinganViewAdapter").setEvent("setAdapter"));
         mediator.message(message.setComponent("RefreshLayout").setEvent("setRefreshing").setEnabled(false));
 

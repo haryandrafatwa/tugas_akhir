@@ -12,9 +12,10 @@ import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Constant;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.DosenContract;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Dosen;
+import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.databinding.ActivityKoorDosenEditorBinding;
 
 import java.util.List;
@@ -73,6 +74,16 @@ public class ProdiDosenEditorActivity extends AppCompatActivity implements Dosen
 
     @Override
     public void onGetListDosen(List<Dosen> dosenList) {
+
+    }
+
+    @Override
+    public void onGetObjectMahasiswa(Mahasiswa mahasiswa) {
+
+    }
+
+    @Override
+    public void onGetListMahasiswa(List<Mahasiswa> mahasiswasList) {
 
     }
 

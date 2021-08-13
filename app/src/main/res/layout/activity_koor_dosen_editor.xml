@@ -106,7 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    android:text="@{Integer.toString(presenter.kuota_bimbingan)}"
+                    android:text="@={presenter.kuota_bimbingan}"
                     android:hint="@string/hint_batas_bimbingan"/>
 
                 <TextView
@@ -124,7 +124,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    android:text="@{Integer.toString(presenter.kuota_reviewer)}"
+                    android:text="@={presenter.kuota_reviewer}"
                     android:hint="@string/hint_batas_reviewer"/>
 
                 <TextView

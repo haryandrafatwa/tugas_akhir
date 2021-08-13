@@ -3,6 +3,7 @@ package org.d3ifcool.finpro.prodi.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import es.dmoral.toasty.Toasty;
 import okhttp3.ResponseBody;
 
 import android.os.Bundle;
@@ -14,10 +15,9 @@ import com.google.gson.Gson;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.AuthContract;
 import org.d3ifcool.finpro.core.interfaces.ProdiContract;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Koordinator;
-import org.d3ifcool.finpro.core.models.User;
 import org.d3ifcool.finpro.databinding.ActivityKoorProfilBinding;
 import org.d3ifcool.finpro.R;
 import org.json.JSONException;
@@ -25,7 +25,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class KoorProfilActivity extends AppCompatActivity implements ProdiContract.ViewModel, AuthContract.ViewModel {
+public class KoorProfilActivity extends AppCompatActivity implements AuthContract.ViewModel {
 
     private ActivityKoorProfilBinding mBinding;
     private Message message = new Message();
@@ -38,16 +38,11 @@ public class KoorProfilActivity extends AppCompatActivity implements ProdiContra
         mBinding.setLifecycleOwner(this);
         mediator = new ConcreteMediator(this);
         mediator.setAuthPresenter(this);
-        mediator.setProdiPresenter(this);
 
-        setTitle(getString(R.string.title_profil));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setElevation(0f);
+        mediator.setTitleContextWithHomeAsUp("Profile");
 
         mediator.message(message.setComponent("ProgressDialog").setEvent("set"));
         mediator.message(message.setComponent("SessionManager").setEvent("set"));
-
-        mediator.message(message.setComponent("AuthPresenter").setEvent("getCurrentUser"));
 
     }
 
@@ -71,11 +66,6 @@ public class KoorProfilActivity extends AppCompatActivity implements ProdiContra
 
     @Override
     public void setStatus(boolean status) {
-
-    }
-
-    @Override
-    public void onGetObjectProdi(Koordinator prodi) {
 
     }
 

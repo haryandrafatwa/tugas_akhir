@@ -24,7 +24,7 @@
             <item
                 android:id="@+id/nav_menu_plotting"
                 android:icon="@drawable/ic_nav_pemetaan_reviewer"
-                android:title="@string/menu_plotting_pembimbing"/>
+                android:title="@string/menu_plotting_dosen"/>
 
             <item
                 android:id="@+id/nav_menu_skta"
@@ -34,7 +34,7 @@
             <item
                 android:id="@+id/nav_menu_sidang"
                 android:icon="@drawable/ic_nav_siap_sidang"
-                android:title="@string/title_sidang"/>
+                android:title="@string/menu_sidang"/>
 
         </menu>
     </item>

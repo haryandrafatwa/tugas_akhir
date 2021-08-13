@@ -8,10 +8,7 @@ import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.api.ApiClient;
 import org.d3ifcool.finpro.core.api.ApiService;
 import org.d3ifcool.finpro.core.helpers.ConnectionHelper;
-import org.d3ifcool.finpro.core.helpers.SessionManager;
 import org.d3ifcool.finpro.core.interfaces.InformasiContract;
-import org.d3ifcool.finpro.core.interfaces.lists.InformasiListView;
-import org.d3ifcool.finpro.core.interfaces.works.InformasiWorkView;
 import org.d3ifcool.finpro.core.models.Informasi;
 
 import java.util.List;

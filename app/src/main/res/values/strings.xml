@@ -6,6 +6,14 @@
     <!--Contoh : view_nilai :-->
 
     <!-- TODO: Remove or change this placeholder text -->
+
+    <string-array name="status_sidang">
+        <item>Lulus</item>
+        <item>Lulus Bersyarat</item>
+        <item>Tidak Lulus</item>
+    </string-array>
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -36,7 +44,7 @@
     <string name="title_judulpa_pengajuan">Pengajuan Mandiri</string>
     <string name="title_bimbingan">Bimbingan</string>
     <string name="title_monev">Monev</string>
-    <string name="title_sidang">Peserta Sidang</string>
+    <string name="title_sidang">Sidang</string>
     <string name="title_profil">Profil</string>
     <string name="title_informasi">Informasi</string>
     <string name="title_judulta">Judul Tugas Akhir</string>
@@ -73,6 +81,7 @@
     <string name="title_kontak_dosen">No Telepon</string>
     <string name="title_dosen_detail">Detail Dosen</string>
     <string name="title_tugasakhir_detail">Detail Tugas Akhir</string>
+    <string name="title_tugasakhir">Tugas Akhir</string>
     <string name="title_tambah_dosen">Tambah Dosen</string>
     <string name="title_tambah_pemetaan">Tambah Pemetaan Monev</string>
     <string name="title_dosen_ubah">Ubah Dosen</string>
@@ -85,6 +94,19 @@
     <string name="title_dosen">Dosen</string>
     <string name="title_kelompok_mahasiswa_detail">Detail Kelompok</string>
     <string name="title_review_monev">Review Monev</string>
+    <string name="title_nilai_clo_1">Nilai CLO 1</string>
+    <string name="title_nilai_clo_2">Nilai CLO 2</string>
+    <string name="title_nilai_clo_3">Nilai CLO 3</string>
+    <string name="title_komponen_clo_1"><strong>1. Kemampuan Analisis</strong>\n2. Sistematika dan Tata Bahasa\n3. Sistem Perujukan\n4. Koherensi Pengerjaan TA\n5. Perancangan TA
+    </string>
+    <string name="title_komponen_clo_2">1. Penggunaan Media dan Materi\n2. Interpersonal Skills\n3. Sistematis dan Logis
+    </string>
+    <string name="title_komponen_clo_3">1. Perangkat Lunak\n2. Prototipe\n3. Model dan Simulasi atau Konfigurasi Sistem\n4. Dokumentasi
+    </string>
+    <string name="title_deskripsi_clo_1">Mampu membuat karya tulis ilmiah yang mengkaji atau menerapkan konsep ilmu pengetahuan/teknologi bidang informatika dan komputer berdasarkan kaidah, tata cara dan etika ilmiah.</string>
+    <string name="title_deskripsi_clo_2">Mampu mengkomunikasikan dan berargumen secara lisan terkait solusi/gagasan/desain hasil kajian ilmu pengetahuan/teknologi bidang informatika dan komputer.</string>
+    <string name="title_deskripsi_clo_3">Mampu membuat produk yang mengkaji atau menerapkan ilmu pengetahuan/teknologi bidang informatika dan komputer untuk menghasilkan solusi dari suatu permasalahan.</string>
+    <string name="title_deskripsi_nilai">*Komponen nilai hanya berisi [ A , AB , B , BC , C , D , E ]</string>
     <string name="title_kategori_monev">Kategori Monev</string>
     <string name="title_kategori_judul_pa">Kategori Judul PA</string>
     <string name="title_pemetaan_monev">Pemetaan Monev</string>
@@ -180,6 +202,7 @@
     <string name="dialog_validasi_sidang">Validasi Sidang</string>
     <string name="dialog_validasi_sidang_text">Apakah anda yakin ingin memvalidasi terkait sidang terjadwal ke seluruh mahasiswa?</string>
     <string name="dialog_validasi_sidang_text_mahasiswa">Silahkan konfirmasi kehadiran anda terkait sidang terjadwal yang direkomendasikan oleh prodi.</string>
+    <string name="dialog_validasi_sidang_text_dosen">Silahkan konfirmasi terkait pengajuan pendaftaran sidang reguler yang dilakukan oleh mahasiswa ini.</string>
     <string name="dialog_update_skta">Update SKTA</string>
     <string name="dialog_update_skta_text">Apakah anda yakin ingin mengupdate SKTA mahasiswa ini?</string>
     <string name="dialog_hapus_form_plot">Hapus Form</string>
@@ -202,9 +225,10 @@
     <string name="menu_dosen">Dosen</string>
     <string name="menu_proyek_akhir">Proyek Akhir</string>
     <string name="menu_plotting_pembimbing">Plotting Pembimbing</string>
+    <string name="menu_plotting_dosen">Plotting Dosen</string>
     <string name="menu_pemetaan_pembimbing">Pemetaan Pembimbing</string>
     <string name="menu_sk_ta">SK TA</string>
-    <string name="menu_sidang">Sidang</string>
+    <string name="menu_sidang">Peserta Sidang</string>
     <string name="menu_judul_pa">Judul</string>
     <string name="menu_kategori_judul">Kategori Judul</string>
     <string name="menu_arsip_judul">Arsip Judul</string>
@@ -239,10 +263,14 @@
     <string name="hint_masukkan_judul_pa">Masukkan Judul PA</string>
     <string name="hint_masukkan_deskripsi_judul_pa">Masukkan Deskripsi Judul PA</string>
     <string name="hint_review_bimbingan">Masukkan Review Bimbingan</string>
+    <string name="hint_review_sidang">Masukkan Review Sidang</string>
     <string name="hint_judul_bimbingan">Masukkan Judul Bimbingan</string>
     <string name="hint_kategori">Masukkan Kategori Proyek Akhir</string>
     <string name="hint_masukkan_kategori_monev">Masukkan Kategori Monev</string>
     <string name="hint_monev_review">Masukkan Review Monev</string>
+    <string name="hint_clo_1">Masukkan Nilai CLO 1</string>
+    <string name="hint_clo_2">Masukkan Nilai CLO 2</string>
+    <string name="hint_clo_3">Masukkan Nilai CLO 3</string>
     <string name="hint_monev_nilai">Masukkan Nilai Monev</string>
     <string name="hint_informasi_isi">Masukkan Informasi</string>
     <string name="hint_nim_mahasiswa">Masukkan NIM Mahasiswa</string>
@@ -324,11 +352,12 @@
     <string name="text_daftar_judul_pa_mahasiswa">Daftar Judul Proyek Akhir Pengajuan Mahasiswa</string>
     <string name="text_jumlah_monev">Jumlah Monev</string>
     <string name="text_status_sidang">Status Sidang</string>
+    <string name="text_status_revisi">Status Revisi</string>
     <string name="text_kode_dosen">Kode Dosen</string>
     <string name="text_judul">Judul</string>
     <string name="text_profil_detail_email">Email</string>
-    <string name="text_daftar_pa_mahasiswa">Daftar Judul Proyek Akhir Mahasiswa Bimbingan</string>
     <string name="text_daftar_ta_mahasiswa">Daftar Judul Tugas Akhir Mahasiswa Bimbingan</string>
+    <string name="text_daftar_ta_mahasiswa_sidang">Daftar Judul Tugas Akhir Mahasiswa Sidang</string>
     <string name="text_tidak_boleh_kosong">Tidak boleh kosong</string>
     <string name="text_pilih_dosen_dahulu">Pilih dosen terlebih dahulu</string>
     <string name="text_tidak_boleh_sama">Dosen tidak boleh sama</string>
@@ -376,8 +405,9 @@
     <string name="text_angkatan_mahasiswa">Tahun Angkatan</string>
     <string name="text_mahasiswa_sudah_mengajukan_judul">Mahasiswa sudah mengajukan judul</string>
     <string name="text_judul_status">Status</string>
-    <string name="text_belum_disetujui">Status proyek akhir belum ada</string>
-    <string name="text_mengajukan_judul_pa">Silahkan mengajukan judul di menu Judul PA</string>
+    <string name="text_belum_disetujui">Status tugas akhir anda belum tersedia</string>
+    <string name="text_menunggu">Pengajuan sidang reguler anda sedang diproses, mohon tunggu konfirmasi dari dosen pembimbing</string>
+    <string name="text_mengajukan_sidang_reguler">Ajukan Sidang Reguler</string>
     <string name="text_ubah_reviewer">Ubah Reviewer</string>
     <string name="text_nama_reviewer">Nama Reviewer</string>
     <string name="text_pilih_dosen_reviewer">Pilih Dosen Reviewer</string>
@@ -389,6 +419,7 @@
     <string name="text_monev_jumlah">Jumlah Monev</string>
     <string name="text_lihat_detail">Lihat Detail</string>
     <string name="text_ubah_monev">Ubah Monev</string>
+    <string name="text_simpan_nilai">Simpan Nilai</string>
     <string name="text_list_mahasiswa">Daftar mahasiswa</string>
     <string name="text_nim_mahasiswa">Nim Mahasiswa</string>
     <string name="text_nama_dospem_1">Dosen Pembimbing 1</string>
@@ -396,12 +427,16 @@
     <string name="text_title_pa_sidang">Daftar Judul Proyek Akhir Sidang</string>
     <string name="text_penilaian_sidang">Penilaian Sidang</string>
     <string name="text_sidang_nilai_proposal">Nilai Proposal</string>
+    <string name="text_sidang_nilai_akhir">Nilai Akhir Sidang</string>
     <string name="text_nilai_sidang_mahasiswa">Nilai Sidang Mahasiswa</string>
     <string name="text_sidang_penguji_1">Nilai Penguji 1</string>
     <string name="text_sidang_penguji_2">Nilai Penguji 2</string>
+    <string name="text_penguji_1">Penguji 1</string>
+    <string name="text_penguji_2">Penguji 2</string>
     <string name="text_sidang_pembimbing_1">Nilai Pembimbing 1</string>
     <string name="text_sidang_nilai_total">Nilai Total</string>
     <string name="text_review_sidang">Review Sidang</string>
+    <string name="text_revisi_sidang">Revisi Sidang</string>
     <string name="text_nilai_sidang">Nilai Sidang</string>
     <string name="text_tanggal_sidang">Tanggal Sidang</string>
     <string name="text_minimal_jumlah_bimbingan">Minimal Jumlah Bimbingan</string>

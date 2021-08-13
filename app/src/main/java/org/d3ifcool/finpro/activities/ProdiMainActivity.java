@@ -10,13 +10,10 @@ import com.google.android.material.navigation.NavigationView;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.ProdiContract;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Koordinator;
-import org.d3ifcool.finpro.core.presenters.ProdiPresenter;
 import org.d3ifcool.finpro.databinding.ActivityAdminMainBinding;
-
-import java.util.List;
 
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.ROLE_PRODI;
 

@@ -2,7 +2,7 @@ package org.d3ifcool.finpro.core.components;
 
 import android.content.Context;
 
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.LoginMediator;
+import org.d3ifcool.finpro.core.mediators.LoginMediator;
 
 public class SessionManager extends org.d3ifcool.finpro.core.helpers.SessionManager implements Component {
 

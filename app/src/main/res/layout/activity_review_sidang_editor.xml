@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="presenter"
+            type="org.d3ifcool.finpro.core.presenters.SidangPresenter" />
+    </data>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_big_16dp">
+
+            <ImageView
+                style="@style/image_all_editor_view"
+                android:background="@drawable/ic_nav_reviewer"
+                android:backgroundTint="@color/colorPrimary"/>
+
+            <TextView
+                style="@style/textview_title_all_editor_view"
+                android:text="@string/text_review_sidang" />
+
+            <EditText
+                android:id="@+id/act_dsn_edittext_judul"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_review_sidang"
+                android:inputType="textMultiLine"
+                android:minHeight="120dp"
+                android:text="@={presenter.review}"
+                android:gravity="start"/>
+
+            <TextView
+                style="@style/textview_title_all_editor_view"
+                android:text="@string/text_status_sidang" />
+
+            <Spinner
+                android:id="@+id/spinner_status_sidang"
+                android:layout_width="match_parent"
+                android:drawSelectorOnTop="true"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/act_dsn_info_button_simpan"
+                style="@style/button_all_primary"
+                android:layout_marginTop="@dimen/dimen_big_16dp"
+                android:onClick="@{()->presenter.onSaveReview()}"
+                android:text="@string/button_click_simpan" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

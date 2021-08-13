@@ -118,7 +118,7 @@
                             android:layout_marginTop="@dimen/dimen_medium_8dp">
 
                             <TextView
-                                android:text="@string/dialog_validasi_sidang"
+                                android:text="@string/dialog_konfirmasi_sidang"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
@@ -139,8 +139,7 @@
                             <LinearLayout
                                 style="@style/profile_all_container_pembimbing"
                                 android:weightSum="12"
-                                android:orientation="vertical"
-                                android:onClick="@{()->presenter.onBimbingan(plot.nip_pembimbing_1)}">
+                                android:orientation="vertical">
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -221,7 +220,8 @@
                         android:layout_below="@+id/profile_body_status_sk"
                         android:layout_marginStart="@dimen/dimen_big_16dp"
                         android:layout_marginEnd="@dimen/dimen_big_16dp"
-                        android:layout_marginTop="@dimen/dimen_medium_8dp">
+                        android:layout_marginTop="@dimen/dimen_medium_8dp"
+                        android:visibility="@{plot.nip_dosen_1 == null ? View.GONE:View.VISIBLE}">
 
                         <TextView
                             android:text="@string/text_dosen_pembimbing"

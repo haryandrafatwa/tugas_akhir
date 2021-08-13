@@ -11,6 +11,7 @@ import org.d3ifcool.finpro.core.helpers.Constant;
 import org.d3ifcool.finpro.core.interfaces.DosenContract;
 import org.d3ifcool.finpro.core.models.Dosen;
 import org.d3ifcool.finpro.core.models.manager.DosenManager;
+import org.d3ifcool.finpro.dosen.activities.editor.DosenProfilUbahActivity;
 import org.d3ifcool.finpro.prodi.activities.editor.ProdiDosenEditorActivity;
 
 public class DosenPresenter implements DosenContract.Presenter {
@@ -18,8 +19,8 @@ public class DosenPresenter implements DosenContract.Presenter {
     public ObservableField<String> nip;
     public ObservableField<String> nama;
     public ObservableField<String> kode;
-    public ObservableField<Integer> kuota_bimbingan;
-    public ObservableField<Integer> kuota_reviewer;
+    public ObservableField<String> kuota_bimbingan;
+    public ObservableField<String> kuota_reviewer;
     public ObservableField<String> email;
     public ObservableField<String> kontak;
 
@@ -91,7 +92,7 @@ public class DosenPresenter implements DosenContract.Presenter {
     @Override
     public void updateDosen(String token) {
         if (isValidate()){
-            dosenManager.updateDosen(token, nip.get(), nama.get(), kode.get(), kontak.get(), email.get(), kuota_bimbingan.get(), kuota_reviewer.get());
+            dosenManager.updateDosen(token, nip.get(), nama.get(), kode.get(), kontak.get(), email.get(), Integer.parseInt(kuota_bimbingan.get()), Integer.parseInt(kuota_reviewer.get()));
         }
     }
 
@@ -100,8 +101,24 @@ public class DosenPresenter implements DosenContract.Presenter {
         dosenManager.getDosenByParameter(token,dsn_nip);
     }
 
+    @Override
+    public void getMahasiswaSidang(String token) {
+        dosenManager.getMahasiswaSidang(token);
+    }
+
+    @Override
+    public void getMahasiswaSidangByUsername(String token, String username) {
+        dosenManager.getMahasiswaSidangByUsername(token, username);
+    }
+
     public Intent toolbarIntent(Dosen dosen){
         Intent intent = new Intent(App.self(), ProdiDosenEditorActivity.class);
+        intent.putExtra(Constant.ObjectConstanta.EXTRA_DOSEN,dosen);
+        return intent;
+    }
+
+    public Intent toolbarIntentProfile(Dosen dosen){
+        Intent intent = new Intent(App.self(), DosenProfilUbahActivity.class);
         intent.putExtra(Constant.ObjectConstanta.EXTRA_DOSEN,dosen);
         return intent;
     }

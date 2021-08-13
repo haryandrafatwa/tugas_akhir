@@ -69,6 +69,50 @@ public class Mahasiswa implements Parcelable {
     private String nip_pembimbing_2;
 
     @Expose
+    @SerializedName("nama_pembimbing_1")
+    private String nama_pembimbing_1;
+
+    @Expose
+    @SerializedName("nama_pembimbing_2")
+    private String nama_pembimbing_2;
+
+    @Expose
+    @SerializedName("nip_penguji_1")
+    private String nip_penguji_1;
+
+    @Expose
+    @SerializedName("nip_penguji_2")
+    private String nip_penguji_2;
+
+    @Expose
+    @SerializedName("nama_penguji_1")
+    private String nama_penguji_1;
+
+    @Expose
+    @SerializedName("nama_penguji_2")
+    private String nama_penguji_2;
+
+    @Expose
+    @SerializedName("nilai_pembimbing_1")
+    private String nilai_pembimbing_1;
+
+    @Expose
+    @SerializedName("nilai_pembimbing_2")
+    private String nilai_pembimbing_2;
+
+    @Expose
+    @SerializedName("nilai_penguji_1")
+    private String nilai_penguji_1;
+
+    @Expose
+    @SerializedName("nilai_penguji_2")
+    private String nilai_penguji_2;
+
+    @Expose
+    @SerializedName("nilai_total")
+    private String nilai_total;
+
+    @Expose
     @SerializedName("sk_expired")
     private String sk_expired;
 
@@ -85,6 +129,10 @@ public class Mahasiswa implements Parcelable {
     private String sidang_status;
 
     @Expose
+    @SerializedName("sidang_review")
+    private String sidang_review;
+
+    @Expose
     @SerializedName("username")
     private String username;
 
@@ -96,25 +144,40 @@ public class Mahasiswa implements Parcelable {
     @SerializedName("pending_sum")
     private int pending_sum;
 
-    public Mahasiswa(String mhs_nim, String mhs_nama, String angkatan, String mhs_kontak, String mhs_foto, String mhs_email, String judul, String judul_inggris, int plot_pembimbing, int plot_penguji,
-                     String sk_expired, int sk_status, String sidang_tanggal, String sidang_status, String username, String nip_pembimbing_1, String nip_pembimbing_2, int bimbingan_sum, int pending_sum) {
+    public Mahasiswa(String mhs_nim, String mhs_nama, String angkatan, String mhs_kontak, String mhs_foto, String judul, String judul_inggris, String mhs_email,
+                     int plot_pembimbing, int plot_penguji, String nip_pembimbing_1, String nip_pembimbing_2, String nama_pembimbing_1, String nama_pembimbing_2,
+                     String nip_penguji_1, String nip_penguji_2, String nama_penguji_1, String nama_penguji_2, String nilai_pembimbing_1, String nilai_pembimbing_2,
+                     String nilai_penguji_1, String nilai_penguji_2, String nilai_total, String sk_expired, int sk_status, String sidang_tanggal, String sidang_status, String sidang_review,
+                     String username, int bimbingan_sum, int pending_sum) {
         this.mhs_nim = mhs_nim;
         this.mhs_nama = mhs_nama;
         this.angkatan = angkatan;
         this.mhs_kontak = mhs_kontak;
         this.mhs_foto = mhs_foto;
-        this.mhs_email = mhs_email;
         this.judul = judul;
         this.judul_inggris = judul_inggris;
+        this.mhs_email = mhs_email;
         this.plot_pembimbing = plot_pembimbing;
         this.plot_penguji = plot_penguji;
+        this.nip_pembimbing_1 = nip_pembimbing_1;
+        this.nip_pembimbing_2 = nip_pembimbing_2;
+        this.nama_pembimbing_1 = nama_pembimbing_1;
+        this.nama_pembimbing_2 = nama_pembimbing_2;
+        this.nip_penguji_1 = nip_penguji_1;
+        this.nip_penguji_2 = nip_penguji_2;
+        this.nama_penguji_1 = nama_penguji_1;
+        this.nama_penguji_2 = nama_penguji_2;
+        this.nilai_pembimbing_1 = nilai_pembimbing_1;
+        this.nilai_pembimbing_2 = nilai_pembimbing_2;
+        this.nilai_penguji_1 = nilai_penguji_1;
+        this.nilai_penguji_2 = nilai_penguji_2;
+        this.nilai_total = nilai_total;
         this.sk_expired = sk_expired;
         this.sk_status = sk_status;
         this.sidang_tanggal = sidang_tanggal;
         this.sidang_status = sidang_status;
+        this.sidang_review = sidang_review;
         this.username = username;
-        this.nip_pembimbing_1 = nip_pembimbing_1;
-        this.nip_pembimbing_2 = nip_pembimbing_2;
         this.bimbingan_sum = bimbingan_sum;
         this.pending_sum = pending_sum;
     }
@@ -199,6 +262,14 @@ public class Mahasiswa implements Parcelable {
         this.nip_pembimbing_2 = nip_pembimbing_2;
     }
 
+    public String getNilai_total() {
+        return nilai_total;
+    }
+
+    public void setNilai_total(String nilai_total) {
+        this.nilai_total = nilai_total;
+    }
+
     public String setSk_detail(){
         String detail = null;
         if (this.sk_status == 1){
@@ -226,6 +297,22 @@ public class Mahasiswa implements Parcelable {
             }
         }
         return detail;
+    }
+
+
+    public String setSidangStatus(){
+        try {
+            Locale locale = new Locale("in", "ID");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", locale);
+            Date date = format.parse(sidang_tanggal);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            String month_name = new SimpleDateFormat("MMMM", locale).format(calendar.getTime());
+            return "Sidang pada " + calendar.get(Calendar.DATE)+" "+month_name+" "+calendar.get(Calendar.YEAR);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String getUsername() {
@@ -300,6 +387,98 @@ public class Mahasiswa implements Parcelable {
         this.pending_sum = pending_sum;
     }
 
+    public String getNama_pembimbing_1() {
+        return nama_pembimbing_1;
+    }
+
+    public void setNama_pembimbing_1(String nama_pembimbing_1) {
+        this.nama_pembimbing_1 = nama_pembimbing_1;
+    }
+
+    public String getNama_pembimbing_2() {
+        return nama_pembimbing_2;
+    }
+
+    public void setNama_pembimbing_2(String nama_pembimbing_2) {
+        this.nama_pembimbing_2 = nama_pembimbing_2;
+    }
+
+    public String getNip_penguji_1() {
+        return nip_penguji_1;
+    }
+
+    public void setNip_penguji_1(String nip_penguji_1) {
+        this.nip_penguji_1 = nip_penguji_1;
+    }
+
+    public String getNip_penguji_2() {
+        return nip_penguji_2;
+    }
+
+    public void setNip_penguji_2(String nip_penguji_2) {
+        this.nip_penguji_2 = nip_penguji_2;
+    }
+
+    public String getNama_penguji_1() {
+        return nama_penguji_1;
+    }
+
+    public void setNama_penguji_1(String nama_penguji_1) {
+        this.nama_penguji_1 = nama_penguji_1;
+    }
+
+    public String getNama_penguji_2() {
+        return nama_penguji_2;
+    }
+
+    public void setNama_penguji_2(String nama_penguji_2) {
+        this.nama_penguji_2 = nama_penguji_2;
+    }
+
+    public String getNilai_pembimbing_1() {
+        return nilai_pembimbing_1;
+    }
+
+    public void setNilai_pembimbing_1(String nilai_pembimbing_1) {
+        this.nilai_pembimbing_1 = nilai_pembimbing_1;
+    }
+
+    public String getNilai_pembimbing_2() {
+        return nilai_pembimbing_2;
+    }
+
+    public void setNilai_pembimbing_2(String nilai_pembimbing_2) {
+        this.nilai_pembimbing_2 = nilai_pembimbing_2;
+    }
+
+    public String getNilai_penguji_1() {
+        return nilai_penguji_1;
+    }
+
+    public void setNilai_penguji_1(String nilai_penguji_1) {
+        this.nilai_penguji_1 = nilai_penguji_1;
+    }
+
+    public String getNilai_penguji_2() {
+        return nilai_penguji_2;
+    }
+
+    public void setNilai_penguji_2(String nilai_penguji_2) {
+        this.nilai_penguji_2 = nilai_penguji_2;
+    }
+
+    public String getSidang_review() {
+        return sidang_review;
+    }
+
+    public void setSidang_review(String sidang_review) {
+        this.sidang_review = sidang_review;
+    }
+
+    public static Creator<Mahasiswa> getCREATOR() {
+        return CREATOR;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -324,6 +503,18 @@ public class Mahasiswa implements Parcelable {
         dest.writeString(this.sidang_tanggal);
         dest.writeString(this.nip_pembimbing_1);
         dest.writeString(this.nip_pembimbing_2);
+        dest.writeString(this.nama_pembimbing_1);
+        dest.writeString(this.nama_pembimbing_2);
+        dest.writeString(this.nilai_pembimbing_1);
+        dest.writeString(this.nilai_pembimbing_2);
+        dest.writeString(this.nip_penguji_1);
+        dest.writeString(this.nip_penguji_2);
+        dest.writeString(this.nama_penguji_1);
+        dest.writeString(this.nama_penguji_2);
+        dest.writeString(this.nilai_penguji_1);
+        dest.writeString(this.nilai_penguji_2);
+        dest.writeString(this.nilai_total);
+        dest.writeString(this.sidang_review);
         dest.writeInt(this.bimbingan_sum);
         dest.writeInt(this.pending_sum);
     }
@@ -346,6 +537,18 @@ public class Mahasiswa implements Parcelable {
         this.sidang_tanggal = in.readString();
         this.nip_pembimbing_1 = in.readString();
         this.nip_pembimbing_2 = in.readString();
+        this.nama_pembimbing_1 = in.readString();
+        this.nama_pembimbing_2 = in.readString();
+        this.nilai_pembimbing_1 = in.readString();
+        this.nilai_pembimbing_2 = in.readString();
+        this.nip_penguji_1 = in.readString();
+        this.nip_penguji_2 = in.readString();
+        this.nama_penguji_1 = in.readString();
+        this.nama_penguji_2 = in.readString();
+        this.nilai_penguji_1 = in.readString();
+        this.nilai_penguji_2 = in.readString();
+        this.nilai_total = in.readString();
+        this.sidang_review = in.readString();
         this.bimbingan_sum = in.readInt();
         this.pending_sum = in.readInt();
     }

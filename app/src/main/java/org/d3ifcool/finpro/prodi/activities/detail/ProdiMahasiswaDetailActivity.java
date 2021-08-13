@@ -11,8 +11,8 @@ import android.view.View;
 
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.MahasiswaContract;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.databinding.ActivityProdiMahasiswaDetailBinding;
@@ -22,7 +22,6 @@ import org.d3ifcool.finpro.prodi.activities.editor.ProdiMahasiswaPlotPembimbingA
 import java.util.List;
 
 
-import es.dmoral.toasty.Toasty;
 import okhttp3.ResponseBody;
 
 import static org.d3ifcool.finpro.core.helpers.Constant.ObjectConstanta.EXTRA_MAHASISWA;
@@ -121,7 +120,7 @@ public class ProdiMahasiswaDetailActivity extends AppCompatActivity implements M
     public void onMessage(String messages) {
         switch (messages){
             case "onSuccess":
-                mediator.message(message.setComponent("Toasty").setEvent("Success").setText("Berhasil hapus Mahasiswa"));
+                mediator.message(message.setComponent("Toasty").setEvent("Success").setText("Berhasil menyimpan data"));
                 finish();
                 break;
             case "ShowProgressDialog":

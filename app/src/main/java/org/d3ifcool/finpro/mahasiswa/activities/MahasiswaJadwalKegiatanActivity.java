@@ -2,31 +2,20 @@ package org.d3ifcool.finpro.mahasiswa.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.JadwalContract;
-import org.d3ifcool.finpro.core.interfaces.lists.KegiatanListView;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.JadwalKegiatan;
-import org.d3ifcool.finpro.core.models.Kegiatan;
-import org.d3ifcool.finpro.core.presenters.KegiatanPresenter;
 import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.databinding.ActivityMahasiswaJadwalKegiatanBinding;
 import org.d3ifcool.finpro.lak.LAKJadwalEditorActivity;
-import org.d3ifcool.finpro.mahasiswa.adapters.recyclerview.MahasiswaJadwalKegiatanViewAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MahasiswaJadwalKegiatanActivity extends AppCompatActivity implements JadwalContract.ViewModel {

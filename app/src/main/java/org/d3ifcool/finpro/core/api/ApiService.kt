@@ -49,29 +49,6 @@ interface ApiService {
         @Path(FinproUrl.VAR_BIMBINGAN) bimbingan_id: Int?
     ): Call<Bimbingan?>?
 
-    @GET(FinproUrl.URL_BIMBINGAN + FinproUrl.PATH_SEARCH + FinproUrl.PATH_ALL + FinproUrl.BASE_PARAMETER + FinproUrl.PARAMETER_QUERY)
-    fun searchBimbinganAllBy(
-            @Path(FinproUrl.VAR_PARAMS) parameter: String?,
-            @Path(FinproUrl.VAR_QUERY) query: String?
-    ): Call<List<Bimbingan?>?>?
-
-    @GET(FinproUrl.URL_BIMBINGAN + FinproUrl.PATH_SEARCH + FinproUrl.PATH_ALL + FinproUrl.BASE_PARAMETER + FinproUrl.PARAMETER_QUERY)
-    fun searchBimbinganBy(
-            @Path(FinproUrl.VAR_PARAMS) parameter: String?,
-            @Path(FinproUrl.VAR_QUERY) query: String?
-    ): Call<Bimbingan?>?
-
-    @GET(FinproUrl.URL_BIMBINGAN + FinproUrl.PATH_SEARCH + FinproUrl.PATH_ALL + FinproUrl.BASE_PARAMETER_1 + FinproUrl.PARAMETER_QUERY_1 + FinproUrl.BASE_PARAMETER_2 + FinproUrl.PARAMETER_QUERY_2)
-    fun searchBimbinganAllByTwo(
-            @Path(FinproUrl.VAR_PARAMS + "1") parameter1: String?,
-            @Path(FinproUrl.VAR_QUERY + "1") query1: String?,
-            @Path(FinproUrl.VAR_PARAMS + "2") parameter2: String?,
-            @Path(FinproUrl.VAR_QUERY + "2") query2: String?
-    ): Call<List<Bimbingan?>?>?
-
-    @GET(FinproUrl.URL_BIMBINGAN + FinproUrl.PATH_SEARCH + FinproUrl.PATH_SIAP_SIDANG + FinproUrl.PARAMETER_BIMBINGAN)
-    fun searchSiapSidang(@Path(FinproUrl.VAR_BIMBINGAN) jumlah_bimbingan: Int): Call<List<SiapSidang?>?>?
-
     @FormUrlEncoded
     @POST(FinproUrl.URL_BIMBINGAN + FinproUrl.PATH_UPDATE + FinproUrl.PATH_STATUS + FinproUrl.PARAMETER_BIMBINGAN)
     fun updateBimbinganStatus(
@@ -101,8 +78,8 @@ interface ApiService {
         @Field("dsn_kode") dsn_kode: String?,
         @Field("dsn_kontak") dsn_kontak: String?,
         @Field("dsn_email") dsn_email: String?,
-        @Field("kuota_bimbingan") kuota_bimbingan: Int,
-        @Field("kuota_reviewer")kuota_reviewer: Int
+        @Field("kuota_bimbingan") kuota_bimbingan: Int?,
+        @Field("kuota_reviewer")kuota_reviewer: Int?
     ): Call<Dosen?>?
 
     @POST(FinproUrl.URL_DOSEN + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_DOSEN)
@@ -128,6 +105,18 @@ interface ApiService {
         @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
         @Path(FinproUrl.VAR_DOSEN) dsn_nip: String?
     ): Call<Dosen?>?
+
+    @GET(FinproUrl.URL_DOSEN + FinproUrl.PATH_MAHASISWA + FinproUrl.PATH_SIDANG)
+    fun getMahasiswaSidang(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?
+    ): Call<List<Mahasiswa?>?>?
+
+
+    @GET(FinproUrl.URL_DOSEN + FinproUrl.PATH_MAHASISWA + FinproUrl.PATH_SIDANG + FinproUrl.PARAMETER_DOSEN)
+    fun getMahasiswaSidangByUsername(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_DOSEN) mhs_nim: String?
+    ): Call<Mahasiswa?>?
 
     // Plotting
     // ---------------------------------------------------------------------------------------------
@@ -290,113 +279,7 @@ interface ApiService {
         @Path(FinproUrl.VAR_JADWAL) jadwal_id: Int
     ): Call<JadwalKegiatan?>?
 
-    // Judul
-    // ---------------------------------------------------------------------------------------------
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_JUDUL_PA)
-    fun createJudul(
-            @Field("judul_nama") judul_nama: String?,
-            @Field("kategori_id") kategori_id: Int,
-            @Field("judul_deskripsi") judul_deskripsi: String?,
-            @Field("dsn_nip") dsn_nip: String?,
-            @Field("judul_status") judul_status: String?
-    ): Call<Judul?>?
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_JUDUL_PA + FinproUrl.PATH_UPDATE + FinproUrl.PARAMETER_JUDUL)
-    fun updateJudul(
-            @Path(FinproUrl.VAR_JUDUL) judul_id: Int,
-            @Field("judul_nama") judul_nama: String?,
-            @Field("kategori_id") kategori_id: Int,
-            @Field("judul_deskripsi") judul_deskripsi: String?
-    ): Call<Judul?>?
-
-    @GET(FinproUrl.URL_JUDUL_PA)
-    fun getJudul(): Call<List<Judul?>?>?
-
-    @POST(FinproUrl.URL_JUDUL_PA + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_JUDUL)
-    fun deleteJudul(@Path(FinproUrl.VAR_JUDUL) judul_id: Int): Call<Judul?>?
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_JUDUL_PA + FinproUrl.PATH_UPDATE + FinproUrl.PATH_STATUS + FinproUrl.PARAMETER_JUDUL)
-    fun updateStatusJudul(@Path(FinproUrl.VAR_JUDUL) judul_id: Int,
-                          @Field("judul_status") judul_status: String?): Call<Judul?>?
-
-    @GET(FinproUrl.URL_JUDUL_PA + FinproUrl.PATH_SEARCH + FinproUrl.BASE_PARAMETER + FinproUrl.PARAMETER_QUERY)
-    fun searchJudulBy(
-            @Path(FinproUrl.VAR_PARAMS) parameter: String?,
-            @Path(FinproUrl.VAR_QUERY) query: String?
-    ): Call<List<Judul?>?>?
-
-    @GET(FinproUrl.URL_JUDUL_PA + FinproUrl.PATH_SEARCH + FinproUrl.BASE_PARAMETER_1 + FinproUrl.PARAMETER_QUERY_1 + FinproUrl.BASE_PARAMETER_2 + FinproUrl.PARAMETER_QUERY_2)
-    fun searchJudulByTwo(
-            @Path(FinproUrl.VAR_PARAMS + "1") parameter1: String?,
-            @Path(FinproUrl.VAR_QUERY + "1") query1: String?,
-            @Path(FinproUrl.VAR_PARAMS + "2") parameter2: String?,
-            @Path(FinproUrl.VAR_QUERY + "2") query2: String?
-    ): Call<List<Judul?>?>?
-
-    @GET(FinproUrl.URL_JUDUL_PA + FinproUrl.PATH_SEARCH + FinproUrl.PATH_MAHASISWA + FinproUrl.BASE_PARAMETER + FinproUrl.PARAMETER_QUERY)
-    fun searchJudulMahasiswaBy(
-            @Path(FinproUrl.VAR_PARAMS) parameter: String?,
-            @Path(FinproUrl.VAR_QUERY) query: String?
-    ): Call<List<Judul?>?>?
-
-    // Kategori Judul
-    // ---------------------------------------------------------------------------------------------
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_KATEGORI_JUDUL)
-    fun createKategoriJudul(
-            @Field("kategori_nama") kategori_nama: String?
-    ): Call<KategoriJudul?>?
-
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_KATEGORI_JUDUL + FinproUrl.PATH_UPDATE + FinproUrl.PARAMETER_KATEGORI_JUDUL)
-    fun updateKategoriJudul(
-            @Path(FinproUrl.VAR_KATEGORI_JUDUL) kategori_judul: Int,
-            @Field("kategori_nama") kategori_nama: String?
-    ): Call<KategoriJudul?>?
-
-    @GET(FinproUrl.URL_KATEGORI_JUDUL)
-    fun getKategoriJudul(): Call<List<KategoriJudul?>?>?
-
-    @POST(FinproUrl.URL_KATEGORI_JUDUL + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_KATEGORI_JUDUL)
-    fun deleteKategoriJudul(@Path(FinproUrl.VAR_KATEGORI_JUDUL) kategori_judul: Int): Call<KategoriJudul?>?
-
-    // Kegiatan
-    // ---------------------------------------------------------------------------------------------
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_KEGIATAN)
-    open fun createKegiatan(
-            @Field("kegiatan") kegiatan: String?,
-            @Field("tanggal_mulai") tanggal_mulai: String?,
-            @Field("tanggal_berakhir") tanggal_berakhir: String?,
-            @Field("pelaku") pelaku: String?,
-            @Field("keterangan") keterangan: String?
-    ): Call<Kegiatan?>?
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_KEGIATAN + FinproUrl.PATH_UPDATE + FinproUrl.PARAMETER_KEGIATAN)
-    fun updateKegiatan(
-            @Path(FinproUrl.VAR_KEGIATAN) kegiatan_id: Int,
-            @Field("kegiatan") kegiatan: String?,
-            @Field("tanggal_mulai") tanggal_mulai: String?,
-            @Field("tanggal_berakhir") tanggal_berakhir: String?,
-            @Field("pelaku") pelaku: String?,
-            @Field("keterangan") keterangan: String?
-    ): Call<Kegiatan?>?
-
-    @GET(FinproUrl.URL_KEGIATAN)
-    fun getKegiatan(): Call<List<Kegiatan?>?>?
-
-    @POST(FinproUrl.URL_KEGIATAN + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_KEGIATAN)
-    fun deleteKegiatan(@Path(FinproUrl.VAR_KEGIATAN) kegiatan_id: Int): Call<Kegiatan?>?
-
-    // Koor
+     // Koor
     // ---------------------------------------------------------------------------------------------
 
     @FormUrlEncoded
@@ -432,32 +315,6 @@ interface ApiService {
             @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
             @Path(FinproUrl.VAR_KOORDINATOR_PA) username_koor: String?
     ): Call<Koordinator?>?
-
-
-    // Kuota Dosen
-    // ---------------------------------------------------------------------------------------------
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_KUOTA_DOSEN)
-    open fun createKuotaDosen(
-            @Field("kuota_variable") kuota_variable: String?,
-            @Field("kuota_value") kuota_value: String?
-    ): Call<KuotaDosen?>?
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_MONEV + FinproUrl.PATH_UPDATE + FinproUrl.PARAMETER_MONEV)
-    fun updateKuotaDosen(
-            @Path(FinproUrl.VAR_KUOTA_DOSEN) kuota_id: Int,
-            @Field("kuota_variable") kuota_variable: String?,
-            @Field("kuota_value") kuota_value: String?
-    ): Call<KuotaDosen?>?
-
-    @GET(FinproUrl.URL_MONEV)
-    fun getKuotaDosen(): Call<List<KuotaDosen?>?>?
-
-    @POST(FinproUrl.URL_MONEV + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_MONEV)
-    fun deleteKuotaDosen(@Path(FinproUrl.VAR_KUOTA_DOSEN) kuota_id: Int): Call<KuotaDosen?>?
-
 
     // Mahasiswa
     // ---------------------------------------------------------------------------------------------
@@ -551,71 +408,6 @@ interface ApiService {
         @Path(FinproUrl.VAR_MAHASISWA) mhs_nim: String?
     ): Call<ResponseBody?>?
 
-    // Monev
-    // ---------------------------------------------------------------------------------------------
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_MONEV)
-    fun createMonev(
-            @Field("monev_kategori") monev_kategori: String?,
-            @Field("jumlah_bimbingan") jumlah_bimbingan: String?
-    ): Call<Monev?>?
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_MONEV + FinproUrl.PATH_UPDATE + FinproUrl.PARAMETER_MONEV)
-    fun updateMonev(
-            @Path(FinproUrl.VAR_MONEV) monev_id: Int,
-            @Field("monev_kategori") kategori: String?,
-            @Field("jumlah_bimbingan") jumlah_bimbingan: String?
-    ): Call<Monev?>?
-
-    @GET(FinproUrl.URL_MONEV)
-    fun getMonev(): Call<List<Monev?>?>?
-
-    @POST(FinproUrl.URL_MONEV + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_MONEV)
-    fun deleteMonev(@Path(FinproUrl.VAR_MONEV) monev_id: Int): Call<Monev?>?
-
-    // Monev Detail
-    // ---------------------------------------------------------------------------------------------
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_MONEV_DETAIL)
-    fun createDetailMonev(
-            @Field("monev_nilai") monev_nilai: Int,
-            @Field("monev_tanggal") monev_tanggal: String?,
-            @Field("monev_ulasan") monev_ulasan: String?,
-            @Field("monev_id") monev_id: Int,
-            @Field("proyek_akhir_id") proyek_akhir_id: Int
-    ): Call<DetailMonev?>?
-
-    @GET(FinproUrl.URL_MONEV_DETAIL)
-    fun getDetailMonev(): Call<List<DetailMonev?>?>?
-
-    @POST(FinproUrl.URL_MONEV_DETAIL + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_MONEV_DETAIL)
-    fun deleteDetailMonev(@Path(FinproUrl.VAR_MONEV_DETAIL) monev_detail_id: Int): Call<DetailMonev?>?
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_MONEV_DETAIL + FinproUrl.PATH_UPDATE + FinproUrl.PARAMETER_MONEV_DETAIL)
-    fun updateDetailMonev(@Path(FinproUrl.VAR_MONEV_DETAIL) monev_detail_id: Int,
-                          @Field("monev_nilai") monev_nilai: Int,
-                          @Field("monev_tanggal") monev_tanggal: String?,
-                          @Field("monev_ulasan") monev_ulasan: String?
-    ): Call<DetailMonev?>?
-
-    @GET(FinproUrl.URL_MONEV_DETAIL + FinproUrl.PATH_SEARCH + FinproUrl.BASE_PARAMETER_1 + FinproUrl.PARAMETER_QUERY_1 + FinproUrl.BASE_PARAMETER_2 + FinproUrl.PARAMETER_QUERY_2)
-    fun searchDetailMonevByTwo(
-            @Path(FinproUrl.VAR_PARAMS + "1") parameter1: String?,
-            @Path(FinproUrl.VAR_QUERY + "1") query1: String?,
-            @Path(FinproUrl.VAR_PARAMS + "2") parameter2: String?,
-            @Path(FinproUrl.VAR_QUERY + "2") query2: String?
-    ): Call<List<DetailMonev?>?>?
-
-    @GET(FinproUrl.URL_MONEV_DETAIL + FinproUrl.PATH_SEARCH + FinproUrl.BASE_PARAMETER + FinproUrl.PARAMETER_QUERY)
-    fun searchDetailMonevBy(
-            @Path(FinproUrl.VAR_PARAMS) parameter: String?,
-            @Path(FinproUrl.VAR_QUERY) query: String?
-    ): Call<List<DetailMonev?>?>?
-
     // Notifikasi
     // ---------------------------------------------------------------------------------------------
 
@@ -662,76 +454,6 @@ interface ApiService {
     @POST(FinproUrl.URL_NOTIFIKASI + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_NOTIFIKASI)
     fun deleteNotifikasi(@Path(FinproUrl.VAR_NOTIFIKASI) notifikasi_id: Int): Call<Notifikasi?>?
 
-    // Proyek Akhir
-    // ---------------------------------------------------------------------------------------------
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_PROYEK_AKHIR)
-    fun createProyekAkhir(
-            @Field("judul_id") id_judul: Int,
-            @Field("mhs_nim") mhs_nim: String?,
-            @Field("nama_tim") nama_tim: String?
-    ): Call<ProyekAkhir?>?
-
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_PROYEK_AKHIR + FinproUrl.PATH_UPDATE + FinproUrl.PARAMETER_PROYEK_AKHIR)
-    fun updateProyekAkhir(
-            @Path(FinproUrl.VAR_PROYEK_AKHIR) proyek_akhir_id: Int,
-            @Field("judul_id") id_judul: Int,
-            @Field("mhs_nim") mhs_nim: String?,
-            @Field("dsn_nip") dsn_nip: String?,
-            @Field("nama_tim") nama_tim: String?
-    ): Call<ProyekAkhir?>?
-
-    @GET(FinproUrl.URL_PROYEK_AKHIR)
-    fun getProyekAkhir(): Call<List<ProyekAkhir?>?>?
-
-    @POST(FinproUrl.URL_PROYEK_AKHIR + FinproUrl.PATH_DELETE + FinproUrl.PARAMETER_PROYEK_AKHIR)
-    fun deleteProyekAkhir(@Path(FinproUrl.VAR_PROYEK_AKHIR) proyek_akhir: Int): Call<ProyekAkhir?>?
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_PROYEK_AKHIR + FinproUrl.PATH_UPDATE + FinproUrl.PATH_NILAI + FinproUrl.PARAMETER_PROYEK_AKHIR)
-    fun updateNilai(
-            @Path(FinproUrl.VAR_PROYEK_AKHIR) proyek_akhir_id: Int,
-            @Field("nilai_total") nilai_total: Double
-    ): Call<ProyekAkhir?>?
-
-    @FormUrlEncoded
-    @POST(FinproUrl.URL_PROYEK_AKHIR + FinproUrl.PATH_UPDATE + FinproUrl.PATH_DOSEN + FinproUrl.PARAMETER_PROYEK_AKHIR)
-    fun updateDosenReviewer(
-            @Path(FinproUrl.VAR_PROYEK_AKHIR) proyek_akhir_id: Int,
-            @Field("dsn_nip") nip_dosen: String?
-    ): Call<ProyekAkhir?>?
-
-    @GET(FinproUrl.URL_PROYEK_AKHIR + FinproUrl.PATH_SEARCH + FinproUrl.PATH_ALL + FinproUrl.BASE_PARAMETER + FinproUrl.PARAMETER_QUERY)
-    fun searchAllProyekAkhirBy(
-            @Path(FinproUrl.VAR_PARAMS) parameter: String?,
-            @Path(FinproUrl.VAR_QUERY) query: String?
-    ): Call<List<ProyekAkhir?>?>?
-
-    @GET(FinproUrl.URL_PROYEK_AKHIR + FinproUrl.PATH_SEARCH + FinproUrl.PATH_ALL + FinproUrl.BASE_PARAMETER_1 + FinproUrl.PARAMETER_QUERY_1 + FinproUrl.BASE_PARAMETER_2 + FinproUrl.PARAMETER_QUERY_2)
-    fun searchAllProyekAkhirByTwo(
-            @Path(FinproUrl.VAR_PARAMS + "1") parameter1: String?,
-            @Path(FinproUrl.VAR_QUERY + "1") query1: String?,
-            @Path(FinproUrl.VAR_PARAMS + "2") parameter2: String?,
-            @Path(FinproUrl.VAR_QUERY + "2") query2: String?
-    ): Call<List<ProyekAkhir?>?>?
-
-    @GET(FinproUrl.URL_PROYEK_AKHIR + FinproUrl.PATH_SEARCH + FinproUrl.PATH_DISTINCT + FinproUrl.BASE_PARAMETER + FinproUrl.PARAMETER_QUERY)
-    fun searchDistinctProyekAkhirBy(
-            @Path(FinproUrl.VAR_PARAMS) parameter: String?,
-            @Path(FinproUrl.VAR_QUERY) query: String?
-    ): Call<List<ProyekAkhir?>?>?
-
-    @GET(FinproUrl.URL_PROYEK_AKHIR + FinproUrl.PATH_SEARCH + FinproUrl.PATH_DISTINCT + FinproUrl.BASE_PARAMETER_1 + FinproUrl.PARAMETER_QUERY_1 + FinproUrl.BASE_PARAMETER_2 + FinproUrl.PARAMETER_QUERY_2)
-    fun searchDistinctProyekAkhirByTwo(
-            @Path(FinproUrl.VAR_PARAMS + "1") parameter1: String?,
-            @Path(FinproUrl.VAR_QUERY + "1") query1: String?,
-            @Path(FinproUrl.VAR_PARAMS + "2") parameter2: String?,
-            @Path(FinproUrl.VAR_QUERY + "2") query2: String?
-    ): Call<List<ProyekAkhir?>?>?
-
     // Sidang
     // ---------------------------------------------------------------------------------------------
 
@@ -739,18 +461,67 @@ interface ApiService {
     fun getSidang(): Call<List<Sidang?>?>?
 
     @FormUrlEncoded
-    @POST(FinproUrl.URL_SIDANG)
-    fun createSidang(
-            @Field("sidang_review") sidang_review: String?,
-            @Field("sidang_tanggal") sidang_tanggal: String?,
-            @Field("nilai_proposal") nilai_proposal: Int,
-            @Field("nilai_penguji_1") nilai_penguji_1: Int,
-            @Field("nilai_penguji_2") nilai_penguji_2: Int,
-            @Field("nilai_pembimbing") nilai_pembimbing: Int,
-            @Field("nilai_total") nilai_total: Double,
-            @Field("sidang_status") sidang_status: String?,
-            @Field("proyek_akhir_id") proyek_akhir_id: Int
+    @POST(FinproUrl.URL_SIDANG + FinproUrl.PATH_NILAI + FinproUrl.PARAMETER_SIDANG)
+    fun saveNilaiSidang(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_SIDANG) mhs_nim: String?,
+        @Field("clo1") clo1: String?,
+        @Field("clo2") clo2: String,
+        @Field("clo3") clo3: String,
+    ): Call<ResponseBody?>?
+
+    @FormUrlEncoded
+    @POST(FinproUrl.URL_SIDANG + FinproUrl.PATH_REVIEW + FinproUrl.PARAMETER_SIDANG)
+    fun saveReviewSidang(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_SIDANG) mhs_nim: String?,
+        @Field("review") review: String?,
+        @Field("status") status: String?,
+    ): Call<ResponseBody?>?
+
+    @FormUrlEncoded
+    @POST(FinproUrl.URL_SIDANG + FinproUrl.PATH_UPDATE + FinproUrl.PATH_STATUS + FinproUrl.PARAMETER_SIDANG)
+    fun updateStatusSidang(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_SIDANG) mhs_nim: String?,
+        @Field("status") status: String?,
+    ): Call<ResponseBody?>?
+
+    @GET(FinproUrl.URL_SIDANG + FinproUrl.PATH_NILAI + FinproUrl.PARAMETER_SIDANG)
+    fun getSidangByNIM(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_SIDANG) mhs_nim: String?
     ): Call<Sidang?>?
+
+    @Multipart
+    @POST(FinproUrl.URL_SIDANG + FinproUrl.PATH_UPLOAD + FinproUrl.PATH_REVISI + FinproUrl.PARAMETER_SIDANG)
+    fun uploadFormRevisi(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Part file: MultipartBody.Part?
+    ): Call<ResponseBody?>?
+
+    @Multipart
+    @POST(FinproUrl.URL_SIDANG + FinproUrl.PATH_UPLOAD + FinproUrl.PATH_JURNAL + FinproUrl.PARAMETER_SIDANG)
+    fun uploadDraftJurnal(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_SIDANG) mhs_nim: String?,
+        @Part file: MultipartBody.Part?
+    ): Call<ResponseBody?>?
+
+    @Headers("Connection:close")
+    @GET(FinproUrl.URL_SIDANG + FinproUrl.PATH_CHECK + FinproUrl.PATH_REVISI + FinproUrl.PARAMETER_SIDANG)
+    fun checkFormRevisi(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_SIDANG) mhs_nim: String?
+    ): Call<ResponseBody>?
+
+    @Headers("Connection:close")
+    @Streaming
+    @GET(FinproUrl.URL_SIDANG + FinproUrl.PATH_DOWNLOAD + FinproUrl.PATH_REVISI + FinproUrl.PARAMETER_SIDANG)
+    fun downloadFormRevisi(
+        @Header(FinproUrl.VAR_AUTHORIZATION) token: String?,
+        @Path(FinproUrl.VAR_SIDANG) mhs_nim: String?
+    ): Call<ResponseBody>?
 
     @FormUrlEncoded
     @POST(FinproUrl.URL_SIDANG + FinproUrl.PATH_UPDATE + FinproUrl.PARAMETER_SIDANG)

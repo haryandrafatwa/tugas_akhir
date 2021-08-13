@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="model"
+            type="org.d3ifcool.finpro.core.models.Mahasiswa" />
+        <import type="android.graphics.Typeface" />
+        <import type="androidx.core.content.ContextCompat"/>
+        <import type="android.R"/>
+        <import type="android.view.View"/>
+    </data>
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:scrollbars="none"
+        android:background="@color/colorBackground">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_margin="@dimen/dimen_big_16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_title_ta"/>
+
+            <include
+                layout="@layout/content_all_pa_judul_kelompok"
+                mahasiswa="@{model}"/>
+
+            <TextView
+                android:layout_margin="@dimen/dimen_big_16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_nilai_sidang_mahasiswa"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/frg_mhs_pa_cardview_nilai_pembimbing_1"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:focusable="true"
+                android:elevation="@dimen/dimen_elevation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/dimen_medium_8dp"
+                    android:layout_marginBottom="@dimen/dimen_medium_8dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_marginStart="@dimen/dimen_big_16dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_medium_8dp"
+                                android:text="@string/text_pembimbing_1"/>
+                            <TextView
+                                android:textAllCaps="false"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorBackgroundYellow"
+                                android:textSize="@dimen/text_size_title_small_18sp"
+                                android:layout_marginBottom="@dimen/dimen_medium_8dp"
+                                tools:text="@string/dummy_mahasiswa_nama"
+                                android:text="@{model.nama_pembimbing_1}"
+                                android:id="@+id/act_dsn_sidang_pembimbing_1"
+                                android:layout_marginStart="@dimen/dimen_big_16dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <View
+                        style="@style/view_all_line_horizontal"/>
+
+                    <TextView
+                        android:layout_marginStart="@dimen/dimen_big_16dp"
+                        android:layout_marginEnd="@dimen/dimen_big_16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:textColor="@color/colorPrimary"
+                        android:textAllCaps="true"
+                        android:text="@string/text_lihat_detail"/>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/frg_mhs_pa_cardview_nilai_pembimbing_2"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:focusable="true"
+                android:elevation="@dimen/dimen_elevation"
+                android:layout_marginTop="@dimen/dimen_small_4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/dimen_medium_8dp"
+                    android:layout_marginBottom="@dimen/dimen_medium_8dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_marginStart="@dimen/dimen_big_16dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_medium_8dp"
+                                android:text="@string/text_pembimbing_2"/>
+                            <TextView
+                                android:textAllCaps="false"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorBackgroundYellow"
+                                android:textSize="@dimen/text_size_title_small_18sp"
+                                android:layout_marginBottom="@dimen/dimen_medium_8dp"
+                                tools:text="@string/dummy_mahasiswa_nama"
+                                android:text="@{model.nama_pembimbing_2}"
+                                android:id="@+id/act_dsn_sidang_pembimbing_2"
+                                android:layout_marginStart="@dimen/dimen_big_16dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <View
+                        style="@style/view_all_line_horizontal"/>
+
+                    <TextView
+                        android:layout_marginStart="@dimen/dimen_big_16dp"
+                        android:layout_marginEnd="@dimen/dimen_big_16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:textColor="@color/colorPrimary"
+                        android:textAllCaps="true"
+                        android:text="@string/text_lihat_detail"/>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/frg_mhs_pa_cardview_nilai_penguji_1"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:focusable="true"
+                android:elevation="@dimen/dimen_elevation"
+                android:layout_marginTop="@dimen/dimen_small_4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/dimen_medium_8dp"
+                    android:layout_marginBottom="@dimen/dimen_medium_8dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_marginStart="@dimen/dimen_big_16dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_medium_8dp"
+                                android:text="@string/text_penguji_1"/>
+                            <TextView
+                                android:textAllCaps="false"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorBackgroundYellow"
+                                android:textSize="@dimen/text_size_title_small_18sp"
+                                android:layout_marginBottom="@dimen/dimen_medium_8dp"
+                                tools:text="@string/dummy_mahasiswa_nama"
+                                android:text="@{model.nama_penguji_1 == null ? `Belum memiliki penguji`:model.nama_penguji_1}"
+                                android:id="@+id/act_dsn_sidang_penguji_1"
+                                android:layout_marginStart="@dimen/dimen_big_16dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <View
+                        style="@style/view_all_line_horizontal"/>
+
+                    <TextView
+                        android:layout_marginStart="@dimen/dimen_big_16dp"
+                        android:layout_marginEnd="@dimen/dimen_big_16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:textColor="@color/colorPrimary"
+                        android:textAllCaps="true"
+                        android:text="@string/text_lihat_detail"/>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/frg_mhs_pa_cardview_nilai_penguji_2"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:focusable="true"
+                android:elevation="@dimen/dimen_elevation"
+                android:layout_marginTop="@dimen/dimen_small_4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/dimen_medium_8dp"
+                    android:layout_marginBottom="@dimen/dimen_medium_8dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_marginStart="@dimen/dimen_big_16dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_medium_8dp"
+                                android:text="@string/text_penguji_2"/>
+                            <TextView
+                                android:textAllCaps="false"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorBackgroundYellow"
+                                android:textSize="@dimen/text_size_title_small_18sp"
+                                android:layout_marginBottom="@dimen/dimen_medium_8dp"
+                                tools:text="@string/dummy_mahasiswa_nama"
+                                android:text="@{model.nama_penguji_2 == null ? `Belum memiliki penguji`:model.nama_penguji_2}"
+                                android:id="@+id/act_dsn_sidang_penguji_2"
+                                android:layout_marginStart="@dimen/dimen_big_16dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <View
+                        style="@style/view_all_line_horizontal"/>
+
+                    <TextView
+                        android:layout_marginStart="@dimen/dimen_big_16dp"
+                        android:layout_marginEnd="@dimen/dimen_big_16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:textColor="@color/colorPrimary"
+                        android:textAllCaps="true"
+                        android:text="@string/text_lihat_detail"/>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+
+            <TextView
+                android:layout_margin="@dimen/dimen_big_16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_review_sidang"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/frg_mhs_pa_cardview_sidang"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:focusable="true"
+                android:elevation="@dimen/dimen_elevation"
+                android:layout_marginBottom="@dimen/dimen_big_16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/dimen_medium_8dp"
+                    android:layout_marginBottom="@dimen/dimen_medium_8dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textAllCaps="false"
+                        android:textColor="@{model.sidang_review == null ? ContextCompat.getColor(context, R.color.darker_gray):ContextCompat.getColor(context, R.color.black)}"
+                        android:typeface="@{Typeface.defaultFromStyle(model.sidang_review == null ? Typeface.ITALIC:Typeface.NORMAL)}"
+                        android:textSize="@dimen/text_size_title_small_18sp"
+                        tools:text="@string/dummy_status_sidang"
+                        android:text="@{model.sidang_review == null ? `Belum ada review`:model.sidang_review}"
+                        android:id="@+id/act_dsn_pa_bimbingan_textview_status_sidang"
+                        android:layout_marginStart="@dimen/dimen_big_16dp"
+                        android:layout_marginTop="@dimen/dimen_medium_8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <View
+                        style="@style/view_all_line_horizontal"/>
+
+                    <TextView
+                        android:layout_marginStart="@dimen/dimen_big_16dp"
+                        android:layout_marginEnd="@dimen/dimen_big_16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:textColor="@color/colorPrimary"
+                        android:textAllCaps="true"
+                        android:text="@string/text_lihat_detail"/>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/btn_download_form_revisi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/box_border_button_add"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_marginHorizontal="@dimen/dimen_big_16dp"
+                android:text="Download Form Revisi"
+                android:textAllCaps="false"
+                android:textColor="@color/colorTextWhite"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btn_download_berita_acara"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_big_16dp"
+                android:layout_marginTop="@dimen/dimen_big_16dp"
+                android:background="@drawable/box_border_button_add"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_marginHorizontal="@dimen/dimen_big_16dp"
+                android:text="Download Berita Acara"
+                android:textAllCaps="false"
+                android:textColor="@color/colorTextWhite"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>

@@ -57,7 +57,7 @@ public class AuthManager {
                     }else{
                         try {
                             view.onMessage("dismissProgress");
-                            view.onMessage(new JSONObject(response.body().string()).getString("message"));
+                            view.onMessage(new JSONObject(response.errorBody().string()).getString("message"));
                         } catch (JSONException|IOException e) {
                             e.printStackTrace();
                         }

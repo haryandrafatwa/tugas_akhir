@@ -12,6 +12,8 @@
     <color name="colorAccent">#FF9800</color>
     <color name="colorSecondary">#2c3b41</color>
 
+    <color name="defaultTextColor">#FFFFFF</color>
+
     <!-- Tema Warna Utama Website -->
     <!--<color name="colorPrimary">#2c3b41</color>
     <color name="colorPrimaryDark">#1e282c</color>

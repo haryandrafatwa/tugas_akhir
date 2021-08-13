@@ -16,9 +16,10 @@ import org.d3ifcool.finpro.R;
 import org.d3ifcool.finpro.core.helpers.Message;
 import org.d3ifcool.finpro.core.interfaces.DosenContract;
 import org.d3ifcool.finpro.core.interfaces.PlottingContract;
-import org.d3ifcool.finpro.core.mediators.interfaces.prodi.Mediator;
-import org.d3ifcool.finpro.core.mediators.prodi.ConcreteMediator;
+import org.d3ifcool.finpro.core.mediators.Mediator;
+import org.d3ifcool.finpro.core.mediators.ConcreteMediator;
 import org.d3ifcool.finpro.core.models.Dosen;
+import org.d3ifcool.finpro.core.models.Mahasiswa;
 import org.d3ifcool.finpro.core.models.Plotting;
 import org.d3ifcool.finpro.core.presenters.DosenPresenter;
 import org.d3ifcool.finpro.databinding.ActivityKoorPlottingTambahBinding;
@@ -45,10 +46,11 @@ public class ProdiPlottingEditorActivity extends AppCompatActivity implements Pl
         mediator.setPlottingPresenter(this);
         mediator.setDosenPresenter(this);
         mBinding.setPresenter(mediator.getPlottingPresenter());
-        setTitle(getString(R.string.title_plotting_tambah));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mediator.setTitleContextWithHomeAsUp("Tambah Plotting");
 
         if (getIntent().getParcelableExtra("PlottingModel")!=null){
+            mediator.setTitleContextWithHomeAsUp("Ubah Plotting");
             message.setPlotting(getIntent().getParcelableExtra("PlottingModel"));
             mediator.setTextView(mBinding.actKoorInfoButtonSimpan);
             mediator.message(message.setComponent("TextView").setEvent("setText").setText("Ubah Plotting"));
@@ -74,13 +76,11 @@ public class ProdiPlottingEditorActivity extends AppCompatActivity implements Pl
         mediator.message(message.setComponent("Toolbar").setVisibility(i));
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     public void onGetObjectDosen(Dosen dosen) {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onGetListDosen(List<Dosen> dosen) {
         ArrayList<String> usernameList = new ArrayList<>();
@@ -88,7 +88,7 @@ public class ProdiPlottingEditorActivity extends AppCompatActivity implements Pl
         arrayList.add("Pilih dosen disini");
         usernameList.add("-");
         for (int i = 0; i < dosen.size(); i++) {
-            usernameList.add(dosen.get(i).getUsername());
+            usernameList.add(dosen.get(i).getDsn_nip());
             arrayList.add(dosen.get(i).getDsn_nama());
         }
         mediator.setSpinner(mBinding.actKoorDosenSpinnerDosen1);
@@ -98,10 +98,10 @@ public class ProdiPlottingEditorActivity extends AppCompatActivity implements Pl
         mediator.message(message.setComponent("Spinner").setEvent("setAdapter").setItem(arrayList));
         dosen_2 = mediator.getUsernameDosen();
         if (message.isEnabled()){
-            if (usernameList.contains(message.getPlotting().getNip_pembimbing_2())){
+            if (usernameList.contains(message.getPlotting().getNip_dosen_2())){
                 mediator.message(message.setComponent("Spinner").setEvent("setSelection2").setItem(usernameList));
             }
-            if (usernameList.contains(message.getPlotting().getNip_pembimbing_1())){
+            if (usernameList.contains(message.getPlotting().getNip_dosen_1())){
                 mediator.setSpinner(mBinding.actKoorDosenSpinnerDosen1);
                 mediator.message(message.setComponent("Spinner").setEvent("setSelection1").setItem(usernameList));
             }
@@ -129,6 +129,16 @@ public class ProdiPlottingEditorActivity extends AppCompatActivity implements Pl
 
             }
         });
+    }
+
+    @Override
+    public void onGetObjectMahasiswa(Mahasiswa mahasiswa) {
+
+    }
+
+    @Override
+    public void onGetListMahasiswa(List<Mahasiswa> mahasiswasList) {
+
     }
 
     @Override
